@@ -1,0 +1,126 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-parcelize'
+apply plugin: 'kotlinx-serialization'
+apply plugin: 'androidx.navigation.safeargs'
+
+apply from: "$rootDir/config/detekt/detekt.gradle"
+
+def apikeyProperties = new Properties()
+def apikeyPropertiesFile = rootProject.file("apikey.properties")
+apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
+
+android {
+    compileSdk 33
+    namespace "com.bed.seller"
+
+    defaultConfig {
+        minSdk 27
+        targetSdk 33
+        versionCode 1
+        versionName '1.0'
+        applicationId "com.bed.seller"
+
+        testInstrumentationRunnerArguments clearPackageData: 'true'
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+
+        buildConfigField 'String', 'API_KEY', apikeyProperties['API_KEY']
+        buildConfigField 'String', 'BASE_URL', apikeyProperties['BASE_URL']
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    testOptions {
+        animationsDisabled = true
+        execution 'ANDROIDX_TEST_ORCHESTRATOR'
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+            applicationIdSuffix '.debug'
+        }
+
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    kotlinOptions {
+        jvmTarget = '11'
+        freeCompilerArgs += ['-opt-in=kotlin.RequiresOptIn']
+    }
+
+}
+
+dependencies {
+
+    // Material
+    implementation 'com.google.android.material:material:1.8.0-alpha01'
+
+    // AndroidX
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'androidx.core:core-splashscreen:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+
+    // Koin
+    implementation "io.insert-koin:koin-core:$koin_version"
+    implementation "io.insert-koin:koin-android:$koin_version"
+    implementation "io.insert-koin:koin-androidx-navigation:$koin_version"
+    implementation "io.insert-koin:koin-androidx-workmanager:$koin_version"
+
+    // Ktor Dependencies
+    implementation "io.ktor:ktor-client-core:$ktor_version"
+    implementation "io.ktor:ktor-client-okhttp:$ktor_version"
+    implementation "io.ktor:ktor-client-logging:$ktor_version"
+    implementation "io.ktor:ktor-client-content-negotiation:$ktor_version"
+    implementation "io.ktor:ktor-serialization-kotlinx-json:$ktor_version"
+
+    // ViewModel and LiveData
+    def lifecycle_version = '2.5.1'
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+
+    // Other Libs
+    implementation 'io.arrow-kt:arrow-core:1.1.2'
+    implementation 'androidx.datastore:datastore-preferences:1.0.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0'
+
+    detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:$detekt_version"
+
+    // Tests
+    androidTestUtil 'androidx.test:orchestrator:1.4.1'
+
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'androidx.arch.core:core-testing:2.1.0'
+    testImplementation "io.insert-koin:koin-test-junit4:$koin_version"
+    testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0'
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
+
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
+
+    // Debug
+     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
+}
+

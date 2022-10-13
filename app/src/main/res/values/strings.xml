@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">Seller</string>
+
+    <!-- Strings related to login -->
+    <string name="action_log_out">Sair</string>
+    <string name="error">Ops… ocoreu um erro!</string>
+
+    <!-- Strings related to SignIn and SignUp -->
+    <string name="title_email_text_input">E-mail</string>
+    <string name="placeholder_email_text_input">Exemplo: email@email.com</string>
+    <string name="title_password_text_input">Senha</string>
+    <string name="placeholder_password_text_input">Exemplo: G00S@l55</string>
+
+    <string name="title_create_account">Criar</string>
+
+    <string name="failure_name_message">Nome inválido.</string>
+    <string name="failure_email_message">E-mail inválido.</string>
+    <string name="failure_password_message">Senha inválida.</string>
+
+    <!-- Strings related to SignIn -->
+    <string name="sign_in_title">Bem vindo!</string>
+    <string name="sign_in_sub_title">Olá.\nAcesse sua conta e divulge seus produtos</string>
+
+    <string name="sign_in_title_check_box">Lembrar de mim</string>
+    <string name="sign_in_title_recover_password_button">Recuperar conta?</string>
+    <string name="sign_in_title_button">Entrar</string>
+    <string name="sign_in_description_create_account">Não possui uma conta?</string>
+
+    <!-- Strings related to SignUp -->
+    <string name="sign_up_generic_error">Verifique seus dados e tente novamente.</string>
+    <string name="sign_up_sub_title">Entre com seu nome, e-mail e senha.</string>
+    <string name="sign_up_success_create_account">Sua conta foi criada com sucesso.</string>
+    <string name="sign_up_description_already_existing_account">Já possui uma conta?</string>
+    <string name="sign_up_title_already_existing_account_button">Entrar</string>
+
+    <string name="sign_up_title_name_text_input">Nome</string>
+    <string name="sign_up_placeholder_name_text_input">Exemplo: Gabriel</string>
+
+    <!-- Strings related to Recover Password -->
+    <string name="recover_password_title">Recuperar senha</string>
+    <string name="recover_password_description_icon_button">Botão para fechar o Dialog</string>
+    <string name="recover_password_title_button">Enviar</string>
+
+    <!-- Strings related to errors in Text Inputs and Response API -->
+    <string name="generic_failure_message_form">Preencha as informações corretamente!</string>
+    <string name="generic_failure_message">Um erro aconteceu!</string>
+    <string name="generic_failure_message_email_already_registered">E-mail já cadastrado!</string>
+
+    <!-- Strings related to BottomNavigation -->
+    <string name="bottom_home">Home</string>
+    <string name="bottom_products">Produtos</string>
+    <string name="bottom_account">Conta</string>
+</resources>
