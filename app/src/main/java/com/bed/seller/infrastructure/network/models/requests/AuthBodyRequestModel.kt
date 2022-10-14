@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class SignUpRequestModel(
+data class AuthBodyRequestModel(
     @SerialName("email")
     val email: String,
 
@@ -12,11 +12,6 @@ data class SignUpRequestModel(
     val password: String,
 
     @SerialName("data")
-    val data: SignUpDataRequestModel?,
+    val data: SignUpDataBodyRequestModel?,
 )
 
-@Serializable
-data class SignUpDataRequestModel(
-    @SerialName("name")
-    val name: String,
-)

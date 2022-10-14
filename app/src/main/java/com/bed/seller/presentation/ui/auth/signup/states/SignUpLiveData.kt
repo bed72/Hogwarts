@@ -8,19 +8,20 @@ import androidx.lifecycle.switchMap
 
 import androidx.lifecycle.MutableLiveData
 
-import com.bed.seller.infrastructure.storage.StorageConstants
-
 import com.bed.seller.presentation.ui.auth.commons.Auth
 
-import com.bed.seller.domain.entities.auth.AuthRequestEntity
-import com.bed.seller.domain.entities.auth.AuthResponseEntity
+import com.bed.seller.infrastructure.storage.StorageConstants
 
+import com.bed.seller.domain.usecases.auth.AuthUseCase
 import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
-import com.bed.seller.domain.usecases.auth.signup.SignUpUseCase
+
+import com.bed.seller.domain.entities.auth.AuthResponseEntity
+import com.bed.seller.domain.entities.auth.AuthBodyRequestEntity
+import com.bed.seller.domain.entities.paths.PathEntity
 
 class SignUpLiveData(
     private val commons: Auth,
-    private val signUpUseCase: SignUpUseCase,
+    private val signUpUseCase: AuthUseCase,
     private val coroutineDispatcher: CoroutinesDispatchers
 ) {
     private val actions = MutableLiveData<Auth.Actions>()
@@ -31,7 +32,7 @@ class SignUpLiveData(
                 if (action is Auth.Actions.SignUp) {
                     emit(Auth.States.Loading)
 
-                    signUpUseCase(action.params).collect { response ->
+                    signUpUseCase(buildBodyParams(action)).collect { response ->
                         response.fold(
                             { failure ->
                                 val status = failure.status
@@ -55,9 +56,12 @@ class SignUpLiveData(
             }
         }
 
-    fun createAccount(params: AuthRequestEntity) {
+    fun createAccount(params: AuthBodyRequestEntity) {
         actions.value = Auth.Actions.SignUp(params)
     }
+
+    private fun buildBodyParams(action: Auth.Actions.SignUp) =
+        AuthUseCase.Params(PathEntity.SIGN_UP, action.params)
 
     private suspend fun saveInStorage(data: AuthResponseEntity) {
         commons.saveInStorage(

@@ -2,13 +2,13 @@ package com.bed.seller.infrastructure.modules.auth
 
 import org.koin.dsl.module
 
-import com.bed.seller.data.client.SignUpClient
+import com.bed.seller.data.client.AuthClient
 import com.bed.seller.data.client.StorageClient
 import com.bed.seller.data.client.ValidatorClient
 
 import com.bed.seller.domain.usecases.storage.StorageUseCase
 import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
-import com.bed.seller.domain.usecases.auth.signup.SignUpUseCase
+import com.bed.seller.domain.usecases.auth.AuthUseCase
 import com.bed.seller.domain.usecases.validator.ValidatorUseCase
 
 import com.bed.seller.data.usecases.auth.RemoteSignUpUseCase
@@ -24,9 +24,9 @@ val authUseCasesModule = module {
         RemoteValidatorUseCase(get<ValidatorClient>())
     }
 
-    single<SignUpUseCase> {
+    single<AuthUseCase> {
         RemoteSignUpUseCase(
-            get<SignUpClient>(),
+            get<AuthClient>(),
             get<CoroutinesDispatchers>(),
         )
     }

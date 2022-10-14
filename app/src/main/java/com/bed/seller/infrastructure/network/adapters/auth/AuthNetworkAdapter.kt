@@ -9,26 +9,28 @@ import io.ktor.client.request.url
 import io.ktor.client.request.setBody
 
 import com.bed.seller.BuildConfig
-import com.bed.seller.data.client.SignUpClient
+import com.bed.seller.data.client.AuthClient
 import com.bed.seller.domain.alias.AuthEitherModelType
-import com.bed.seller.domain.entities.auth.AuthRequestEntity
+
+import com.bed.seller.domain.entities.paths.PathEntity
+import com.bed.seller.domain.entities.auth.AuthBodyRequestEntity
 
 import com.bed.seller.infrastructure.network.adapters.safe
-import com.bed.seller.infrastructure.network.models.requests.SignUpRequestModel
-import com.bed.seller.infrastructure.network.models.requests.SignUpDataRequestModel
+import com.bed.seller.infrastructure.network.models.requests.AuthBodyRequestModel
+import com.bed.seller.infrastructure.network.models.requests.SignUpDataBodyRequestModel
 
-class AuthNetworkAdapter(private val httpClient: HttpClient) : SignUpClient {
-    override suspend fun signUp(params: AuthRequestEntity): AuthEitherModelType =
+class AuthNetworkAdapter(private val httpClient: HttpClient) : AuthClient {
+    override suspend fun invoke(path: PathEntity, params: AuthBodyRequestEntity): AuthEitherModelType =
         httpClient.safe {
             method = HttpMethod.Post
             setBody(buildBody(params))
             contentType(ContentType.Application.Json)
-            url("${BuildConfig.BASE_URL}/auth/v1/signup")
+            url("${BuildConfig.BASE_URL}${path.value}")
         }
 
-    private fun buildBody(params: AuthRequestEntity): SignUpRequestModel {
-        val data = params.name?.let { SignUpDataRequestModel(it) }
+    private fun buildBody(params: AuthBodyRequestEntity): AuthBodyRequestModel {
+        val data = params.name?.let { SignUpDataBodyRequestModel(it) }
 
-        return SignUpRequestModel(params.email, params.password, data)
+        return AuthBodyRequestModel(params.email, params.password, data)
     }
 }

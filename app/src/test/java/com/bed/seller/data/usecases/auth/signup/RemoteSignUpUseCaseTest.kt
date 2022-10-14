@@ -21,13 +21,13 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-import com.bed.seller.data.client.SignUpClient
+import com.bed.seller.data.client.AuthClient
 
 import com.bed.seller.data.usecases.mocks.CommonMock
 import com.bed.seller.data.usecases.auth.mocks.AuthMock
 import com.bed.seller.data.usecases.auth.RemoteSignUpUseCase
 
-import com.bed.seller.domain.usecases.auth.signup.SignUpUseCase
+import com.bed.seller.domain.usecases.auth.AuthUseCase
 
 import com.bed.seller.domain.entities.ResponseEntity
 import com.bed.seller.domain.entities.auth.AuthResponseEntity
@@ -45,9 +45,9 @@ class RemoteSignUpRemoteUseCaseTest {
     val mainCoroutineRule = MainCoroutineRule()
 
     @Mock
-    private lateinit var signUpClient: SignUpClient
+    private lateinit var signUpClient: AuthClient
 
-    private lateinit var signUpUseCase: SignUpUseCase
+    private lateinit var signUpUseCase: AuthUseCase
 
     private val authMock = AuthMock()
 

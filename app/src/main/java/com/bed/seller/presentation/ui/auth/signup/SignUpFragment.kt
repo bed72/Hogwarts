@@ -11,7 +11,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.google.android.material.textfield.TextInputLayout
 
 import com.bed.seller.domain.entities.form.TextFieldEntity
-import com.bed.seller.domain.entities.auth.AuthRequestEntity
+import com.bed.seller.domain.entities.auth.AuthBodyRequestEntity
 import com.bed.seller.domain.entities.auth.isNotEmpty
 
 import com.bed.seller.presentation.extensions.snake
@@ -25,7 +25,7 @@ import com.bed.seller.presentation.ui.common.fragment.BaseFragment
 
 class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding::inflate) {
 
-    private var signUpData = AuthRequestEntity()
+    private var signUpData = AuthBodyRequestEntity()
     private val viewModel: SignUpViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

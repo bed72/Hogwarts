@@ -6,7 +6,7 @@ import androidx.annotation.StringRes
 
 import com.bed.seller.domain.usecases.storage.StorageUseCase
 
-import com.bed.seller.domain.entities.auth.AuthRequestEntity
+import com.bed.seller.domain.entities.auth.AuthBodyRequestEntity
 import com.bed.seller.domain.entities.auth.AuthResponseEntity
 
 interface Auth {
@@ -14,7 +14,7 @@ interface Auth {
     suspend fun saveInStorage(vararg data: Pair<String, String>)
 
     sealed class Actions {
-        data class SignUp(val params: AuthRequestEntity) : Actions()
+        data class SignUp(val params: AuthBodyRequestEntity) : Actions()
     }
 
     sealed class States {

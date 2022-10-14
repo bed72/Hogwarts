@@ -6,10 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.distinctUntilChanged
 
-import com.bed.seller.domain.entities.auth.AuthRequestEntity
+import com.bed.seller.domain.entities.auth.AuthBodyRequestEntity
 import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
 
-import com.bed.seller.domain.usecases.auth.signup.SignUpUseCase
+import com.bed.seller.domain.usecases.auth.AuthUseCase
 import com.bed.seller.domain.usecases.validator.ValidatorUseCase
 
 import com.bed.seller.presentation.utils.TripleMediatorLiveData
@@ -23,7 +23,7 @@ import com.bed.seller.presentation.ui.auth.commons.states.validators.PasswordVal
 
 class SignUpViewModel(
     commons: Auth,
-    signUpUseCase: SignUpUseCase,
+    signUpUseCase: AuthUseCase,
     validatorUseCase: ValidatorUseCase,
     coroutineDispatcher: CoroutinesDispatchers
 ) : ViewModel() {
@@ -52,7 +52,7 @@ class SignUpViewModel(
                 }
             }
 
-    fun submit(data: AuthRequestEntity) {
+    fun submit(data: AuthBodyRequestEntity) {
         signUp.createAccount(data)
     }
 }

@@ -26,7 +26,7 @@ import com.bed.seller.presentation.ui.auth.commons.Auth
 import com.bed.seller.data.usecases.mocks.CommonMock
 import com.bed.seller.data.usecases.auth.mocks.AuthMock
 
-import com.bed.seller.domain.usecases.auth.signup.SignUpUseCase
+import com.bed.seller.domain.usecases.auth.AuthUseCase
 import com.bed.seller.domain.usecases.validator.ValidatorUseCase
 
 import com.bed.seller.infrastructure.rules.MainCoroutineRule
@@ -46,7 +46,7 @@ class SignUpViewModelTest {
     lateinit var commons: Auth
 
     @Mock
-    lateinit var signUpUseCase: SignUpUseCase
+    lateinit var signUpUseCase: AuthUseCase
 
     @Mock
     lateinit var signUpValidatorUseCase: ValidatorUseCase

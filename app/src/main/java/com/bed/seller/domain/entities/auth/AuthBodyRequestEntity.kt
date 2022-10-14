@@ -1,10 +1,10 @@
 package com.bed.seller.domain.entities.auth
 
-data class AuthRequestEntity(
+data class AuthBodyRequestEntity(
     val name: String? = null,
     val email: String = "",
     val password: String = "",
 )
 
-fun AuthRequestEntity.isNotEmpty(): Boolean =
+fun AuthBodyRequestEntity.isNotEmpty(): Boolean =
     (name?.isNotEmpty() ?: true) and email.isNotEmpty() and password.isNotEmpty()
