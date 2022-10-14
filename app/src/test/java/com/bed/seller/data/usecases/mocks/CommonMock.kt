@@ -1,8 +1,5 @@
 package com.bed.seller.data.usecases.mocks
 
-import com.bed.seller.domain.usecases.auth.AuthUseCase
-
-import com.bed.seller.domain.entities.paths.PathEntity
 import com.bed.seller.domain.entities.auth.AuthBodyRequestEntity
 
 class CommonMock {

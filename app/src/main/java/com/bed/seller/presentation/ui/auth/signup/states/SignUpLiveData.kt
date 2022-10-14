@@ -20,7 +20,7 @@ import com.bed.seller.domain.entities.auth.AuthResponseEntity
 import com.bed.seller.domain.entities.auth.AuthBodyRequestEntity
 
 class SignUpLiveData(
-    private val commons: Auth,
+    private val authCommons: Auth,
     private val authUseCase: AuthUseCase,
     private val coroutineDispatcher: CoroutinesDispatchers
 ) {
@@ -35,7 +35,7 @@ class SignUpLiveData(
                     authUseCase(buildBodyParams(action)).collect { response ->
                         response.fold(
                             { failure ->
-                                emit(Auth.States.Failure(commons.mapper(failure.status)))
+                                emit(Auth.States.Failure(authCommons.mapper(failure.status)))
                             },
                             { success ->
                                 saveInStorage(success.data)
@@ -49,7 +49,6 @@ class SignUpLiveData(
                             }
                         )
                     }
-
                 }
             }
         }
@@ -62,7 +61,7 @@ class SignUpLiveData(
         AuthUseCase.Params(PathEntity.SIGN_UP, action.params)
 
     private suspend fun saveInStorage(data: AuthResponseEntity) {
-        commons.saveInStorage(
+        authCommons.saveInStorage(
             StorageConstants.DATA_STORE_ACCESS_TOKEN to data.accessToken,
             StorageConstants.DATA_STORE_REFRESH_TOKEN to data.refreshToken,
             StorageConstants.DATA_STORE_EXPIRES_IN to data.expiresIn.toString()

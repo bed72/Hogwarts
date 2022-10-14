@@ -22,15 +22,15 @@ import com.bed.seller.presentation.ui.auth.commons.states.validators.EmailValida
 import com.bed.seller.presentation.ui.auth.commons.states.validators.PasswordValidatorLiveData
 
 class SignUpViewModel(
-    commons: Auth,
-    signUpUseCase: AuthUseCase,
+    authCommons: Auth,
+    authUseCase: AuthUseCase,
     validatorUseCase: ValidatorUseCase,
     coroutineDispatcher: CoroutinesDispatchers
 ) : ViewModel() {
 
     val auth = SignUpLiveData(
-        commons,
-        signUpUseCase,
+        authCommons,
+        authUseCase,
         coroutineDispatcher
     )
 
