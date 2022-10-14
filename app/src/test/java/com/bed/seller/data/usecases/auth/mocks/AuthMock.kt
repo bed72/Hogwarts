@@ -3,8 +3,11 @@ package com.bed.seller.data.usecases.auth.mocks
 import arrow.core.left
 import arrow.core.right
 import com.bed.seller.R
+import com.bed.seller.data.usecases.mocks.CommonMock
 
 import com.bed.seller.domain.entities.ResponseEntity
+import com.bed.seller.domain.entities.paths.PathEntity
+import com.bed.seller.domain.usecases.auth.AuthUseCase
 
 import com.bed.seller.infrastructure.network.models.responses.ResponseModel
 
@@ -25,6 +28,9 @@ class AuthMock {
             accessToken = "Mock_Access_Token",
             refreshToken = "Mock_Refresh_Token"
         )
+
+    val pathSignUp = PathEntity.SIGN_UP
+    val paramsSignUp = AuthUseCase.Params(pathSignUp, CommonMock.PARAMS_SIGN_UP_REQUEST)
 
     val failureModel = makeModel(ResponseModel.FailureModel)
     val successModel = makeModel(ResponseModel.SuccessModel)
