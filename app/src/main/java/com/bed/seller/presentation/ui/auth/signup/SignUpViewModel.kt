@@ -28,7 +28,7 @@ class SignUpViewModel(
     coroutineDispatcher: CoroutinesDispatchers
 ) : ViewModel() {
 
-    val signUp = SignUpLiveData(
+    val auth = SignUpLiveData(
         commons,
         signUpUseCase,
         coroutineDispatcher
@@ -53,7 +53,7 @@ class SignUpViewModel(
             }
 
     fun submit(data: AuthBodyRequestEntity) {
-        signUp.createAccount(data)
+        auth.signUp(data)
     }
 }
 

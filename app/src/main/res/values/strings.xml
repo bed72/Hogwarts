@@ -24,6 +24,7 @@
     <string name="sign_in_title_check_box">Lembrar de mim</string>
     <string name="sign_in_title_recover_password_button">Recuperar conta?</string>
     <string name="sign_in_title_button">Entrar</string>
+    <string name="sign_in_success">Bem vindo.</string>
     <string name="sign_in_description_create_account">Não possui uma conta?</string>
 
     <!-- Strings related to SignUp -->

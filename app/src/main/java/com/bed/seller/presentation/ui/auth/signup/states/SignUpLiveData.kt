@@ -15,13 +15,13 @@ import com.bed.seller.infrastructure.storage.StorageConstants
 import com.bed.seller.domain.usecases.auth.AuthUseCase
 import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
 
+import com.bed.seller.domain.entities.paths.PathEntity
 import com.bed.seller.domain.entities.auth.AuthResponseEntity
 import com.bed.seller.domain.entities.auth.AuthBodyRequestEntity
-import com.bed.seller.domain.entities.paths.PathEntity
 
 class SignUpLiveData(
     private val commons: Auth,
-    private val signUpUseCase: AuthUseCase,
+    private val authUseCase: AuthUseCase,
     private val coroutineDispatcher: CoroutinesDispatchers
 ) {
     private val actions = MutableLiveData<Auth.Actions>()
@@ -32,12 +32,10 @@ class SignUpLiveData(
                 if (action is Auth.Actions.SignUp) {
                     emit(Auth.States.Loading)
 
-                    signUpUseCase(buildBodyParams(action)).collect { response ->
+                    authUseCase(buildBodyParams(action)).collect { response ->
                         response.fold(
                             { failure ->
-                                val status = failure.status
-                                val bed = commons.mapper(status)
-                                emit(Auth.States.Failure(bed))
+                                emit(Auth.States.Failure(commons.mapper(failure.status)))
                             },
                             { success ->
                                 saveInStorage(success.data)
@@ -56,7 +54,7 @@ class SignUpLiveData(
             }
         }
 
-    fun createAccount(params: AuthBodyRequestEntity) {
+    fun signUp(params: AuthBodyRequestEntity) {
         actions.value = Auth.Actions.SignUp(params)
     }
 

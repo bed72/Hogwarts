@@ -66,7 +66,7 @@ class SignUpViewModelTest {
             signUpValidatorUseCase,
             mainCoroutineRule.testDispatcherProvider
         ).apply {
-            signUp.state.observeForever(statesObserver)
+            auth.state.observeForever(statesObserver)
         }
     }
 
@@ -76,7 +76,7 @@ class SignUpViewModelTest {
             whenever(signUpUseCase(any()))
                 .thenReturn(flowOf(authMock.successEntity))
 
-            signUpViewModel.signUp.createAccount(CommonMock.PARAMS_SIGN_UP_REQUEST)
+            signUpViewModel.auth.signUp(CommonMock.PARAMS_SIGN_UP_REQUEST)
 
             verify(statesObserver).onChanged(isA<Auth.States.Loading>())
         }
@@ -87,9 +87,9 @@ class SignUpViewModelTest {
             whenever(signUpUseCase(any()))
                 .thenReturn(flowOf(authMock.successEntity))
 
-            signUpViewModel.signUp.createAccount(CommonMock.PARAMS_SIGN_UP_REQUEST)
+            signUpViewModel.auth.signUp(CommonMock.PARAMS_SIGN_UP_REQUEST)
 
-            val (data) = signUpViewModel.signUp.state.value as Auth.States.Success
+            val (data) = signUpViewModel.auth.state.value as Auth.States.Success
             assertEquals(data, authMock.authSuccessModel.toEntity())
         }
 
@@ -102,9 +102,9 @@ class SignUpViewModelTest {
             whenever(commons.mapper(any()))
                 .thenReturn(authMock.stringIdFailureBedRequest)
 
-            signUpViewModel.signUp.createAccount(CommonMock.PARAMS_SIGN_UP_REQUEST)
+            signUpViewModel.auth.signUp(CommonMock.PARAMS_SIGN_UP_REQUEST)
 
-            val data = signUpViewModel.signUp.state.value as Auth.States.Failure
+            val data = signUpViewModel.auth.state.value as Auth.States.Failure
             assertEquals(data.message, authMock.intIdFailureBedRequest)
         }
 }

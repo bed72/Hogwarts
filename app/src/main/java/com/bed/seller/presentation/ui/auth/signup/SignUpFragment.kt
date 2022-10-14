@@ -38,7 +38,7 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
     }
 
     private fun observeSignUpState() {
-            viewModel.signUp.state.observe(viewLifecycleOwner) { states ->
+            viewModel.auth.state.observe(viewLifecycleOwner) { states ->
                 binding.signUpFlipperAction.displayedChild = when (states) {
                     Auth.States.Loading -> LOADING
                     is Auth.States.Success -> {
