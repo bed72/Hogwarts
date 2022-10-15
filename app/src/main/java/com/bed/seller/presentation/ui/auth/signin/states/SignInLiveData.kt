@@ -17,7 +17,7 @@ import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
 
 import com.bed.seller.domain.entities.paths.PathEntity
 import com.bed.seller.domain.entities.auth.AuthResponseEntity
-import com.bed.seller.domain.entities.auth.AuthBodyRequestEntity
+import com.bed.seller.domain.entities.auth.signin.SignInBodyRequestEntity
 
 class SignInLiveData(
     private val commons: Auth,
@@ -29,7 +29,7 @@ class SignInLiveData(
     val state: LiveData<Auth.States> = actions
         .switchMap { action ->
             liveData(coroutineDispatcher.main()) {
-                if (action is Auth.Actions.SignUp) {
+                if (action is Auth.Actions.SignIn) {
                     emit(Auth.States.Loading)
 
                     authUseCase(buildBodyParams(action)).collect { response ->
@@ -53,11 +53,11 @@ class SignInLiveData(
             }
         }
 
-    fun signIn(params: AuthBodyRequestEntity) {
-        actions.value = Auth.Actions.SignUp(params)
+    fun signIn(params: SignInBodyRequestEntity) {
+        actions.value = Auth.Actions.SignIn(params)
     }
 
-    private fun buildBodyParams(action: Auth.Actions.SignUp) =
+    private fun buildBodyParams(action: Auth.Actions.SignIn) =
         AuthUseCase.Params(PathEntity.SIGN_IN, action.params)
 
     private suspend fun saveInStorage(data: AuthResponseEntity) {

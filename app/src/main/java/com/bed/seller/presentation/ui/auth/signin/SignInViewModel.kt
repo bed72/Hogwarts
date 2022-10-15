@@ -12,10 +12,11 @@ import com.bed.seller.domain.usecases.auth.AuthUseCase
 import com.bed.seller.domain.usecases.validator.ValidatorUseCase
 
 import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
-import com.bed.seller.domain.entities.auth.AuthBodyRequestEntity
+import com.bed.seller.domain.entities.auth.signin.SignInBodyRequestEntity
+
+import com.bed.seller.presentation.ui.auth.signin.states.SignInLiveData
 
 import com.bed.seller.presentation.ui.auth.commons.Auth
-import com.bed.seller.presentation.ui.auth.signin.states.SignInLiveData
 import com.bed.seller.presentation.ui.auth.commons.states.validators.EmailValidatorLiveData
 import com.bed.seller.presentation.ui.auth.commons.states.validators.PasswordValidatorLiveData
 
@@ -48,7 +49,7 @@ class SignInViewModel(
                 }
             }
 
-    fun submit(data: AuthBodyRequestEntity) {
+    fun submit(data: SignInBodyRequestEntity) {
         auth.signIn(data)
     }
 }

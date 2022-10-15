@@ -11,6 +11,7 @@ import com.bed.seller.domain.usecases.UseCase
 import com.bed.seller.domain.usecases.auth.AuthUseCase
 
 import com.bed.seller.domain.entities.ResponseEntity
+import com.bed.seller.domain.entities.auth.signup.SignUpBodyRequestEntity
 
 import com.bed.seller.infrastructure.network.models.responses.auth.toEntity
 import com.bed.seller.infrastructure.network.models.responses.failure.toEntity
@@ -20,9 +21,9 @@ class RemoteSignUpUseCase(
     private val coroutinesDispatchers: CoroutinesDispatchers
 ) : AuthUseCase, UseCase<AuthUseCase.Params, AuthEitherEntityType>() {
         override suspend fun doWork(params: AuthUseCase.Params): AuthEitherEntityType =
-        withContext(coroutinesDispatchers.io()) {
-            return@withContext authClient(params.path, params.body)
-                .map { success -> ResponseEntity(success.status, success.data.toEntity()) }
-                .mapLeft { failure -> ResponseEntity(failure.status, failure.data.toEntity()) }
-        }
+            withContext(coroutinesDispatchers.io()) {
+                return@withContext authClient(params.path, params.body)
+                    .map { success -> ResponseEntity(success.status, success.data.toEntity()) }
+                    .mapLeft { failure -> ResponseEntity(failure.status, failure.data.toEntity()) }
+            }
 }

@@ -164,6 +164,7 @@
                 <Button
                     android:id="@+id/sign_in_button"
                     android:text="@string/sign_in_title_button"
+                    android:enabled="false"
                     style="@style/UnelevatedButton"
                     android:layout_height="@dimen/button_height"
                     android:layout_width="match_parent" />

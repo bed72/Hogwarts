@@ -17,7 +17,7 @@ import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
 
 import com.bed.seller.domain.entities.paths.PathEntity
 import com.bed.seller.domain.entities.auth.AuthResponseEntity
-import com.bed.seller.domain.entities.auth.AuthBodyRequestEntity
+import com.bed.seller.domain.entities.auth.signup.SignUpBodyRequestEntity
 
 class SignUpLiveData(
     private val authCommons: Auth,
@@ -53,7 +53,7 @@ class SignUpLiveData(
             }
         }
 
-    fun signUp(params: AuthBodyRequestEntity) {
+    fun signUp(params: SignUpBodyRequestEntity) {
         actions.value = Auth.Actions.SignUp(params)
     }
 

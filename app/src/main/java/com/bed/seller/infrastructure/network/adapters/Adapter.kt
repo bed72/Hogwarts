@@ -37,6 +37,7 @@ suspend inline fun <reified F, reified S> HttpClient.safe(
 
     return when (val status = response.status) {
         HttpStatusCode.BadRequest -> buildResponseFailure(status.value, response)
+        HttpStatusCode.Unauthorized -> buildResponseFailure(status.value, response)
         HttpStatusCode.UnprocessableEntity -> buildResponseFailure(status.value, response)
         else -> buildResponseSuccess(status.value, response)
     }

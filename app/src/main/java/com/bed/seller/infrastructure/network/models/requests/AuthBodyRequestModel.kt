@@ -1,17 +1,6 @@
 package com.bed.seller.infrastructure.network.models.requests
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-
-@Serializable
-data class AuthBodyRequestModel(
-    @SerialName("email")
-    val email: String,
-
-    @SerialName("password")
-    val password: String,
-
-    @SerialName("data")
-    val data: SignUpDataBodyRequestModel?,
-)
-
+abstract class AuthBodyRequestModel {
+    abstract val email: String
+    abstract val password: String
+}
