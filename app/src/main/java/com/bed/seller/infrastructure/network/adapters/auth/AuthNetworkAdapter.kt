@@ -42,10 +42,4 @@ class AuthNetworkAdapter(private val httpClient: HttpClient) : AuthClient {
             )
             else -> null
         }
-//        if (params is SignInBodyRequestEntity) SignInBodyRequestModel(params.email, params.password)
-//        else SignUpBodyRequestModel(
-//            params.email,
-//            params.password,
-//            SignUpNameBodyRequestModel(params.name)
-//        )
 }

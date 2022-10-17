@@ -6,11 +6,15 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class MessageFailureResponseModel(
+    @SerialName("error")
+    val error: String? = null,
+
     @SerialName("msg")
-    val message: String,
+    val message: String? = null,
 )
 
 fun MessageFailureResponseModel.toEntity() =
     MessageFailureResponseEntity(
-        message = this.message
+        error = this.error ?: "",
+        message = this.message ?: ""
     )

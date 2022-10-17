@@ -70,6 +70,7 @@ fun HttpClientConfig<OkHttpConfig>.installContentNegotiation() {
                 isLenient = true
                 prettyPrint = true
                 ignoreUnknownKeys = true
+                encodeDefaults = false
             }
         )
 
