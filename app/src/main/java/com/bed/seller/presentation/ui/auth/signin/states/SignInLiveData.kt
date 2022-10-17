@@ -7,6 +7,7 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.distinctUntilChanged
 
 import com.bed.seller.presentation.ui.auth.commons.Auth
 
@@ -27,6 +28,7 @@ class SignInLiveData(
     private val actions = MutableLiveData<Auth.Actions>()
 
     val state: LiveData<Auth.States> = actions
+        .distinctUntilChanged()
         .switchMap { action ->
             liveData(coroutineDispatcher.main()) {
                 if (action is Auth.Actions.SignIn) {
@@ -34,18 +36,11 @@ class SignInLiveData(
 
                     authUseCase(buildBodyParams(action)).collect { response ->
                         response.fold(
-                            { failure ->
-                                emit(Auth.States.Failure(commons.mapper(failure.status)))
-                            },
+                            { failure -> emit(Auth.States.Failure(commons.mapper(failure.status))) },
                             { success ->
                                 saveInStorage(success.data)
 
-                                emit(
-                                    Auth.States.Success(
-                                        success.data,
-                                        R.string.sign_in_success
-                                    )
-                                )
+                                emit(Auth.States.Success(success.data, R.string.sign_in_success))
                             }
                         )
                     }

@@ -2,9 +2,11 @@ package com.bed.seller.presentation.extensions
 
 import android.os.Build
 import android.os.Bundle
+
+import android.content.Context
+
 import android.view.View
 import android.widget.Toast
-import android.content.Context
 import android.view.inputmethod.InputMethodManager
 
 import com.google.android.material.snackbar.Snackbar

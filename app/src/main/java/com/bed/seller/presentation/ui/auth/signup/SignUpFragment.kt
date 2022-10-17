@@ -18,7 +18,6 @@ import com.google.android.material.textfield.TextInputLayout
 import com.bed.seller.presentation.extensions.snake
 import com.bed.seller.presentation.extensions.hideKeyboard
 import com.bed.seller.presentation.extensions.actionKeyboard
-import com.bed.seller.presentation.extensions.navigationBack
 import com.bed.seller.presentation.extensions.getTextChanged
 
 import com.bed.seller.presentation.ui.auth.commons.Auth
@@ -27,10 +26,12 @@ import com.bed.seller.presentation.ui.common.fragment.BaseFragment
 import com.bed.seller.domain.entities.auth.signup.isNotEmpty
 import com.bed.seller.domain.entities.auth.signup.SignUpBodyRequestEntity
 
-class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding::inflate) {
+class SignUpFragment : BaseFragment<SignUpFragmentBinding, SignUpViewModel>(
+    SignUpFragmentBinding::inflate
+) {
 
     private var authBody = SignUpBodyRequestEntity()
-    private val viewModel: SignUpViewModel by viewModel()
+    override val viewModel: SignUpViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -47,7 +48,6 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
                     Auth.States.Loading -> Auth.LOADING
                     is Auth.States.Success -> {
                         snake(requireView(), states.message)
-//                        navigationBack()
 
                         Auth.SUCCESS
                     }
@@ -118,7 +118,9 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
     }
 
     private fun setupAlreadyExistingAccountButton() {
-        binding.signUpAlreadyExistingAccountButton.setOnClickListener { navigationBack() }
+        binding.signUpAlreadyExistingAccountButton.setOnClickListener {
+            viewModel.navigationBack()
+        }
     }
 
     private fun setupSuccessMessageInEditInput(textField: TextFieldEntity?): Boolean {

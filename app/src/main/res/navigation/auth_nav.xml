@@ -14,7 +14,7 @@
 
         <action
             app:destination="@id/recover_password_fragment"
-            android:id="@+id/action_sign_in_fragment_to_recover_password_fragment" />
+            android:id="@+id/action_sign_in_fragment_to_recover_account_fragment" />
 
         <action
             app:destination="@id/sign_up_fragment"

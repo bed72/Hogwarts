@@ -13,7 +13,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.google.android.material.textfield.TextInputLayout
 
 import com.bed.seller.presentation.extensions.snake
-import com.bed.seller.presentation.extensions.navigationTo
 import com.bed.seller.presentation.extensions.hideKeyboard
 import com.bed.seller.presentation.extensions.getTextChanged
 import com.bed.seller.presentation.extensions.actionKeyboard
@@ -25,10 +24,12 @@ import com.bed.seller.domain.entities.form.TextFieldEntity
 import com.bed.seller.domain.entities.auth.signin.isNotEmpty
 import com.bed.seller.domain.entities.auth.signin.SignInBodyRequestEntity
 
-class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding::inflate) {
+class SignInFragment : BaseFragment<SignInFragmentBinding, SignInViewModel>(
+    SignInFragmentBinding::inflate
+) {
 
     private var authBody = SignInBodyRequestEntity()
-    private val viewModel: SignInViewModel by viewModel()
+    override val viewModel: SignInViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -45,7 +46,6 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
                 Auth.States.Loading -> Auth.LOADING
                 is Auth.States.Success -> {
                     snake(requireView(), states.message)
-//                    navigationBack()
 
                     Auth.SUCCESS
                 }
@@ -84,6 +84,8 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
 
             formIsValid.observe(viewLifecycleOwner) { state ->
                 if (state) {
+                    buttonIsEnabled(true)
+
                     setupActionKeyboard(state)
                     setupActionSignInButton(state)
                 }
@@ -93,7 +95,7 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
 
     private fun setupComponents() {
         setupForm()
-        setupCreateAccountButton()
+        setupSignUpButton()
         setupRecoverAccountButton()
     }
 
@@ -104,16 +106,14 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
         }
     }
 
-    private fun setupCreateAccountButton() {
+    private fun setupSignUpButton() {
         binding.signInCreateAccountButton.setOnClickListener {
-            navigationTo(R.id.action_sign_in_fragment_to_sign_up_fragment)
+            viewModel.navigateToSignUp(R.id.action_sign_in_fragment_to_sign_up_fragment)
         }
     }
 
     private fun setupRecoverAccountButton() {
-        binding.signInRecoverPasswordButton.setOnClickListener {
-            navigationTo(R.id.action_sign_in_fragment_to_recover_password_fragment)
-        }
+        binding.signInRecoverAccountButton.setOnClickListener { viewModel.navigateToRecoverAccount() }
     }
 
     private fun setupSuccessMessageInEditInput(textField: TextFieldEntity?): Boolean {
@@ -145,23 +145,18 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
     ) { input.error = if (isClean) Auth.EMPTY else getString(message) }
 
     private fun setupActionKeyboard(state: Boolean) {
-        binding.signInPasswordEditInput.actionKeyboard {
-            if (state) viewModel.submit(authBody)
-
-            hideKeyboard()
-        }
+        binding.signInPasswordEditInput.actionKeyboard { doSignIn(state) }
     }
 
     private fun setupActionSignInButton(state: Boolean = false) {
-        with (binding) {
-            buttonIsEnabled(true)
-            signInButton.setOnClickListener {
-                if (state and authBody.isNotEmpty()) viewModel.submit(authBody)
-                else snake(requireView(), R.string.sign_up_generic_error)
+        binding.signInButton.setOnClickListener { doSignIn(state) }
+    }
 
-                hideKeyboard()
-            }
-        }
+    private fun doSignIn(state: Boolean) {
+        if (state and authBody.isNotEmpty()) viewModel.submit(authBody)
+         else snake(requireView(), R.string.sign_up_generic_error)
+
+        hideKeyboard()
     }
 
     private fun buttonIsEnabled(isEnabled: Boolean = false) {

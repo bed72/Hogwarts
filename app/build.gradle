@@ -1,12 +1,12 @@
 plugins {
+    id 'kotlin-kapt'
+    id 'kotlinx-serialization'
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
-apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-parcelize'
-apply plugin: 'kotlinx-serialization'
-apply plugin: 'androidx.navigation.safeargs'
 
 apply from: "$rootDir/config/detekt/detekt.gradle"
 
