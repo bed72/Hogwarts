@@ -20,13 +20,15 @@ interface Auth {
     }
 
     sealed class States {
+        object Empty : States()
         object Loading : States()
         data class Failure(@StringRes val message: Int) : States()
         data class Success(val data: AuthResponseEntity, @StringRes val message: Int) : States()
     }
 
     companion object {
-        const val EMPTY = ""
+        const val CLEAR = ""
+        const val EMPTY = 0
         const val LOADING = 1
         const val SUCCESS = 1
         const val FAILURE = 2

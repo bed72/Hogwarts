@@ -14,6 +14,7 @@ import com.google.android.material.textfield.TextInputLayout
 
 import com.bed.seller.presentation.extensions.snake
 import com.bed.seller.presentation.extensions.hideKeyboard
+import com.bed.seller.presentation.extensions.navigationTo
 import com.bed.seller.presentation.extensions.getTextChanged
 import com.bed.seller.presentation.extensions.actionKeyboard
 
@@ -24,12 +25,10 @@ import com.bed.seller.domain.entities.form.TextFieldEntity
 import com.bed.seller.domain.entities.auth.signin.isNotEmpty
 import com.bed.seller.domain.entities.auth.signin.SignInBodyRequestEntity
 
-class SignInFragment : BaseFragment<SignInFragmentBinding, SignInViewModel>(
-    SignInFragmentBinding::inflate
-) {
+class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding::inflate) {
 
     private var authBody = SignInBodyRequestEntity()
-    override val viewModel: SignInViewModel by viewModel()
+    private val viewModel: SignInViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,6 +42,7 @@ class SignInFragment : BaseFragment<SignInFragmentBinding, SignInViewModel>(
     private fun observeSignInState() {
         viewModel.auth.state.observe(viewLifecycleOwner) { states ->
             binding.signInActionViewFlipper.displayedChild = when (states) {
+                Auth.States.Empty -> Auth.EMPTY
                 Auth.States.Loading -> Auth.LOADING
                 is Auth.States.Success -> {
                     snake(requireView(), states.message)
@@ -65,9 +65,9 @@ class SignInFragment : BaseFragment<SignInFragmentBinding, SignInViewModel>(
                     authBody = authBody.copy(email = states.value)
                     setupSuccessMessageInEditInput(states.textField)
                 } else {
+                    buttonIsEnabled()
                     authBody = authBody.copy(email = states.value)
                     setupFailureMessageInEditInput(states.textField)
-                    buttonIsEnabled()
                 }
             }
 
@@ -76,9 +76,9 @@ class SignInFragment : BaseFragment<SignInFragmentBinding, SignInViewModel>(
                     authBody = authBody.copy(password = states.value)
                     setupSuccessMessageInEditInput(states.textField)
                 } else {
+                    buttonIsEnabled()
                     authBody = authBody.copy(password = states.value)
                     setupFailureMessageInEditInput(states.textField)
-                    buttonIsEnabled()
                 }
             }
 
@@ -108,12 +108,14 @@ class SignInFragment : BaseFragment<SignInFragmentBinding, SignInViewModel>(
 
     private fun setupSignUpButton() {
         binding.signInCreateAccountButton.setOnClickListener {
-            viewModel.navigateToSignUp(R.id.action_sign_in_fragment_to_sign_up_fragment)
+            navigationTo(R.id.action_sign_in_fragment_to_sign_up_fragment)
         }
     }
 
     private fun setupRecoverAccountButton() {
-        binding.signInRecoverAccountButton.setOnClickListener { viewModel.navigateToRecoverAccount() }
+        binding.signInRecoverAccountButton.setOnClickListener {
+            navigationTo(SignInFragmentDirections.actionSignInFragmentToRecoverAccountFragment())
+        }
     }
 
     private fun setupSuccessMessageInEditInput(textField: TextFieldEntity?): Boolean {
@@ -142,7 +144,7 @@ class SignInFragment : BaseFragment<SignInFragmentBinding, SignInViewModel>(
         input: TextInputLayout,
         @StringRes message: Int,
         isClean: Boolean = false
-    ) { input.error = if (isClean) Auth.EMPTY else getString(message) }
+    ) { input.error = if (isClean) Auth.CLEAR else getString(message) }
 
     private fun setupActionKeyboard(state: Boolean) {
         binding.signInPasswordEditInput.actionKeyboard { doSignIn(state) }

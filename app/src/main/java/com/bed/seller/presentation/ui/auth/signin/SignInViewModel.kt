@@ -1,8 +1,8 @@
 package com.bed.seller.presentation.ui.auth.signin
 
-import androidx.annotation.IdRes
 import androidx.lifecycle.liveData
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.distinctUntilChanged
 
@@ -14,7 +14,6 @@ import com.bed.seller.domain.usecases.validator.ValidatorUseCase
 import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
 import com.bed.seller.domain.entities.auth.signin.SignInBodyRequestEntity
 
-import com.bed.seller.presentation.ui.common.viewmodel.BaseViewModel
 import com.bed.seller.presentation.ui.auth.signin.states.SignInLiveData
 
 import com.bed.seller.presentation.ui.auth.commons.Auth
@@ -26,7 +25,7 @@ class SignInViewModel(
     authUseCase: AuthUseCase,
     validatorUseCase: ValidatorUseCase,
     coroutineDispatcher: CoroutinesDispatchers
-) : BaseViewModel() {
+) : ViewModel() {
 
     val auth = SignInLiveData(
         authCommons,
@@ -51,14 +50,5 @@ class SignInViewModel(
 
     fun submit(data: SignInBodyRequestEntity) {
         auth.signIn(data)
-    }
-
-    fun navigateToSignUp(@IdRes direction: Int) {
-        navigate(direction)
-        // navigate(SignInFragmentDirections.actionSignInFragmentToSignUpFragment())
-    }
-
-    fun navigateToRecoverAccount() {
-        navigate(SignInFragmentDirections.actionSignInFragmentToRecoverAccountFragment())
     }
 }

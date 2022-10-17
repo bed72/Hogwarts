@@ -1,6 +1,7 @@
 package com.bed.seller.presentation.ui.auth.signup
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.distinctUntilChanged
@@ -13,7 +14,6 @@ import com.bed.seller.domain.entities.auth.signup.SignUpBodyRequestEntity
 
 import com.bed.seller.presentation.utils.TripleMediatorLiveData
 
-import com.bed.seller.presentation.ui.common.viewmodel.BaseViewModel
 import com.bed.seller.presentation.ui.auth.signup.states.SignUpLiveData
 import com.bed.seller.presentation.ui.auth.signup.states.validators.NameValidatorLiveData
 
@@ -26,7 +26,7 @@ class SignUpViewModel(
     authUseCase: AuthUseCase,
     validatorUseCase: ValidatorUseCase,
     coroutineDispatcher: CoroutinesDispatchers
-) : BaseViewModel() {
+) : ViewModel() {
 
     val auth = SignUpLiveData(
         authCommons,
@@ -55,7 +55,5 @@ class SignUpViewModel(
     fun submit(data: SignUpBodyRequestEntity) {
         auth.signUp(data)
     }
-
-    fun navigationBack() { navigateBack() }
 }
 
