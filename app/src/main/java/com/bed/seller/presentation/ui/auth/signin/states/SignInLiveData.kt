@@ -34,18 +34,16 @@ class SignInLiveData(
 
                     authUseCase(buildBodyParams(action)).collect { response ->
                         response.fold(
-                            { failure ->
-                                emit(Auth.States.Failure(commons.mapper(failure.status)))
-                                emit(Auth.States.Empty)
-                            },
+                            { failure -> emit(Auth.States.Failure(commons.mapper(failure.status))) },
                             { success ->
                                 saveInStorage(success.data)
 
                                 emit(Auth.States.Success(success.data, R.string.sign_in_success))
-                                emit(Auth.States.Empty)
                             }
                         )
                     }
+
+                    emit(Auth.States.Empty)
                 }
             }
         }
