@@ -26,6 +26,7 @@ import com.bed.seller.presentation.ui.common.fragment.BaseFragment
 
 import com.bed.seller.domain.entities.auth.signup.isNotEmpty
 import com.bed.seller.domain.entities.auth.signup.SignUpBodyRequestEntity
+import com.bed.seller.presentation.extensions.navigationTo
 
 class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding::inflate) {
 
@@ -39,6 +40,8 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
 
         observeSignUpState()
         observeSignUpFormState()
+
+        setNavigationBarColorTheme()
     }
 
     private fun observeSignUpState() {
@@ -48,6 +51,7 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
                     Auth.States.Loading -> Auth.LOADING
                     is Auth.States.Success -> {
                         snake(requireView(), states.message)
+                        navigationTo(R.id.action_sign_in_fragment_to_home_fragment)
 
                         Auth.SUCCESS
                     }

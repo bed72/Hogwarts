@@ -7,6 +7,6 @@
     android:id="@+id/main_nav" >
 
     <include app:graph="@navigation/auth_nav" />
-    <!-- <include app:graph="@navigation/home_nav" /> -->
+    <include app:graph="@navigation/home_nav" />
 
 </navigation>

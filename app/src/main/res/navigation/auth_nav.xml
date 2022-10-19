@@ -17,6 +17,10 @@
             android:id="@+id/action_sign_in_fragment_to_recover_account_fragment" />
 
         <action
+            app:destination="@+id/home"
+            android:id="@+id/action_sign_in_fragment_to_home_fragment" />
+
+        <action
             app:destination="@id/sign_up_fragment"
             app:exitAnim="@anim/nav_pop_exit_to_left"
             app:enterAnim="@anim/nav_pop_enter_from_right"
@@ -38,6 +42,10 @@
             app:popExitAnim="@anim/nav_pop_exit_to_left"
             app:popEnterAnim="@anim/nav_pop_enter_from_right"
             android:id="@+id/action_sign_up_fragment_to_sign_in_fragment" />
+
+        <action
+            app:destination="@+id/home"
+            android:id="@+id/action_sign_in_fragment_to_home_fragment" />
 
     </fragment>
 

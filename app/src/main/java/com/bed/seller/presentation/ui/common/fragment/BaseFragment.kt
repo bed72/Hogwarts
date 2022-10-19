@@ -6,8 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.LayoutInflater
 
+import androidx.annotation.ColorRes
 import androidx.fragment.app.Fragment
+
+import android.content.res.Configuration
+
 import androidx.viewbinding.ViewBinding
+
+import com.bed.seller.R
+import com.bed.seller.presentation.extensions.setNavigationBarColor
 
 typealias Inflate<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 
@@ -26,6 +33,16 @@ abstract class BaseFragment<viewBinding : ViewBinding>(
         _binding = inflate(inflater, container, false)
 
         return binding.root
+    }
+
+    protected fun setNavigationBarColorTheme(
+        @ColorRes colorDark: Int = R.color.dark_background,
+        @ColorRes colorLight: Int = R.color.light_background
+    ) {
+        when (requireContext().resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_NO -> setNavigationBarColor(colorLight)
+            Configuration.UI_MODE_NIGHT_YES -> setNavigationBarColor(colorDark)
+        }
     }
 
     override fun onDestroy() {
