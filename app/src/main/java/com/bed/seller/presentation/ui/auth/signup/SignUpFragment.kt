@@ -40,8 +40,6 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
 
         observeSignUpState()
         observeSignUpFormState()
-
-        setNavigationBarColorTheme()
     }
 
     private fun observeSignUpState() {

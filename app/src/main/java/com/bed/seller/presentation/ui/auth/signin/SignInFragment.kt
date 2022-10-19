@@ -30,12 +30,6 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
     private var authBody = SignInBodyRequestEntity()
     private val viewModel: SignInViewModel by viewModel()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        setNavigationBarColorTheme(R.color.navbar_dark, R.color.navbar_light)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
