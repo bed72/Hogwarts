@@ -11,8 +11,17 @@ import com.bed.seller.domain.usecases.validator.ValidatorUseCase
 import com.bed.seller.presentation.ui.auth.commons.Auth
 import com.bed.seller.presentation.ui.auth.signin.SignInViewModel
 import com.bed.seller.presentation.ui.auth.signup.SignUpViewModel
+import com.bed.seller.presentation.ui.auth.tokens.TokensViewModel
 
 val authViewModelsModule = module {
+    viewModel {
+        TokensViewModel(
+            get<Auth>(),
+            get<AuthUseCase>(),
+            get<CoroutinesDispatchers>(),
+        )
+    }
+
     viewModel {
         SignUpViewModel(
             get<Auth>(),

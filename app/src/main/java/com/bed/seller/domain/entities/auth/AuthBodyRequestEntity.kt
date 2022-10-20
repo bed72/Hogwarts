@@ -1,6 +1,7 @@
 package com.bed.seller.domain.entities.auth
 
 abstract class AuthBodyRequestEntity {
-    abstract val email: String
-    abstract val password: String
+    open val email: String? = null
+    open val password: String? = null
+    open val refreshToken: String? = null
 }

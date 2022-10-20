@@ -17,10 +17,12 @@ import com.bed.seller.domain.entities.auth.AuthBodyRequestEntity
 import com.bed.seller.domain.entities.auth.signin.SignInBodyRequestEntity
 
 import com.bed.seller.domain.entities.paths.PathEntity
+import com.bed.seller.domain.entities.auth.tokens.RefreshTokenEntity
 import com.bed.seller.domain.entities.auth.signup.SignUpBodyRequestEntity
 
 import com.bed.seller.infrastructure.network.adapters.safe
 import com.bed.seller.infrastructure.network.models.requests.AuthBodyRequestModel
+import com.bed.seller.infrastructure.network.models.requests.tokens.RefreshTokenModel
 import com.bed.seller.infrastructure.network.models.requests.signin.SignInBodyRequestModel
 import com.bed.seller.infrastructure.network.models.requests.signup.SignUpBodyRequestModel
 import com.bed.seller.infrastructure.network.models.requests.signup.SignUpNameBodyRequestModel
@@ -36,6 +38,7 @@ class AuthNetworkAdapter(private val httpClient: HttpClient) : AuthClient {
 
     private fun buildBody(params: AuthBodyRequestEntity): AuthBodyRequestModel? =
         when (params) {
+            is RefreshTokenEntity -> RefreshTokenModel(params.refreshToken)
             is SignInBodyRequestEntity -> SignInBodyRequestModel(params.email, params.password)
             is SignUpBodyRequestEntity -> SignUpBodyRequestModel(
                 params.email,

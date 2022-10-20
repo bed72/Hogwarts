@@ -3,10 +3,35 @@
 <navigation
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:startDestination="@id/auth"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/splash_fragment"
     android:id="@+id/main_nav" >
 
     <include app:graph="@navigation/auth_nav" />
+
     <include app:graph="@navigation/home_nav" />
+
+    <fragment
+        android:id="@+id/splash_fragment"
+        tools:layout="@layout/splash_fragment"
+        android:name="com.bed.seller.presentation.ui.splash.SplashFragment" >
+
+        <action
+            app:destination="@+id/home"
+            app:enterAnim="@anim/nav_enter_fade_in"
+            app:exitAnim="@anim/nav_exit_fade_out"
+            app:popEnterAnim="@anim/nav_pop_enter_fade_in"
+            app:popExitAnim="@anim/nav_pop_exit_fade_out"
+            android:id="@+id/action_splash_fragment_to_home_fragment" />
+
+        <action
+            app:destination="@+id/auth"
+            app:enterAnim="@anim/nav_enter_fade_in"
+            app:exitAnim="@anim/nav_exit_fade_out"
+            app:popEnterAnim="@anim/nav_pop_enter_fade_in"
+            app:popExitAnim="@anim/nav_pop_exit_fade_out"
+            android:id="@+id/action_splash_fragment_to_sign_in_fragment" />
+
+    </fragment>
 
 </navigation>

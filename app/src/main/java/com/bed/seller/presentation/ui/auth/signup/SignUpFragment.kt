@@ -17,6 +17,7 @@ import com.google.android.material.textfield.TextInputLayout
 
 import com.bed.seller.presentation.extensions.snake
 import com.bed.seller.presentation.extensions.hideKeyboard
+import com.bed.seller.presentation.extensions.navigationTo
 import com.bed.seller.presentation.extensions.actionKeyboard
 import com.bed.seller.presentation.extensions.getTextChanged
 import com.bed.seller.presentation.extensions.navigationBack
@@ -26,7 +27,6 @@ import com.bed.seller.presentation.ui.common.fragment.BaseFragment
 
 import com.bed.seller.domain.entities.auth.signup.isNotEmpty
 import com.bed.seller.domain.entities.auth.signup.SignUpBodyRequestEntity
-import com.bed.seller.presentation.extensions.navigationTo
 
 class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding::inflate) {
 

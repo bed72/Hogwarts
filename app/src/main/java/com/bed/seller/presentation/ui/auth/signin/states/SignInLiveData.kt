@@ -43,7 +43,7 @@ class SignInLiveData(
                         )
                     }
 
-                    emit(Auth.States.Empty)
+                    emit(Auth.States.Loading)
                 }
             }
         }
