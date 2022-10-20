@@ -9,13 +9,13 @@ import com.bed.seller.domain.entities.ResponseEntity
 import com.bed.seller.domain.entities.paths.PathEntity
 import com.bed.seller.domain.usecases.auth.AuthUseCase
 
-import com.bed.seller.infrastructure.network.models.responses.ResponseModel
+import com.bed.seller.infrastructure.network.models.ResponseModel
 
 import com.bed.seller.infrastructure.network.models.responses.auth.toEntity
 import com.bed.seller.infrastructure.network.models.responses.auth.AuthResponseModel
 
-import com.bed.seller.infrastructure.network.models.responses.failure.toEntity
-import com.bed.seller.infrastructure.network.models.responses.failure.MessageFailureResponseModel
+import com.bed.seller.infrastructure.network.models.failure.toEntity
+import com.bed.seller.infrastructure.network.models.failure.MessageFailureResponseModel
 
 class AuthMock {
 

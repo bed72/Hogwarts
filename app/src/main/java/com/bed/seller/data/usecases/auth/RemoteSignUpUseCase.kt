@@ -4,17 +4,16 @@ import kotlinx.coroutines.withContext
 
 import com.bed.seller.data.client.AuthClient
 
-import com.bed.seller.domain.alias.AuthEitherEntityType
-import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
+import com.bed.seller.domain.entities.ResponseEntity
 
 import com.bed.seller.domain.usecases.UseCase
 import com.bed.seller.domain.usecases.auth.AuthUseCase
 
-import com.bed.seller.domain.entities.ResponseEntity
-import com.bed.seller.domain.entities.auth.signup.SignUpBodyRequestEntity
+import com.bed.seller.domain.alias.AuthEitherEntityType
+import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
 
-import com.bed.seller.infrastructure.network.models.responses.auth.toEntity
-import com.bed.seller.infrastructure.network.models.responses.failure.toEntity
+import com.bed.seller.infrastructure.network.models.auth.toEntity
+import com.bed.seller.infrastructure.network.models.failure.toEntity
 
 class RemoteSignUpUseCase(
     private val authClient: AuthClient,

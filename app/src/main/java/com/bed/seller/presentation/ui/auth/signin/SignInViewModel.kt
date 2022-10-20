@@ -14,21 +14,21 @@ import com.bed.seller.domain.usecases.validator.ValidatorUseCase
 import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
 import com.bed.seller.domain.entities.auth.signin.SignInBodyRequestEntity
 
+import com.bed.seller.presentation.ui.common.Commons
 import com.bed.seller.presentation.ui.auth.signin.states.SignInLiveData
 
-import com.bed.seller.presentation.ui.auth.commons.Auth
 import com.bed.seller.presentation.ui.auth.commons.states.validators.EmailValidatorLiveData
 import com.bed.seller.presentation.ui.auth.commons.states.validators.PasswordValidatorLiveData
 
 class SignInViewModel(
-    authCommons: Auth,
+    commons: Commons,
     authUseCase: AuthUseCase,
     validatorUseCase: ValidatorUseCase,
     coroutineDispatcher: CoroutinesDispatchers
 ) : ViewModel() {
 
     val auth = SignInLiveData(
-        authCommons,
+        commons,
         authUseCase,
         coroutineDispatcher
     )

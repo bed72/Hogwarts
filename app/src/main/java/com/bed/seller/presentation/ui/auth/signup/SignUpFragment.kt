@@ -22,8 +22,10 @@ import com.bed.seller.presentation.extensions.actionKeyboard
 import com.bed.seller.presentation.extensions.getTextChanged
 import com.bed.seller.presentation.extensions.navigationBack
 
-import com.bed.seller.presentation.ui.auth.commons.Auth
+import com.bed.seller.presentation.ui.common.Commons
 import com.bed.seller.presentation.ui.common.fragment.BaseFragment
+
+import com.bed.seller.presentation.ui.auth.signup.states.SignUpLiveData
 
 import com.bed.seller.domain.entities.auth.signup.isNotEmpty
 import com.bed.seller.domain.entities.auth.signup.SignUpBodyRequestEntity
@@ -45,18 +47,18 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
     private fun observeSignUpState() {
             viewModel.auth.state.observe(viewLifecycleOwner) { states ->
                 binding.signUpActionViewFlipper.displayedChild = when (states) {
-                    Auth.States.Empty -> Auth.EMPTY
-                    Auth.States.Loading -> Auth.LOADING
-                    is Auth.States.Success -> {
+                    SignUpLiveData.States.Empty -> Commons.EMPTY
+                    SignUpLiveData.States.Loading -> Commons.LOADING
+                    is SignUpLiveData.States.Success -> {
                         snake(requireView(), states.message)
                         navigationTo(R.id.action_sign_in_fragment_to_home_fragment)
 
-                        Auth.SUCCESS
+                        Commons.SUCCESS
                     }
-                    is Auth.States.Failure -> {
+                    is SignUpLiveData.States.Failure -> {
                         snake(requireView(), states.message)
 
-                        Auth.FAILURE
+                        Commons.FAILURE
                     }
                 }
             }
@@ -128,13 +130,13 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
     private fun setupSuccessMessageInEditInput(textField: TextFieldEntity?): Boolean {
         textField?.let { setupFailureMessageAtTheForm(it, true) }
 
-        return Auth.FORM_VALID
+        return Commons.FORM_VALID
     }
 
     private fun setupFailureMessageInEditInput(textField: TextFieldEntity?): Boolean  {
         textField?.let { setupFailureMessageAtTheForm(it) }
 
-        return Auth.FORM_INVALID
+        return Commons.FORM_INVALID
     }
 
     private fun setupFailureMessageAtTheForm(textField: TextFieldEntity, isClean: Boolean = false) {
@@ -153,7 +155,7 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
         input: TextInputLayout,
         @StringRes message: Int,
         isClean: Boolean = false
-    ) { input.error = if (isClean) Auth.CLEAR else getString(message) }
+    ) { input.error = if (isClean) Commons.CLEAR else getString(message) }
 
     private fun setupActionKeyboard(state: Boolean) {
         binding.signUpPasswordEditInput.actionKeyboard {

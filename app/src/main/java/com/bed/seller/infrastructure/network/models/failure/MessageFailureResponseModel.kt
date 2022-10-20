@@ -1,8 +1,9 @@
-package com.bed.seller.infrastructure.network.models.responses.failure
+package com.bed.seller.infrastructure.network.models.failure
 
-import com.bed.seller.domain.entities.failure.MessageFailureResponseEntity
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+
+import com.bed.seller.domain.entities.failure.MessageFailureResponseEntity
 
 @Serializable
 data class MessageFailureResponseModel(

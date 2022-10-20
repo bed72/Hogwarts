@@ -13,19 +13,19 @@ import com.bed.seller.BuildConfig
 import com.bed.seller.data.client.AuthClient
 
 import com.bed.seller.domain.alias.AuthEitherModelType
-import com.bed.seller.domain.entities.auth.AuthBodyRequestEntity
-import com.bed.seller.domain.entities.auth.signin.SignInBodyRequestEntity
 
 import com.bed.seller.domain.entities.paths.PathEntity
+import com.bed.seller.domain.entities.auth.AuthBodyRequestEntity
 import com.bed.seller.domain.entities.auth.tokens.RefreshTokenEntity
+import com.bed.seller.domain.entities.auth.signin.SignInBodyRequestEntity
 import com.bed.seller.domain.entities.auth.signup.SignUpBodyRequestEntity
 
 import com.bed.seller.infrastructure.network.adapters.safe
-import com.bed.seller.infrastructure.network.models.requests.AuthBodyRequestModel
-import com.bed.seller.infrastructure.network.models.requests.tokens.RefreshTokenModel
-import com.bed.seller.infrastructure.network.models.requests.signin.SignInBodyRequestModel
-import com.bed.seller.infrastructure.network.models.requests.signup.SignUpBodyRequestModel
-import com.bed.seller.infrastructure.network.models.requests.signup.SignUpNameBodyRequestModel
+import com.bed.seller.infrastructure.network.models.auth.AuthBodyRequestModel
+import com.bed.seller.infrastructure.network.models.auth.tokens.RefreshTokenModel
+import com.bed.seller.infrastructure.network.models.auth.signin.SignInBodyRequestModel
+import com.bed.seller.infrastructure.network.models.auth.signup.SignUpBodyRequestModel
+import com.bed.seller.infrastructure.network.models.auth.signup.SignUpNameBodyRequestModel
 
 class AuthNetworkAdapter(private val httpClient: HttpClient) : AuthClient {
     override suspend fun invoke(path: PathEntity, params: AuthBodyRequestEntity): AuthEitherModelType =

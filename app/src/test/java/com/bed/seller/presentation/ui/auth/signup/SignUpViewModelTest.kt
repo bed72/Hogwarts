@@ -21,7 +21,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import androidx.lifecycle.Observer
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 
-import com.bed.seller.presentation.ui.auth.commons.Auth
+import com.bed.seller.presentation.ui.common.Commons
 
 import com.bed.seller.data.usecases.mocks.CommonMock
 import com.bed.seller.data.usecases.auth.mocks.AuthMock
@@ -43,7 +43,7 @@ class SignUpViewModelTest {
     var instantExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    lateinit var commons: Auth
+    lateinit var commons: Commons
 
     @Mock
     lateinit var signUpUseCase: AuthUseCase
@@ -52,7 +52,7 @@ class SignUpViewModelTest {
     lateinit var signUpValidatorUseCase: ValidatorUseCase
 
     @Mock
-    lateinit var statesObserver: Observer<Auth.States>
+    lateinit var statesObserver: Observer<Commons.States>
 
     private lateinit var signUpViewModel: SignUpViewModel
 
@@ -78,7 +78,7 @@ class SignUpViewModelTest {
 
             signUpViewModel.auth.signUp(CommonMock.PARAMS_SIGN_UP_REQUEST)
 
-            verify(statesObserver).onChanged(isA<Auth.States.Loading>())
+            verify(statesObserver).onChanged(isA<Commons.States.Loading>())
         }
 
     @Test
@@ -89,7 +89,7 @@ class SignUpViewModelTest {
 
             signUpViewModel.auth.signUp(CommonMock.PARAMS_SIGN_UP_REQUEST)
 
-            val (data) = signUpViewModel.auth.state.value as Auth.States.Success
+            val (data) = signUpViewModel.auth.state.value as Commons.States.Success
             assertEquals(data, authMock.authSuccessModel.toEntity())
         }
 
@@ -104,7 +104,7 @@ class SignUpViewModelTest {
 
             signUpViewModel.auth.signUp(CommonMock.PARAMS_SIGN_UP_REQUEST)
 
-            val data = signUpViewModel.auth.state.value as Auth.States.Failure
+            val data = signUpViewModel.auth.state.value as Commons.States.Failure
             assertEquals(data.message, authMock.intIdFailureBedRequest)
         }
 }

@@ -2,15 +2,14 @@ package com.bed.seller.presentation.ui.auth.signup.states
 
 import com.bed.seller.R
 
+import androidx.annotation.StringRes
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
-
 import androidx.lifecycle.MutableLiveData
 
-import com.bed.seller.presentation.ui.auth.commons.Auth
-
-import com.bed.seller.infrastructure.storage.StorageConstants
+import com.bed.seller.presentation.ui.common.Commons
 
 import com.bed.seller.domain.usecases.auth.AuthUseCase
 import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
@@ -20,51 +19,51 @@ import com.bed.seller.domain.entities.auth.AuthResponseEntity
 import com.bed.seller.domain.entities.auth.signup.SignUpBodyRequestEntity
 
 class SignUpLiveData(
-    private val authCommons: Auth,
+    private val commons: Commons,
     private val authUseCase: AuthUseCase,
     private val coroutineDispatcher: CoroutinesDispatchers
 ) {
-    private val actions = MutableLiveData<Auth.Actions>()
+    private val actions = MutableLiveData<Actions>()
 
-    val state: LiveData<Auth.States> = actions
+    val state: LiveData<States> = actions
         .switchMap { action ->
             liveData(coroutineDispatcher.main()) {
-                if (action is Auth.Actions.SignUp) {
-                    emit(Auth.States.Loading)
+                if (action is Actions.SignUp) {
+                    emit(States.Loading)
 
                     authUseCase(buildBodyParams(action)).collect { response ->
                         response.fold(
-                            { failure ->
-                                emit(Auth.States.Failure(authCommons.mapper(failure.status)))
-                            },
+                            { failure -> emit(States.Failure(commons.mapper(failure.status))) },
                             { success ->
-                                saveInStorage(success.data)
+//                                saveInStorage(success.data)
 
                                 emit(
-                                    Auth.States.Success(
-                                        success.data,
-                                        R.string.sign_up_success_create_account
-                                    )
+                                    States.Success(success.data, R.string.sign_up_success_create_account)
                                 )
                             }
                         )
                     }
+
+                    emit(States.Empty)
                 }
             }
         }
 
     fun signUp(params: SignUpBodyRequestEntity) {
-        actions.value = Auth.Actions.SignUp(params)
+        actions.value = Actions.SignUp(params)
     }
 
-    private fun buildBodyParams(action: Auth.Actions.SignUp) =
+    private fun buildBodyParams(action: Actions.SignUp) =
         AuthUseCase.Params(PathEntity.SIGN_UP, action.params)
 
-    private suspend fun saveInStorage(data: AuthResponseEntity) {
-        authCommons.saveInStorage(
-            StorageConstants.DATA_STORE_ACCESS_TOKEN to data.accessToken,
-            StorageConstants.DATA_STORE_REFRESH_TOKEN to data.refreshToken,
-            StorageConstants.DATA_STORE_EXPIRES_IN to data.expiresIn.toString()
-        )
+    sealed class Actions {
+        data class SignUp(val params: SignUpBodyRequestEntity) : Actions()
+    }
+
+    sealed class States {
+        object Empty : States()
+        object Loading : States()
+        data class Failure(@StringRes val message: Int) : States()
+        data class Success(val data: AuthResponseEntity, @StringRes val message: Int) : States()
     }
 }

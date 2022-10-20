@@ -35,7 +35,7 @@ import com.bed.seller.domain.entities.failure.MessageFailureResponseEntity
 
 import com.bed.seller.infrastructure.rules.MainCoroutineRule
 import com.bed.seller.infrastructure.network.models.responses.auth.toEntity
-import com.bed.seller.infrastructure.network.models.responses.failure.toEntity
+import com.bed.seller.infrastructure.network.models.failure.toEntity
 
 @RunWith(MockitoJUnitRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)

@@ -12,7 +12,7 @@ import io.ktor.client.request.request
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.request.HttpRequestBuilder
 
-import com.bed.seller.infrastructure.network.models.responses.ResponseModel
+import com.bed.seller.infrastructure.network.models.ResponseModel
 
 /**
  * Base Client

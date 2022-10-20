@@ -1,9 +1,9 @@
-package com.bed.seller.infrastructure.network.models.requests.signin
+package com.bed.seller.infrastructure.network.models.auth.signin
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-import com.bed.seller.infrastructure.network.models.requests.AuthBodyRequestModel
+import com.bed.seller.infrastructure.network.models.auth.AuthBodyRequestModel
 
 @Serializable
 data class SignInBodyRequestModel(
