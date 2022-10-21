@@ -8,12 +8,18 @@ import android.view.View
 import androidx.annotation.StringRes
 
 import com.bed.seller.databinding.SignUpFragmentBinding
+import com.bed.seller.domain.entities.auth.AuthResponseEntity
 
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 import com.bed.seller.domain.entities.form.TextFieldEntity
 
 import com.google.android.material.textfield.TextInputLayout
+
+import com.bed.seller.infrastructure.storage.StorageConstants
+
+import com.bed.seller.domain.entities.auth.signup.isNotEmpty
+import com.bed.seller.domain.entities.auth.signup.SignUpBodyRequestEntity
 
 import com.bed.seller.presentation.extensions.snake
 import com.bed.seller.presentation.extensions.hideKeyboard
@@ -25,15 +31,17 @@ import com.bed.seller.presentation.extensions.navigationBack
 import com.bed.seller.presentation.ui.common.Commons
 import com.bed.seller.presentation.ui.common.fragment.BaseFragment
 
+import com.bed.seller.presentation.ui.auth.tokens.TokensViewModel
 import com.bed.seller.presentation.ui.auth.signup.states.SignUpLiveData
 
-import com.bed.seller.domain.entities.auth.signup.isNotEmpty
-import com.bed.seller.domain.entities.auth.signup.SignUpBodyRequestEntity
+import com.bed.seller.presentation.ui.storage.states.SaveValueInStorageLiveData
 
 class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding::inflate) {
 
     private var authBody = SignUpBodyRequestEntity()
-    private val viewModel: SignUpViewModel by viewModel()
+
+    private val signUpViewModel: SignUpViewModel by viewModel()
+    private val tokensViewModel: TokensViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -45,13 +53,14 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
     }
 
     private fun observeSignUpState() {
-            viewModel.auth.state.observe(viewLifecycleOwner) { states ->
+            signUpViewModel.auth.state.observe(viewLifecycleOwner) { states ->
                 binding.signUpActionViewFlipper.displayedChild = when (states) {
                     SignUpLiveData.States.Empty -> Commons.EMPTY
                     SignUpLiveData.States.Loading -> Commons.LOADING
                     is SignUpLiveData.States.Success -> {
+                        saveData(states.data)
+                        observeStorageState()
                         snake(requireView(), states.message)
-                        navigationTo(R.id.action_sign_in_fragment_to_home_fragment)
 
                         Commons.SUCCESS
                     }
@@ -64,8 +73,23 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
             }
     }
 
+    private fun observeStorageState() {
+        tokensViewModel.saveRefreshToken.state.observe(viewLifecycleOwner) { states ->
+            when (states) {
+                SaveValueInStorageLiveData.States.Loading -> Commons.LOADING
+                is SaveValueInStorageLiveData.States.Success ->
+                    navigationTo(R.id.action_sign_up_fragment_to_home_fragment)
+                is SaveValueInStorageLiveData.States.Failure -> {
+                    snake(requireView(), R.string.generic_failure_storage_message)
+
+                    navigationTo(R.id.action_sign_up_fragment_to_home_fragment)
+                }
+            }
+        }
+    }
+
     private fun observeSignUpFormState() {
-        with (viewModel) {
+        with (signUpViewModel) {
             name.isValid.observe(viewLifecycleOwner) { states ->
                 if (states.valid) {
                     authBody = authBody.copy(name = states.value)
@@ -117,9 +141,9 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
 
     private fun setupForm() {
         with (binding) {
-            signUpNameEditInput.getTextChanged { text -> viewModel.name.set(text) }
-            signUpEmailEditInput.getTextChanged { text -> viewModel.email.set(text) }
-            signUpPasswordEditInput.getTextChanged { text -> viewModel.password.set(text) }
+            signUpNameEditInput.getTextChanged { text -> signUpViewModel.name.set(text) }
+            signUpEmailEditInput.getTextChanged { text -> signUpViewModel.email.set(text) }
+            signUpPasswordEditInput.getTextChanged { text -> signUpViewModel.password.set(text) }
         }
     }
 
@@ -159,7 +183,7 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
 
     private fun setupActionKeyboard(state: Boolean) {
         binding.signUpPasswordEditInput.actionKeyboard {
-            if (state) viewModel.submit(authBody)
+            if (state) signUpViewModel.submit(authBody)
 
             hideKeyboard()
         }
@@ -167,7 +191,7 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
 
     private fun setupActionSignUpButton(state: Boolean = false) {
         binding.signUpButton.setOnClickListener {
-            if (state and authBody.isNotEmpty()) viewModel.submit(authBody)
+            if (state and authBody.isNotEmpty()) signUpViewModel.submit(authBody)
             else snake(requireView(), R.string.sign_up_generic_error)
 
             hideKeyboard()
@@ -177,5 +201,13 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
 
     private fun buttonIsEnabled(isEnabled: Boolean = false) {
         binding.signUpButton.isEnabled = isEnabled
+    }
+
+    private fun saveData(data: AuthResponseEntity) {
+        with (tokensViewModel.saveRefreshToken) {
+            save(StorageConstants.DATA_STORE_ACCESS_TOKEN to data.accessToken)
+            save(StorageConstants.DATA_STORE_REFRESH_TOKEN to data.refreshToken)
+            save(StorageConstants.DATA_STORE_EXPIRES_IN to data.expiresIn.toString())
+        }
     }
 }

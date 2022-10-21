@@ -47,7 +47,8 @@
 
     <!-- Strings related to errors in Text Inputs and Response API -->
     <string name="generic_failure_message_form">Preencha as informações corretamente!</string>
-    <string name="generic_failure_message">Um erro aconteceu!</string>
+    <string name="generic_failure_message">Entre com suas credenciais!</string>
+    <string name="generic_failure_storage_message">Não foi possivel salvar suas credenciais!</string>
     <string name="generic_failure_message_email_already_registered">E-mail já cadastrado!</string>
 
     <!-- Strings related to BottomNavigation -->

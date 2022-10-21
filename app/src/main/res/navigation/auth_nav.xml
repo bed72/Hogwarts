@@ -36,6 +36,10 @@
         android:name="com.bed.seller.presentation.ui.auth.signup.SignUpFragment" >
 
         <action
+            app:destination="@+id/home"
+            android:id="@+id/action_sign_up_fragment_to_home_fragment" />
+
+        <action
             app:destination="@id/sign_in_fragment"
             app:exitAnim="@anim/nav_exit_to_right"
             app:enterAnim="@anim/nav_enter_from_left"

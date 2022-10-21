@@ -8,7 +8,6 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.distinctUntilChanged
 
 import com.bed.seller.presentation.ui.common.Commons
 
@@ -26,7 +25,6 @@ class RefreshTokenLiveData(
     private val actions = MutableLiveData<Actions>()
 
     val states: LiveData<States> = actions
-        .distinctUntilChanged()
         .switchMap { action ->
             liveData(coroutineDispatcher.main()) {
                 if (action is Actions.RefreshToken) {
@@ -35,11 +33,7 @@ class RefreshTokenLiveData(
                     authUseCase(buildBodyParams(action)).collect { response ->
                         response.fold(
                             { failure -> emit(States.Failure(commons.mapper(failure.status))) },
-                            { success ->
-//                                saveInStorage(success.data)
-
-                                emit(States.Success(success.data, R.string.sign_in_success))
-                            }
+                            { success -> emit(States.Success(success.data, R.string.sign_in_success)) }
                         )
                     }
 

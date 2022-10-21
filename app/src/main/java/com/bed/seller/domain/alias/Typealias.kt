@@ -2,6 +2,8 @@ package com.bed.seller.domain.alias
 
 import arrow.core.Either
 
+import kotlinx.coroutines.flow.Flow
+
 import com.bed.seller.domain.entities.ResponseEntity
 import com.bed.seller.domain.entities.auth.AuthResponseEntity
 import com.bed.seller.domain.entities.failure.MessageFailureResponseEntity
@@ -15,3 +17,6 @@ typealias AuthEitherModelType =
 
 typealias AuthEitherEntityType =
         Either<ResponseEntity<MessageFailureResponseEntity>, ResponseEntity<AuthResponseEntity>>
+
+typealias ResponseStorageType = Flow<Either<String, String>>
+

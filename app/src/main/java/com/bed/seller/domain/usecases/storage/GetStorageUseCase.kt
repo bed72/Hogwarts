@@ -1,13 +1,12 @@
 package com.bed.seller.domain.usecases.storage
 
-import kotlinx.coroutines.flow.Flow
+
+import com.bed.seller.domain.alias.ResponseStorageType
 
 interface GetStorageUseCase {
-    suspend operator fun invoke(params: String): Flow<String>
+    suspend operator fun invoke(params: String): ResponseStorageType
 }
 
 interface SaveStorageUseCase {
-    operator fun invoke(params: Params): Flow<Unit>
-
-    data class Params(val data: Pair<String, String>)
+    suspend operator fun invoke(params: Pair<String, String>): ResponseStorageType
 }

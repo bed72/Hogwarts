@@ -12,6 +12,13 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 import com.google.android.material.textfield.TextInputLayout
 
+import com.bed.seller.infrastructure.storage.StorageConstants
+
+import com.bed.seller.domain.entities.form.TextFieldEntity
+import com.bed.seller.domain.entities.auth.signin.isNotEmpty
+import com.bed.seller.domain.entities.auth.AuthResponseEntity
+import com.bed.seller.domain.entities.auth.signin.SignInBodyRequestEntity
+
 import com.bed.seller.presentation.extensions.snake
 import com.bed.seller.presentation.extensions.hideKeyboard
 import com.bed.seller.presentation.extensions.navigationTo
@@ -21,16 +28,17 @@ import com.bed.seller.presentation.extensions.actionKeyboard
 import com.bed.seller.presentation.ui.common.Commons
 import com.bed.seller.presentation.ui.common.fragment.BaseFragment
 
+import com.bed.seller.presentation.ui.auth.tokens.TokensViewModel
 import com.bed.seller.presentation.ui.auth.signin.states.SignInLiveData
 
-import com.bed.seller.domain.entities.form.TextFieldEntity
-import com.bed.seller.domain.entities.auth.signin.isNotEmpty
-import com.bed.seller.domain.entities.auth.signin.SignInBodyRequestEntity
+import com.bed.seller.presentation.ui.storage.states.SaveValueInStorageLiveData
 
 class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding::inflate) {
 
     private var authBody = SignInBodyRequestEntity()
-    private val viewModel: SignInViewModel by viewModel()
+
+    private val signInViewModel: SignInViewModel by viewModel()
+    private val tokensViewModel: TokensViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,13 +50,14 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
     }
 
     private fun observeSignInState() {
-        viewModel.auth.state.observe(viewLifecycleOwner) { states ->
+        signInViewModel.auth.state.observe(viewLifecycleOwner) { states ->
             binding.signInActionViewFlipper.displayedChild = when (states) {
                 SignInLiveData.States.Empty -> Commons.EMPTY
                 SignInLiveData.States.Loading -> Commons.LOADING
                 is SignInLiveData.States.Success -> {
+                    saveData(states.data)
+                    observeStorageState()
                     snake(requireView(), states.message)
-                    navigationTo(R.id.action_sign_in_fragment_to_home_fragment)
 
                     Commons.SUCCESS
                 }
@@ -61,8 +70,23 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
         }
     }
 
+    private fun observeStorageState() {
+        tokensViewModel.saveRefreshToken.state.observe(viewLifecycleOwner) { states ->
+            when (states) {
+                SaveValueInStorageLiveData.States.Loading -> Commons.LOADING
+                is SaveValueInStorageLiveData.States.Success ->
+                    navigationTo(R.id.action_sign_in_fragment_to_home_fragment)
+                is SaveValueInStorageLiveData.States.Failure -> {
+                    snake(requireView(), R.string.generic_failure_storage_message)
+
+                    navigationTo(R.id.action_sign_in_fragment_to_home_fragment)
+                }
+            }
+        }
+    }
+
     private fun observeSignInFormState() {
-        with (viewModel) {
+        with (signInViewModel) {
             email.isValid.observe(viewLifecycleOwner) { states ->
                 if (states.valid) {
                     authBody = authBody.copy(email = states.value)
@@ -104,8 +128,8 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
 
     private fun setupForm() {
         with(binding) {
-            signInEmailEditInput.getTextChanged { text -> viewModel.email.set(text)}
-            signInPasswordEditInput.getTextChanged { text -> viewModel.password.set(text) }
+            signInEmailEditInput.getTextChanged { text -> signInViewModel.email.set(text)}
+            signInPasswordEditInput.getTextChanged { text -> signInViewModel.password.set(text) }
         }
     }
 
@@ -158,7 +182,7 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
     }
 
     private fun doSignIn(state: Boolean) {
-        if (state and authBody.isNotEmpty()) viewModel.submit(authBody)
+        if (state and authBody.isNotEmpty()) signInViewModel.submit(authBody)
          else snake(requireView(), R.string.sign_up_generic_error)
 
         hideKeyboard()
@@ -166,5 +190,13 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
 
     private fun buttonIsEnabled(isEnabled: Boolean = false) {
         binding.signInButton.isEnabled = isEnabled
+    }
+
+    private fun saveData(data: AuthResponseEntity) {
+        with (tokensViewModel.saveRefreshToken) {
+            save(StorageConstants.DATA_STORE_ACCESS_TOKEN to data.accessToken)
+            save(StorageConstants.DATA_STORE_REFRESH_TOKEN to data.refreshToken)
+            save(StorageConstants.DATA_STORE_EXPIRES_IN to data.expiresIn.toString())
+        }
     }
 }

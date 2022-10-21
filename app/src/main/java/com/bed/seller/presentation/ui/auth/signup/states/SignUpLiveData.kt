@@ -35,7 +35,7 @@ class SignUpLiveData(
                         response.fold(
                             { failure -> emit(States.Failure(commons.mapper(failure.status))) },
                             { success ->
-//                                saveInStorage(success.data)
+                                //commons.saveAuthTokenDataInStorage(success.data)
 
                                 emit(
                                     States.Success(success.data, R.string.sign_up_success_create_account)

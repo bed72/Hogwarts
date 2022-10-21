@@ -1,4 +1,4 @@
-package com.bed.seller.presentation.ui.auth.tokens.states
+package com.bed.seller.presentation.ui.storage.states
 
 import com.bed.seller.R
 
@@ -8,41 +8,35 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.distinctUntilChanged
 
 import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
-
-import com.bed.seller.infrastructure.storage.StorageConstants
 import com.bed.seller.domain.usecases.storage.GetStorageUseCase
 
-class GetTokensLiveData(
-    private val getStorageUseCase: GetStorageUseCase,
+class GetValueInStorageLiveData(
+    private val useCase: GetStorageUseCase,
     private val coroutineDispatcher: CoroutinesDispatchers
 ) {
     private val actions = MutableLiveData<Actions>()
 
     val states: LiveData<States> = actions
-        .distinctUntilChanged()
         .switchMap { action ->
             liveData(coroutineDispatcher.main()) {
-                if (action is Actions.GetToken) {
+                if (action is Actions.Get) {
                     emit(States.Loading)
 
-                    getStorageUseCase(StorageConstants.DATA_STORE_REFRESH_TOKEN).collect { value ->
-                        if (value.isNotEmpty()) emit(States.Success(value))
-                        else emit(States.Failure(R.string.app_name))
+                    useCase(action.params).collect { response ->
+                        response.fold(
+                            { emit(States.Failure(R.string.generic_failure_message)) },
+                            { success -> emit(States.Success(success)) }
+                        )
                     }
                 }
             }
         }
 
-    fun getToken(data: Pair<String, String>) {
-        actions.value = Actions.GetToken(data)
-    }
+    fun get(params: String) { actions.value = Actions.Get(params) }
 
-    sealed class Actions {
-        data class GetToken(val params: Pair<String, String>) : Actions()
-    }
+    sealed class Actions { data class Get(val params: String) : Actions() }
 
     sealed class States {
         object Loading : States()
@@ -50,3 +44,4 @@ class GetTokensLiveData(
         data class Failure(@StringRes val message: Int) : States()
     }
 }
+

@@ -1,21 +1,19 @@
 package com.bed.seller.presentation.ui.splash
 
 import android.os.Bundle
-
 import android.view.View
-
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 import com.bed.seller.databinding.SplashFragmentBinding
 
+import org.koin.androidx.viewmodel.ext.android.viewModel
+
 import com.bed.seller.presentation.extensions.navigationTo
 
-import com.bed.seller.presentation.ui.common.fragment.BaseFragment
-
-import com.bed.seller.domain.entities.auth.tokens.RefreshTokenEntity
+import com.bed.seller.infrastructure.storage.StorageConstants
 
 import com.bed.seller.presentation.ui.auth.tokens.TokensViewModel
-import com.bed.seller.presentation.ui.auth.tokens.states.RefreshTokenLiveData
+import com.bed.seller.presentation.ui.storage.states.GetValueInStorageLiveData
+import com.bed.seller.presentation.ui.common.fragment.BaseFragment
 
 class SplashFragment : BaseFragment<SplashFragmentBinding>(SplashFragmentBinding::inflate) {
 
@@ -24,19 +22,19 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(SplashFragmentBinding
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        observeRefreshTokenState()
+        observeTokenState()
     }
 
-    private fun observeRefreshTokenState() {
-        with (viewModel.auth) {
-            refreshToken(RefreshTokenEntity(""))
+    private fun observeTokenState() {
+        with (viewModel.getRefreshToken) {
+            get(StorageConstants.DATA_STORE_REFRESH_TOKEN)
 
             states.observe(viewLifecycleOwner) { states ->
                 when (states) {
-                    RefreshTokenLiveData.States.Empty, RefreshTokenLiveData.States.Loading -> { }
-                    is RefreshTokenLiveData.States.Success ->
+                    GetValueInStorageLiveData.States.Loading -> {}
+                    is GetValueInStorageLiveData.States.Success ->
                         navigationTo(SplashFragmentDirections.actionSplashFragmentToHomeFragment())
-                    is RefreshTokenLiveData.States.Failure ->
+                    is GetValueInStorageLiveData.States.Failure ->
                         navigationTo(SplashFragmentDirections.actionSplashFragmentToSignInFragment())
                 }
             }
