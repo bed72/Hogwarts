@@ -18,14 +18,13 @@ import com.bed.seller.data.usecases.storage.LocalGetStorageUseCase
 import com.bed.seller.data.usecases.storage.LocalSaveStorageUseCase
 import com.bed.seller.data.usecases.validator.RemoteValidatorUseCase
 
-val authUseCasesModule = module {
-    single<GetStorageUseCase> {
-        LocalGetStorageUseCase(
-            get<StorageClient>(),
-            get<CoroutinesDispatchers>(),
-        )
+fun validatorsUSeCaseModule() = module {
+    single<ValidatorUseCase> {
+        RemoteValidatorUseCase(get<ValidatorClient>())
     }
+}
 
+fun storageUseCaseModule() = module {
     single<SaveStorageUseCase> {
         LocalSaveStorageUseCase(
             get<StorageClient>(),
@@ -33,10 +32,15 @@ val authUseCasesModule = module {
         )
     }
 
-    single<ValidatorUseCase> {
-        RemoteValidatorUseCase(get<ValidatorClient>())
+    single<GetStorageUseCase> {
+        LocalGetStorageUseCase(
+            get<StorageClient>(),
+            get<CoroutinesDispatchers>(),
+        )
     }
+}
 
+val authUseCasesModule = module {
     single<AuthUseCase> {
         RemoteSignUpUseCase(
             get<AuthClient>(),

@@ -13,16 +13,20 @@ import com.bed.seller.infrastructure.validator.adapters.ValidatorAdapter
 import com.bed.seller.infrastructure.network.adapters.auth.AuthNetworkAdapter
 import com.bed.seller.infrastructure.storage.adapters.StorageAdapter
 
-fun adaptersModule() = module {
+fun adapterClientModule() = module {
     single<AuthClient> {
         AuthNetworkAdapter(get<HttpClient>())
     }
+}
 
-    single<ValidatorClient> {
-        ValidatorAdapter()
-    }
-
+fun adapterStorageModule() = module {
     single<StorageClient> {
         StorageAdapter(androidContext())
+    }
+}
+
+fun adapterValidatorModule() = module {
+    single<ValidatorClient> {
+        ValidatorAdapter()
     }
 }
