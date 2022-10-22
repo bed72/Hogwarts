@@ -15,6 +15,7 @@ import com.bed.seller.infrastructure.modules.dispatchersModule
 import com.bed.seller.infrastructure.modules.auth.authCommonModule
 import com.bed.seller.infrastructure.modules.auth.authUseCasesModule
 import com.bed.seller.infrastructure.modules.auth.authViewModelsModule
+import com.bed.seller.infrastructure.modules.home.homeViewModelsModule
 
 class SellerApp : Application() {
     override fun onCreate() {
@@ -33,6 +34,8 @@ class SellerApp : Application() {
                 authCommonModule(),
                 authUseCasesModule,
                 authViewModelsModule,
+                // Home Modules
+                homeViewModelsModule
             )
         }
     }

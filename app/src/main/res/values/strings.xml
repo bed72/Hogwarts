@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Seller</string>
 
+    <!-- Strings related to splash -->
+    <string name="splash_image_description">Logo da Aplicação</string>
+
     <!-- Strings related to login -->
     <string name="action_log_out">Sair</string>
     <string name="error">Ops… ocoreu um erro!</string>
@@ -24,6 +27,7 @@
     <string name="sign_in_title_check_box">Lembrar de mim</string>
     <string name="sign_in_title_recover_password_button">Recuperar conta?</string>
     <string name="sign_in_title_button">Entrar</string>
+    <string name="sign_in_success">Bem vindo.</string>
     <string name="sign_in_description_create_account">Não possui uma conta?</string>
 
     <!-- Strings related to SignUp -->
@@ -43,7 +47,8 @@
 
     <!-- Strings related to errors in Text Inputs and Response API -->
     <string name="generic_failure_message_form">Preencha as informações corretamente!</string>
-    <string name="generic_failure_message">Um erro aconteceu!</string>
+    <string name="generic_failure_message">Entre com suas credenciais!</string>
+    <string name="generic_failure_storage_message">Não foi possivel salvar suas credenciais!</string>
     <string name="generic_failure_message_email_already_registered">E-mail já cadastrado!</string>
 
     <!-- Strings related to BottomNavigation -->

@@ -12,7 +12,7 @@ import io.ktor.client.request.request
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.request.HttpRequestBuilder
 
-import com.bed.seller.infrastructure.network.models.responses.ResponseModel
+import com.bed.seller.infrastructure.network.models.ResponseModel
 
 /**
  * Base Client
@@ -37,6 +37,7 @@ suspend inline fun <reified F, reified S> HttpClient.safe(
 
     return when (val status = response.status) {
         HttpStatusCode.BadRequest -> buildResponseFailure(status.value, response)
+        HttpStatusCode.Unauthorized -> buildResponseFailure(status.value, response)
         HttpStatusCode.UnprocessableEntity -> buildResponseFailure(status.value, response)
         else -> buildResponseSuccess(status.value, response)
     }

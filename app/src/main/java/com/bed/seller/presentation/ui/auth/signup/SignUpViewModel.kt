@@ -1,36 +1,36 @@
 package com.bed.seller.presentation.ui.auth.signup
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.distinctUntilChanged
 
-import com.bed.seller.domain.entities.auth.AuthRequestEntity
-import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
-
-import com.bed.seller.domain.usecases.auth.signup.SignUpUseCase
+import com.bed.seller.domain.usecases.auth.AuthUseCase
 import com.bed.seller.domain.usecases.validator.ValidatorUseCase
 
+import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
+import com.bed.seller.domain.entities.auth.signup.SignUpBodyRequestEntity
+
+import com.bed.seller.presentation.ui.common.Commons
 import com.bed.seller.presentation.utils.TripleMediatorLiveData
 
 import com.bed.seller.presentation.ui.auth.signup.states.SignUpLiveData
 import com.bed.seller.presentation.ui.auth.signup.states.validators.NameValidatorLiveData
 
-import com.bed.seller.presentation.ui.auth.commons.Auth
 import com.bed.seller.presentation.ui.auth.commons.states.validators.EmailValidatorLiveData
 import com.bed.seller.presentation.ui.auth.commons.states.validators.PasswordValidatorLiveData
 
 class SignUpViewModel(
-    commons: Auth,
-    signUpUseCase: SignUpUseCase,
+    commons: Commons,
+    authUseCase: AuthUseCase,
     validatorUseCase: ValidatorUseCase,
     coroutineDispatcher: CoroutinesDispatchers
 ) : ViewModel() {
 
-    val signUp = SignUpLiveData(
+    val auth = SignUpLiveData(
         commons,
-        signUpUseCase,
+        authUseCase,
         coroutineDispatcher
     )
 
@@ -52,8 +52,8 @@ class SignUpViewModel(
                 }
             }
 
-    fun submit(data: AuthRequestEntity) {
-        signUp.createAccount(data)
+    fun submit(data: SignUpBodyRequestEntity) {
+        auth.signUp(data)
     }
 }
 

@@ -1,11 +1,57 @@
 package com.bed.seller.presentation.ui.auth.signin
 
+import androidx.lifecycle.liveData
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.switchMap
+import androidx.lifecycle.distinctUntilChanged
+import arrow.core.valid
 
-class SignInViewModel : ViewModel() {
-    sealed class Actions {
-        object SignIn : Actions()
+import com.bed.seller.presentation.utils.PairMediatorLiveData
+
+import com.bed.seller.domain.usecases.auth.AuthUseCase
+import com.bed.seller.domain.usecases.validator.ValidatorUseCase
+
+import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
+import com.bed.seller.domain.entities.auth.signin.SignInBodyRequestEntity
+import com.bed.seller.domain.usecases.storage.SaveStorageUseCase
+
+import com.bed.seller.presentation.ui.common.Commons
+import com.bed.seller.presentation.ui.auth.signin.states.SignInLiveData
+
+import com.bed.seller.presentation.ui.auth.commons.states.validators.EmailValidatorLiveData
+import com.bed.seller.presentation.ui.auth.commons.states.validators.PasswordValidatorLiveData
+import com.bed.seller.presentation.ui.storage.states.SaveValueInStorageLiveData
+
+class SignInViewModel(
+    commons: Commons,
+    authUseCase: AuthUseCase,
+    validatorUseCase: ValidatorUseCase,
+    coroutineDispatcher: CoroutinesDispatchers
+) : ViewModel() {
+
+    val auth = SignInLiveData(
+        commons,
+        authUseCase,
+        coroutineDispatcher
+    )
+
+    val email = EmailValidatorLiveData(validatorUseCase)
+    val password = PasswordValidatorLiveData(validatorUseCase)
+
+    val formIsValid: LiveData<Boolean>
+        get() = PairMediatorLiveData(email.isValid, password.isValid)
+            .distinctUntilChanged()
+            .switchMap { state ->
+                val firstValue = state.first?.valid ?: false
+                val secondValue = state.second?.valid ?: false
+
+                return@switchMap liveData {
+                    if (firstValue and secondValue) emit(firstValue and secondValue)
+                }
+            }
+
+    fun submit(data: SignInBodyRequestEntity) {
+        auth.signIn(data)
     }
-
-    sealed class States
 }

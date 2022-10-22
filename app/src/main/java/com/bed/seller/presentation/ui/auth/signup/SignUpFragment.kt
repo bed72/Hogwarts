@@ -6,94 +6,128 @@ import android.os.Bundle
 import android.view.View
 
 import androidx.annotation.StringRes
+
 import com.bed.seller.databinding.SignUpFragmentBinding
+import com.bed.seller.domain.entities.auth.AuthResponseEntity
+
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import com.google.android.material.textfield.TextInputLayout
 
 import com.bed.seller.domain.entities.form.TextFieldEntity
-import com.bed.seller.domain.entities.auth.AuthRequestEntity
-import com.bed.seller.domain.entities.auth.isNotEmpty
+
+import com.google.android.material.textfield.TextInputLayout
+
+import com.bed.seller.infrastructure.storage.StorageConstants
+
+import com.bed.seller.domain.entities.auth.signup.isNotEmpty
+import com.bed.seller.domain.entities.auth.signup.SignUpBodyRequestEntity
 
 import com.bed.seller.presentation.extensions.snake
 import com.bed.seller.presentation.extensions.hideKeyboard
+import com.bed.seller.presentation.extensions.navigationTo
 import com.bed.seller.presentation.extensions.actionKeyboard
-import com.bed.seller.presentation.extensions.navigationBack
 import com.bed.seller.presentation.extensions.getTextChanged
+import com.bed.seller.presentation.extensions.navigationBack
 
-import com.bed.seller.presentation.ui.auth.commons.Auth
+import com.bed.seller.presentation.ui.common.Commons
 import com.bed.seller.presentation.ui.common.fragment.BaseFragment
+
+import com.bed.seller.presentation.ui.auth.tokens.TokensViewModel
+import com.bed.seller.presentation.ui.auth.signup.states.SignUpLiveData
+
+import com.bed.seller.presentation.ui.storage.states.SaveValueInStorageLiveData
 
 class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding::inflate) {
 
-    private var signUpData = AuthRequestEntity()
-    private val viewModel: SignUpViewModel by viewModel()
+    private var authBody = SignUpBodyRequestEntity()
+
+    private val signUpViewModel: SignUpViewModel by viewModel()
+    private val tokensViewModel: TokensViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupComponents()
 
-        observeSignUpFormState()
         observeSignUpState()
+        observeSignUpFormState()
     }
 
     private fun observeSignUpState() {
-            viewModel.signUp.state.observe(viewLifecycleOwner) { states ->
-                binding.signUpFlipperAction.displayedChild = when (states) {
-                    Auth.States.Loading -> LOADING
-                    is Auth.States.Success -> {
+            signUpViewModel.auth.state.observe(viewLifecycleOwner) { states ->
+                binding.signUpActionViewFlipper.displayedChild = when (states) {
+                    SignUpLiveData.States.Empty -> Commons.EMPTY
+                    SignUpLiveData.States.Loading -> Commons.LOADING
+                    is SignUpLiveData.States.Success -> {
+                        saveData(states.data)
+                        observeStorageState()
                         snake(requireView(), states.message)
-                        navigationBack()
 
-                        SUCCESS
+                        Commons.SUCCESS
                     }
-                    is Auth.States.Failure -> {
+                    is SignUpLiveData.States.Failure -> {
                         snake(requireView(), states.message)
 
-                        FAILURE
+                        Commons.FAILURE
                     }
                 }
             }
     }
 
+    private fun observeStorageState() {
+        tokensViewModel.saveRefreshToken.state.observe(viewLifecycleOwner) { states ->
+            when (states) {
+                SaveValueInStorageLiveData.States.Loading -> Commons.LOADING
+                is SaveValueInStorageLiveData.States.Success ->
+                    navigationTo(R.id.action_sign_up_fragment_to_home_fragment)
+                is SaveValueInStorageLiveData.States.Failure -> {
+                    snake(requireView(), R.string.generic_failure_storage_message)
+
+                    navigationTo(R.id.action_sign_up_fragment_to_home_fragment)
+                }
+            }
+        }
+    }
+
     private fun observeSignUpFormState() {
-        with (viewModel) {
+        with (signUpViewModel) {
             name.isValid.observe(viewLifecycleOwner) { states ->
                 if (states.valid) {
-                    signUpData = signUpData.copy(name = states.value)
+                    authBody = authBody.copy(name = states.value)
                     setupSuccessMessageInEditInput(states.textField)
                 } else {
-                    signUpData = signUpData.copy(name = states.value)
-                    setupFailureMessageInEditInput(states.textField)
                     buttonIsEnabled()
+                    authBody = authBody.copy(name = states.value)
+                    setupFailureMessageInEditInput(states.textField)
                 }
             }
 
             email.isValid.observe(viewLifecycleOwner) { states ->
                 if (states.valid) {
-                    signUpData = signUpData.copy(email = states.value)
+                    authBody = authBody.copy(email = states.value)
                     setupSuccessMessageInEditInput(states.textField)
                 } else {
-                    signUpData = signUpData.copy(email = states.value)
-                    setupFailureMessageInEditInput(states.textField)
                     buttonIsEnabled()
+                    authBody = authBody.copy(email = states.value)
+                    setupFailureMessageInEditInput(states.textField)
                 }
             }
 
             password.isValid.observe(viewLifecycleOwner) { states ->
                 if (states.valid) {
-                    signUpData = signUpData.copy(password = states.value)
+                    authBody = authBody.copy(password = states.value)
                     setupSuccessMessageInEditInput(states.textField)
                 } else {
-                    signUpData = signUpData.copy(password = states.value)
-                    setupFailureMessageInEditInput(states.textField)
                     buttonIsEnabled()
+                    authBody = authBody.copy(password = states.value)
+                    setupFailureMessageInEditInput(states.textField)
                 }
             }
 
             formIsValid.observe(viewLifecycleOwner) { state ->
                 if (state) {
-                    setupActionSignUpKeyboard(state)
+                    buttonIsEnabled(true)
+
+                    setupActionKeyboard(state)
                     setupActionSignUpButton(state)
                 }
             }
@@ -105,31 +139,31 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
         setupAlreadyExistingAccountButton()
     }
 
+    private fun setupForm() {
+        with (binding) {
+            signUpNameEditInput.getTextChanged { text -> signUpViewModel.name.set(text) }
+            signUpEmailEditInput.getTextChanged { text -> signUpViewModel.email.set(text) }
+            signUpPasswordEditInput.getTextChanged { text -> signUpViewModel.password.set(text) }
+        }
+    }
+
     private fun setupAlreadyExistingAccountButton() {
         binding.signUpAlreadyExistingAccountButton.setOnClickListener { navigationBack() }
     }
 
     private fun setupSuccessMessageInEditInput(textField: TextFieldEntity?): Boolean {
-        textField?.let { setupFormFailureMessages(it, true) }
+        textField?.let { setupFailureMessageAtTheForm(it, true) }
 
-        return FORM_VALID
-    }
-
-    private fun setupForm() {
-        with (binding) {
-            signUpNameEditInput.getTextChanged { text -> viewModel.name.set(text) }
-            signUpEmailEditInput.getTextChanged { text -> viewModel.email.set(text) }
-            signUpPasswordEditInput.getTextChanged { text -> viewModel.password.set(text) }
-        }
+        return Commons.FORM_VALID
     }
 
     private fun setupFailureMessageInEditInput(textField: TextFieldEntity?): Boolean  {
-        textField?.let { setupFormFailureMessages(it) }
+        textField?.let { setupFailureMessageAtTheForm(it) }
 
-        return FORM_INVALID
+        return Commons.FORM_INVALID
     }
 
-    private fun setupFormFailureMessages(textField: TextFieldEntity, isClean: Boolean = false) {
+    private fun setupFailureMessageAtTheForm(textField: TextFieldEntity, isClean: Boolean = false) {
         when (textField) {
             TextFieldEntity.NAME ->
                 setupStyleTextField(binding.signUpNameTextInput, R.string.failure_name_message, isClean)
@@ -141,43 +175,39 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
         }
     }
 
+    private fun setupStyleTextField(
+        input: TextInputLayout,
+        @StringRes message: Int,
+        isClean: Boolean = false
+    ) { input.error = if (isClean) Commons.CLEAR else getString(message) }
 
-    private fun setupActionSignUpKeyboard(state: Boolean) {
+    private fun setupActionKeyboard(state: Boolean) {
         binding.signUpPasswordEditInput.actionKeyboard {
-            if (state) viewModel.submit(signUpData)
+            if (state) signUpViewModel.submit(authBody)
 
             hideKeyboard()
         }
     }
 
     private fun setupActionSignUpButton(state: Boolean = false) {
-        with (binding) {
-            buttonIsEnabled(true)
-            signUpButton.setOnClickListener {
-                if (state and signUpData.isNotEmpty()) viewModel.submit(signUpData)
-                else snake(requireView(), R.string.sign_up_generic_error)
+        binding.signUpButton.setOnClickListener {
+            if (state and authBody.isNotEmpty()) signUpViewModel.submit(authBody)
+            else snake(requireView(), R.string.sign_up_generic_error)
 
-                hideKeyboard()
-            }
+            hideKeyboard()
         }
+
     }
 
     private fun buttonIsEnabled(isEnabled: Boolean = false) {
         binding.signUpButton.isEnabled = isEnabled
     }
 
-    private fun setupStyleTextField(
-        input: TextInputLayout,
-        @StringRes message: Int,
-        isClean: Boolean = false
-    ) { input.error = if (isClean) EMPTY else getString(message) }
-
-    companion object {
-        private const val EMPTY = ""
-        private const val LOADING = 1
-        private const val SUCCESS = 1
-        private const val FAILURE = 2
-        private const val FORM_VALID = true
-        private const val FORM_INVALID = false
+    private fun saveData(data: AuthResponseEntity) {
+        with (tokensViewModel.saveRefreshToken) {
+            save(StorageConstants.DATA_STORE_ACCESS_TOKEN to data.accessToken)
+            save(StorageConstants.DATA_STORE_REFRESH_TOKEN to data.refreshToken)
+            save(StorageConstants.DATA_STORE_EXPIRES_IN to data.expiresIn.toString())
+        }
     }
 }

@@ -2,10 +2,14 @@ package com.bed.seller.presentation.extensions
 
 import android.os.Build
 import android.os.Bundle
+
+import android.content.Context
+
 import android.view.View
 import android.widget.Toast
-import android.content.Context
 import android.view.inputmethod.InputMethodManager
+import androidx.annotation.AttrRes
+import androidx.annotation.ColorRes
 
 import com.google.android.material.snackbar.Snackbar
 
@@ -16,6 +20,18 @@ import androidx.fragment.app.Fragment
 
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
+
+// Colors
+fun Fragment.getColor(@ColorRes id: Int): Int =
+     requireActivity().resources.getColor(id, null)
+
+fun Fragment.setStatusBarColor(@ColorRes id: Int) {
+    requireActivity().window.statusBarColor = requireActivity().getColor(id)
+}
+
+fun Fragment.setNavigationBarColor(@ColorRes id: Int) {
+    requireActivity().window.navigationBarColor = requireActivity().getColor(id)
+}
 
 // SnackBar
 fun Fragment.snake(view: View, @StringRes message: Int) =

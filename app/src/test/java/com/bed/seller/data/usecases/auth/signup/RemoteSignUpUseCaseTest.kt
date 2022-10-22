@@ -21,13 +21,13 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-import com.bed.seller.data.client.SignUpClient
+import com.bed.seller.data.client.AuthClient
 
 import com.bed.seller.data.usecases.mocks.CommonMock
 import com.bed.seller.data.usecases.auth.mocks.AuthMock
 import com.bed.seller.data.usecases.auth.RemoteSignUpUseCase
 
-import com.bed.seller.domain.usecases.auth.signup.SignUpUseCase
+import com.bed.seller.domain.usecases.auth.AuthUseCase
 
 import com.bed.seller.domain.entities.ResponseEntity
 import com.bed.seller.domain.entities.auth.AuthResponseEntity
@@ -35,7 +35,7 @@ import com.bed.seller.domain.entities.failure.MessageFailureResponseEntity
 
 import com.bed.seller.infrastructure.rules.MainCoroutineRule
 import com.bed.seller.infrastructure.network.models.responses.auth.toEntity
-import com.bed.seller.infrastructure.network.models.responses.failure.toEntity
+import com.bed.seller.infrastructure.network.models.failure.toEntity
 
 @RunWith(MockitoJUnitRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -45,9 +45,9 @@ class RemoteSignUpRemoteUseCaseTest {
     val mainCoroutineRule = MainCoroutineRule()
 
     @Mock
-    private lateinit var signUpClient: SignUpClient
+    private lateinit var signUpClient: AuthClient
 
-    private lateinit var signUpUseCase: SignUpUseCase
+    private lateinit var signUpUseCase: AuthUseCase
 
     private val authMock = AuthMock()
 
@@ -59,32 +59,32 @@ class RemoteSignUpRemoteUseCaseTest {
     @Test
     fun `Should call SignUpClient when trying to create an account and the return cannot be null`() =
         runTest {
-            whenever(signUpClient.signUp(CommonMock.PARAMS_SIGN_UP_REQUEST))
+            whenever(signUpClient(authMock.pathSignUp, CommonMock.PARAMS_SIGN_UP_REQUEST))
                 .thenReturn(authMock.successModel)
 
-            val response = signUpUseCase(CommonMock.PARAMS_SIGN_UP_REQUEST).first()
+            val response = signUpUseCase(authMock.paramsSignUp).first()
 
             assertNotNull(response)
         }
 
     @Test
     fun `Should call SignUpClient when trying to create an account`() = runTest {
-        whenever(signUpClient.signUp(CommonMock.PARAMS_SIGN_UP_REQUEST))
+        whenever(signUpClient(authMock.pathSignUp, CommonMock.PARAMS_SIGN_UP_REQUEST))
             .thenReturn(authMock.successModel)
 
-        val response = signUpUseCase(CommonMock.PARAMS_SIGN_UP_REQUEST).first()
+        val response = signUpUseCase(authMock.paramsSignUp).first()
 
         assertNotNull(response)
-        verify(signUpClient).signUp(CommonMock.PARAMS_SIGN_UP_REQUEST)
+        verify(signUpClient).invoke(authMock.pathSignUp, CommonMock.PARAMS_SIGN_UP_REQUEST)
     }
 
     @Test
     fun `Should call SignUpClient when trying to create an account and return Either the SignEntity`() =
         runTest {
-            whenever(signUpClient.signUp(CommonMock.PARAMS_SIGN_UP_REQUEST))
+            whenever(signUpClient(authMock.pathSignUp, CommonMock.PARAMS_SIGN_UP_REQUEST))
                 .thenReturn(authMock.successModel)
 
-            val response = signUpUseCase(CommonMock.PARAMS_SIGN_UP_REQUEST).first()
+            val response = signUpUseCase(authMock.paramsSignUp).first()
 
             assertTrue(response is Either.Right<ResponseEntity<AuthResponseEntity>>)
         }
@@ -92,10 +92,10 @@ class RemoteSignUpRemoteUseCaseTest {
     @Test
     fun `Should return Failure from Either when trying to create an account request with returns failure`() =
         runTest {
-            whenever(signUpClient.signUp(CommonMock.PARAMS_SIGN_UP_REQUEST))
+            whenever(signUpClient(authMock.pathSignUp, CommonMock.PARAMS_SIGN_UP_REQUEST))
                 .thenReturn(authMock.failureModel)
 
-            val response = signUpUseCase(CommonMock.PARAMS_SIGN_UP_REQUEST).first()
+            val response = signUpUseCase(authMock.paramsSignUp).first()
 
             assertTrue(response is Either.Left<ResponseEntity<MessageFailureResponseEntity>>)
         }
@@ -103,10 +103,10 @@ class RemoteSignUpRemoteUseCaseTest {
     @Test
     fun `Should return SignUpEntity in right Either when trying to create an account with returns success`() =
         runTest {
-            whenever(signUpClient.signUp(CommonMock.PARAMS_SIGN_UP_REQUEST))
+            whenever(signUpClient(authMock.pathSignUp, CommonMock.PARAMS_SIGN_UP_REQUEST))
                 .thenReturn(authMock.successModel)
 
-            signUpUseCase(CommonMock.PARAMS_SIGN_UP_REQUEST).collect { response ->
+            signUpUseCase(authMock.paramsSignUp).collect { response ->
                 response.fold(
                     { },
                     { entity ->
@@ -123,10 +123,10 @@ class RemoteSignUpRemoteUseCaseTest {
     @Test
     fun `Should return HttpHandleException with type 400 when trying to create account with already registered email`() =
         runTest {
-            whenever(signUpClient.signUp(CommonMock.PARAMS_SIGN_UP_REQUEST))
+            whenever(signUpClient(authMock.pathSignUp, CommonMock.PARAMS_SIGN_UP_REQUEST))
                 .thenReturn(authMock.failureModel)
 
-            signUpUseCase(CommonMock.PARAMS_SIGN_UP_REQUEST).collect { response ->
+            signUpUseCase(authMock.paramsSignUp).collect { response ->
                 response.fold(
                     { failure ->
                         run {

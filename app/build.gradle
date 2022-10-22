@@ -1,12 +1,12 @@
 plugins {
+    id 'kotlin-kapt'
+    id 'kotlinx-serialization'
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
-apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-parcelize'
-apply plugin: 'kotlinx-serialization'
-apply plugin: 'androidx.navigation.safeargs'
 
 apply from: "$rootDir/config/detekt/detekt.gradle"
 
@@ -92,6 +92,7 @@ dependencies {
     implementation "io.ktor:ktor-client-logging:$ktor_version"
     implementation "io.ktor:ktor-client-content-negotiation:$ktor_version"
     implementation "io.ktor:ktor-serialization-kotlinx-json:$ktor_version"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     // ViewModel and LiveData
     def lifecycle_version = '2.5.1'
@@ -121,6 +122,6 @@ dependencies {
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 
     // Debug
-     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
 }
 

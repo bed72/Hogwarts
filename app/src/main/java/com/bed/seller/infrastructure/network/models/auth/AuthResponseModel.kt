@@ -1,8 +1,9 @@
-package com.bed.seller.infrastructure.network.models.responses.auth
+package com.bed.seller.infrastructure.network.models.auth
 
-import com.bed.seller.domain.entities.auth.AuthResponseEntity
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+
+import com.bed.seller.domain.entities.auth.AuthResponseEntity
 
 @Serializable
 data class AuthResponseModel(

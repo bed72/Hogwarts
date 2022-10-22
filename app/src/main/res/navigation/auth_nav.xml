@@ -14,7 +14,11 @@
 
         <action
             app:destination="@id/recover_password_fragment"
-            android:id="@+id/action_sign_in_fragment_to_recover_password_fragment" />
+            android:id="@+id/action_sign_in_fragment_to_recover_account_fragment" />
+
+        <action
+            app:destination="@+id/home"
+            android:id="@+id/action_sign_in_fragment_to_home_fragment" />
 
         <action
             app:destination="@id/sign_up_fragment"
@@ -32,12 +36,20 @@
         android:name="com.bed.seller.presentation.ui.auth.signup.SignUpFragment" >
 
         <action
+            app:destination="@+id/home"
+            android:id="@+id/action_sign_up_fragment_to_home_fragment" />
+
+        <action
             app:destination="@id/sign_in_fragment"
             app:exitAnim="@anim/nav_exit_to_right"
             app:enterAnim="@anim/nav_enter_from_left"
             app:popExitAnim="@anim/nav_pop_exit_to_left"
             app:popEnterAnim="@anim/nav_pop_enter_from_right"
             android:id="@+id/action_sign_up_fragment_to_sign_in_fragment" />
+
+        <action
+            app:destination="@+id/home"
+            android:id="@+id/action_sign_in_fragment_to_home_fragment" />
 
     </fragment>
 

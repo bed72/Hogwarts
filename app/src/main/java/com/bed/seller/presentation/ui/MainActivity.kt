@@ -7,15 +7,16 @@ import android.view.View
 
 import androidx.appcompat.app.AppCompatActivity
 
+import com.bed.seller.databinding.MainActivityBinding
+
 import androidx.navigation.NavController
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.fragment.NavHostFragment
+
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-
-import com.bed.seller.databinding.MainActivityBinding
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         installSplashScreen()
 
         binding = MainActivityBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
         setSupportActionBar(binding.toolbarApp)
 
@@ -42,6 +44,7 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.nav_host_container) as NavHostFragment
 
         navController = navigationContainerFragment.navController
+
         binding.bottomNavMain.setupWithNavController(navController)
     }
 
@@ -50,6 +53,7 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.sign_in_fragment,
                 R.id.sign_up_fragment,
+                R.id.home_fragment
             )
         )
 
@@ -67,7 +71,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun visibilityNavBar(destination: Int) {
         val visibility = when (destination) {
-            R.id.auth -> GONE
+            R.id.sign_in_fragment -> GONE
+            R.id.sign_up_fragment -> GONE
+            R.id.home_fragment -> VISIBLE
             else -> GONE
         }
 
@@ -76,7 +82,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun visibilityToolBar(destination: Int) {
         val visibility = when (destination) {
-            R.id.auth -> GONE
+            R.id.sign_in_fragment -> GONE
+            R.id.sign_up_fragment -> GONE
+            R.id.home_fragment -> GONE
             else -> GONE
         }
 

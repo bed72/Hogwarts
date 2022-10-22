@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/home_nav">
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/home_fragment"
+    android:id="@+id/home" >
+
+    <fragment
+        android:id="@+id/home_fragment"
+        tools:layout="@layout/home_fragment"
+        android:name="com.bed.seller.presentation.ui.home.store.HomeFragment" />
 
 </navigation>

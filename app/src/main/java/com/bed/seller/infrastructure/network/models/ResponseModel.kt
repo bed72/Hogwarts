@@ -1,9 +1,7 @@
-package com.bed.seller.infrastructure.network.models.responses
+package com.bed.seller.infrastructure.network.models
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-
-import com.bed.seller.domain.entities.ResponseEntity
 
 @Serializable
 data class ResponseModel<out T>(

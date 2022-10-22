@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:context="com.bed.seller.presentation.ui.auth.signin.SignInFragment">
 
     <ScrollView
         style="@style/ScrollView"
@@ -141,7 +142,7 @@
                     android:button="@drawable/checkbox_states" />
 
                 <Button
-                    android:id="@+id/sign_in_recover_password_button"
+                    android:id="@+id/sign_in_recover_account_button"
                     style="@style/TextButtonDark"
                     android:layout_weight="1"
                     android:textAlignment="center"
@@ -164,8 +165,9 @@
                 <Button
                     android:id="@+id/sign_in_button"
                     android:text="@string/sign_in_title_button"
-                    style="@style/UnelevatedButton"
+                    android:enabled="false"
                     android:layout_height="@dimen/button_height"
+                    style="@style/UnelevatedButton"
                     android:layout_width="match_parent" />
 
                 <com.google.android.material.progressindicator.CircularProgressIndicator

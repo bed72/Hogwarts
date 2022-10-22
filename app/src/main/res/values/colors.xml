@@ -74,5 +74,8 @@
     <color name="dark_surfaceTintColor">#72DAA5</color>
 
     <!-- Both -->
+    <color name="navbar_dark">#202B25</color>
+    <color name="navbar_light">#E6F1E9</color>
     <color name="neutral_textColorHighlight">#9936AA68</color>
+
 </resources>
