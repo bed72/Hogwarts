@@ -2,7 +2,7 @@ package com.bed.seller.presentation.ui.auth.tokens
 
 import androidx.lifecycle.ViewModel
 
-import com.bed.seller.domain.usecases.auth.AuthUseCase
+import com.bed.seller.domain.usecases.auth.AuthRefreshUseCase
 import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
 import com.bed.seller.domain.usecases.storage.GetStorageUseCase
 import com.bed.seller.domain.usecases.storage.SaveStorageUseCase
@@ -14,9 +14,9 @@ import com.bed.seller.presentation.ui.storage.states.SaveValueInStorageLiveData
 
 class TokensViewModel(
     commons: Commons,
-    authUseCase: AuthUseCase,
     getStorageUseCase: GetStorageUseCase,
     saveStorageUseCase: SaveStorageUseCase,
+    authRefreshUseCase: AuthRefreshUseCase,
     coroutineDispatcher: CoroutinesDispatchers,
 ) : ViewModel() {
 
@@ -32,7 +32,7 @@ class TokensViewModel(
 
     val refreshToken = RefreshTokenLiveData(
         commons,
-        authUseCase,
+        authRefreshUseCase,
         coroutineDispatcher
     )
 }

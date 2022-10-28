@@ -36,11 +36,7 @@ class AuthInterceptor(
             )
         }
 
-        return chain.proceed(
-            request.newBuilder()
-                .url(url)
-                .build()
-        )
+        return response
     }
 
     private inline fun <reified T> toModel(response: Response): T {

@@ -11,15 +11,15 @@ import androidx.lifecycle.MutableLiveData
 
 import com.bed.seller.presentation.ui.common.Commons
 
-import com.bed.seller.domain.usecases.auth.AuthUseCase
+import com.bed.seller.domain.usecases.auth.AuthRefreshUseCase
 import com.bed.seller.domain.entities.paths.PathEntity
 import com.bed.seller.domain.entities.auth.AuthResponseEntity
 import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
-import com.bed.seller.domain.entities.auth.tokens.RefreshTokenEntity
+import com.bed.seller.domain.entities.auth.tokens.RefreshTokenBodyRequestEntity
 
 class RefreshTokenLiveData(
     private val commons: Commons,
-    private val authUseCase: AuthUseCase,
+    private val authRefreshUseCase: AuthRefreshUseCase,
     private val coroutineDispatcher: CoroutinesDispatchers
 ) {
     private val actions = MutableLiveData<Actions>()
@@ -30,7 +30,7 @@ class RefreshTokenLiveData(
                 if (action is Actions.RefreshToken) {
                     emit(States.Loading)
 
-                    authUseCase(buildBodyParams(action)).collect { response ->
+                    authRefreshUseCase(buildBodyParams(action)).collect { response ->
                         response.fold(
                             { failure -> emit(States.Failure(commons.mapper(failure.status))) },
                             { success -> emit(States.Success(success.data, R.string.sign_in_success)) }
@@ -42,15 +42,15 @@ class RefreshTokenLiveData(
             }
         }
 
-    fun refreshToken(params: RefreshTokenEntity) {
+    fun refreshToken(params: RefreshTokenBodyRequestEntity) {
         actions.value = Actions.RefreshToken(params)
     }
 
     private fun buildBodyParams(action: Actions.RefreshToken) =
-        AuthUseCase.Params(PathEntity.REFRESH_TOKEN, action.params)
+        AuthRefreshUseCase.Params(PathEntity.REFRESH_TOKEN, action.params)
 
     sealed class Actions {
-        data class RefreshToken(val params: RefreshTokenEntity) : Actions()
+        data class RefreshToken(val params: RefreshTokenBodyRequestEntity) : Actions()
     }
 
     sealed class States {

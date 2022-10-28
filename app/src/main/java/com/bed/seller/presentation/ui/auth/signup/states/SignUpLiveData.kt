@@ -11,16 +11,16 @@ import androidx.lifecycle.MutableLiveData
 
 import com.bed.seller.presentation.ui.common.Commons
 
-import com.bed.seller.domain.usecases.auth.AuthUseCase
+import com.bed.seller.domain.entities.paths.PathEntity
 import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
 
-import com.bed.seller.domain.entities.paths.PathEntity
+import com.bed.seller.domain.usecases.auth.AuthSignUpUseCase
 import com.bed.seller.domain.entities.auth.AuthResponseEntity
 import com.bed.seller.domain.entities.auth.signup.SignUpBodyRequestEntity
 
 class SignUpLiveData(
     private val commons: Commons,
-    private val authUseCase: AuthUseCase,
+    private val authSignUpUseCase: AuthSignUpUseCase,
     private val coroutineDispatcher: CoroutinesDispatchers
 ) {
     private val actions = MutableLiveData<Actions>()
@@ -31,12 +31,10 @@ class SignUpLiveData(
                 if (action is Actions.SignUp) {
                     emit(States.Loading)
 
-                    authUseCase(buildBodyParams(action)).collect { response ->
+                    authSignUpUseCase(buildBodyParams(action)).collect { response ->
                         response.fold(
                             { failure -> emit(States.Failure(commons.mapper(failure.status))) },
                             { success ->
-                                //commons.saveAuthTokenDataInStorage(success.data)
-
                                 emit(
                                     States.Success(success.data, R.string.sign_up_success_create_account)
                                 )
@@ -54,7 +52,7 @@ class SignUpLiveData(
     }
 
     private fun buildBodyParams(action: Actions.SignUp) =
-        AuthUseCase.Params(PathEntity.SIGN_UP, action.params)
+        AuthSignUpUseCase.Params(PathEntity.SIGN_UP, action.params)
 
     sealed class Actions {
         data class SignUp(val params: SignUpBodyRequestEntity) : Actions()

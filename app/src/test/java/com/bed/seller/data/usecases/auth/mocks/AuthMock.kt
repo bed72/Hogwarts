@@ -7,7 +7,7 @@ import com.bed.seller.data.usecases.mocks.CommonMock
 
 import com.bed.seller.domain.entities.ResponseEntity
 import com.bed.seller.domain.entities.paths.PathEntity
-import com.bed.seller.domain.usecases.auth.AuthUseCase
+import com.bed.seller.domain.usecases.auth.AuthRefreshUseCase
 
 import com.bed.seller.infrastructure.network.models.ResponseModel
 
@@ -30,7 +30,7 @@ class AuthMock {
         )
 
     val pathSignUp = PathEntity.SIGN_UP
-    val paramsSignUp = AuthUseCase.Params(pathSignUp, CommonMock.PARAMS_SIGN_UP_REQUEST)
+    val paramsSignUp = AuthRefreshUseCase.Params(pathSignUp, CommonMock.PARAMS_SIGN_UP_REQUEST)
 
     val failureModel = makeModel(ResponseModel.FailureModel)
     val successModel = makeModel(ResponseModel.SuccessModel)
