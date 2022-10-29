@@ -3,7 +3,6 @@ package com.bed.seller.infrastructure.modules.auth
 import org.koin.dsl.module
 
 import com.bed.seller.data.client.StorageClient
-import com.bed.seller.data.client.ValidatorClient
 import com.bed.seller.data.client.AuthSignInClient
 import com.bed.seller.data.client.AuthSignUpClient
 import com.bed.seller.data.client.AuthRefreshClient
@@ -14,56 +13,33 @@ import com.bed.seller.data.usecases.auth.RemoteSignInUseCase
 import com.bed.seller.data.usecases.auth.RemoteSignUpUseCase
 import com.bed.seller.data.usecases.auth.RemoteRefreshUseCase
 
-import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
-
 import com.bed.seller.domain.usecases.auth.AuthRefreshUseCase
-import com.bed.seller.domain.usecases.storage.GetStorageUseCase
-import com.bed.seller.domain.usecases.storage.SaveStorageUseCase
-import com.bed.seller.domain.usecases.validator.ValidatorUseCase
-
-import com.bed.seller.data.usecases.storage.LocalGetStorageUseCase
-import com.bed.seller.data.usecases.storage.LocalSaveStorageUseCase
-import com.bed.seller.data.usecases.validator.RemoteValidatorUseCase
-
-fun validatorsUSeCaseModule() = module {
-    single<ValidatorUseCase> {
-        RemoteValidatorUseCase(get<ValidatorClient>())
-    }
-}
-
-fun storageUseCaseModule() = module {
-    single<SaveStorageUseCase> {
-        LocalSaveStorageUseCase(
-            get<StorageClient>(),
-            get<CoroutinesDispatchers>(),
-        )
-    }
-
-    single<GetStorageUseCase> {
-        LocalGetStorageUseCase(
-            get<StorageClient>(),
-            get<CoroutinesDispatchers>(),
-        )
-    }
-}
+import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
 
 val authRefreshUseCasesModule = module {
     single<AuthRefreshUseCase> {
         RemoteRefreshUseCase(
+            get<StorageClient>(),
             get<AuthRefreshClient>(),
             get<CoroutinesDispatchers>(),
         )
     }
+}
 
+val signInUseCasesModule = module {
     single<AuthSignInUseCase> {
         RemoteSignInUseCase(
+            get<StorageClient>(),
             get<AuthSignInClient>(),
             get<CoroutinesDispatchers>(),
         )
     }
+}
 
+val signUpUseCasesModule = module {
     single<AuthSignUpUseCase> {
         RemoteSignUpUseCase(
+            get<StorageClient>(),
             get<AuthSignUpClient>(),
             get<CoroutinesDispatchers>(),
         )

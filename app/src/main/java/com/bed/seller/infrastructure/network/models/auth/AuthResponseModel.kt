@@ -7,9 +7,6 @@ import com.bed.seller.domain.entities.auth.AuthResponseEntity
 
 @Serializable
 data class AuthResponseModel(
-    @SerialName("expires_in")
-    val expiresIn: Int,
-
     @SerialName("access_token")
     val accessToken: String,
 
@@ -19,7 +16,6 @@ data class AuthResponseModel(
 
 fun AuthResponseModel.toEntity() =
     AuthResponseEntity(
-        expiresIn = this.expiresIn,
         accessToken = this.accessToken,
         refreshToken = this.refreshToken,
     )

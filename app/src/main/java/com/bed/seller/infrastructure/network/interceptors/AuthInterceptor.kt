@@ -4,43 +4,52 @@ import okhttp3.Response
 import okhttp3.Interceptor
 
 import io.ktor.http.HttpStatusCode
+import org.koin.core.component.inject
+import org.koin.core.component.KoinComponent
 
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.decodeFromString
 
-import com.bed.seller.domain.usecases.storage.SaveStorageUseCase
-
-import com.bed.seller.infrastructure.storage.StorageConstants
+import com.bed.seller.infrastructure.extension.isExpired
 import com.bed.seller.infrastructure.configuration.JSON_CONFIG
 import com.bed.seller.infrastructure.network.models.auth.AuthResponseModel
 
-class AuthInterceptor(
-    private val saveStorageUseCase: SaveStorageUseCase
-) : Interceptor {
+import com.bed.seller.domain.usecases.auth.AuthRefreshUseCase
+
+import com.bed.seller.domain.entities.paths.PathEntity
+import com.bed.seller.domain.entities.auth.tokens.RefreshTokenBodyRequestEntity
+
+class AuthInterceptor : Interceptor, KoinComponent {
     private val json = JSON_CONFIG
+    private val refreshUseCase: AuthRefreshUseCase by inject()
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val response = chain.proceed(chain.request())
         val url = request.url
 
-        /**
-         * Save data token in Storage
-         */
         if (url.pathSegments.contains("auth")) {
-            val body = toModel<AuthResponseModel>(response)
-
-            body?.let { data ->
-                saveInStorage(
-                    StorageConstants.DATA_STORE_ACCESS_TOKEN to data.accessToken,
-                    StorageConstants.DATA_STORE_REFRESH_TOKEN to data.refreshToken,
-                    StorageConstants.DATA_STORE_EXPIRES_IN to data.expiresIn.toString()
-                )
+            toModel<AuthResponseModel>(response)?.let { model ->
+                if (model.accessToken.isExpired()) {
+                    runBlocking {
+                        refreshUseCase(buildBody(model)).collect { data ->
+                            data.fold(
+                                { response.close() },
+                                { response.close() }
+                            )
+                        }
+                    }
+                }
             }
         }
 
         return response
     }
+
+    private fun buildBody(model: AuthResponseModel) = AuthRefreshUseCase.Params(
+        PathEntity.REFRESH_TOKEN,
+        RefreshTokenBodyRequestEntity(model.refreshToken)
+    )
 
     private inline fun <reified T> toModel(response: Response): T? =
         when (response.code) {
@@ -50,9 +59,5 @@ class AuthInterceptor(
                 json.decodeFromString<T>(body.string())
             }
             else -> null
-    }
-
-    private fun saveInStorage(vararg data: Pair<String, String>) = runBlocking {
-        for (value in data) saveStorageUseCase(value.first to value.second)
     }
 }

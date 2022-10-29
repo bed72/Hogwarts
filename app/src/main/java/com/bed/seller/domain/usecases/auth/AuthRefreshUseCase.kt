@@ -7,7 +7,6 @@ import com.bed.seller.domain.alias.AuthEitherEntityType
 import com.bed.seller.domain.entities.paths.PathEntity
 import com.bed.seller.domain.entities.auth.tokens.RefreshTokenBodyRequestEntity
 
-
 interface AuthRefreshUseCase {
     operator fun invoke(params: Params): Flow<AuthEitherEntityType>
 

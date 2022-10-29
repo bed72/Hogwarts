@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 
 import com.bed.seller.databinding.SplashFragmentBinding
+import com.bed.seller.infrastructure.extension.isExpired
 
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -27,13 +28,15 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(SplashFragmentBinding
 
     private fun observeTokenState() {
         with (viewModel) {
-            tokens.get(StorageConstants.DATA_STORE_REFRESH_TOKEN)
+            tokens.get(StorageConstants.DATA_STORE_ACCESS_TOKEN)
 
             tokens.states.observe(viewLifecycleOwner) { states ->
                 when (states) {
                     GetValueInStorageLiveData.States.Loading -> {}
                     is GetValueInStorageLiveData.States.Success ->
-                        navigationTo(SplashFragmentDirections.actionSplashFragmentToHomeFragment())
+                        if (states.data.isExpired())
+                            navigationTo(SplashFragmentDirections.actionSplashFragmentToSignInFragment())
+                        else navigationTo(SplashFragmentDirections.actionSplashFragmentToHomeFragment())
                     is GetValueInStorageLiveData.States.Failure ->
                         navigationTo(SplashFragmentDirections.actionSplashFragmentToSignInFragment())
                 }

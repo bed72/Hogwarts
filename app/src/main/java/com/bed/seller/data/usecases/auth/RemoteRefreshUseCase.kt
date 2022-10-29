@@ -2,6 +2,7 @@ package com.bed.seller.data.usecases.auth
 
 import kotlinx.coroutines.withContext
 
+import com.bed.seller.data.client.StorageClient
 import com.bed.seller.data.client.AuthRefreshClient
 
 import com.bed.seller.domain.entities.ResponseEntity
@@ -12,17 +13,32 @@ import com.bed.seller.domain.usecases.auth.AuthRefreshUseCase
 import com.bed.seller.domain.alias.AuthEitherEntityType
 import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
 
+import com.bed.seller.infrastructure.storage.StorageConstants
 import com.bed.seller.infrastructure.network.models.auth.toEntity
 import com.bed.seller.infrastructure.network.models.failure.toEntity
 
 class RemoteRefreshUseCase(
-    private val client: AuthRefreshClient,
+    private val storageClient: StorageClient,
+    private val refreshClient: AuthRefreshClient,
     private val coroutines: CoroutinesDispatchers
 ) : AuthRefreshUseCase, UseCase<AuthRefreshUseCase.Params, AuthEitherEntityType>() {
         override suspend fun doWork(params: AuthRefreshUseCase.Params): AuthEitherEntityType =
             withContext(coroutines.io()) {
-                return@withContext client(params.path, params.body)
-                    .map { success -> ResponseEntity(success.status, success.data.toEntity()) }
+                return@withContext refreshClient(params.path, params.body)
+                    .map { success ->
+                        with (success) {
+                            save(
+                                StorageConstants.DATA_STORE_ACCESS_TOKEN to data.accessToken,
+                                StorageConstants.DATA_STORE_REFRESH_TOKEN to data.refreshToken,
+                            )
+
+                            ResponseEntity(status, data.toEntity())
+                        }
+                    }
                     .mapLeft { failure -> ResponseEntity(failure.status, failure.data.toEntity()) }
             }
+
+    private suspend fun save(vararg data: Pair<String, String>)  {
+        for (value in data) storageClient.save(value.first to value.second)
+    }
 }
