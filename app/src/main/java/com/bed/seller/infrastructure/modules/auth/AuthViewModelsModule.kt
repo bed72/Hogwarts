@@ -5,9 +5,10 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 
 import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
 
-import com.bed.seller.domain.usecases.auth.AuthUseCase
+import com.bed.seller.domain.usecases.auth.AuthSignInUseCase
+import com.bed.seller.domain.usecases.auth.AuthSignUpUseCase
+import com.bed.seller.domain.usecases.auth.AuthRefreshUseCase
 import com.bed.seller.domain.usecases.storage.GetStorageUseCase
-import com.bed.seller.domain.usecases.storage.SaveStorageUseCase
 import com.bed.seller.domain.usecases.validator.ValidatorUseCase
 
 import com.bed.seller.presentation.ui.common.Commons
@@ -20,8 +21,8 @@ val authViewModelsModule = module {
     viewModel {
         SignUpViewModel(
             get<Commons>(),
-            get<AuthUseCase>(),
             get<ValidatorUseCase>(),
+            get<AuthSignUpUseCase>(),
             get<CoroutinesDispatchers>()
         )
     }
@@ -29,8 +30,8 @@ val authViewModelsModule = module {
     viewModel {
         SignInViewModel(
             get<Commons>(),
-            get<AuthUseCase>(),
             get<ValidatorUseCase>(),
+            get<AuthSignInUseCase>(),
             get<CoroutinesDispatchers>()
         )
     }
@@ -38,9 +39,8 @@ val authViewModelsModule = module {
     viewModel {
         TokensViewModel(
             get<Commons>(),
-            get<AuthUseCase>(),
             get<GetStorageUseCase>(),
-            get<SaveStorageUseCase>(),
+            get<AuthRefreshUseCase>(),
             get<CoroutinesDispatchers>(),
         )
     }

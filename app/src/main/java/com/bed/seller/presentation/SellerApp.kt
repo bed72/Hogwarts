@@ -10,11 +10,15 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.android.ext.koin.androidContext
 
 import com.bed.seller.infrastructure.modules.networkModule
-import com.bed.seller.infrastructure.modules.adaptersModule
 import com.bed.seller.infrastructure.modules.dispatchersModule
+import com.bed.seller.infrastructure.modules.adapterClientModule
+import com.bed.seller.infrastructure.modules.adapterStorageModule
 import com.bed.seller.infrastructure.modules.auth.authCommonModule
-import com.bed.seller.infrastructure.modules.auth.authUseCasesModule
+import com.bed.seller.infrastructure.modules.adapterValidatorModule
+import com.bed.seller.infrastructure.modules.auth.authRefreshUseCasesModule
 import com.bed.seller.infrastructure.modules.auth.authViewModelsModule
+import com.bed.seller.infrastructure.modules.auth.storageUseCaseModule
+import com.bed.seller.infrastructure.modules.auth.validatorsUSeCaseModule
 import com.bed.seller.infrastructure.modules.home.homeViewModelsModule
 
 class SellerApp : Application() {
@@ -28,11 +32,19 @@ class SellerApp : Application() {
             modules(
                 // Shared Modules
                 networkModule(),
-                adaptersModule(),
                 dispatchersModule(),
+                // Adapters
+                adapterClientModule(),
+                adapterStorageModule(),
+                adapterValidatorModule(),
+
+                // UseCases
+                storageUseCaseModule(),
+                validatorsUSeCaseModule(),
+
                 // Auth Modules
                 authCommonModule(),
-                authUseCasesModule,
+                authRefreshUseCasesModule,
                 authViewModelsModule,
                 // Home Modules
                 homeViewModelsModule

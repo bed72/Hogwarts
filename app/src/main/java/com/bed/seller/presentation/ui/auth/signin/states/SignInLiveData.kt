@@ -11,7 +11,7 @@ import androidx.lifecycle.MutableLiveData
 
 import com.bed.seller.presentation.ui.common.Commons
 
-import com.bed.seller.domain.usecases.auth.AuthUseCase
+import com.bed.seller.domain.usecases.auth.AuthSignInUseCase
 import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
 
 import com.bed.seller.domain.entities.paths.PathEntity
@@ -20,7 +20,7 @@ import com.bed.seller.domain.entities.auth.signin.SignInBodyRequestEntity
 
 class SignInLiveData(
     private val commons: Commons,
-    private val authUseCase: AuthUseCase,
+    private val authSignInUseCase: AuthSignInUseCase,
     private val coroutineDispatcher: CoroutinesDispatchers
 ) {
     private val actions = MutableLiveData<Actions>()
@@ -31,7 +31,7 @@ class SignInLiveData(
                 if (action is Actions.SignIn) {
                     emit(States.Loading)
 
-                    authUseCase(buildBodyParams(action)).collect { response ->
+                    authSignInUseCase(buildBodyParams(action)).collect { response ->
                         response.fold(
                             { failure -> emit(States.Failure(commons.mapper(failure.status))) },
                             { success -> emit(States.Success(success.data, R.string.sign_in_success)) }
@@ -48,7 +48,7 @@ class SignInLiveData(
     }
 
     private fun buildBodyParams(action: Actions.SignIn) =
-        AuthUseCase.Params(PathEntity.SIGN_IN, action.params)
+        AuthSignInUseCase.Params(PathEntity.SIGN_IN, action.params)
 
     sealed class Actions {
         data class SignIn(val params: SignInBodyRequestEntity) : Actions()

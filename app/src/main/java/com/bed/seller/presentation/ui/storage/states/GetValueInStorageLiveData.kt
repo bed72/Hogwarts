@@ -8,6 +8,7 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.distinctUntilChanged
 
 import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
 import com.bed.seller.domain.usecases.storage.GetStorageUseCase
@@ -19,6 +20,7 @@ class GetValueInStorageLiveData(
     private val actions = MutableLiveData<Actions>()
 
     val states: LiveData<States> = actions
+        .distinctUntilChanged()
         .switchMap { action ->
             liveData(coroutineDispatcher.main()) {
                 if (action is Actions.Get) {

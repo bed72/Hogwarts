@@ -12,13 +12,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 import com.google.android.material.textfield.TextInputLayout
 
-import com.bed.seller.infrastructure.storage.StorageConstants
-
-import com.bed.seller.domain.entities.form.TextFieldEntity
-import com.bed.seller.domain.entities.auth.signin.isNotEmpty
-import com.bed.seller.domain.entities.auth.AuthResponseEntity
-import com.bed.seller.domain.entities.auth.signin.SignInBodyRequestEntity
-
 import com.bed.seller.presentation.extensions.snake
 import com.bed.seller.presentation.extensions.hideKeyboard
 import com.bed.seller.presentation.extensions.navigationTo
@@ -28,17 +21,18 @@ import com.bed.seller.presentation.extensions.actionKeyboard
 import com.bed.seller.presentation.ui.common.Commons
 import com.bed.seller.presentation.ui.common.fragment.BaseFragment
 
-import com.bed.seller.presentation.ui.auth.tokens.TokensViewModel
 import com.bed.seller.presentation.ui.auth.signin.states.SignInLiveData
 
-import com.bed.seller.presentation.ui.storage.states.SaveValueInStorageLiveData
+import com.bed.seller.domain.entities.form.TextFieldEntity
+
+import com.bed.seller.domain.entities.auth.signin.isNotEmpty
+import com.bed.seller.domain.entities.auth.signin.SignInBodyRequestEntity
 
 class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding::inflate) {
 
     private var authBody = SignInBodyRequestEntity()
 
     private val signInViewModel: SignInViewModel by viewModel()
-    private val tokensViewModel: TokensViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -55,9 +49,8 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
                 SignInLiveData.States.Empty -> Commons.EMPTY
                 SignInLiveData.States.Loading -> Commons.LOADING
                 is SignInLiveData.States.Success -> {
-                    saveData(states.data)
-                    observeStorageState()
                     snake(requireView(), states.message)
+                    navigationTo(R.id.action_sign_in_fragment_to_home_fragment)
 
                     Commons.SUCCESS
                 }
@@ -65,21 +58,6 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
                     snake(requireView(), states.message)
 
                     Commons.FAILURE
-                }
-            }
-        }
-    }
-
-    private fun observeStorageState() {
-        tokensViewModel.saveRefreshToken.state.observe(viewLifecycleOwner) { states ->
-            when (states) {
-                SaveValueInStorageLiveData.States.Loading -> Commons.LOADING
-                is SaveValueInStorageLiveData.States.Success ->
-                    navigationTo(R.id.action_sign_in_fragment_to_home_fragment)
-                is SaveValueInStorageLiveData.States.Failure -> {
-                    snake(requireView(), R.string.generic_failure_storage_message)
-
-                    navigationTo(R.id.action_sign_in_fragment_to_home_fragment)
                 }
             }
         }
@@ -190,13 +168,5 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
 
     private fun buttonIsEnabled(isEnabled: Boolean = false) {
         binding.signInButton.isEnabled = isEnabled
-    }
-
-    private fun saveData(data: AuthResponseEntity) {
-        with (tokensViewModel.saveRefreshToken) {
-            save(StorageConstants.DATA_STORE_ACCESS_TOKEN to data.accessToken)
-            save(StorageConstants.DATA_STORE_REFRESH_TOKEN to data.refreshToken)
-            save(StorageConstants.DATA_STORE_EXPIRES_IN to data.expiresIn.toString())
-        }
     }
 }
