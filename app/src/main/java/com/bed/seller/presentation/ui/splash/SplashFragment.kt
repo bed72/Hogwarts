@@ -12,8 +12,8 @@ import com.bed.seller.presentation.extensions.navigationTo
 import com.bed.seller.infrastructure.storage.StorageConstants
 
 import com.bed.seller.presentation.ui.auth.tokens.TokensViewModel
-import com.bed.seller.presentation.ui.storage.states.GetValueInStorageLiveData
 import com.bed.seller.presentation.ui.common.fragment.BaseFragment
+import com.bed.seller.presentation.ui.storage.states.GetValueInStorageLiveData
 
 class SplashFragment : BaseFragment<SplashFragmentBinding>(SplashFragmentBinding::inflate) {
 
@@ -26,10 +26,10 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(SplashFragmentBinding
     }
 
     private fun observeTokenState() {
-        with (viewModel.getRefreshToken) {
-            get(StorageConstants.DATA_STORE_REFRESH_TOKEN)
+        with (viewModel) {
+            tokens.get(StorageConstants.DATA_STORE_REFRESH_TOKEN)
 
-            states.observe(viewLifecycleOwner) { states ->
+            tokens.states.observe(viewLifecycleOwner) { states ->
                 when (states) {
                     GetValueInStorageLiveData.States.Loading -> {}
                     is GetValueInStorageLiveData.States.Success ->

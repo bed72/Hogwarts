@@ -9,7 +9,6 @@ import com.bed.seller.domain.usecases.auth.AuthSignInUseCase
 import com.bed.seller.domain.usecases.auth.AuthSignUpUseCase
 import com.bed.seller.domain.usecases.auth.AuthRefreshUseCase
 import com.bed.seller.domain.usecases.storage.GetStorageUseCase
-import com.bed.seller.domain.usecases.storage.SaveStorageUseCase
 import com.bed.seller.domain.usecases.validator.ValidatorUseCase
 
 import com.bed.seller.presentation.ui.common.Commons
@@ -41,7 +40,6 @@ val authViewModelsModule = module {
         TokensViewModel(
             get<Commons>(),
             get<GetStorageUseCase>(),
-            get<SaveStorageUseCase>(),
             get<AuthRefreshUseCase>(),
             get<CoroutinesDispatchers>(),
         )

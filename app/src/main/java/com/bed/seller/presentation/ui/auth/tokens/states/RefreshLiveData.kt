@@ -12,12 +12,14 @@ import androidx.lifecycle.MutableLiveData
 import com.bed.seller.presentation.ui.common.Commons
 
 import com.bed.seller.domain.usecases.auth.AuthRefreshUseCase
-import com.bed.seller.domain.entities.paths.PathEntity
-import com.bed.seller.domain.entities.auth.AuthResponseEntity
 import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
+
+import com.bed.seller.domain.entities.paths.PathEntity
+import com.bed.seller.domain.entities.auth.tokens.isNotEmpty
+import com.bed.seller.domain.entities.auth.AuthResponseEntity
 import com.bed.seller.domain.entities.auth.tokens.RefreshTokenBodyRequestEntity
 
-class RefreshTokenLiveData(
+class RefreshLiveData(
     private val commons: Commons,
     private val authRefreshUseCase: AuthRefreshUseCase,
     private val coroutineDispatcher: CoroutinesDispatchers
@@ -36,14 +38,12 @@ class RefreshTokenLiveData(
                             { success -> emit(States.Success(success.data, R.string.sign_in_success)) }
                         )
                     }
-
-                    emit(States.Empty)
                 }
             }
         }
 
     fun refreshToken(params: RefreshTokenBodyRequestEntity) {
-        actions.value = Actions.RefreshToken(params)
+        if (params.isNotEmpty()) actions.value = Actions.RefreshToken(params)
     }
 
     private fun buildBodyParams(action: Actions.RefreshToken) =
@@ -54,7 +54,6 @@ class RefreshTokenLiveData(
     }
 
     sealed class States {
-        object Empty : States()
         object Loading : States()
         data class Failure(@StringRes val message: Int) : States()
         data class Success(val data: AuthResponseEntity, @StringRes val message: Int) : States()
