@@ -1,11 +1,12 @@
 package com.bed.seller.infrastructure.modules
 
-import okhttp3.Protocol
-
 import org.koin.dsl.module
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
+
+import okhttp3.Protocol
+import okhttp3.logging.HttpLoggingInterceptor
 
 import com.bed.seller.domain.usecases.storage.SaveStorageUseCase
 
@@ -34,6 +35,11 @@ fun networkModule() = module {
 
 
                 addInterceptor(AuthInterceptor(get<SaveStorageUseCase>()))
+                addInterceptor(
+                    HttpLoggingInterceptor().apply {
+                        setLevel(HttpLoggingInterceptor.Level.BODY)
+                    }
+                )
             }
         }
     }
