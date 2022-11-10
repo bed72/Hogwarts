@@ -34,7 +34,7 @@ class RefreshLiveData(
 
                     authRefreshUseCase(buildBodyParams(action)).collect { response ->
                         response.fold(
-                            { failure -> emit(States.Failure(commons.mapper(failure.status))) },
+                            { failure -> emit(States.Failure(commons.mapper(failure.data.message))) },
                             { success -> emit(States.Success(success.data, R.string.sign_in_success)) }
                         )
                     }

@@ -33,7 +33,12 @@ class SignUpLiveData(
 
                     authSignUpUseCase(buildBodyParams(action)).collect { response ->
                         response.fold(
-                            { failure -> emit(States.Failure(commons.mapper(failure.status))) },
+                            { failure ->
+                                val message = failure.data.message.ifEmpty {
+                                    failure.data.errorDescription
+                                }
+                                emit(States.Failure(commons.mapper(message)))
+                            },
                             { success ->
                                 emit(
                                     States.Success(success.data, R.string.sign_up_success_create_account)
@@ -41,8 +46,6 @@ class SignUpLiveData(
                             }
                         )
                     }
-
-                    emit(States.Empty)
                 }
             }
         }
@@ -59,7 +62,6 @@ class SignUpLiveData(
     }
 
     sealed class States {
-        object Empty : States()
         object Loading : States()
         data class Failure(@StringRes val message: Int) : States()
         data class Success(val data: AuthResponseEntity, @StringRes val message: Int) : States()

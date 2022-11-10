@@ -10,7 +10,7 @@ import org.koin.core.component.KoinComponent
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.decodeFromString
 
-import com.bed.seller.infrastructure.extension.isExpired
+import com.bed.seller.infrastructure.extension.jwtIsExpired
 import com.bed.seller.infrastructure.configuration.JSON_CONFIG
 import com.bed.seller.infrastructure.network.models.auth.AuthResponseModel
 
@@ -30,7 +30,7 @@ class AuthInterceptor : Interceptor, KoinComponent {
 
         if (url.pathSegments.contains("auth")) {
             toModel<AuthResponseModel>(response)?.let { model ->
-                if (model.accessToken.isExpired()) {
+                if (model.accessToken.jwtIsExpired()) {
                     runBlocking {
                         refreshUseCase(buildBody(model)).collect { data ->
                             data.fold(

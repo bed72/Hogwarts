@@ -21,16 +21,17 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import androidx.lifecycle.Observer
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 
-import com.bed.seller.presentation.ui.common.Commons
-
 import com.bed.seller.data.usecases.mocks.CommonMock
 import com.bed.seller.data.usecases.auth.mocks.AuthMock
 
-import com.bed.seller.domain.usecases.auth.AuthRefreshUseCase
+import com.bed.seller.domain.usecases.auth.AuthSignUpUseCase
 import com.bed.seller.domain.usecases.validator.ValidatorUseCase
 
 import com.bed.seller.infrastructure.rules.MainCoroutineRule
-import com.bed.seller.infrastructure.network.models.responses.auth.toEntity
+import com.bed.seller.infrastructure.network.models.auth.toEntity
+
+import com.bed.seller.presentation.ui.common.Commons
+import com.bed.seller.presentation.ui.auth.signup.states.SignUpLiveData
 
 @RunWith(MockitoJUnitRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -46,13 +47,13 @@ class SignUpViewModelTest {
     lateinit var commons: Commons
 
     @Mock
-    lateinit var signUpUseCase: AuthRefreshUseCase
+    lateinit var signUpUseCase: AuthSignUpUseCase
 
     @Mock
-    lateinit var signUpValidatorUseCase: ValidatorUseCase
+    lateinit var validatorUseCase: ValidatorUseCase
 
     @Mock
-    lateinit var statesObserver: Observer<Commons.States>
+    lateinit var statesObserver: Observer<SignUpLiveData.States>
 
     private lateinit var signUpViewModel: SignUpViewModel
 
@@ -62,8 +63,8 @@ class SignUpViewModelTest {
     fun setUp() {
         signUpViewModel = SignUpViewModel(
             commons,
+            validatorUseCase,
             signUpUseCase,
-            signUpValidatorUseCase,
             mainCoroutineRule.testDispatcherProvider
         ).apply {
             auth.state.observeForever(statesObserver)
@@ -78,7 +79,7 @@ class SignUpViewModelTest {
 
             signUpViewModel.auth.signUp(CommonMock.PARAMS_SIGN_UP_REQUEST)
 
-            verify(statesObserver).onChanged(isA<Commons.States.Loading>())
+            verify(statesObserver).onChanged(isA<SignUpLiveData.States.Loading>())
         }
 
     @Test
@@ -89,7 +90,7 @@ class SignUpViewModelTest {
 
             signUpViewModel.auth.signUp(CommonMock.PARAMS_SIGN_UP_REQUEST)
 
-            val (data) = signUpViewModel.auth.state.value as Commons.States.Success
+            val (data) = signUpViewModel.auth.state.value as SignUpLiveData.States.Success
             assertEquals(data, authMock.authSuccessModel.toEntity())
         }
 
@@ -104,7 +105,8 @@ class SignUpViewModelTest {
 
             signUpViewModel.auth.signUp(CommonMock.PARAMS_SIGN_UP_REQUEST)
 
-            val data = signUpViewModel.auth.state.value as Commons.States.Failure
+            val data = signUpViewModel.auth.state.value as SignUpLiveData
+            .States.Failure
             assertEquals(data.message, authMock.intIdFailureBedRequest)
         }
 }

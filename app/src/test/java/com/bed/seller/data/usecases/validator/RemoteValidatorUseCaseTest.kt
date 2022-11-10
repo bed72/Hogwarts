@@ -1,18 +1,23 @@
 package com.bed.seller.data.usecases.validator
 
+import com.nhaarman.mockitokotlin2.whenever
+
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
+
+import org.junit.Test
+import org.junit.Before
+import org.junit.runner.RunWith
+
+import org.mockito.Mock
+import org.mockito.junit.MockitoJUnitRunner
+
+import com.bed.seller.domain.entities.form.TextFieldEntity
+import com.bed.seller.domain.usecases.validator.ValidatorUseCase
+
 import com.bed.seller.data.client.ValidatorClient
 import com.bed.seller.data.usecases.mocks.CommonMock
 import com.bed.seller.data.usecases.validator.mocks.ValidatorFactoryMock
-import com.bed.seller.domain.entities.form.TextFieldEntity
-import com.bed.seller.domain.usecases.validator.ValidatorUseCase
-import com.nhaarman.mockitokotlin2.whenever
-import org.junit.Before
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
-import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
 
 @RunWith(MockitoJUnitRunner::class)
 class RemoteValidatorUseCaseTest {

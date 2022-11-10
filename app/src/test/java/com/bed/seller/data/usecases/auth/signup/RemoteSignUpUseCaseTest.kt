@@ -21,21 +21,21 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-import com.bed.seller.data.client.AuthRefreshClient
+import com.bed.seller.data.client.StorageClient
+import com.bed.seller.data.client.AuthSignUpClient
 
 import com.bed.seller.data.usecases.mocks.CommonMock
 import com.bed.seller.data.usecases.auth.mocks.AuthMock
-import com.bed.seller.data.usecases.auth.RemoteRefreshUseCase
-
-import com.bed.seller.domain.usecases.auth.AuthRefreshUseCase
-
-import com.bed.seller.domain.entities.ResponseEntity
-import com.bed.seller.domain.entities.auth.AuthResponseEntity
-import com.bed.seller.domain.entities.failure.MessageFailureResponseEntity
+import com.bed.seller.data.usecases.auth.RemoteSignUpUseCase
 
 import com.bed.seller.infrastructure.rules.MainCoroutineRule
-import com.bed.seller.infrastructure.network.models.responses.auth.toEntity
+import com.bed.seller.infrastructure.network.models.auth.toEntity
 import com.bed.seller.infrastructure.network.models.failure.toEntity
+
+import com.bed.seller.domain.entities.ResponseEntity
+import com.bed.seller.domain.usecases.auth.AuthSignUpUseCase
+import com.bed.seller.domain.entities.auth.AuthResponseEntity
+import com.bed.seller.domain.entities.failure.MessageFailureResponseEntity
 
 @RunWith(MockitoJUnitRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -45,15 +45,22 @@ class RemoteSignUpRemoteUseCaseTest {
     val mainCoroutineRule = MainCoroutineRule()
 
     @Mock
-    private lateinit var signUpClient: AuthRefreshClient
+    private lateinit var storageClient: StorageClient
 
-    private lateinit var signUpUseCase: AuthRefreshUseCase
+    @Mock
+    private lateinit var signUpClient: AuthSignUpClient
+
+    private lateinit var signUpUseCase: AuthSignUpUseCase
 
     private val authMock = AuthMock()
 
     @Before
     fun setUp() {
-        signUpUseCase = RemoteRefreshUseCase(signUpClient, mainCoroutineRule.testDispatcherProvider)
+        signUpUseCase = RemoteSignUpUseCase(
+            storageClient,
+            signUpClient,
+            mainCoroutineRule.testDispatcherProvider
+        )
     }
 
     @Test

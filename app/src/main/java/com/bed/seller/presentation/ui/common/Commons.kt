@@ -1,7 +1,7 @@
 package com.bed.seller.presentation.ui.common
 
 interface Commons {
-    fun mapper(status: Int): Int
+    fun mapper(message: String): Int
 
     companion object {
         const val CLEAR = ""

@@ -7,15 +7,15 @@ import com.bed.seller.domain.entities.failure.MessageFailureResponseEntity
 
 @Serializable
 data class MessageFailureResponseModel(
-    @SerialName("error")
-    val error: String? = null,
-
     @SerialName("msg")
     val message: String? = null,
+
+    @SerialName("error_description")
+    val errorDescription: String? = null,
 )
 
 fun MessageFailureResponseModel.toEntity() =
     MessageFailureResponseEntity(
-        error = this.error ?: "",
-        message = this.message ?: ""
+        message = this.message ?: "",
+        errorDescription = this.errorDescription ?: "",
     )

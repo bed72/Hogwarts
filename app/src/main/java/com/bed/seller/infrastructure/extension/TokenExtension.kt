@@ -6,7 +6,7 @@ import com.auth0.android.jwt.JWT
 
 import com.bed.seller.infrastructure.network.models.auth.AuthResponseModel
 
-fun String.isExpired() = toJwt()?.isExpired(0) ?: true
+fun String.jwtIsExpired() = toJwt()?.isExpired(0) ?: true
 
 private fun AuthResponseModel.getAccessTokenJWT(): JWT? = accessToken.toJwt()
 

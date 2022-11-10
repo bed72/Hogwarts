@@ -48,7 +48,6 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
     private fun observeSignUpState() {
             signUpViewModel.auth.state.observe(viewLifecycleOwner) { states ->
                 binding.signUpActionViewFlipper.displayedChild = when (states) {
-                    SignUpLiveData.States.Empty -> Commons.EMPTY
                     SignUpLiveData.States.Loading -> Commons.LOADING
                     is SignUpLiveData.States.Success -> {
                         snake(requireView(), states.message)

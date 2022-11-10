@@ -17,6 +17,7 @@ import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
 import com.bed.seller.domain.entities.paths.PathEntity
 import com.bed.seller.domain.entities.auth.AuthResponseEntity
 import com.bed.seller.domain.entities.auth.signin.SignInBodyRequestEntity
+import com.bed.seller.presentation.ui.auth.signup.states.SignUpLiveData
 
 class SignInLiveData(
     private val commons: Commons,
@@ -33,7 +34,12 @@ class SignInLiveData(
 
                     authSignInUseCase(buildBodyParams(action)).collect { response ->
                         response.fold(
-                            { failure -> emit(States.Failure(commons.mapper(failure.status))) },
+                            { failure ->
+                                val message = failure.data.message.ifEmpty {
+                                    failure.data.errorDescription
+                                }
+                                emit(States.Failure(commons.mapper(message)))
+                            },
                             { success -> emit(States.Success(success.data, R.string.sign_in_success)) }
                         )
                     }

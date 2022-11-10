@@ -44,7 +44,6 @@ fun networkModule() = module {
                 }
 
                 addInterceptor(get<AuthInterceptor>())
-
                 addInterceptor(get<HttpLoggingInterceptor>())
             }
         }
