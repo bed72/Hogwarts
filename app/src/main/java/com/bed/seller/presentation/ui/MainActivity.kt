@@ -51,9 +51,10 @@ class MainActivity : AppCompatActivity() {
     private fun setupAppComponentBarController() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
+                R.id.home_fragment,
+                R.id.splash_fragment,
                 R.id.sign_in_fragment,
                 R.id.sign_up_fragment,
-                R.id.home_fragment
             )
         )
 
@@ -71,9 +72,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun visibilityNavBar(destination: Int) {
         val visibility = when (destination) {
-            R.id.sign_in_fragment -> GONE
-            R.id.sign_up_fragment -> GONE
-            R.id.home_fragment -> VISIBLE
+            R.id.splash_fragment -> GONE
+            R.id.sign_in_fragment, R.id.sign_up_fragment -> GONE
+            R.id.home_fragment, R.id.products_fragment, R.id.account_fragment -> VISIBLE
             else -> GONE
         }
 
@@ -82,10 +83,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun visibilityToolBar(destination: Int) {
         val visibility = when (destination) {
-            R.id.sign_in_fragment -> GONE
-            R.id.sign_up_fragment -> GONE
-            R.id.home_fragment -> GONE
-            else -> GONE
+            R.id.splash_fragment -> GONE
+            R.id.sign_in_fragment, R.id.sign_up_fragment -> GONE
+            R.id.home_fragment, R.id.products_fragment, R.id.account_fragment -> GONE
+            else -> VISIBLE
         }
 
         binding.toolbarApp.visibility = visibility

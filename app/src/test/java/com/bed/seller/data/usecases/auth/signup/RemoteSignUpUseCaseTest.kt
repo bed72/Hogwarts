@@ -21,8 +21,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-import com.bed.seller.data.client.StorageClient
-import com.bed.seller.data.client.AuthSignUpClient
+import com.bed.seller.data.client.storage.StorageClient
+import com.bed.seller.data.client.auth.SignUpClient
 
 import com.bed.seller.data.usecases.mocks.CommonMock
 import com.bed.seller.data.usecases.auth.mocks.AuthMock
@@ -33,7 +33,7 @@ import com.bed.seller.infrastructure.network.models.auth.toEntity
 import com.bed.seller.infrastructure.network.models.failure.toEntity
 
 import com.bed.seller.domain.entities.ResponseEntity
-import com.bed.seller.domain.usecases.auth.AuthSignUpUseCase
+import com.bed.seller.domain.usecases.auth.SignUpUseCase
 import com.bed.seller.domain.entities.auth.AuthResponseEntity
 import com.bed.seller.domain.entities.failure.MessageFailureResponseEntity
 
@@ -48,9 +48,9 @@ class RemoteSignUpRemoteUseCaseTest {
     private lateinit var storageClient: StorageClient
 
     @Mock
-    private lateinit var signUpClient: AuthSignUpClient
+    private lateinit var signUpClient: SignUpClient
 
-    private lateinit var signUpUseCase: AuthSignUpUseCase
+    private lateinit var signUpUseCase: SignUpUseCase
 
     private val authMock = AuthMock()
 

@@ -1,4 +1,4 @@
-package com.bed.seller.data.client
+package com.bed.seller.data.client.validators
 
 import com.bed.seller.domain.entities.form.ValidateFormEntity
 

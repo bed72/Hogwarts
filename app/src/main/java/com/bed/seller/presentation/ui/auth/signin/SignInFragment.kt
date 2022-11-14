@@ -46,10 +46,8 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
     private fun observeSignInState() {
         signInViewModel.auth.state.observe(viewLifecycleOwner) { states ->
             binding.signInActionViewFlipper.displayedChild = when (states) {
-                SignInLiveData.States.Empty -> Commons.EMPTY
                 SignInLiveData.States.Loading -> Commons.LOADING
                 is SignInLiveData.States.Success -> {
-                    snake(requireView(), states.message)
                     navigationTo(R.id.action_sign_in_fragment_to_home_fragment)
 
                     Commons.SUCCESS

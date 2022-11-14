@@ -19,6 +19,10 @@
     <string name="failure_email_message">E-mail inválido.</string>
     <string name="failure_password_message">Senha inválida.</string>
 
+    <!-- Strings related to User -->
+    <string name="user_enter_again">Precisamos das suas credenciais.</string>
+    <string name="user_welcome_success">Bem vindo %s.</string>
+
     <!-- Strings related to SignIn -->
     <string name="sign_in_title">Bem vindo!</string>
     <string name="sign_in_sub_title">Olá.\nAcesse sua conta e divulge seus produtos</string>
@@ -26,7 +30,6 @@
     <string name="sign_in_title_check_box">Lembrar de mim</string>
     <string name="sign_in_title_recover_password_button">Recuperar conta?</string>
     <string name="sign_in_title_button">Entrar</string>
-    <string name="sign_in_success">Bem vindo.</string>
     <string name="sign_in_description_create_account">Não possui uma conta?</string>
 
     <!-- Strings related to SignUp -->
@@ -48,6 +51,7 @@
     <string name="generic_failure_message">Algo inesperado aconteceu!</string>
     <string name="generic_failure_message_form">Preencha as informações corretamente!</string>
     <string name="generic_failure_message_email_already_registered">E-mail já cadastrado!</string>
+    <string name="generic_failure_requires_bearer_token">Opa, parece que sua sessão expirou!</string>
     <string name="generic_failure_storage_message">Não foi possível salvar suas credenciais!</string>
     <string name="generic_failure_invalid_credentials">E-mail ou Senha inválido!</string>
 

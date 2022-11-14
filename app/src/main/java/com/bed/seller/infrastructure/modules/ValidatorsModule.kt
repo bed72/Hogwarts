@@ -4,7 +4,7 @@ import org.koin.dsl.module
 
 import com.bed.seller.domain.usecases.validator.ValidatorUseCase
 
-import com.bed.seller.data.client.ValidatorClient
+import com.bed.seller.data.client.validators.ValidatorClient
 import com.bed.seller.data.usecases.validator.RemoteValidatorUseCase
 
 import com.bed.seller.infrastructure.validator.adapters.ValidatorAdapter

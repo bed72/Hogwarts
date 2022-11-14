@@ -1,4 +1,4 @@
-package com.bed.seller.data.client
+package com.bed.seller.data.client.storage
 
 import com.bed.seller.domain.alias.ResponseStorageType
 

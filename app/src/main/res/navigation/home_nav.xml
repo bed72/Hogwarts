@@ -10,6 +10,6 @@
     <fragment
         android:id="@+id/home_fragment"
         tools:layout="@layout/home_fragment"
-        android:name="com.bed.seller.presentation.ui.home.store.HomeFragment" />
+        android:name="com.bed.seller.presentation.ui.home.HomeFragment" />
 
 </navigation>

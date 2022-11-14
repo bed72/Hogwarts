@@ -2,13 +2,13 @@ package com.bed.seller.data.usecases.auth
 
 import kotlinx.coroutines.withContext
 
-import com.bed.seller.data.client.StorageClient
-import com.bed.seller.data.client.AuthSignUpClient
+import com.bed.seller.data.client.storage.StorageClient
+import com.bed.seller.data.client.auth.SignUpClient
 
 import com.bed.seller.domain.entities.ResponseEntity
 
 import com.bed.seller.domain.usecases.UseCase
-import com.bed.seller.domain.usecases.auth.AuthSignUpUseCase
+import com.bed.seller.domain.usecases.auth.SignUpUseCase
 
 import com.bed.seller.domain.alias.AuthEitherEntityType
 import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
@@ -19,10 +19,10 @@ import com.bed.seller.infrastructure.network.models.failure.toEntity
 
 class RemoteSignUpUseCase(
     private val storageClient: StorageClient,
-    private val signUpClient: AuthSignUpClient,
+    private val signUpClient: SignUpClient,
     private val coroutines: CoroutinesDispatchers
-) : AuthSignUpUseCase, UseCase<AuthSignUpUseCase.Params, AuthEitherEntityType>() {
-        override suspend fun doWork(params: AuthSignUpUseCase.Params): AuthEitherEntityType =
+) : SignUpUseCase, UseCase<SignUpUseCase.Params, AuthEitherEntityType>() {
+        override suspend fun doWork(params: SignUpUseCase.Params): AuthEitherEntityType =
             withContext(coroutines.io()) {
                 return@withContext signUpClient(params.path, params.body)
                     .map { success ->

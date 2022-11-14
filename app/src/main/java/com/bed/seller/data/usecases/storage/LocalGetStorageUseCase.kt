@@ -4,7 +4,7 @@ import arrow.core.Either
 
 import kotlinx.coroutines.withContext
 
-import com.bed.seller.data.client.StorageClient
+import com.bed.seller.data.client.storage.StorageClient
 
 import com.bed.seller.domain.alias.ResponseStorageType
 import com.bed.seller.domain.dispatchers.CoroutinesDispatchers

@@ -10,7 +10,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.request.url
 import io.ktor.client.request.setBody
 
-import com.bed.seller.data.client.AuthSignInClient
+import com.bed.seller.data.client.auth.SignInClient
 
 import com.bed.seller.domain.alias.AuthEitherModelType
 
@@ -20,7 +20,7 @@ import com.bed.seller.domain.entities.auth.signin.SignInBodyRequestEntity
 import com.bed.seller.infrastructure.network.adapters.safe
 import com.bed.seller.infrastructure.network.models.auth.signin.SignInBodyRequestModel
 
-class AuthSignInNetworkAdapter(private val httpClient: HttpClient) : AuthSignInClient {
+class SignInAdapter(private val httpClient: HttpClient) : SignInClient {
     override suspend fun invoke(path: PathEntity, params: SignInBodyRequestEntity): AuthEitherModelType =
         httpClient.safe {
             method = HttpMethod.Post

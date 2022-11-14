@@ -5,7 +5,6 @@ interface Commons {
 
     companion object {
         const val CLEAR = ""
-        const val EMPTY = 0
         const val LOADING = 1
         const val SUCCESS = 1
         const val FAILURE = 2

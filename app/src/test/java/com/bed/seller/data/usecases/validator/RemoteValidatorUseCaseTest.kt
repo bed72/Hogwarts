@@ -15,7 +15,7 @@ import org.mockito.junit.MockitoJUnitRunner
 import com.bed.seller.domain.entities.form.TextFieldEntity
 import com.bed.seller.domain.usecases.validator.ValidatorUseCase
 
-import com.bed.seller.data.client.ValidatorClient
+import com.bed.seller.data.client.validators.ValidatorClient
 import com.bed.seller.data.usecases.mocks.CommonMock
 import com.bed.seller.data.usecases.validator.mocks.ValidatorFactoryMock
 

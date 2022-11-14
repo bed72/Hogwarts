@@ -1,7 +1,5 @@
 package com.bed.seller.presentation.ui.auth.tokens.states
 
-import com.bed.seller.R
-
 import androidx.annotation.StringRes
 
 import androidx.lifecycle.liveData
@@ -11,7 +9,7 @@ import androidx.lifecycle.MutableLiveData
 
 import com.bed.seller.presentation.ui.common.Commons
 
-import com.bed.seller.domain.usecases.auth.AuthRefreshUseCase
+import com.bed.seller.domain.usecases.auth.RefreshUseCase
 import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
 
 import com.bed.seller.domain.entities.paths.PathEntity
@@ -21,7 +19,7 @@ import com.bed.seller.domain.entities.auth.tokens.RefreshTokenBodyRequestEntity
 
 class RefreshLiveData(
     private val commons: Commons,
-    private val authRefreshUseCase: AuthRefreshUseCase,
+    private val authRefreshUseCase: RefreshUseCase,
     private val coroutineDispatcher: CoroutinesDispatchers
 ) {
     private val actions = MutableLiveData<Actions>()
@@ -35,7 +33,7 @@ class RefreshLiveData(
                     authRefreshUseCase(buildBodyParams(action)).collect { response ->
                         response.fold(
                             { failure -> emit(States.Failure(commons.mapper(failure.data.message))) },
-                            { success -> emit(States.Success(success.data, R.string.sign_in_success)) }
+                            { success -> emit(States.Success(success.data)) }
                         )
                     }
                 }
@@ -47,7 +45,7 @@ class RefreshLiveData(
     }
 
     private fun buildBodyParams(action: Actions.RefreshToken) =
-        AuthRefreshUseCase.Params(PathEntity.REFRESH_TOKEN, action.params)
+        RefreshUseCase.Params(PathEntity.REFRESH_TOKEN, action.params)
 
     sealed class Actions {
         data class RefreshToken(val params: RefreshTokenBodyRequestEntity) : Actions()
@@ -56,6 +54,6 @@ class RefreshLiveData(
     sealed class States {
         object Loading : States()
         data class Failure(@StringRes val message: Int) : States()
-        data class Success(val data: AuthResponseEntity, @StringRes val message: Int) : States()
+        data class Success(val data: AuthResponseEntity) : States()
     }
 }

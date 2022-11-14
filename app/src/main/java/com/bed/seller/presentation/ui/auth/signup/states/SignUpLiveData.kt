@@ -14,24 +14,24 @@ import com.bed.seller.presentation.ui.common.Commons
 import com.bed.seller.domain.entities.paths.PathEntity
 import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
 
-import com.bed.seller.domain.usecases.auth.AuthSignUpUseCase
+import com.bed.seller.domain.usecases.auth.SignUpUseCase
 import com.bed.seller.domain.entities.auth.AuthResponseEntity
 import com.bed.seller.domain.entities.auth.signup.SignUpBodyRequestEntity
 
 class SignUpLiveData(
     private val commons: Commons,
-    private val authSignUpUseCase: AuthSignUpUseCase,
-    private val coroutineDispatcher: CoroutinesDispatchers
+    private val signUpUseCase: SignUpUseCase,
+    private val coroutines: CoroutinesDispatchers
 ) {
     private val actions = MutableLiveData<Actions>()
 
     val state: LiveData<States> = actions
         .switchMap { action ->
-            liveData(coroutineDispatcher.main()) {
+            liveData(coroutines.main()) {
                 if (action is Actions.SignUp) {
                     emit(States.Loading)
 
-                    authSignUpUseCase(buildBodyParams(action)).collect { response ->
+                    signUpUseCase(buildBodyParams(action)).collect { response ->
                         response.fold(
                             { failure ->
                                 val message = failure.data.message.ifEmpty {
@@ -55,7 +55,7 @@ class SignUpLiveData(
     }
 
     private fun buildBodyParams(action: Actions.SignUp) =
-        AuthSignUpUseCase.Params(PathEntity.SIGN_UP, action.params)
+        SignUpUseCase.Params(PathEntity.SIGN_UP, action.params)
 
     sealed class Actions {
         data class SignUp(val params: SignUpBodyRequestEntity) : Actions()

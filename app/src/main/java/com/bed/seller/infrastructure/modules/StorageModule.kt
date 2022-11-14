@@ -3,7 +3,7 @@ package com.bed.seller.infrastructure.modules
 import org.koin.dsl.module
 import org.koin.android.ext.koin.androidContext
 
-import com.bed.seller.data.client.StorageClient
+import com.bed.seller.data.client.storage.StorageClient
 
 import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
 import com.bed.seller.domain.usecases.storage.GetStorageUseCase

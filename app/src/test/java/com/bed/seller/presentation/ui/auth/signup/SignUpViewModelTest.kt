@@ -24,14 +24,14 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.bed.seller.data.usecases.mocks.CommonMock
 import com.bed.seller.data.usecases.auth.mocks.AuthMock
 
-import com.bed.seller.domain.usecases.auth.AuthSignUpUseCase
+import com.bed.seller.domain.usecases.auth.SignUpUseCase
 import com.bed.seller.domain.usecases.validator.ValidatorUseCase
 
 import com.bed.seller.infrastructure.rules.MainCoroutineRule
 import com.bed.seller.infrastructure.network.models.auth.toEntity
 
 import com.bed.seller.presentation.ui.common.Commons
-import com.bed.seller.presentation.ui.auth.signup.states.SignUpLiveData
+import com.bed.seller.presentation.ui.auth.user.states.UserLiveData
 
 @RunWith(MockitoJUnitRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -47,13 +47,13 @@ class SignUpViewModelTest {
     lateinit var commons: Commons
 
     @Mock
-    lateinit var signUpUseCase: AuthSignUpUseCase
+    lateinit var signUpUseCase: SignUpUseCase
 
     @Mock
     lateinit var validatorUseCase: ValidatorUseCase
 
     @Mock
-    lateinit var statesObserver: Observer<SignUpLiveData.States>
+    lateinit var statesObserver: Observer<UserLiveData.States>
 
     private lateinit var signUpViewModel: SignUpViewModel
 
@@ -79,7 +79,7 @@ class SignUpViewModelTest {
 
             signUpViewModel.auth.signUp(CommonMock.PARAMS_SIGN_UP_REQUEST)
 
-            verify(statesObserver).onChanged(isA<SignUpLiveData.States.Loading>())
+            verify(statesObserver).onChanged(isA<UserLiveData.States.Loading>())
         }
 
     @Test
@@ -90,7 +90,7 @@ class SignUpViewModelTest {
 
             signUpViewModel.auth.signUp(CommonMock.PARAMS_SIGN_UP_REQUEST)
 
-            val (data) = signUpViewModel.auth.state.value as SignUpLiveData.States.Success
+            val (data) = signUpViewModel.auth.state.value as UserLiveData.States.Success
             assertEquals(data, authMock.authSuccessModel.toEntity())
         }
 
@@ -105,7 +105,7 @@ class SignUpViewModelTest {
 
             signUpViewModel.auth.signUp(CommonMock.PARAMS_SIGN_UP_REQUEST)
 
-            val data = signUpViewModel.auth.state.value as SignUpLiveData
+            val data = signUpViewModel.auth.state.value as UserLiveData
             .States.Failure
             assertEquals(data.message, authMock.intIdFailureBedRequest)
         }

@@ -1,4 +1,4 @@
-package com.bed.seller.data.client
+package com.bed.seller.data.client.auth
 
 import com.bed.seller.domain.alias.AuthEitherModelType
 
@@ -6,6 +6,6 @@ import com.bed.seller.domain.entities.paths.PathEntity
 
 import com.bed.seller.domain.entities.auth.signup.SignUpBodyRequestEntity
 
-interface AuthSignUpClient {
+interface SignUpClient {
     suspend operator fun invoke(path: PathEntity, params: SignUpBodyRequestEntity): AuthEitherModelType
 }

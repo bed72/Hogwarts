@@ -2,13 +2,13 @@ package com.bed.seller.data.usecases.auth
 
 import kotlinx.coroutines.withContext
 
-import com.bed.seller.data.client.StorageClient
-import com.bed.seller.data.client.AuthRefreshClient
+import com.bed.seller.data.client.storage.StorageClient
+import com.bed.seller.data.client.auth.RefreshClient
 
 import com.bed.seller.domain.entities.ResponseEntity
 
 import com.bed.seller.domain.usecases.UseCase
-import com.bed.seller.domain.usecases.auth.AuthRefreshUseCase
+import com.bed.seller.domain.usecases.auth.RefreshUseCase
 
 import com.bed.seller.domain.alias.AuthEitherEntityType
 import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
@@ -19,10 +19,10 @@ import com.bed.seller.infrastructure.network.models.failure.toEntity
 
 class RemoteRefreshUseCase(
     private val storageClient: StorageClient,
-    private val refreshClient: AuthRefreshClient,
+    private val refreshClient: RefreshClient,
     private val coroutines: CoroutinesDispatchers
-) : AuthRefreshUseCase, UseCase<AuthRefreshUseCase.Params, AuthEitherEntityType>() {
-        override suspend fun doWork(params: AuthRefreshUseCase.Params): AuthEitherEntityType =
+) : RefreshUseCase, UseCase<RefreshUseCase.Params, AuthEitherEntityType>() {
+        override suspend fun doWork(params: RefreshUseCase.Params): AuthEitherEntityType =
             withContext(coroutines.io()) {
                 return@withContext refreshClient(params.path, params.body)
                     .map { success ->

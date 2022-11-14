@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.map
 
 import androidx.datastore.core.DataStore
 
-import com.bed.seller.data.client.StorageClient
+import com.bed.seller.data.client.storage.StorageClient
 
 import com.bed.seller.domain.alias.ResponseStorageType
 

@@ -5,13 +5,14 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 
 import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
 
-import com.bed.seller.domain.usecases.auth.AuthSignInUseCase
-import com.bed.seller.domain.usecases.auth.AuthSignUpUseCase
-import com.bed.seller.domain.usecases.auth.AuthRefreshUseCase
+import com.bed.seller.domain.usecases.auth.UserUseCase
+import com.bed.seller.domain.usecases.auth.SignInUseCase
+import com.bed.seller.domain.usecases.auth.SignUpUseCase
 import com.bed.seller.domain.usecases.storage.GetStorageUseCase
 import com.bed.seller.domain.usecases.validator.ValidatorUseCase
 
 import com.bed.seller.presentation.ui.common.Commons
+import com.bed.seller.presentation.ui.auth.user.UserViewModel
 import com.bed.seller.presentation.ui.auth.signin.SignInViewModel
 import com.bed.seller.presentation.ui.auth.signup.SignUpViewModel
 import com.bed.seller.presentation.ui.auth.tokens.TokensViewModel
@@ -22,7 +23,7 @@ val authViewModelsModule = module {
         SignUpViewModel(
             get<Commons>(),
             get<ValidatorUseCase>(),
-            get<AuthSignUpUseCase>(),
+            get<SignUpUseCase>(),
             get<CoroutinesDispatchers>()
         )
     }
@@ -31,17 +32,23 @@ val authViewModelsModule = module {
         SignInViewModel(
             get<Commons>(),
             get<ValidatorUseCase>(),
-            get<AuthSignInUseCase>(),
+            get<SignInUseCase>(),
             get<CoroutinesDispatchers>()
         )
     }
 
     viewModel {
         TokensViewModel(
-            get<Commons>(),
             get<GetStorageUseCase>(),
-            get<AuthRefreshUseCase>(),
             get<CoroutinesDispatchers>(),
+        )
+    }
+
+    viewModel {
+        UserViewModel(
+            get<Commons>(),
+            get<UserUseCase>(),
+            get<CoroutinesDispatchers>()
         )
     }
 }

@@ -6,24 +6,23 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.distinctUntilChanged
 
-import com.bed.seller.presentation.utils.PairMediatorLiveData
-
-import com.bed.seller.presentation.ui.common.Commons
-import com.bed.seller.presentation.ui.auth.signin.states.SignInLiveData
-
-import com.bed.seller.domain.usecases.auth.AuthSignInUseCase
+import com.bed.seller.domain.usecases.auth.SignInUseCase
 import com.bed.seller.domain.usecases.validator.ValidatorUseCase
 
 import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
 import com.bed.seller.domain.entities.auth.signin.SignInBodyRequestEntity
 
+import com.bed.seller.presentation.utils.PairMediatorLiveData
+
+import com.bed.seller.presentation.ui.common.Commons
+import com.bed.seller.presentation.ui.auth.signin.states.SignInLiveData
 import com.bed.seller.presentation.ui.auth.commons.states.validators.EmailValidatorLiveData
 import com.bed.seller.presentation.ui.auth.commons.states.validators.PasswordValidatorLiveData
 
 class SignInViewModel(
     commons: Commons,
     validatorUseCase: ValidatorUseCase,
-    authSignInUseCase: AuthSignInUseCase,
+    authSignInUseCase: SignInUseCase,
     coroutineDispatcher: CoroutinesDispatchers
 ) : ViewModel() {
 

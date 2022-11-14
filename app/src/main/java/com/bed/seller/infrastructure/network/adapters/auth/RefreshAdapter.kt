@@ -10,7 +10,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.request.url
 import io.ktor.client.request.setBody
 
-import com.bed.seller.data.client.AuthRefreshClient
+import com.bed.seller.data.client.auth.RefreshClient
 
 import com.bed.seller.domain.alias.AuthEitherModelType
 
@@ -20,7 +20,7 @@ import com.bed.seller.domain.entities.auth.tokens.RefreshTokenBodyRequestEntity
 import com.bed.seller.infrastructure.network.adapters.safe
 import com.bed.seller.infrastructure.network.models.auth.tokens.RefreshTokenModel
 
-class AuthRefreshNetworkAdapter(private val httpClient: HttpClient) : AuthRefreshClient {
+class RefreshAdapter(private val httpClient: HttpClient) : RefreshClient {
     override suspend fun invoke(path: PathEntity, params: RefreshTokenBodyRequestEntity): AuthEitherModelType =
         httpClient.safe {
             method = HttpMethod.Post

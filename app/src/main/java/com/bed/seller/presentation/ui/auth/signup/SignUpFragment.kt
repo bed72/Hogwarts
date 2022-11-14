@@ -24,7 +24,6 @@ import com.bed.seller.presentation.extensions.navigationBack
 
 import com.bed.seller.presentation.ui.common.Commons
 import com.bed.seller.presentation.ui.common.fragment.BaseFragment
-
 import com.bed.seller.presentation.ui.auth.signup.states.SignUpLiveData
 
 import com.bed.seller.domain.entities.auth.signup.isNotEmpty

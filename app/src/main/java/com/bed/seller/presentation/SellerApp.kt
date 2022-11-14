@@ -22,10 +22,11 @@ import com.bed.seller.infrastructure.modules.validatorsUseCaseModule
 
 import com.bed.seller.infrastructure.modules.auth.authCommonModule
 import com.bed.seller.infrastructure.modules.auth.authViewModelsModule
+import com.bed.seller.infrastructure.modules.auth.getUserUseCaseModule
 import com.bed.seller.infrastructure.modules.auth.signInUseCasesModule
 import com.bed.seller.infrastructure.modules.auth.signUpUseCasesModule
 import com.bed.seller.infrastructure.modules.home.homeViewModelsModule
-import com.bed.seller.infrastructure.modules.auth.authRefreshUseCasesModule
+import com.bed.seller.infrastructure.modules.auth.refreshUseCasesModule
 
 class SellerApp : Application() {
     override fun onCreate() {
@@ -51,9 +52,10 @@ class SellerApp : Application() {
                 validatorsUseCaseModule(),
 
                 // Auth UseCases
+                getUserUseCaseModule,
                 signInUseCasesModule,
                 signUpUseCasesModule,
-                authRefreshUseCasesModule,
+                refreshUseCasesModule,
 
                 // Shared Auth Modules
                 authCommonModule(),

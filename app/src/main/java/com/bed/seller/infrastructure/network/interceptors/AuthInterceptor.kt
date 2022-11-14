@@ -14,14 +14,14 @@ import com.bed.seller.infrastructure.extension.jwtIsExpired
 import com.bed.seller.infrastructure.configuration.JSON_CONFIG
 import com.bed.seller.infrastructure.network.models.auth.AuthResponseModel
 
-import com.bed.seller.domain.usecases.auth.AuthRefreshUseCase
+import com.bed.seller.domain.usecases.auth.RefreshUseCase
 
 import com.bed.seller.domain.entities.paths.PathEntity
 import com.bed.seller.domain.entities.auth.tokens.RefreshTokenBodyRequestEntity
 
 class AuthInterceptor : Interceptor, KoinComponent {
     private val json = JSON_CONFIG
-    private val refreshUseCase: AuthRefreshUseCase by inject()
+    private val refreshUseCase: RefreshUseCase by inject()
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
@@ -46,7 +46,7 @@ class AuthInterceptor : Interceptor, KoinComponent {
         return response
     }
 
-    private fun buildBody(model: AuthResponseModel) = AuthRefreshUseCase.Params(
+    private fun buildBody(model: AuthResponseModel) = RefreshUseCase.Params(
         PathEntity.REFRESH_TOKEN,
         RefreshTokenBodyRequestEntity(model.refreshToken)
     )

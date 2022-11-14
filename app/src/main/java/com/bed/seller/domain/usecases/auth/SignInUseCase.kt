@@ -5,10 +5,10 @@ import kotlinx.coroutines.flow.Flow
 import com.bed.seller.domain.alias.AuthEitherEntityType
 
 import com.bed.seller.domain.entities.paths.PathEntity
-import com.bed.seller.domain.entities.auth.tokens.RefreshTokenBodyRequestEntity
+import com.bed.seller.domain.entities.auth.signin.SignInBodyRequestEntity
 
-interface AuthRefreshUseCase {
+interface SignInUseCase {
     operator fun invoke(params: Params): Flow<AuthEitherEntityType>
 
-    data class Params(val path: PathEntity, val body: RefreshTokenBodyRequestEntity)
+    data class Params(val path: PathEntity, val body: SignInBodyRequestEntity)
 }
