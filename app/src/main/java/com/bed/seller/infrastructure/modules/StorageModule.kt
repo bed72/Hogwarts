@@ -5,7 +5,7 @@ import org.koin.android.ext.koin.androidContext
 
 import com.bed.seller.data.client.storage.StorageClient
 
-import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
+import com.bed.seller.domain.dispatchers.Coroutines
 import com.bed.seller.domain.usecases.storage.GetStorageUseCase
 import com.bed.seller.domain.usecases.storage.SaveStorageUseCase
 
@@ -23,14 +23,14 @@ fun storageUseCaseModule() = module {
     single<SaveStorageUseCase> {
         LocalSaveStorageUseCase(
             get<StorageClient>(),
-            get<CoroutinesDispatchers>(),
+            get<Coroutines>(),
         )
     }
 
     single<GetStorageUseCase> {
         LocalGetStorageUseCase(
             get<StorageClient>(),
-            get<CoroutinesDispatchers>(),
+            get<Coroutines>(),
         )
     }
 }

@@ -3,52 +3,56 @@ package com.bed.seller.infrastructure.modules.auth
 import org.koin.dsl.module
 import org.koin.androidx.viewmodel.dsl.viewModel
 
-import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
+import com.bed.seller.domain.dispatchers.Coroutines
+import com.bed.seller.domain.usecases.auth.RefreshUseCase
 
 import com.bed.seller.domain.usecases.auth.UserUseCase
 import com.bed.seller.domain.usecases.auth.SignInUseCase
 import com.bed.seller.domain.usecases.auth.SignUpUseCase
-import com.bed.seller.domain.usecases.storage.GetStorageUseCase
+import com.bed.seller.domain.usecases.storage.SaveStorageUseCase
 import com.bed.seller.domain.usecases.validator.ValidatorUseCase
 
 import com.bed.seller.presentation.ui.common.Commons
 import com.bed.seller.presentation.ui.auth.user.UserViewModel
 import com.bed.seller.presentation.ui.auth.signin.SignInViewModel
 import com.bed.seller.presentation.ui.auth.signup.SignUpViewModel
-import com.bed.seller.presentation.ui.auth.tokens.TokensViewModel
+import com.bed.seller.presentation.ui.auth.refresh.RefreshViewModel
 
 val authViewModelsModule = module {
 
     viewModel {
         SignUpViewModel(
             get<Commons>(),
-            get<ValidatorUseCase>(),
+            get<Coroutines>(),
             get<SignUpUseCase>(),
-            get<CoroutinesDispatchers>()
+            get<ValidatorUseCase>(),
+            get<SaveStorageUseCase>()
         )
     }
 
     viewModel {
         SignInViewModel(
             get<Commons>(),
-            get<ValidatorUseCase>(),
+            get<Coroutines>(),
             get<SignInUseCase>(),
-            get<CoroutinesDispatchers>()
+            get<ValidatorUseCase>(),
+            get<SaveStorageUseCase>()
         )
     }
 
     viewModel {
-        TokensViewModel(
-            get<GetStorageUseCase>(),
-            get<CoroutinesDispatchers>(),
+        RefreshViewModel(
+            get<Commons>(),
+            get<Coroutines>(),
+            get<RefreshUseCase>(),
         )
     }
 
     viewModel {
         UserViewModel(
             get<Commons>(),
-            get<UserUseCase>(),
-            get<CoroutinesDispatchers>()
+            get<Coroutines>(),
+            get<UserUseCase>()
         )
     }
 }

@@ -17,14 +17,14 @@ import com.bed.seller.domain.usecases.auth.UserUseCase
 import com.bed.seller.domain.usecases.auth.SignUpUseCase
 import com.bed.seller.domain.usecases.auth.SignInUseCase
 import com.bed.seller.domain.usecases.auth.RefreshUseCase
-import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
+import com.bed.seller.domain.dispatchers.Coroutines
 
 val refreshUseCasesModule = module {
     single<RefreshUseCase> {
         RemoteRefreshUseCase(
             get<StorageClient>(),
             get<RefreshClient>(),
-            get<CoroutinesDispatchers>(),
+            get<Coroutines>(),
         )
     }
 }
@@ -34,7 +34,7 @@ val signInUseCasesModule = module {
         RemoteSignInUseCase(
             get<StorageClient>(),
             get<SignInClient>(),
-            get<CoroutinesDispatchers>(),
+            get<Coroutines>(),
         )
     }
 }
@@ -44,7 +44,7 @@ val signUpUseCasesModule = module {
         RemoteSignUpUseCase(
             get<StorageClient>(),
             get<SignUpClient>(),
-            get<CoroutinesDispatchers>(),
+            get<Coroutines>(),
         )
     }
 }
@@ -53,7 +53,7 @@ val getUserUseCaseModule = module {
     single<UserUseCase> {
         RemoteUserUseCase(
             get<UserClient>(),
-            get<CoroutinesDispatchers>(),
+            get<Coroutines>(),
         )
     }
 }

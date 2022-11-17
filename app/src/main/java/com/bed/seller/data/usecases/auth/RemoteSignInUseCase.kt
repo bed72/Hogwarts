@@ -11,7 +11,7 @@ import com.bed.seller.domain.usecases.UseCase
 import com.bed.seller.domain.usecases.auth.SignInUseCase
 
 import com.bed.seller.domain.alias.AuthEitherEntityType
-import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
+import com.bed.seller.domain.dispatchers.Coroutines
 
 import com.bed.seller.infrastructure.storage.StorageConstants
 import com.bed.seller.infrastructure.network.models.auth.toEntity
@@ -20,7 +20,7 @@ import com.bed.seller.infrastructure.network.models.failure.toEntity
 class RemoteSignInUseCase(
     private val storageClient: StorageClient,
     private val signInClient: SignInClient,
-    private val coroutines: CoroutinesDispatchers
+    private val coroutines: Coroutines
 ) : SignInUseCase, UseCase<SignInUseCase.Params, AuthEitherEntityType>() {
         override suspend fun doWork(params: SignInUseCase.Params): AuthEitherEntityType =
             withContext(coroutines.io()) {

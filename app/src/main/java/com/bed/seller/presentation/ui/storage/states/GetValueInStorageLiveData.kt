@@ -10,12 +10,12 @@ import androidx.lifecycle.switchMap
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.distinctUntilChanged
 
-import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
+import com.bed.seller.domain.dispatchers.Coroutines
 import com.bed.seller.domain.usecases.storage.GetStorageUseCase
 
 class GetValueInStorageLiveData(
     private val useCase: GetStorageUseCase,
-    private val coroutineDispatcher: CoroutinesDispatchers
+    private val coroutineDispatcher: Coroutines
 ) {
     private val actions = MutableLiveData<Actions>()
 

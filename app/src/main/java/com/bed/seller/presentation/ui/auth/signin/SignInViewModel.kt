@@ -9,8 +9,9 @@ import androidx.lifecycle.distinctUntilChanged
 import com.bed.seller.domain.usecases.auth.SignInUseCase
 import com.bed.seller.domain.usecases.validator.ValidatorUseCase
 
-import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
+import com.bed.seller.domain.dispatchers.Coroutines
 import com.bed.seller.domain.entities.auth.signin.SignInBodyRequestEntity
+import com.bed.seller.domain.usecases.storage.SaveStorageUseCase
 
 import com.bed.seller.presentation.utils.PairMediatorLiveData
 
@@ -21,15 +22,17 @@ import com.bed.seller.presentation.ui.auth.commons.states.validators.PasswordVal
 
 class SignInViewModel(
     commons: Commons,
+    coroutines: Coroutines,
+    signInUseCase: SignInUseCase,
     validatorUseCase: ValidatorUseCase,
-    authSignInUseCase: SignInUseCase,
-    coroutineDispatcher: CoroutinesDispatchers
+    storageUseCase: SaveStorageUseCase
 ) : ViewModel() {
 
     val auth = SignInLiveData(
         commons,
-        authSignInUseCase,
-        coroutineDispatcher
+        coroutines,
+        signInUseCase,
+        storageUseCase
     )
 
     val email = EmailValidatorLiveData(validatorUseCase)

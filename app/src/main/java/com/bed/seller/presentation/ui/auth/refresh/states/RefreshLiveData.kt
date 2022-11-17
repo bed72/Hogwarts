@@ -1,4 +1,4 @@
-package com.bed.seller.presentation.ui.auth.tokens.states
+package com.bed.seller.presentation.ui.auth.refresh.states
 
 import androidx.annotation.StringRes
 
@@ -10,7 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import com.bed.seller.presentation.ui.common.Commons
 
 import com.bed.seller.domain.usecases.auth.RefreshUseCase
-import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
+import com.bed.seller.domain.dispatchers.Coroutines
 
 import com.bed.seller.domain.entities.paths.PathEntity
 import com.bed.seller.domain.entities.auth.tokens.isNotEmpty
@@ -19,18 +19,18 @@ import com.bed.seller.domain.entities.auth.tokens.RefreshTokenBodyRequestEntity
 
 class RefreshLiveData(
     private val commons: Commons,
-    private val authRefreshUseCase: RefreshUseCase,
-    private val coroutineDispatcher: CoroutinesDispatchers
+    private val coroutines: Coroutines,
+    private val refreshUseCase: RefreshUseCase
 ) {
     private val actions = MutableLiveData<Actions>()
 
     val states: LiveData<States> = actions
         .switchMap { action ->
-            liveData(coroutineDispatcher.main()) {
+            liveData(coroutines.main()) {
                 if (action is Actions.RefreshToken) {
                     emit(States.Loading)
 
-                    authRefreshUseCase(buildBodyParams(action)).collect { response ->
+                    refreshUseCase(buildBodyParams(action)).collect { response ->
                         response.fold(
                             { failure -> emit(States.Failure(commons.mapper(failure.data.message))) },
                             { success -> emit(States.Success(success.data)) }
