@@ -7,22 +7,21 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.MutableLiveData
 
+import com.bed.seller.R
+
 import com.bed.seller.presentation.ui.common.Commons
 
-import com.bed.seller.domain.usecases.auth.SignInUseCase
 import com.bed.seller.domain.dispatchers.Coroutines
+import com.bed.seller.domain.usecases.auth.SignInUseCase
 
 import com.bed.seller.domain.entities.paths.PathEntity
 import com.bed.seller.domain.entities.auth.AuthResponseEntity
 import com.bed.seller.domain.entities.auth.signin.SignInBodyRequestEntity
-import com.bed.seller.domain.usecases.storage.SaveStorageUseCase
-import com.bed.seller.infrastructure.storage.StorageConstants
 
 class SignInLiveData(
     private val commons: Commons,
     private val coroutines: Coroutines,
     private val signInUseCase: SignInUseCase,
-    private val storageUseCase: SaveStorageUseCase
 ) {
     private val actions = MutableLiveData<Actions>()
 
@@ -41,12 +40,7 @@ class SignInLiveData(
                                 emit(States.Failure(commons.mapper(message)))
                             },
                             { success ->
-                                save(
-                                    StorageConstants.DATA_STORE_ACCESS_TOKEN to success.data.accessToken,
-                                    StorageConstants.DATA_STORE_REFRESH_TOKEN to success.data.refreshToken,
-                                )
-
-                                emit(States.Success(success.data))
+                                emit(States.Success(success.data, R.string.user_welcome_success))
                             }
                         )
                     }
@@ -61,10 +55,6 @@ class SignInLiveData(
     private fun buildBodyParams(action: Actions.SignIn) =
         SignInUseCase.Params(PathEntity.SIGN_IN, action.params)
 
-    private suspend fun save(vararg data: Pair<String, String>)  {
-        for (value in data) storageUseCase(value.first to value.second)
-    }
-
     sealed class Actions {
         data class SignIn(val params: SignInBodyRequestEntity) : Actions()
     }
@@ -72,6 +62,6 @@ class SignInLiveData(
     sealed class States {
         object Loading : States()
         data class Failure(@StringRes val message: Int) : States()
-        data class Success(val data: AuthResponseEntity) : States()
+        data class Success(val data: AuthResponseEntity, @StringRes val message: Int) : States()
     }
 }

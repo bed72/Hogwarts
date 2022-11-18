@@ -9,7 +9,7 @@ import com.bed.seller.domain.usecases.auth.RefreshUseCase
 import com.bed.seller.domain.usecases.auth.UserUseCase
 import com.bed.seller.domain.usecases.auth.SignInUseCase
 import com.bed.seller.domain.usecases.auth.SignUpUseCase
-import com.bed.seller.domain.usecases.storage.SaveStorageUseCase
+import com.bed.seller.domain.usecases.storage.GetStorageUseCase
 import com.bed.seller.domain.usecases.validator.ValidatorUseCase
 
 import com.bed.seller.presentation.ui.common.Commons
@@ -25,8 +25,7 @@ val authViewModelsModule = module {
             get<Commons>(),
             get<Coroutines>(),
             get<SignUpUseCase>(),
-            get<ValidatorUseCase>(),
-            get<SaveStorageUseCase>()
+            get<ValidatorUseCase>()
         )
     }
 
@@ -35,8 +34,7 @@ val authViewModelsModule = module {
             get<Commons>(),
             get<Coroutines>(),
             get<SignInUseCase>(),
-            get<ValidatorUseCase>(),
-            get<SaveStorageUseCase>()
+            get<ValidatorUseCase>()
         )
     }
 
@@ -44,7 +42,7 @@ val authViewModelsModule = module {
         RefreshViewModel(
             get<Commons>(),
             get<Coroutines>(),
-            get<RefreshUseCase>(),
+            get<RefreshUseCase>()
         )
     }
 
@@ -52,7 +50,8 @@ val authViewModelsModule = module {
         UserViewModel(
             get<Commons>(),
             get<Coroutines>(),
-            get<UserUseCase>()
+            get<UserUseCase>(),
+            get<GetStorageUseCase>()
         )
     }
 }

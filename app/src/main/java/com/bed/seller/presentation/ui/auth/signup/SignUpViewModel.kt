@@ -6,11 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.distinctUntilChanged
 
-import com.bed.seller.domain.usecases.auth.SignUpUseCase
 import com.bed.seller.domain.dispatchers.Coroutines
+import com.bed.seller.domain.usecases.auth.SignUpUseCase
 import com.bed.seller.domain.usecases.validator.ValidatorUseCase
 import com.bed.seller.domain.entities.auth.signup.SignUpBodyRequestEntity
-import com.bed.seller.domain.usecases.storage.SaveStorageUseCase
 
 import com.bed.seller.presentation.ui.common.Commons
 import com.bed.seller.presentation.utils.TripleMediatorLiveData
@@ -26,14 +25,12 @@ class SignUpViewModel(
     coroutines: Coroutines,
     signUpUseCase: SignUpUseCase,
     validatorUseCase: ValidatorUseCase,
-    storageUseCase: SaveStorageUseCase
 ) : ViewModel() {
 
     val auth = SignUpLiveData(
         commons,
         coroutines,
         signUpUseCase,
-        storageUseCase
     )
 
     val name = NameValidatorLiveData(validatorUseCase)

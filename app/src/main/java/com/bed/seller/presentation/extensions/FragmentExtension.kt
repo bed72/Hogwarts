@@ -19,6 +19,7 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 
 import androidx.navigation.NavDirections
+import androidx.navigation.Navigator
 import androidx.navigation.fragment.findNavController
 
 // Colors

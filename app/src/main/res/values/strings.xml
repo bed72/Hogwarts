@@ -2,6 +2,7 @@
     <string name="app_name">Seller</string>
 
     <!-- Strings related to splash -->
+
     <string name="splash_image_description">Logo da Aplicação</string>
 
     <!-- Strings related to login -->

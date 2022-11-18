@@ -9,11 +9,11 @@ import okhttp3.Interceptor
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 
-import org.koin.core.component.inject
-import org.koin.core.component.KoinComponent
-
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
+
+import org.koin.core.component.inject
+import org.koin.core.component.KoinComponent
 
 import com.bed.seller.infrastructure.storage.StorageConstants
 
@@ -31,8 +31,8 @@ class AuthInterceptor : Interceptor, KoinComponent {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
 
-        val accessToken = getToken()
-        val refreshToken = getToken(false)
+        val accessToken = getToken() ?: ""
+        val refreshToken = getToken(false) ?: ""
 
         val response = chain.proceed(getNewRequest(request, accessToken))
 
@@ -56,13 +56,13 @@ class AuthInterceptor : Interceptor, KoinComponent {
         RefreshTokenBodyRequestEntity(data)
     )
 
-    private fun getToken(isToken: Boolean = true): String {
+    private fun getToken(isToken: Boolean = true): String? {
         val response = runBlocking {
             if (isToken) getStorageUseCase(StorageConstants.DATA_STORE_ACCESS_TOKEN).first()
             else getStorageUseCase(StorageConstants.DATA_STORE_REFRESH_TOKEN).first()
         }
 
-        return (response as Either.Right).value
+        return if (response.isRight()) (response as Either.Right).value else null
     }
 
     private fun refresh(refreshToken: String): AuthResponseEntity? {

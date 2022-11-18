@@ -11,7 +11,6 @@ import com.bed.seller.domain.usecases.validator.ValidatorUseCase
 
 import com.bed.seller.domain.dispatchers.Coroutines
 import com.bed.seller.domain.entities.auth.signin.SignInBodyRequestEntity
-import com.bed.seller.domain.usecases.storage.SaveStorageUseCase
 
 import com.bed.seller.presentation.utils.PairMediatorLiveData
 
@@ -25,14 +24,12 @@ class SignInViewModel(
     coroutines: Coroutines,
     signInUseCase: SignInUseCase,
     validatorUseCase: ValidatorUseCase,
-    storageUseCase: SaveStorageUseCase
 ) : ViewModel() {
 
     val auth = SignInLiveData(
         commons,
         coroutines,
         signInUseCase,
-        storageUseCase
     )
 
     val email = EmailValidatorLiveData(validatorUseCase)
