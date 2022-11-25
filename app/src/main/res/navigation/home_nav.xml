@@ -7,18 +7,11 @@
     app:startDestination="@id/home_fragment"
     android:id="@+id/home" >
 
-    <argument
-        app:argType="string"
-        android:name="userName" />
 
     <fragment
         android:id="@+id/home_fragment"
         tools:layout="@layout/home_fragment"
         android:name="com.bed.seller.presentation.ui.home.HomeFragment" >
-
-        <argument
-            app:argType="string"
-            android:name="userName" />
 
     </fragment>
 

@@ -9,7 +9,7 @@ import com.bed.seller.domain.usecases.auth.RefreshUseCase
 import com.bed.seller.domain.usecases.auth.UserUseCase
 import com.bed.seller.domain.usecases.auth.SignInUseCase
 import com.bed.seller.domain.usecases.auth.SignUpUseCase
-import com.bed.seller.domain.usecases.storage.GetStorageUseCase
+import com.bed.seller.domain.usecases.storage.StorageUseCase
 import com.bed.seller.domain.usecases.validator.ValidatorUseCase
 
 import com.bed.seller.presentation.ui.common.Commons
@@ -51,7 +51,7 @@ val authViewModelsModule = module {
             get<Commons>(),
             get<Coroutines>(),
             get<UserUseCase>(),
-            get<GetStorageUseCase>()
+            get<StorageUseCase>()
         )
     }
 }

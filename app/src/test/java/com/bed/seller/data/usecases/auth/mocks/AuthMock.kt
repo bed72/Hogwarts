@@ -14,11 +14,22 @@ import com.bed.seller.domain.usecases.auth.SignUpUseCase
 import com.bed.seller.infrastructure.network.models.ResponseModel
 import com.bed.seller.infrastructure.network.models.auth.toEntity
 import com.bed.seller.infrastructure.network.models.auth.AuthResponseModel
+import com.bed.seller.infrastructure.network.models.auth.user.UserMetaDataResponseModel
+import com.bed.seller.infrastructure.network.models.auth.user.UserResponseModel
 
 import com.bed.seller.infrastructure.network.models.failure.toEntity
 import com.bed.seller.infrastructure.network.models.failure.MessageFailureResponseModel
 
 class AuthMock {
+    private val userMetadata = UserMetaDataResponseModel(
+        name = "Mock_Name"
+    )
+
+    private val user = UserResponseModel(
+        id = "Mock_User_Id",
+        email = "Mock_User_Email",
+        userMetadata = userMetadata
+    )
 
     val authFailureModel = MessageFailureResponseModel(
             message = "User already registered"
@@ -26,7 +37,8 @@ class AuthMock {
 
     val authSuccessModel = AuthResponseModel(
             accessToken = "Mock_Access_Token",
-            refreshToken = "Mock_Refresh_Token"
+            refreshToken = "Mock_Refresh_Token",
+            user = user
         )
 
     val pathSignUp = PathEntity.SIGN_UP

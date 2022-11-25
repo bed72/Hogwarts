@@ -28,6 +28,7 @@ import com.bed.seller.presentation.ui.auth.signup.states.SignUpLiveData
 
 import com.bed.seller.domain.entities.auth.signup.isNotEmpty
 import com.bed.seller.domain.entities.auth.signup.SignUpBodyRequestEntity
+import com.bed.seller.presentation.ui.common.navigation.Navigation
 
 class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding::inflate) {
 
@@ -50,6 +51,7 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
                     SignUpLiveData.States.Loading -> Commons.LOADING
                     is SignUpLiveData.States.Success -> {
                         snake(requireView(), states.message)
+
                         navigationTo(R.id.action_sign_up_fragment_to_home_fragment)
 
                         Commons.SUCCESS

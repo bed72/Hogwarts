@@ -10,8 +10,8 @@
     <application
         tools:targetApi="33"
         android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:allowBackup="true"
+        android:supportsRtl="false"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:theme="@style/Theme.Seller"
         android:name=".presentation.SellerApp"

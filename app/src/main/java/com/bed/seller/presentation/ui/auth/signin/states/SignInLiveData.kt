@@ -40,7 +40,14 @@ class SignInLiveData(
                                 emit(States.Failure(commons.mapper(message)))
                             },
                             { success ->
-                                emit(States.Success(success.data, R.string.user_welcome_success))
+
+                                emit(
+                                    States.Success(
+                                        success.data,
+                                        R.string.user_welcome_success,
+                                        success.data.user.userMetadata.name
+                                    )
+                                )
                             }
                         )
                     }
@@ -62,6 +69,10 @@ class SignInLiveData(
     sealed class States {
         object Loading : States()
         data class Failure(@StringRes val message: Int) : States()
-        data class Success(val data: AuthResponseEntity, @StringRes val message: Int) : States()
+        data class Success(
+            val data: AuthResponseEntity,
+            @StringRes val message: Int,
+            val arg: String
+        ) : States()
     }
 }

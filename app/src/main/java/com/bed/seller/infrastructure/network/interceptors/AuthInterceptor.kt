@@ -17,16 +17,17 @@ import org.koin.core.component.KoinComponent
 
 import com.bed.seller.infrastructure.storage.StorageConstants
 
-import com.bed.seller.domain.entities.paths.PathEntity
 import com.bed.seller.domain.usecases.auth.RefreshUseCase
+import com.bed.seller.domain.usecases.storage.StorageUseCase
+
+import com.bed.seller.domain.entities.paths.PathEntity
 import com.bed.seller.domain.entities.auth.AuthResponseEntity
-import com.bed.seller.domain.usecases.storage.GetStorageUseCase
 import com.bed.seller.domain.entities.auth.tokens.RefreshTokenBodyRequestEntity
 
 class AuthInterceptor : Interceptor, KoinComponent {
 
     private val refreshUseCase: RefreshUseCase by inject()
-    private val getStorageUseCase: GetStorageUseCase by inject()
+    private val storageUseCase: StorageUseCase by inject()
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
@@ -58,11 +59,11 @@ class AuthInterceptor : Interceptor, KoinComponent {
 
     private fun getToken(isToken: Boolean = true): String? {
         val response = runBlocking {
-            if (isToken) getStorageUseCase(StorageConstants.DATA_STORE_ACCESS_TOKEN).first()
-            else getStorageUseCase(StorageConstants.DATA_STORE_REFRESH_TOKEN).first()
+            if (isToken) storageUseCase.getSecure(StorageConstants.DATA_STORE_ACCESS_TOKEN).first()
+            else storageUseCase.getSecure(StorageConstants.DATA_STORE_REFRESH_TOKEN).first()
         }
 
-        return if (response.isRight()) (response as Either.Right).value else null
+        return response.ifEmpty { null }
     }
 
     private fun refresh(refreshToken: String): AuthResponseEntity? {

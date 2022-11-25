@@ -38,6 +38,9 @@ fun Fragment.setNavigationBarColor(@ColorRes id: Int) {
 fun Fragment.snake(view: View, @StringRes message: Int) =
     Snackbar.make(view, getText(message), Snackbar.LENGTH_SHORT).show()
 
+fun Fragment.snakeArg(view: View, @StringRes message: Int, arg: String) =
+    Snackbar.make(view, resources.getString(message, arg), Snackbar.LENGTH_SHORT).show()
+
 // Toast
 fun Fragment.showToast(@StringRes message: Int) =
     Toast.makeText(requireContext(), getText(message), Toast.LENGTH_SHORT).show()

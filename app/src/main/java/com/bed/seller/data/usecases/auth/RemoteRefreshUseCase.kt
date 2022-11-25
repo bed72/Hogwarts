@@ -18,9 +18,9 @@ import com.bed.seller.infrastructure.network.models.auth.toEntity
 import com.bed.seller.infrastructure.network.models.failure.toEntity
 
 class RemoteRefreshUseCase(
-    private val storageClient: StorageClient,
+    private val coroutines: Coroutines,
     private val refreshClient: RefreshClient,
-    private val coroutines: Coroutines
+    private val storageClient: StorageClient
 ) : RefreshUseCase, UseCase<RefreshUseCase.Params, AuthEitherEntityType>() {
         override suspend fun doWork(params: RefreshUseCase.Params): AuthEitherEntityType =
             withContext(coroutines.io()) {
@@ -30,6 +30,7 @@ class RemoteRefreshUseCase(
                             save(
                                 StorageConstants.DATA_STORE_ACCESS_TOKEN to data.accessToken,
                                 StorageConstants.DATA_STORE_REFRESH_TOKEN to data.refreshToken,
+                                StorageConstants.DATA_STORE_NAME to data.user.userMetadata.name
                             )
 
                             ResponseEntity(status, data.toEntity())
@@ -39,6 +40,6 @@ class RemoteRefreshUseCase(
             }
 
     private suspend fun save(vararg data: Pair<String, String>)  {
-        for (value in data) storageClient.save(value.first to value.second)
+        for (value in data) storageClient.saveSecure(value.first to value.second)
     }
 }

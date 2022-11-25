@@ -1,8 +1,11 @@
 package com.bed.seller.data.client.storage
 
-import com.bed.seller.domain.alias.ResponseStorageType
+import kotlinx.coroutines.flow.Flow
 
 interface StorageClient {
-    suspend fun get(params: String): ResponseStorageType
-    suspend fun save(params: Pair<String, String>): ResponseStorageType
+    suspend fun clearDataStore()
+    suspend fun get(params: String): Flow<String>
+    suspend fun save(params: Pair<String, String>): Flow<String>
+    suspend fun getSecure(params: String): Flow<String>
+    suspend fun saveSecure(params: Pair<String, String>): Flow<String>
 }

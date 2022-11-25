@@ -2,7 +2,6 @@ package com.bed.seller.presentation.ui.home
 
 import android.os.Bundle
 import android.view.View
-import androidx.navigation.fragment.navArgs
 
 import com.bed.seller.R
 import com.bed.seller.databinding.HomeFragmentBinding
@@ -16,8 +15,6 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
 
     private val viewModel: AccountViewModel by viewModel()
 
-    private val args by navArgs<HomeFragmentArgs>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -27,7 +24,6 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val userName = args.userName
-        binding.title.text = userName
+        binding.title.text = "Bed"
     }
 }
