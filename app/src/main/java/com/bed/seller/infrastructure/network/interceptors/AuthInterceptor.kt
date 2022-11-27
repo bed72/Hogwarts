@@ -32,24 +32,29 @@ class AuthInterceptor : Interceptor, KoinComponent {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
 
-        val accessToken = getToken() ?: ""
-        val refreshToken = getToken(false) ?: ""
+        val response = if (verifyPath(request.url.toString())) {
+            val accessToken = getToken() ?: ""
+            val refreshToken = getToken(false) ?: ""
 
-        val response = chain.proceed(getNewRequest(request, accessToken))
+            val response = chain.proceed(getNewRequest(request, accessToken))
 
-        return when (response.code) {
-            HttpStatusCode.OK.value, HttpStatusCode.Created.value -> response
-            HttpStatusCode.Unauthorized.value -> {
-                val data = refresh(refreshToken)
+            when (response.code) {
+                HttpStatusCode.OK.value, HttpStatusCode.Created.value -> response
+                HttpStatusCode.Unauthorized.value -> {
+                    val data = refresh(refreshToken)
 
-                if (data == null) response else chain.proceed(getNewRequest(request, data.refreshToken))
+                    if (data == null) response
+                    else chain.proceed(getNewRequest(request, data.refreshToken))
+                }
+                else -> response
             }
-            else -> response
-        }
+        } else chain.proceed(request)
+
+        return response
     }
 
     private fun getNewRequest(request: Request, data: String): Request = request.newBuilder()
-        .header(HttpHeaders.Authorization, " Bearer $data")
+        .header(HttpHeaders.Authorization, "Bearer $data")
         .build()
 
     private fun buildBody(data: String) = RefreshUseCase.Params(
@@ -57,10 +62,19 @@ class AuthInterceptor : Interceptor, KoinComponent {
         RefreshTokenBodyRequestEntity(data)
     )
 
+    private fun verifyPath(path: String): Boolean {
+        if (path.contains(PathEntity.LOGOUT.value)) return true
+        if (path.contains(PathEntity.GET_USER.value)) return true
+        if (path.contains(PathEntity.REFRESH_TOKEN.value)) return true
+
+        return false
+    }
+
     private fun getToken(isToken: Boolean = true): String? {
         val response = runBlocking {
-            if (isToken) storageUseCase.getSecure(StorageConstants.DATA_STORE_ACCESS_TOKEN).first()
-            else storageUseCase.getSecure(StorageConstants.DATA_STORE_REFRESH_TOKEN).first()
+            if (isToken) storageUseCase.getSecureData(StorageConstants.DATA_STORE_ACCESS_TOKEN)
+                .first()
+            else storageUseCase.getSecureData(StorageConstants.DATA_STORE_REFRESH_TOKEN).first()
         }
 
         return response.ifEmpty { null }

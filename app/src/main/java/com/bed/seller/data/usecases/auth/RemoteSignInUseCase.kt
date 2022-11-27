@@ -33,13 +33,13 @@ class RemoteSignInUseCase(
                                 StorageConstants.DATA_STORE_NAME to data.user.userMetadata.name
                             )
 
-                            ResponseEntity(status, data.toEntity())
-                        }
+                        ResponseEntity(status, data.toEntity())
                     }
-                    .mapLeft { failure -> ResponseEntity(failure.status, failure.data.toEntity()) }
-            }
+                }
+                .mapLeft { failure -> ResponseEntity(failure.status, failure.data.toEntity()) }
+        }
 
     private suspend fun save(vararg data: Pair<String, String>)  {
-        for (value in data) storageClient.saveSecure(value.first to value.second)
+        for (value in data) storageClient.saveSecureData(value.first to value.second)
     }
 }

@@ -33,7 +33,7 @@ class UserLiveData(
                 if (action is Actions.GetUser) {
                     emit(States.Loading)
 
-                    storageUseCase.get(StorageConstants.DATA_STORE_ACCESS_TOKEN).collect { data ->
+                    storageUseCase.getSecureData(StorageConstants.DATA_STORE_ACCESS_TOKEN).collect { data ->
                         if (data.isEmpty()) emit(States.Failure())
                         else userUseCase(buildBodyParams()).collect { response ->
                             response.fold(

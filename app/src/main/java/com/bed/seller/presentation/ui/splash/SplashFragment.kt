@@ -12,13 +12,12 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.bed.seller.presentation.extensions.snake
 import com.bed.seller.presentation.extensions.navigationTo
 
-import com.bed.seller.presentation.ui.auth.user.UserViewModel
 import com.bed.seller.presentation.ui.common.fragment.BaseFragment
-import com.bed.seller.presentation.ui.auth.user.states.UserLiveData
+import com.bed.seller.presentation.ui.splash.states.SplashLiveData
 
 class SplashFragment : BaseFragment<SplashFragmentBinding>(SplashFragmentBinding::inflate) {
 
-    private val userViewModel: UserViewModel by viewModel()
+    private val viewModel: SplashViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -27,17 +26,15 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(SplashFragmentBinding
     }
 
     private fun observeUserState() {
-        with (userViewModel.user) {
-            get()
+        with (viewModel.splash) {
+            verify()
 
             state.observe(viewLifecycleOwner) { states ->
                 when (states) {
-                    UserLiveData.States.Loading -> {}
-                    is UserLiveData.States.Success ->
-                        if (states.data.id.isNotEmpty())
-                            navigationTo(R.id.action_splash_fragment_to_home_fragment)
-                         else navigationTo(SplashFragmentDirections.actionSplashFragmentToSignInFragment())
-                    is UserLiveData.States.Failure -> {
+                    SplashLiveData.States.Loading -> {}
+                    is SplashLiveData.States.Success ->
+                        navigationTo(R.id.action_splash_fragment_to_home_fragment)
+                    is SplashLiveData.States.Failure -> {
                         val firstAppOpen = 0
                         if (states.message != firstAppOpen) snake(requireView(), states.message)
 

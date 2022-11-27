@@ -12,6 +12,7 @@ import com.bed.seller.domain.usecases.auth.SignUpUseCase
 
 import com.bed.seller.domain.alias.AuthEitherEntityType
 import com.bed.seller.domain.dispatchers.Coroutines
+import com.bed.seller.infrastructure.network.models.auth.AuthResponseModel
 
 import com.bed.seller.infrastructure.storage.StorageConstants
 import com.bed.seller.infrastructure.network.models.auth.toEntity
@@ -22,24 +23,24 @@ class RemoteSignUpUseCase(
     private val signUpClient: SignUpClient,
     private val storageClient: StorageClient
 ) : SignUpUseCase, UseCase<SignUpUseCase.Params, AuthEitherEntityType>() {
-        override suspend fun doWork(params: SignUpUseCase.Params): AuthEitherEntityType =
-            withContext(coroutines.io()) {
-                return@withContext signUpClient(params.path, params.body)
-                    .map { success ->
-                        with (success) {
-                            save(
-                                StorageConstants.DATA_STORE_ACCESS_TOKEN to data.accessToken,
-                                StorageConstants.DATA_STORE_REFRESH_TOKEN to data.refreshToken,
-                                StorageConstants.DATA_STORE_NAME to data.user.userMetadata.name
-                            )
+    override suspend fun doWork(params: SignUpUseCase.Params): AuthEitherEntityType =
+        withContext(coroutines.io()) {
+            return@withContext signUpClient(params.path, params.body)
+                .map { success ->
+                    with(success) {
+                        save(
+                            StorageConstants.DATA_STORE_ACCESS_TOKEN to data.accessToken,
+                            StorageConstants.DATA_STORE_REFRESH_TOKEN to data.refreshToken,
+                            StorageConstants.DATA_STORE_NAME to data.user.userMetadata.name
+                        )
 
-                            ResponseEntity(status, data.toEntity())
-                        }
+                        ResponseEntity(status, data.toEntity())
                     }
-                    .mapLeft { failure -> ResponseEntity(failure.status, failure.data.toEntity()) }
-            }
+                }
+                .mapLeft { failure -> ResponseEntity(failure.status, failure.data.toEntity()) }
+        }
 
-    private suspend fun save(vararg data: Pair<String, String>)  {
-        for (value in data) storageClient.saveSecure(value.first to value.second)
+    private suspend fun save(vararg data: Pair<String, String>) {
+        for (value in data) storageClient.saveSecureData(value.first to value.second)
     }
 }

@@ -3,11 +3,11 @@ package com.bed.seller.domain.usecases.storage
 import kotlinx.coroutines.flow.Flow
 
 interface StorageUseCase {
-    suspend fun clearDataStore()
+    suspend fun clearData()
 
-    suspend fun get(params: String): Flow<String>
-    suspend fun save(params: Pair<String, String>): Flow<String>
+    suspend fun getData(params: String): Flow<String>
+    suspend fun saveData(params: Pair<String, String>)
 
-    suspend fun getSecure(params: String): Flow<String>
-    suspend fun saveSecure(params: Pair<String, String>): Flow<String>
+    suspend fun getSecureData(params: String): Flow<String>
+    suspend fun saveSecureData(params: Pair<String, String>)
 }

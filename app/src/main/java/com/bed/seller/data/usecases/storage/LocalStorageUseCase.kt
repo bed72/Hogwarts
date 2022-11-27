@@ -12,16 +12,21 @@ class LocalStorageUseCase(
     private val client: StorageClient,
     private val coroutines: Coroutines
 ) : StorageUseCase {
-    override suspend fun clearDataStore() =
-        withContext(coroutines.io()) { client.clearDataStore() }
+    override suspend fun clearData() {
+        withContext(coroutines.io()) { client.clearData() }
+    }
 
-    override suspend fun get(params: String): Flow<String> =
-        withContext(coroutines.io()) { client.get(params) }
-    override suspend fun save(params: Pair<String, String>): Flow<String> =
-        withContext(coroutines.io()) { client.save(params) }
+    override suspend fun getData(params: String): Flow<String> =
+        withContext(coroutines.io()) { client.getData(params) }
 
-    override suspend fun getSecure(params: String): Flow<String>  =
-        withContext(coroutines.io()) { client.getSecure(params) }
-    override suspend fun saveSecure(params: Pair<String, String>): Flow<String> =
-        withContext(coroutines.io()) { client.saveSecure(params) }
+    override suspend fun saveData(params: Pair<String, String>) {
+        withContext(coroutines.io()) { client.saveData(params) }
+    }
+
+    override suspend fun getSecureData(params: String): Flow<String> =
+        withContext(coroutines.io()) { client.getSecureData(params) }
+
+    override suspend fun saveSecureData(params: Pair<String, String>) {
+        withContext(coroutines.io()) { client.saveSecureData(params) }
+    }
 }

@@ -13,12 +13,20 @@ import com.bed.seller.domain.usecases.storage.StorageUseCase
 import com.bed.seller.domain.usecases.validator.ValidatorUseCase
 
 import com.bed.seller.presentation.ui.common.Commons
+import com.bed.seller.presentation.ui.splash.SplashViewModel
 import com.bed.seller.presentation.ui.auth.user.UserViewModel
 import com.bed.seller.presentation.ui.auth.signin.SignInViewModel
 import com.bed.seller.presentation.ui.auth.signup.SignUpViewModel
 import com.bed.seller.presentation.ui.auth.refresh.RefreshViewModel
 
 val authViewModelsModule = module {
+
+    viewModel {
+        SplashViewModel(
+            get<Coroutines>(),
+            get<StorageUseCase>()
+        )
+    }
 
     viewModel {
         SignUpViewModel(

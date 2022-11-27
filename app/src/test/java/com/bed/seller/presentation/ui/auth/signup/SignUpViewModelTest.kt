@@ -31,7 +31,7 @@ import com.bed.seller.infrastructure.rules.MainCoroutineRule
 import com.bed.seller.infrastructure.network.models.auth.toEntity
 
 import com.bed.seller.presentation.ui.common.Commons
-import com.bed.seller.presentation.ui.auth.user.states.UserLiveData
+import com.bed.seller.presentation.ui.splash.states.SplashLiveData
 
 @RunWith(MockitoJUnitRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -53,7 +53,7 @@ class SignUpViewModelTest {
     lateinit var validatorUseCase: ValidatorUseCase
 
     @Mock
-    lateinit var statesObserver: Observer<UserLiveData.States>
+    lateinit var statesObserver: Observer<SplashLiveData.States>
 
     private lateinit var signUpViewModel: SignUpViewModel
 
@@ -79,7 +79,7 @@ class SignUpViewModelTest {
 
             signUpViewModel.auth.signUp(CommonMock.PARAMS_SIGN_UP_REQUEST)
 
-            verify(statesObserver).onChanged(isA<UserLiveData.States.Loading>())
+            verify(statesObserver).onChanged(isA<SplashLiveData.States.Loading>())
         }
 
     @Test
@@ -90,7 +90,7 @@ class SignUpViewModelTest {
 
             signUpViewModel.auth.signUp(CommonMock.PARAMS_SIGN_UP_REQUEST)
 
-            val (data) = signUpViewModel.auth.state.value as UserLiveData.States.Success
+            val (data) = signUpViewModel.auth.state.value as SplashLiveData.States.Success
             assertEquals(data, authMock.authSuccessModel.toEntity())
         }
 
@@ -105,7 +105,7 @@ class SignUpViewModelTest {
 
             signUpViewModel.auth.signUp(CommonMock.PARAMS_SIGN_UP_REQUEST)
 
-            val data = signUpViewModel.auth.state.value as UserLiveData
+            val data = signUpViewModel.auth.state.value as SplashLiveData
             .States.Failure
             assertEquals(data.message, authMock.intIdFailureBedRequest)
         }

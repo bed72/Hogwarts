@@ -40,7 +40,6 @@ class SignInLiveData(
                                 emit(States.Failure(commons.mapper(message)))
                             },
                             { success ->
-
                                 emit(
                                     States.Success(
                                         success.data,
