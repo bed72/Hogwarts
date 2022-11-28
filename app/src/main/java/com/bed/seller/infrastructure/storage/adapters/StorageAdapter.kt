@@ -2,9 +2,10 @@ package com.bed.seller.infrastructure.storage.adapters
 
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.flow.flowOf
 
-import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.decodeFromString
 
@@ -29,20 +30,18 @@ class StorageAdapter(
         dataStore.edit { preferences -> preferences.clear() }
     }
 
-    override fun getData(params: String) =
+    override fun getData(params: String): Flow<String> =
         dataStore.data.map { preferences ->
             preferences[buildPreferencesKey(params)].orEmpty()
         }
 
     override suspend fun saveData(params: Pair<String, String>) {
-        with(dataStore) {
-            edit { preferences -> preferences[buildPreferencesKey(params.first)] = params.second }
-        }
+        dataStore.edit { preferences -> preferences[buildPreferencesKey(params.first)] = params.second }
     }
 
     override fun getSecureData(params: String): Flow<String> =
-        if (params == ACCESS_TOKEN) getSecureSmallData(params)
-        else getSecureLargeData(params)
+        if (params == ACCESS_TOKEN) getSecureLargeData(params)
+        else getSecureSmallData(params)
 
     override suspend fun saveSecureData(params: Pair<String, String>) {
         if (params.first == ACCESS_TOKEN) saveSecureLargeData(params)
@@ -53,63 +52,88 @@ class StorageAdapter(
         stringPreferencesKey(key)
 
     private fun getSecureSmallData(params: String) =
-        dataStore.data.secureMap { preferences ->
+        dataStore.data.secureMap<String> { preferences ->
             preferences[buildPreferencesKey(params)].orEmpty()
         }
 
     private suspend fun saveSecureSmallData(params: Pair<String, String>) {
-        with(dataStore) {
-            secureEdit(params.second) { preferences, encrypted ->
+        dataStore.secureEdit(params.second) { preferences, encrypted ->
                 preferences[buildPreferencesKey(params.first)] = encrypted
+            }
+    }
+
+    private fun getSecureLargeData(params: String): Flow<String> {
+        val length = 28
+        val values = mutableListOf<String>()
+
+        runBlocking {
+            for (index in 0 until length) {
+                val value = getSecureSmallData("${params}_$index").first()
+
+                values.add(value)
+            }
+        }
+
+        return if (values.first().isEmpty()) flowOf("") else flowOf(values.joinToString())
+    }
+
+    private suspend fun saveSecureLargeData(params: Pair<String, String>) {
+        val (restOfTokenSize, values) = handleSaveSecureLargeData(params)
+
+        for ((index, data) in values.withIndex()) {
+            saveSecureSmallData("${params.first}_$index" to data)
+
+            if (index == (values.size - 1)) {
+                saveSecureSmallData(
+                    "${params.first}_${index + 1}" to
+                            params.second
+                                .slice(restOfTokenSize until params.second.length)
+                )
             }
         }
     }
 
-    @Suppress("UnusedPrivateMember")
-    private fun getSecureLargeData(params: String) = flowOf("")
-
-    private suspend fun saveSecureLargeData(params: Pair<String, String>) {
+    private fun handleSaveSecureLargeData(params: Pair<String, String>): Pair<Int, MutableList<String>> {
         var parts = 0
         var indices = 0
         var breakSteps = 19
 
-        val steps = 20
+        val steps = breakSteps
         val values = mutableListOf<String>()
 
-        do {
+        while (parts < params.second.length) {
             if (parts == breakSteps) {
                 values.add(params.second.slice(indices until breakSteps))
-                parts = breakSteps
                 indices = parts
                 breakSteps += steps
             }
 
-            parts ++
-        } while (parts < params.second.length)
-
-        for ((index, data) in values.withIndex()) {
-            saveSecureSmallData("${params.first}_$index" to data)
+            parts++
         }
+
+        return (breakSteps - steps) to values
     }
 
-    private suspend inline fun DataStore<Preferences>.secureEdit(
-        value: String,
+    private suspend inline fun <reified T> DataStore<Preferences>.secureEdit(
+        value: T,
         crossinline store: (MutablePreferences, String) -> Unit
     ) {
-        edit { mutablePreferences ->
-            val encrypted = client.encrypt(Json.encodeToString(value))
+        edit { preferences ->
+            val encrypted = client.encrypt(
+                SecurityJson.Config.encodeToString(value).replace("\"", "")
+            )
 
             store(
-                mutablePreferences,
+                preferences,
                 encrypted.joinToString(StorageConstants.DATA_STORE_SEPARATOR)
             )
         }
     }
 
-    private inline fun Flow<Preferences>.secureMap(
+    private inline fun <reified T> Flow<Preferences>.secureMap(
         crossinline fetch: (value: Preferences) -> String
-    ): Flow<String> = map { preferences ->
-        if (fetch(preferences).isEmpty()) return@map ""
+    ): Flow<T> = map { preferences ->
+        if (fetch(preferences).isEmpty()) return@map "" as T
 
         val decrypted = client.decrypt(
             fetch(preferences).split(StorageConstants.DATA_STORE_SEPARATOR).map { it.toByte() }

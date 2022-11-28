@@ -4,6 +4,8 @@ import kotlinx.serialization.json.Json
 
 object SecurityJson {
     val Config = Json {
+        isLenient = true
+        prettyPrint = true
         encodeDefaults = true
     }
 }
