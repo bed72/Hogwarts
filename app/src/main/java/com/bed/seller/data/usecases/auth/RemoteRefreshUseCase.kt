@@ -40,6 +40,6 @@ class RemoteRefreshUseCase(
         }
 
     private suspend fun save(vararg data: Pair<String, String>) {
-        for (value in data) storageClient.saveSecureData(value.first to value.second)
+        for (value in data) storageClient.saveData(value.first to value.second)
     }
 }

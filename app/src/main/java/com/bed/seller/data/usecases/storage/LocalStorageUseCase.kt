@@ -22,11 +22,4 @@ class LocalStorageUseCase(
     override suspend fun saveData(params: Pair<String, String>) {
         withContext(coroutines.io()) { client.saveData(params) }
     }
-
-    override suspend fun getSecureData(params: String): Flow<String> =
-        withContext(coroutines.io()) { client.getSecureData(params) }
-
-    override suspend fun saveSecureData(params: Pair<String, String>) {
-        withContext(coroutines.io()) { client.saveSecureData(params) }
-    }
 }

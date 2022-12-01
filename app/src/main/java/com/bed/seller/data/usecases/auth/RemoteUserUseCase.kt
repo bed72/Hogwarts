@@ -11,12 +11,11 @@ import com.bed.seller.domain.usecases.auth.UserUseCase
 import com.bed.seller.domain.dispatchers.Coroutines
 import com.bed.seller.domain.entities.ResponseEntity
 import com.bed.seller.domain.alias.UserEitherEntityType
-import com.bed.seller.infrastructure.network.models.auth.AuthResponseModel
-import com.bed.seller.infrastructure.network.models.auth.user.UserResponseModel
 
 import com.bed.seller.infrastructure.storage.StorageConstants
 import com.bed.seller.infrastructure.network.models.failure.toEntity
 import com.bed.seller.infrastructure.network.models.auth.user.toEntity
+import com.bed.seller.infrastructure.network.models.auth.user.UserResponseModel
 
 class RemoteUserUseCase(
     private val coroutines: Coroutines,
@@ -37,7 +36,7 @@ class RemoteUserUseCase(
         }
 
     private suspend fun save(data: UserResponseModel) {
-        storageClient.saveSecureData(StorageConstants.DATA_STORE_NAME to data.userMetadata.name)
+        storageClient.saveData(StorageConstants.DATA_STORE_NAME to data.userMetadata.name)
     }
 }
 

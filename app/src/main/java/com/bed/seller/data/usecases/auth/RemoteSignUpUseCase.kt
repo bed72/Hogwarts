@@ -5,14 +5,12 @@ import kotlinx.coroutines.withContext
 import com.bed.seller.data.client.storage.StorageClient
 import com.bed.seller.data.client.auth.SignUpClient
 
+import com.bed.seller.domain.dispatchers.Coroutines
 import com.bed.seller.domain.entities.ResponseEntity
+import com.bed.seller.domain.alias.AuthEitherEntityType
 
 import com.bed.seller.domain.usecases.UseCase
 import com.bed.seller.domain.usecases.auth.SignUpUseCase
-
-import com.bed.seller.domain.alias.AuthEitherEntityType
-import com.bed.seller.domain.dispatchers.Coroutines
-import com.bed.seller.infrastructure.network.models.auth.AuthResponseModel
 
 import com.bed.seller.infrastructure.storage.StorageConstants
 import com.bed.seller.infrastructure.network.models.auth.toEntity
@@ -41,6 +39,6 @@ class RemoteSignUpUseCase(
         }
 
     private suspend fun save(vararg data: Pair<String, String>) {
-        for (value in data) storageClient.saveSecureData(value.first to value.second)
+        for (value in data) storageClient.saveData(value.first to value.second)
     }
 }

@@ -72,9 +72,9 @@ class AuthInterceptor : Interceptor, KoinComponent {
 
     private fun getToken(isToken: Boolean = true): String? {
         val response = runBlocking {
-            if (isToken) storageUseCase.getSecureData(StorageConstants.DATA_STORE_ACCESS_TOKEN)
+            if (isToken) storageUseCase.getData(StorageConstants.DATA_STORE_ACCESS_TOKEN)
                 .first()
-            else storageUseCase.getSecureData(StorageConstants.DATA_STORE_REFRESH_TOKEN).first()
+            else storageUseCase.getData(StorageConstants.DATA_STORE_REFRESH_TOKEN).first()
         }
 
         return response.ifEmpty { null }

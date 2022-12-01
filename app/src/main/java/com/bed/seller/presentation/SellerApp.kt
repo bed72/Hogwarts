@@ -14,7 +14,6 @@ import com.bed.seller.infrastructure.modules.networkModule
 import com.bed.seller.infrastructure.modules.dispatchersModule
 import com.bed.seller.infrastructure.modules.interceptorsModule
 import com.bed.seller.infrastructure.modules.adapterClientModule
-import com.bed.seller.infrastructure.modules.adapterSecurityModule
 import com.bed.seller.infrastructure.modules.adapterStorageModule
 import com.bed.seller.infrastructure.modules.adapterValidatorModule
 
@@ -46,7 +45,6 @@ class SellerApp : Application() {
                 // Adapters
                 adapterClientModule(),
                 adapterStorageModule(),
-                adapterSecurityModule(),
                 adapterValidatorModule(),
 
                 // Shared UseCases

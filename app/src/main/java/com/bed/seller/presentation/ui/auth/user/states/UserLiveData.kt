@@ -33,7 +33,7 @@ class UserLiveData(
                 if (action is Actions.GetUser) {
                     emit(States.Loading)
 
-                    storageUseCase.getSecureData(StorageConstants.DATA_STORE_ACCESS_TOKEN).collect { data ->
+                    storageUseCase.getData(StorageConstants.DATA_STORE_ACCESS_TOKEN).collect { data ->
                         if (data.isEmpty()) emit(States.Failure())
                         else userUseCase(buildBodyParams()).collect { response ->
                             response.fold(
@@ -44,14 +44,7 @@ class UserLiveData(
 
                                     emit(States.Failure(commons.mapper(message)))
                                 },
-                                { success ->
-                                    emit(
-                                        States.Success(
-                                            success.data,
-                                            R.string.user_welcome_success
-                                        )
-                                    )
-                                }
+                                { success -> emit(States.Success(success.data, R.string.user_welcome_success)) }
                             )
                         }
                     }

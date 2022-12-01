@@ -57,9 +57,9 @@ class RemoteSignUpRemoteUseCaseTest {
     @Before
     fun setUp() {
         signUpUseCase = RemoteSignUpUseCase(
-            storageClient,
+            mainCoroutineRule.testDispatcherProvider,
             signUpClient,
-            mainCoroutineRule.testDispatcherProvider
+            storageClient
         )
     }
 

@@ -24,7 +24,7 @@ class SplashLiveData(
                 if (action is Actions.VerifyToken) {
                     emit(States.Loading)
 
-                    storageUseCase.getSecureData(StorageConstants.DATA_STORE_ACCESS_TOKEN).collect { data ->
+                    storageUseCase.getData(StorageConstants.DATA_STORE_ACCESS_TOKEN).collect { data ->
                         if (data.isEmpty()) emit(States.Failure()) else emit(States.Success)
                     }
                 }
