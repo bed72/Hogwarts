@@ -1,11 +1,11 @@
 package com.bed.seller.presentation.ui.common
 
-import com.bed.seller.R
-
 class AppCommons : Commons {
-    override fun mapper(status: Int): Int =
-        when (status) {
-            400 -> R.string.generic_failure_message_email_already_registered
-            else -> R.string.generic_failure_message
+    override fun mapper(message: String): Int =
+        when (message) {
+            Translate.REQUIRES_BEARER_TOKEN.value -> Translate.REQUIRES_BEARER_TOKEN.toPortuguese()
+            Translate.USER_ALREADY_REGISTERED.value -> Translate.USER_ALREADY_REGISTERED.toPortuguese()
+            Translate.INVALID_LOGIN_CREDENTIALS.value -> Translate.INVALID_LOGIN_CREDENTIALS.toPortuguese()
+            else -> Translate.DEFAULT.toPortuguese()
         }
 }

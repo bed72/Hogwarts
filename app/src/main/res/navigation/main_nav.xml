@@ -34,4 +34,7 @@
 
     </fragment>
 
+    <include app:graph="@navigation/account_nav" />
+    <include app:graph="@navigation/products_nav" />
+
 </navigation>

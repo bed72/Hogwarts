@@ -1,11 +1,11 @@
 package com.bed.seller.data.usecases.validator.mocks
 
 import com.bed.seller.data.usecases.mocks.CommonMock
+
 import com.bed.seller.domain.entities.form.TextFieldEntity
 import com.bed.seller.domain.entities.form.ValidateFormEntity
 
 class ValidatorFactoryMock {
-    private val invalidInputs = ValidateFormEntity()
 
     val nameIsValid = validateInputs(IsValid.Name)
     val emailIsValid = validateInputs(IsValid.Email)

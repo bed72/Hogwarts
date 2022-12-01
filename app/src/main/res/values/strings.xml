@@ -2,11 +2,11 @@
     <string name="app_name">Seller</string>
 
     <!-- Strings related to splash -->
+
     <string name="splash_image_description">Logo da Aplicação</string>
 
     <!-- Strings related to login -->
     <string name="action_log_out">Sair</string>
-    <string name="error">Ops… ocoreu um erro!</string>
 
     <!-- Strings related to SignIn and SignUp -->
     <string name="title_email_text_input">E-mail</string>
@@ -20,6 +20,10 @@
     <string name="failure_email_message">E-mail inválido.</string>
     <string name="failure_password_message">Senha inválida.</string>
 
+    <!-- Strings related to User -->
+    <string name="user_enter_again">Precisamos das suas credenciais.</string>
+    <string name="user_welcome_success">Bem vindo %s.</string>
+
     <!-- Strings related to SignIn -->
     <string name="sign_in_title">Bem vindo!</string>
     <string name="sign_in_sub_title">Olá.\nAcesse sua conta e divulge seus produtos</string>
@@ -27,7 +31,6 @@
     <string name="sign_in_title_check_box">Lembrar de mim</string>
     <string name="sign_in_title_recover_password_button">Recuperar conta?</string>
     <string name="sign_in_title_button">Entrar</string>
-    <string name="sign_in_success">Bem vindo.</string>
     <string name="sign_in_description_create_account">Não possui uma conta?</string>
 
     <!-- Strings related to SignUp -->
@@ -41,18 +44,20 @@
     <string name="sign_up_placeholder_name_text_input">Exemplo: Gabriel</string>
 
     <!-- Strings related to Recover Password -->
+    <string name="recover_password_title_button">Enviar</string>
     <string name="recover_password_title">Recuperar senha</string>
     <string name="recover_password_description_icon_button">Botão para fechar o Dialog</string>
-    <string name="recover_password_title_button">Enviar</string>
 
     <!-- Strings related to errors in Text Inputs and Response API -->
+    <string name="generic_failure_message">Algo inesperado aconteceu!</string>
     <string name="generic_failure_message_form">Preencha as informações corretamente!</string>
-    <string name="generic_failure_message">Entre com suas credenciais!</string>
-    <string name="generic_failure_storage_message">Não foi possivel salvar suas credenciais!</string>
     <string name="generic_failure_message_email_already_registered">E-mail já cadastrado!</string>
+    <string name="generic_failure_requires_bearer_token">Opa, parece que sua sessão expirou!</string>
+    <string name="generic_failure_storage_message">Não foi possível salvar suas credenciais!</string>
+    <string name="generic_failure_invalid_credentials">E-mail ou Senha inválido!</string>
 
     <!-- Strings related to BottomNavigation -->
     <string name="bottom_home">Home</string>
-    <string name="bottom_products">Produtos</string>
     <string name="bottom_account">Conta</string>
+    <string name="bottom_products">Produtos</string>
 </resources>

@@ -2,11 +2,11 @@ package com.bed.seller.infrastructure.modules
 
 import org.koin.dsl.module
 
-import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
-import com.bed.seller.domain.dispatchers.AppCoroutinesDispatchers
+import com.bed.seller.domain.dispatchers.Coroutines
+import com.bed.seller.domain.dispatchers.AppCoroutines
 
 fun dispatchersModule() = module {
-    single<CoroutinesDispatchers> {
-        AppCoroutinesDispatchers()
+    single<Coroutines> {
+        AppCoroutines()
     }
 }

@@ -13,14 +13,14 @@ import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 
-import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
+import com.bed.seller.domain.dispatchers.Coroutines
 
 @ExperimentalCoroutinesApi
 class MainCoroutineRule(
     private val testDispatcher: TestDispatcher = UnconfinedTestDispatcher(TestCoroutineScheduler())
 ) : TestWatcher() {
 
-    val testDispatcherProvider = object : CoroutinesDispatchers {
+    val testDispatcherProvider = object : Coroutines {
         override fun io(): CoroutineDispatcher = testDispatcher
         override fun main(): CoroutineDispatcher = testDispatcher
         override fun default(): CoroutineDispatcher = testDispatcher

@@ -19,6 +19,7 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 
 import androidx.navigation.NavDirections
+import androidx.navigation.Navigator
 import androidx.navigation.fragment.findNavController
 
 // Colors
@@ -36,6 +37,9 @@ fun Fragment.setNavigationBarColor(@ColorRes id: Int) {
 // SnackBar
 fun Fragment.snake(view: View, @StringRes message: Int) =
     Snackbar.make(view, getText(message), Snackbar.LENGTH_SHORT).show()
+
+fun Fragment.snakeArg(view: View, @StringRes message: Int, arg: String) =
+    Snackbar.make(view, resources.getString(message, arg), Snackbar.LENGTH_SHORT).show()
 
 // Toast
 fun Fragment.showToast(@StringRes message: Int) =

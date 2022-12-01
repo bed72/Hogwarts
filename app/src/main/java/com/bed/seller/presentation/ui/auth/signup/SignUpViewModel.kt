@@ -6,13 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.distinctUntilChanged
 
-import com.bed.seller.presentation.ui.common.Commons
-import com.bed.seller.presentation.utils.TripleMediatorLiveData
-
-import com.bed.seller.domain.usecases.auth.AuthSignUpUseCase
-import com.bed.seller.domain.dispatchers.CoroutinesDispatchers
+import com.bed.seller.domain.dispatchers.Coroutines
+import com.bed.seller.domain.usecases.auth.SignUpUseCase
 import com.bed.seller.domain.usecases.validator.ValidatorUseCase
 import com.bed.seller.domain.entities.auth.signup.SignUpBodyRequestEntity
+
+import com.bed.seller.presentation.ui.common.Commons
+import com.bed.seller.presentation.utils.TripleMediatorLiveData
 
 import com.bed.seller.presentation.ui.auth.signup.states.SignUpLiveData
 import com.bed.seller.presentation.ui.auth.signup.states.validators.NameValidatorLiveData
@@ -22,15 +22,15 @@ import com.bed.seller.presentation.ui.auth.commons.states.validators.PasswordVal
 
 class SignUpViewModel(
     commons: Commons,
+    coroutines: Coroutines,
+    signUpUseCase: SignUpUseCase,
     validatorUseCase: ValidatorUseCase,
-    authSignUpUseCase: AuthSignUpUseCase,
-    coroutineDispatcher: CoroutinesDispatchers
 ) : ViewModel() {
 
     val auth = SignUpLiveData(
         commons,
-        authSignUpUseCase,
-        coroutineDispatcher
+        coroutines,
+        signUpUseCase,
     )
 
     val name = NameValidatorLiveData(validatorUseCase)

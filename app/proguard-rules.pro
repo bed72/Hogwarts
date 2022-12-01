@@ -20,6 +20,11 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
+# DataStore
+-keepclassmembers class * extends androidx.datastore.preferences.protobuf.GeneratedMessageLite {
+    <fields>;
+}
+
 # Ktor
 -keep class io.ktor.** { *; }
 -keep class kotlinx.coroutines.** { *; }

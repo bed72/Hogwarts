@@ -49,8 +49,8 @@
 
     <!-- BottomSheetDialogFragment -->
     <style name="ModalBottomSheetShapeAppearance" parent="ShapeAppearance.Material3.LargeComponent">
-        <item name="cornerSize">@dimen/bottom_sheet_corner_radius</item>
         <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/bottom_sheet_corner_radius</item>
     </style>
 
     <style name="ModalBottomSheetDialog" parent="Widget.Material3.BottomSheet.Modal">

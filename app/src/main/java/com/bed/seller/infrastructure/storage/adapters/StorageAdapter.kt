@@ -1,50 +1,40 @@
 package com.bed.seller.infrastructure.storage.adapters
 
-import arrow.core.left
-import arrow.core.right
-
-import android.content.Context
-
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.flow.flowOf
+
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.decodeFromString
 
 import androidx.datastore.core.DataStore
-
-import com.bed.seller.data.client.StorageClient
-
-import com.bed.seller.domain.alias.ResponseStorageType
-
-import com.bed.seller.infrastructure.storage.StorageConstants
-
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
+import androidx.datastore.preferences.core.MutablePreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 
-class StorageAdapter(private val context: Context) : StorageClient {
+import com.bed.seller.data.client.storage.StorageClient
+import com.bed.seller.data.client.security.SecurityClient
 
-    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
-        name = StorageConstants.DATA_STORE_NAME,
-    )
+import com.bed.seller.infrastructure.storage.StorageConstants
+import com.bed.seller.infrastructure.configuration.SecurityJson
 
-    override suspend fun get(params: String): ResponseStorageType =
-        context.dataStore.data.map { preferences ->
-            val data = preferences[buildPreferencesKey(params)]
+class StorageAdapter(private val dataStore: DataStore<Preferences>) : StorageClient {
 
-            return@map if (data.isNullOrEmpty()) "".left() else data.right()
+    override suspend fun clearData() {
+        dataStore.edit { preferences -> preferences.clear() }
     }
 
-
-    override suspend fun save(params: Pair<String, String>): ResponseStorageType =
-        with (context.dataStore) {
-            edit { preferences -> preferences[buildPreferencesKey(params.first)] = params.second }
-
-            data.map { preferences ->
-                val data = preferences[buildPreferencesKey(params.first)]
-
-                return@map if (data.isNullOrEmpty()) "".left() else data.right()
-            }
+    override fun getData(params: String): Flow<String> =
+        dataStore.data.map { preferences ->
+            preferences[buildPreferencesKey(params)].orEmpty()
         }
 
+    override suspend fun saveData(params: Pair<String, String>) {
+        dataStore.edit { preferences -> preferences[buildPreferencesKey(params.first)] = params.second }
+    }
 
     private fun buildPreferencesKey(key: String): Preferences.Key<String> =
         stringPreferencesKey(key)

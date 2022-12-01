@@ -1,6 +1,6 @@
 package com.bed.seller.data.usecases.validator
 
-import com.bed.seller.data.client.ValidatorClient
+import com.bed.seller.data.client.validators.ValidatorClient
 
 import com.bed.seller.domain.entities.form.ValidateFormEntity
 import com.bed.seller.domain.usecases.validator.ValidatorUseCase

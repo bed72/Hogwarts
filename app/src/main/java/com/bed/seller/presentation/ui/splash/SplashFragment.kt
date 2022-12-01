@@ -3,39 +3,43 @@ package com.bed.seller.presentation.ui.splash
 import android.os.Bundle
 import android.view.View
 
+import com.bed.seller.R
+
 import com.bed.seller.databinding.SplashFragmentBinding
 
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+import com.bed.seller.presentation.extensions.snake
 import com.bed.seller.presentation.extensions.navigationTo
 
-import com.bed.seller.infrastructure.storage.StorageConstants
-
-import com.bed.seller.presentation.ui.auth.tokens.TokensViewModel
 import com.bed.seller.presentation.ui.common.fragment.BaseFragment
-import com.bed.seller.presentation.ui.storage.states.GetValueInStorageLiveData
+import com.bed.seller.presentation.ui.splash.states.SplashLiveData
 
 class SplashFragment : BaseFragment<SplashFragmentBinding>(SplashFragmentBinding::inflate) {
 
-    private val viewModel: TokensViewModel by viewModel()
+    private val viewModel: SplashViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        observeTokenState()
+        observeUserState()
     }
 
-    private fun observeTokenState() {
-        with (viewModel) {
-            tokens.get(StorageConstants.DATA_STORE_REFRESH_TOKEN)
+    private fun observeUserState() {
+        with (viewModel.splash) {
+            verify()
 
-            tokens.states.observe(viewLifecycleOwner) { states ->
+            state.observe(viewLifecycleOwner) { states ->
                 when (states) {
-                    GetValueInStorageLiveData.States.Loading -> {}
-                    is GetValueInStorageLiveData.States.Success ->
-                        navigationTo(SplashFragmentDirections.actionSplashFragmentToHomeFragment())
-                    is GetValueInStorageLiveData.States.Failure ->
+                    SplashLiveData.States.Loading -> {}
+                    is SplashLiveData.States.Success ->
+                        navigationTo(R.id.action_splash_fragment_to_home_fragment)
+                    is SplashLiveData.States.Failure -> {
+                        val firstAppOpen = 0
+                        if (states.message != firstAppOpen) snake(requireView(), states.message)
+
                         navigationTo(SplashFragmentDirections.actionSplashFragmentToSignInFragment())
+                    }
                 }
             }
         }

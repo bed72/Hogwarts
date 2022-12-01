@@ -2,35 +2,47 @@ package com.bed.seller.data.usecases.auth.mocks
 
 import arrow.core.left
 import arrow.core.right
+
 import com.bed.seller.R
+
 import com.bed.seller.data.usecases.mocks.CommonMock
 
 import com.bed.seller.domain.entities.ResponseEntity
 import com.bed.seller.domain.entities.paths.PathEntity
-import com.bed.seller.domain.usecases.auth.AuthRefreshUseCase
+import com.bed.seller.domain.usecases.auth.SignUpUseCase
 
 import com.bed.seller.infrastructure.network.models.ResponseModel
-
-import com.bed.seller.infrastructure.network.models.responses.auth.toEntity
-import com.bed.seller.infrastructure.network.models.responses.auth.AuthResponseModel
+import com.bed.seller.infrastructure.network.models.auth.toEntity
+import com.bed.seller.infrastructure.network.models.auth.AuthResponseModel
+import com.bed.seller.infrastructure.network.models.auth.user.UserMetaDataResponseModel
+import com.bed.seller.infrastructure.network.models.auth.user.UserResponseModel
 
 import com.bed.seller.infrastructure.network.models.failure.toEntity
 import com.bed.seller.infrastructure.network.models.failure.MessageFailureResponseModel
 
 class AuthMock {
+    private val userMetadata = UserMetaDataResponseModel(
+        name = "Mock_Name"
+    )
+
+    private val user = UserResponseModel(
+        id = "Mock_User_Id",
+        email = "Mock_User_Email",
+        userMetadata = userMetadata
+    )
 
     val authFailureModel = MessageFailureResponseModel(
             message = "User already registered"
         )
 
     val authSuccessModel = AuthResponseModel(
-            expiresIn = 3600,
             accessToken = "Mock_Access_Token",
-            refreshToken = "Mock_Refresh_Token"
+            refreshToken = "Mock_Refresh_Token",
+            user = user
         )
 
     val pathSignUp = PathEntity.SIGN_UP
-    val paramsSignUp = AuthRefreshUseCase.Params(pathSignUp, CommonMock.PARAMS_SIGN_UP_REQUEST)
+    val paramsSignUp = SignUpUseCase.Params(pathSignUp, CommonMock.PARAMS_SIGN_UP_REQUEST)
 
     val failureModel = makeModel(ResponseModel.FailureModel)
     val successModel = makeModel(ResponseModel.SuccessModel)

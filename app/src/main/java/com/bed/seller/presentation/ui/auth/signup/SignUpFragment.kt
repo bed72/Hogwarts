@@ -24,11 +24,11 @@ import com.bed.seller.presentation.extensions.navigationBack
 
 import com.bed.seller.presentation.ui.common.Commons
 import com.bed.seller.presentation.ui.common.fragment.BaseFragment
-
 import com.bed.seller.presentation.ui.auth.signup.states.SignUpLiveData
 
 import com.bed.seller.domain.entities.auth.signup.isNotEmpty
 import com.bed.seller.domain.entities.auth.signup.SignUpBodyRequestEntity
+import com.bed.seller.presentation.ui.common.navigation.Navigation
 
 class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding::inflate) {
 
@@ -48,10 +48,10 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
     private fun observeSignUpState() {
             signUpViewModel.auth.state.observe(viewLifecycleOwner) { states ->
                 binding.signUpActionViewFlipper.displayedChild = when (states) {
-                    SignUpLiveData.States.Empty -> Commons.EMPTY
                     SignUpLiveData.States.Loading -> Commons.LOADING
                     is SignUpLiveData.States.Success -> {
                         snake(requireView(), states.message)
+
                         navigationTo(R.id.action_sign_up_fragment_to_home_fragment)
 
                         Commons.SUCCESS

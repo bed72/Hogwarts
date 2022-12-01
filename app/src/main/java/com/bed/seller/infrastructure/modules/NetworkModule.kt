@@ -8,8 +8,6 @@ import io.ktor.client.engine.okhttp.OkHttp
 import okhttp3.Protocol
 import okhttp3.logging.HttpLoggingInterceptor
 
-import com.bed.seller.domain.usecases.storage.SaveStorageUseCase
-
 import com.bed.seller.infrastructure.network.interceptors.AuthInterceptor
 
 import com.bed.seller.infrastructure.configuration.installLogging
@@ -17,6 +15,18 @@ import com.bed.seller.infrastructure.configuration.installRequestDefault
 import com.bed.seller.infrastructure.configuration.installResponseTimeout
 import com.bed.seller.infrastructure.configuration.installResponseObserver
 import com.bed.seller.infrastructure.configuration.installContentNegotiation
+
+fun interceptorsModule() = module {
+    factory {
+        AuthInterceptor()
+    }
+
+    factory {
+        HttpLoggingInterceptor().apply {
+            setLevel(HttpLoggingInterceptor.Level.BODY)
+        }
+    }
+}
 
 fun networkModule() = module {
     single {
@@ -33,13 +43,8 @@ fun networkModule() = module {
                     protocols(listOf(Protocol.HTTP_1_1, Protocol.HTTP_2))
                 }
 
-
-                addInterceptor(AuthInterceptor(get<SaveStorageUseCase>()))
-                addInterceptor(
-                    HttpLoggingInterceptor().apply {
-                        setLevel(HttpLoggingInterceptor.Level.BODY)
-                    }
-                )
+                addInterceptor(get<AuthInterceptor>())
+                addInterceptor(get<HttpLoggingInterceptor>())
             }
         }
     }

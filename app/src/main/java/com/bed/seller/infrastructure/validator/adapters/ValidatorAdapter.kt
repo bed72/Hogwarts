@@ -2,7 +2,7 @@ package com.bed.seller.infrastructure.validator.adapters
 
 import java.util.regex.Pattern
 
-import com.bed.seller.data.client.ValidatorClient
+import com.bed.seller.data.client.validators.ValidatorClient
 
 import com.bed.seller.domain.entities.form.TextFieldEntity
 import com.bed.seller.domain.entities.form.ValidateFormEntity

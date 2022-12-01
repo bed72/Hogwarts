@@ -7,9 +7,12 @@
     app:startDestination="@id/home_fragment"
     android:id="@+id/home" >
 
+
     <fragment
         android:id="@+id/home_fragment"
         tools:layout="@layout/home_fragment"
-        android:name="com.bed.seller.presentation.ui.home.store.HomeFragment" />
+        android:name="com.bed.seller.presentation.ui.home.HomeFragment" >
+
+    </fragment>
 
 </navigation>

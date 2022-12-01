@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-
-
     <!-- Regular Fonts -->
     <style name="RegularBody1" parent="@android:style/TextAppearance.Small">
         <item name="android:fontFamily">@font/poppins</item>

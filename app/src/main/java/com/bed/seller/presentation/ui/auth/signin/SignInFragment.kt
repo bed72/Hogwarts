@@ -13,6 +13,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.google.android.material.textfield.TextInputLayout
 
 import com.bed.seller.presentation.extensions.snake
+import com.bed.seller.presentation.extensions.snakeArg
 import com.bed.seller.presentation.extensions.hideKeyboard
 import com.bed.seller.presentation.extensions.navigationTo
 import com.bed.seller.presentation.extensions.getTextChanged
@@ -46,10 +47,10 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
     private fun observeSignInState() {
         signInViewModel.auth.state.observe(viewLifecycleOwner) { states ->
             binding.signInActionViewFlipper.displayedChild = when (states) {
-                SignInLiveData.States.Empty -> Commons.EMPTY
                 SignInLiveData.States.Loading -> Commons.LOADING
                 is SignInLiveData.States.Success -> {
-                    snake(requireView(), states.message)
+                    snakeArg(requireView(), states.message, states.arg)
+
                     navigationTo(R.id.action_sign_in_fragment_to_home_fragment)
 
                     Commons.SUCCESS

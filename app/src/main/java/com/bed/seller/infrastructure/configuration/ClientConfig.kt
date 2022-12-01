@@ -4,8 +4,6 @@ import android.util.Log
 
 import com.bed.seller.BuildConfig
 
-import kotlinx.serialization.json.Json
-
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
@@ -26,12 +24,6 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 
 // private const val TIMEOUT_MILLIS = 15000L
 
-val JSON_CONFIG = Json {
-    isLenient = true
-    prettyPrint = true
-    ignoreUnknownKeys = true
-    encodeDefaults = false
-}
 
 fun HttpClientConfig<OkHttpConfig>.installLogging() {
     install(Logging) {
@@ -72,7 +64,7 @@ fun HttpClientConfig<OkHttpConfig>.installResponseTimeout() {
 
 fun HttpClientConfig<OkHttpConfig>.installContentNegotiation() {
     install(ContentNegotiation) {
-        json(JSON_CONFIG)
+        json(HttpJson.config)
     }
 }
 
