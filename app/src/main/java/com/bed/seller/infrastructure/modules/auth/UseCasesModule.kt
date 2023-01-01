@@ -54,7 +54,6 @@ val getUserUseCaseModule = module {
         RemoteUserUseCase(
             get<Coroutines>(),
             get<UserClient>(),
-            get<StorageClient>(),
         )
     }
 }

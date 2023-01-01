@@ -1,6 +1,6 @@
 package com.bed.seller.data.client.auth
 
-import com.bed.seller.domain.alias.UserEitherModelType
+import com.bed.seller.data.alias.UserEitherModelType
 import com.bed.seller.domain.entities.paths.PathEntity
 
 interface UserClient {

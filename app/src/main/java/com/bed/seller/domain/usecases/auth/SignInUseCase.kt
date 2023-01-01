@@ -2,7 +2,7 @@ package com.bed.seller.domain.usecases.auth
 
 import kotlinx.coroutines.flow.Flow
 
-import com.bed.seller.domain.alias.AuthEitherEntityType
+import com.bed.seller.data.alias.AuthEitherEntityType
 
 import com.bed.seller.domain.entities.paths.PathEntity
 import com.bed.seller.domain.entities.auth.signin.SignInBodyRequestEntity

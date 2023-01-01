@@ -1,4 +1,4 @@
-package com.bed.seller.domain.alias
+package com.bed.seller.data.alias
 
 import arrow.core.Either
 

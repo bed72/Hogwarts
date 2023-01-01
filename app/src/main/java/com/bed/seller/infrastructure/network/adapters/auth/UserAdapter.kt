@@ -10,7 +10,7 @@ import com.bed.seller.BuildConfig
 
 import com.bed.seller.data.client.auth.UserClient
 
-import com.bed.seller.domain.alias.UserEitherModelType
+import com.bed.seller.data.alias.UserEitherModelType
 import com.bed.seller.domain.entities.paths.PathEntity
 import com.bed.seller.infrastructure.network.adapters.safe
 

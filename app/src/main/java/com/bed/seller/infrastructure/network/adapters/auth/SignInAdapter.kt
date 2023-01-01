@@ -12,7 +12,7 @@ import io.ktor.client.request.setBody
 
 import com.bed.seller.data.client.auth.SignInClient
 
-import com.bed.seller.domain.alias.AuthEitherModelType
+import com.bed.seller.data.alias.AuthEitherModelType
 
 import com.bed.seller.domain.entities.paths.PathEntity
 import com.bed.seller.domain.entities.auth.signin.SignInBodyRequestEntity
