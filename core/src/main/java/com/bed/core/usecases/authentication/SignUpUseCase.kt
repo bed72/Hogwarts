@@ -13,7 +13,7 @@ import com.bed.core.data.repositories.authentication.AuthenticationRepository
 import com.bed.core.usecases.coroutines.CoroutinesUseCase
 
 interface SignUpUseCase {
-    operator fun invoke(params: SignUpParameters): Flow<SignUpType>
+    operator fun invoke(parameters: SignUpParameters): Flow<SignUpType>
 }
 
 class SignUpUseCaseImpl @Inject constructor(

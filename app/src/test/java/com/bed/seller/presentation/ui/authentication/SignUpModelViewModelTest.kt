@@ -24,9 +24,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 
 import com.bed.test.rule.MainCoroutineRule
-import com.bed.test.factories.authentication.SingUpFactory
-
-import com.bed.core.domain.models.authentication.SignUpModel
 
 import com.bed.core.usecases.storage.SaveStorageUseCase
 import com.bed.core.usecases.authentication.SignUpUseCase

@@ -8,7 +8,6 @@ import androidx.lifecycle.MutableLiveData
 import com.bed.core.usecases.authentication.SignUpUseCase
 import com.bed.core.usecases.coroutines.CoroutinesUseCase
 
-import com.bed.core.domain.models.authentication.SignUpModel
 import com.bed.core.domain.parameters.authentication.SignUpParameters
 
 import com.bed.seller.presentation.ui.authentication.signup.states.SignUpLiveData.States.Loading

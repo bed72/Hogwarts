@@ -3,14 +3,14 @@ buildscript {
         nav_version = '2.6.0'
         hilt_version = '2.46.1'
         ktor_version = '2.3.0'
-        kotlin_version = '1.8.10'
+        kotlin_version = '1.9.0'
         detekt_version = '1.23.1'
         android_version = '8.1.0'
         coroutines_version = '1.7.1'
     }
 
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+//        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
     }

@@ -16,10 +16,10 @@ import com.bed.core.usecases.coroutines.CoroutinesUseCase
 
 @ExperimentalCoroutinesApi
 class MainCoroutineRule(
-    val testDispatcher: TestDispatcher = UnconfinedTestDispatcher(TestCoroutineScheduler())
+    val testDispatcher: TestDispatcher = UnconfinedTestDispatcher(TestCoroutineScheduler()),
 ) : TestWatcher() {
 
-    val testDispatcherProvider = object : CoroutinesUseCase {
+    val dispatcher = object : CoroutinesUseCase {
         override fun io(): CoroutineDispatcher = testDispatcher
         override fun main(): CoroutineDispatcher = testDispatcher
         override fun default(): CoroutineDispatcher = testDispatcher
@@ -36,3 +36,4 @@ class MainCoroutineRule(
         Dispatchers.resetMain()
     }
 }
+
