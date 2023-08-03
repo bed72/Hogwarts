@@ -1,0 +1,142 @@
+<resources>
+    <style name="Base.Theme.Seller" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimaryDark">@color/light_inverseSurface</item>
+
+        <item name="colorError">@color/light_error</item>
+        <item name="colorPrimary">@color/light_primary</item>
+        <item name="colorOnError">@color/light_onError</item>
+        <item name="colorSurface">@color/light_surface</item>
+        <item name="colorOutline">@color/light_outline</item>
+        <item name="colorTertiary">@color/light_tertiary</item>
+        <item name="colorOnPrimary">@color/light_onPrimary</item>
+        <item name="colorSecondary">@color/light_secondary</item>
+        <item name="colorOnSurface">@color/light_onSurface</item>
+        <item name="colorOnTertiary">@color/light_onTertiary</item>
+        <item name="colorOnSecondary">@color/light_onSecondary</item>
+        <item name="colorOnBackground">@color/light_onBackground</item>
+        <item name="colorSurfaceVariant">@color/light_surfaceVariant</item>
+        <item name="colorErrorContainer">@color/light_errorContainer</item>
+        <item name="android:colorBackground">@color/light_background</item>
+        <item name="colorSurfaceInverse">@color/light_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/light_inversePrimary</item>
+        <item name="colorOnSurfaceVariant">@color/light_onSurfaceVariant</item>
+        <item name="colorOnSurfaceInverse">@color/light_inverseOnSurface</item>
+        <item name="colorOnErrorContainer">@color/light_onErrorContainer</item>
+        <item name="colorPrimaryContainer">@color/light_primaryContainer</item>
+        <item name="colorTertiaryContainer">@color/light_tertiaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/light_onPrimaryContainer</item>
+        <item name="colorSecondaryContainer">@color/light_secondaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/light_onTertiaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/light_onSecondaryContainer</item>
+
+    </style>
+
+    <style name="Theme.Seller" parent="Base.Theme.Seller" >
+        <!-- Other theme items above -->
+        <item name="android:listDivider">@drawable/divider</item>
+
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
+        <item name="android:navigationBarColor">@color/light_background</item>
+        <item name="windowSplashScreenAnimationDuration">@integer/anim_duration</item>
+    </style>
+
+    <!-- Splash -->
+    <style name="Theme.Seller.SplashScreen" parent="Theme.SplashScreen" >
+        <item name="postSplashScreenTheme">@style/Theme.Seller</item>
+        <item name="windowSplashScreenBackground">@color/light_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+    </style>
+
+    <!-- FloatingActionButton -->
+    <style name="FloatingActionButton" parent="Widget.Material3.FloatingActionButton.Primary">
+        <item name="backgroundTint">@color/navbar_light</item>
+    </style>
+
+    <!-- Toolbar -->
+    <style name="Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="titleCentered">false</item>
+        <item name="titleTextAppearance">@style/SemiBoldHeading4</item>
+    </style>
+
+    <!-- ScrollView -->
+    <style name="ScrollView" >
+        <item name="android:scrollbarThumbVertical">@null</item>
+    </style>
+
+    <!-- CheckBox -->
+    <style name="CheckBox" parent="Widget.MaterialComponents.CompoundButton.CheckBox" >
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textColor">@color/grey_500</item>
+        <item name="android:textSize">@dimen/regular_body_2</item>
+    </style>
+
+    <!-- BottomSheetDialogFragment -->
+    <style name="BottomSheetAppearance" parent="ShapeAppearance.Material3.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/bottom_sheet_corner_radius</item>
+    </style>
+
+    <style name="BottomSheetDialog" parent="Widget.Material3.BottomSheet.Modal">
+        <item name="shapeAppearance">@style/BottomSheetAppearance</item>
+    </style>
+
+    <style name="BottomSheet" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="bottomSheetStyle">@style/BottomSheetDialog</item>
+        <item name="android:navigationBarColor">@color/transparent</item>
+        <item name="android:windowSoftInputMode">adjustResize|stateVisible</item>
+    </style>
+
+    <!-- TextInputLayout and TextInputEditText -->
+    <style name="TextInput" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusTopEnd">@dimen/text_input_corner_radius</item>
+        <item name="boxCornerRadiusTopStart">@dimen/text_input_corner_radius</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/text_input_corner_radius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/text_input_corner_radius</item>
+    </style>
+
+    <style name="TextInputEdit" parent="Base.Widget.MaterialComponents.TextInputEditText">
+        <item name="android:textColor">@color/grey_500</item>
+        <item name="placeholderTextColor">@color/grey_500</item>
+        <item name="android:textColorHighlight">@color/neutral_textColorHighlight</item>
+    </style>
+
+    <!-- Buttons -->
+    <style name="NormalButton" parent="Widget.Material3.Button.UnelevatedButton">
+        <item name="android:textSize">@dimen/semi_bold_body_1</item>
+        <item name="cornerRadius">@dimen/button_corner_radius</item>
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+    </style>
+
+    <style name="CancelButton" parent="Widget.Material3.Button.TonalButton">
+        <item name="android:textSize">@dimen/semi_bold_body_1</item>
+        <item name="cornerRadius">@dimen/button_corner_radius</item>
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+    </style>
+
+    <style name="IconButton" parent="Widget.Material3.Button.IconButton">
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textColor">@color/grey_500</item>
+        <item name="android:textSize">@dimen/regular_body_2</item>
+        <item name="cornerRadius">@dimen/button_corner_radius</item>
+    </style>
+
+    <style name="TextButton" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textColor">@color/grey_500</item>
+        <item name="android:textSize">@dimen/regular_body_2</item>
+        <item name="cornerRadius">@dimen/button_corner_radius</item>
+    </style>
+
+    <style name="TextButtonPrimary" parent="TextButton">
+        <item name="android:textColor">@color/dark_primary</item>
+    </style>
+
+    <style name="TextButtonDark" parent="TextButton">
+        <item name="android:textColor">@color/grey_500</item>
+    </style>
+
+</resources>

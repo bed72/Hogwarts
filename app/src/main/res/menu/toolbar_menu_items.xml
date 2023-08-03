@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/settings"
+        android:enabled="true"
+        android:title="@string/products_toolbar_icon_title"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_settings" />
+
+    <item
+        android:id="@+id/notification"
+        android:enabled="true"
+        app:showAsAction="ifRoom"
+        android:title="@string/home_toolbar_icon_title"
+        android:icon="@drawable/ic_notification" />
+</menu>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Theme Colors Light -->
+    <color name="seed">#005234</color>
+    <color name="light_error">#BA1A1A</color>
+    <color name="light_primary">#006C46</color>
+    <color name="light_surface">#FBFDF8</color>
+    <color name="light_outline">#707972</color>
+    <color name="light_tertiary">#3C6472</color>
+    <color name="light_onSurface">#191C1A</color>
+    <color name="light_secondary">#4E6356</color>
+    <color name="light_background">#FBFDF8</color>
+    <color name="light_shadow">@color/black</color>
+    <color name="light_surfaceTint">#006C46</color>
+    <color name="light_onError">@color/white</color>
+    <color name="light_onBackground">#191C1A</color>
+    <color name="light_surfaceVariant">#DCE5DC</color>
+    <color name="light_inverseSurface">#2E312E</color>
+    <color name="light_inversePrimary">#72DAA5</color>
+    <color name="light_errorContainer">#FFDAD6</color>
+    <color name="light_onPrimary">@color/white</color>
+    <color name="light_onTertiary">@color/white</color>
+    <color name="light_onSecondary">@color/white</color>
+    <color name="light_onSurfaceVariant">#404943</color>
+    <color name="light_surfaceTintColor">#006C46</color>
+    <color name="light_inverseOnSurface">#EFF1ED</color>
+    <color name="light_onErrorContainer">#410002</color>
+    <color name="light_primaryContainer">#8FF7C0</color>
+    <color name="light_tertiaryContainer">#C0E9F9</color>
+    <color name="light_onPrimaryContainer">#002112</color>
+    <color name="light_secondaryContainer">#D0E8D7</color>
+    <color name="light_onTertiaryContainer">#001F28</color>
+    <color name="light_onSecondaryContainer">#0B1F15</color>
+
+    <!-- Theme Colors Dark -->
+    <color name="dark_error">#FFB4AB</color>
+    <color name="dark_primary">#72DAA5</color>
+    <color name="dark_onError">#690005</color>
+    <color name="dark_outline">#8A938C</color>
+    <color name="dark_surface">#191C1A</color>
+    <color name="dark_tertiary">#A4CDDD</color>
+    <color name="dark_onPrimary">#003822</color>
+    <color name="dark_onSurface">#E1E3DF</color>
+    <color name="dark_secondary">#B4CCBC</color>
+    <color name="dark_background">#191C1A</color>
+    <color name="dark_onTertiary">#053542</color>
+    <color name="dark_surfaceTint">#72DAA5</color>
+    <color name="dark_shadow">@color/black</color>
+    <color name="dark_onSecondary">#203529</color>
+    <color name="dark_onBackground">#E1E3DF</color>
+    <color name="dark_surfaceVariant">#404943</color>
+    <color name="dark_inverseSurface">#E1E3DF</color>
+    <color name="dark_errorContainer">#93000A</color>
+    <color name="dark_inversePrimary">#006C46</color>
+    <color name="dark_onSurfaceVariant">#C0C9C1</color>
+    <color name="dark_inverseOnSurface">#191C1A</color>
+    <color name="dark_onErrorContainer">#FFDAD6</color>
+    <color name="dark_surfaceTintColor">#72DAA5</color>
+    <color name="dark_primaryContainer">#005234</color>
+    <color name="dark_tertiaryContainer">#234C59</color>
+    <color name="dark_onPrimaryContainer">#8FF7C0</color>
+    <color name="dark_secondaryContainer">#364B3F</color>
+    <color name="dark_onTertiaryContainer">#C0E9F9</color>
+    <color name="dark_onSecondaryContainer">#D0E8D7</color>
+
+    <!-- Other Colors -->
+    <color name="grey_300">#62727A</color>
+    <color name="grey_500">#808A7F</color>
+    <color name="black_500">#010F07</color>
+
+    <!-- Both -->
+    <color name="navbar_dark">#202B25</color>
+    <color name="navbar_light">#E6F1E9</color>
+    <color name="neutral_textColorHighlight">#9936AA68</color>
+
+    <!-- Base Colors -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="transparent">@android:color/transparent</color>
+
+</resources>

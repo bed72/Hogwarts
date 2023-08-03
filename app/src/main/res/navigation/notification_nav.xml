@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<navigation
+    android:id="@+id/notification"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/notification_fragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <fragment
+        android:id="@+id/notification_fragment"
+        android:label="@string/notification_title"
+        tools:layout="@layout/notification_fragment"
+        android:name="com.bed.seller.presentation.ui.dashboard.notification.NotificationFragment" />
+
+</navigation>

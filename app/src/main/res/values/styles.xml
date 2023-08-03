@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <!-- Regular Fonts -->
+    <style name="RegularBody1" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textSize">@dimen/regular_body_1</item>
+    </style>
+
+    <style name="RegularBody2" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textSize">@dimen/regular_body_2</item>
+    </style>
+
+    <style name="RegularBody3" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textSize">@dimen/regular_body_3</item>
+    </style>
+
+    <style name="RegularHeading1" parent="@android:style/TextAppearance.Large">
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textSize">@dimen/regular_body_4</item>
+    </style>
+
+    <style name="RegularHeading2" parent="@android:style/TextAppearance.Large">
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textSize">@dimen/regular_body_5</item>
+    </style>
+
+    <style name="RegularHeading3" parent="@android:style/TextAppearance.Large">
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textSize">@dimen/regular_body_6</item>
+    </style>
+
+    <style name="RegularHeading4" parent="@android:style/TextAppearance.Medium">
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textSize">@dimen/regular_body_7</item>
+    </style>
+
+    <style name="RegularHeading5" parent="@android:style/TextAppearance.Medium">
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textSize">@dimen/regular_body_8</item>
+    </style>
+
+    <!-- Medium Fonts -->
+    <style name="MediumBody1" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:textSize">@dimen/medium_body_1</item>
+    </style>
+
+    <style name="MediumBody2" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:textSize">@dimen/medium_body_2</item>
+    </style>
+
+    <style name="MediumBody3" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:textSize">@dimen/medium_body_3</item>
+    </style>
+
+    <style name="MediumHeading1" parent="@android:style/TextAppearance.Large">
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:textSize">@dimen/medium_body_4</item>
+    </style>
+
+    <style name="MediumHeading2" parent="@android:style/TextAppearance.Large">
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:textSize">@dimen/medium_body_5</item>
+    </style>
+
+    <style name="MediumHeading3" parent="@android:style/TextAppearance.Large">
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:textSize">@dimen/medium_body_6</item>
+    </style>
+
+    <style name="MediumHeading4" parent="@android:style/TextAppearance.Medium">
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:textSize">@dimen/medium_body_7</item>
+    </style>
+
+    <style name="MediumHeading5" parent="@android:style/TextAppearance.Medium">
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:textSize">@dimen/medium_body_8</item>
+    </style>
+
+    <!-- Semi Bold Fonts -->
+    <style name="SemiBoldBody1" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">@dimen/semi_bold_body_1</item>
+    </style>
+
+    <style name="SemiBoldBody2" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">@dimen/semi_bold_body_2</item>
+    </style>
+
+    <style name="SemiBoldBody3" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">@dimen/semi_bold_body_3</item>
+    </style>
+
+    <style name="SemiBoldHeading1" parent="@android:style/TextAppearance.Large">
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">@dimen/semi_bold_body_4</item>
+    </style>
+
+    <style name="SemiBoldHeading2" parent="@android:style/TextAppearance.Large">
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">@dimen/semi_bold_body_5</item>
+    </style>
+
+    <style name="SemiBoldHeading3" parent="@android:style/TextAppearance.Large">
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">@dimen/semi_bold_body_6</item>
+    </style>
+
+    <style name="SemiBoldHeading4" parent="@android:style/TextAppearance.Medium">
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">@dimen/semi_bold_body_7</item>
+    </style>
+
+    <style name="SemiBoldHeading5" parent="@android:style/TextAppearance.Medium">
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">@dimen/semi_bold_body_8</item>
+    </style>
+
+    <!-- Bold Fonts -->
+    <style name="BoldBody1" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">@dimen/bold_body_1</item>
+    </style>
+
+    <style name="BoldBody2" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">@dimen/bold_body_2</item>
+    </style>
+
+    <style name="BoldBody3" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">@dimen/bold_body_3</item>
+    </style>
+
+    <style name="BoldHeading1" parent="@android:style/TextAppearance.Large">
+        <item name="android:fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">@dimen/bold_body_4</item>
+    </style>
+
+    <style name="BoldHeading2" parent="@android:style/TextAppearance.Large">
+        <item name="android:fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">@dimen/bold_body_5</item>
+    </style>
+
+    <style name="BoldHeading3" parent="@android:style/TextAppearance.Large">
+        <item name="android:fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">@dimen/bold_body_6</item>
+    </style>
+
+    <style name="BoldHeading4" parent="@android:style/TextAppearance.Medium">
+        <item name="android:fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">@dimen/bold_body_7</item>
+    </style>
+
+    <style name="BoldHeading5" parent="@android:style/TextAppearance.Medium">
+        <item name="android:fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">@dimen/bold_body_8</item>
+    </style>
+
+    <!-- Custom Fonts -->
+    <style name="GreyMediumNormalBody" parent="MediumBody1">
+        <item name="android:textColor">@color/grey_500</item>
+    </style>
+
+    <style name="GreyMediumBody" parent="MediumBody2">
+        <item name="android:textColor">@color/grey_500</item>
+    </style>
+
+    <style name="GreyMediumItalicBody" parent="MediumBody2">
+        <item name="android:textStyle">italic</item>
+        <item name="android:textColor">@color/grey_500</item>
+    </style>
+
+    <style name="LightGreenRegularBody" parent="RegularBody2">
+        <item name="android:textColor">@color/dark_surfaceTintColor</item>
+    </style>
+
+</resources>

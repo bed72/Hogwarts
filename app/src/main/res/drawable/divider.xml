@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<inset
+    android:insetLeft="@dimen/small_margin"
+    android:insetRight="@dimen/small_margin"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <shape>
+        <solid android:color="@color/grey_300" />
+        <size android:height="@dimen/diver_height" />
+    </shape>
+
+</inset>

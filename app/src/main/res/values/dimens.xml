@@ -1,0 +1,85 @@
+<resources>
+    <!-- Splash Icon Sizes -->
+    <dimen name="diver_height">0.6dp</dimen>
+    <dimen name="splash_icon_size">240dp</dimen>
+    <dimen name="permission_icon_size">192dp</dimen>
+
+    <!-- Progress Sizes -->
+    <dimen name="progress_bar_dimens">26dp</dimen>
+
+    <!-- BottomSheet Sizes -->
+    <dimen name="bottom_sheet_corner_radius">14dp</dimen>
+
+    <!-- Text Input Edit Sizes -->
+    <dimen name="text_input_height">48dp</dimen>
+    <dimen name="text_input_corner_radius">14dp</dimen>
+
+    <!-- ProgressBar Sizes -->
+    <dimen name="progress_bar_size">30dp</dimen>
+
+    <!-- CheckBox Sizes -->
+    <dimen name="check_box_size">20dp</dimen>
+    <dimen name="check_box_icon_size">16dp</dimen>
+    <dimen name="check_box_corner_radius">4dp</dimen>
+    <dimen name="check_box_stroke_radius">1dp</dimen>
+    <dimen name="check_box_icon_corner_radius">2dp</dimen>
+
+    <!-- Buttons Sizes -->
+    <dimen name="button_height">54dp</dimen>
+    <dimen name="button_corner_radius">14dp</dimen>
+
+    <!-- Margin Spacings Sizes -->
+    <dimen name="big_small_margin">4dp</dimen>
+    <dimen name="small_margin">8dp</dimen>
+    <dimen name="normal_margin">16dp</dimen>
+    <dimen name="large_margin">32dp</dimen>
+    <dimen name="extra_large_margin">64dp</dimen>
+
+    <!-- Padding Spacings Sizes -->
+    <dimen name="normal_padding">16dp</dimen>
+
+    <!-- Regular Size Fonts -->
+    <dimen name="regular_body_1">16sp</dimen>
+    <dimen name="regular_body_2">14sp</dimen>
+    <dimen name="regular_body_3">12sp</dimen>
+
+    <dimen name="regular_body_4">36sp</dimen>
+    <dimen name="regular_body_5">32sp</dimen>
+    <dimen name="regular_body_6">28sp</dimen>
+    <dimen name="regular_body_7">24sp</dimen>
+    <dimen name="regular_body_8">20sp</dimen>
+
+    <!-- Medium Size Fonts -->
+    <dimen name="medium_body_1">16sp</dimen>
+    <dimen name="medium_body_2">14sp</dimen>
+    <dimen name="medium_body_3">12sp</dimen>
+
+    <dimen name="medium_body_4">36sp</dimen>
+    <dimen name="medium_body_5">32sp</dimen>
+    <dimen name="medium_body_6">28sp</dimen>
+    <dimen name="medium_body_7">24sp</dimen>
+    <dimen name="medium_body_8">20sp</dimen>
+
+    <!-- Semi Bold Size Fonts -->
+    <dimen name="semi_bold_body_1">16sp</dimen>
+    <dimen name="semi_bold_body_2">14sp</dimen>
+    <dimen name="semi_bold_body_3">12sp</dimen>
+
+    <dimen name="semi_bold_body_4">36sp</dimen>
+    <dimen name="semi_bold_body_5">32sp</dimen>
+    <dimen name="semi_bold_body_6">28sp</dimen>
+    <dimen name="semi_bold_body_7">24sp</dimen>
+    <dimen name="semi_bold_body_8">20sp</dimen>
+
+    <!-- Bold Size Fonts -->
+    <dimen name="bold_body_1">16sp</dimen>
+    <dimen name="bold_body_2">14sp</dimen>
+    <dimen name="bold_body_3">12sp</dimen>
+
+    <dimen name="bold_body_4">36sp</dimen>
+    <dimen name="bold_body_5">32sp</dimen>
+    <dimen name="bold_body_6">28sp</dimen>
+    <dimen name="bold_body_7">24sp</dimen>
+    <dimen name="bold_body_8">20sp</dimen>
+
+</resources>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    android:padding="@dimen/normal_padding"
+    android:orientation="vertical"
+    style="@style/BottomSheetDialog"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentation.ui.dashboard.sale.SaleFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" >
+
+    <TextView
+        android:layout_weight="4"
+        android:layout_height="0dp"
+        android:text="@string/sale_title"
+        style="@style/SemiBoldHeading5"
+        android:layout_width="wrap_content" />
+
+    <TextView
+        style="@style/GreyMediumNormalBody"
+        android:layout_gravity="start"
+        android:layout_marginTop="@dimen/small_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sale_subtitle" />
+
+    <TextView
+        android:text="@string/sale_title_name_text_input"
+        style="@style/MediumBody1"
+        android:layout_gravity="start"
+        android:layout_marginTop="@dimen/normal_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/sale_name_text_input"
+        style="@style/TextInput"
+        app:endIconMode="clear_text"
+        android:layout_marginTop="@dimen/big_small_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:placeholderText="@string/sale_placeholder_name_text_input"  >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/magic_link_email_edit_input"
+            android:lines="@integer/max_lines_commons"
+            android:maxLines="@integer/max_lines_commons"
+            android:maxLength="@integer/max_length_email"
+            tools:text="@string/sale_placeholder_name_text_input"
+            style="@style/TextInputEdit"
+            android:inputType="textCapWords"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/sale_save_button"
+        android:text="@string/sale_title_save_button"
+        style="@style/NormalButton"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginTop="@dimen/normal_margin"
+        android:layout_width="match_parent" />
+
+    <Button
+        android:id="@+id/sale_cancel_button"
+        android:text="@string/sale_title_cancel_button"
+        style="@style/CancelButton"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginTop="@dimen/small_margin"
+        android:layout_width="match_parent" />
+
+</LinearLayout>
