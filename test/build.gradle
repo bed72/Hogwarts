@@ -12,6 +12,6 @@ dependencies {
     implementation project(':core')
 
     api 'junit:junit:4.13.2'
-    api 'io.mockk:mockk:1.13.5'
+    api 'org.mockito.kotlin:mockito-kotlin:5.0.0'
     api "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 }

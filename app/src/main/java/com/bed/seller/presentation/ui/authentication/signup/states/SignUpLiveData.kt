@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import com.bed.core.usecases.authentication.SignUpUseCase
 import com.bed.core.usecases.coroutines.CoroutinesUseCase
 
+import com.bed.core.domain.models.authentication.AuthenticationModel
 import com.bed.core.domain.parameters.authentication.SignUpParameters
 
 import com.bed.seller.presentation.ui.authentication.signup.states.SignUpLiveData.States.Loading
@@ -23,7 +24,7 @@ class SignUpLiveData(
 
     val states: LiveData<States> = actions.switchMap { action ->
             liveData(coroutinesUseCase.main()) {
-                if (action is Actions.MagicLink) {
+                if (action is Actions.SignUp) {
                     emit(Loading)
 
                     signUpUseCase(action.params).collect { data ->
@@ -36,17 +37,17 @@ class SignUpLiveData(
             }
         }
 
-    fun magicLink(params: SignUpParameters) {
-        actions.value = Actions.MagicLink(params)
+    fun signUp(params: SignUpParameters) {
+        actions.value = Actions.SignUp(params)
     }
 
     sealed class Actions {
-        data class MagicLink(val params: SignUpParameters) : Actions()
+        data class SignUp(val params: SignUpParameters) : Actions()
     }
 
     sealed class States {
-        object Loading : States()
+        data object Loading : States()
         data class Failure(val message: String) : States()
-        data class Success(val data: SignUpModel) : States()
+        data class Success(val data: AuthenticationModel) : States()
     }
 }
