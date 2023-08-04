@@ -1,15 +1,12 @@
 package com.bed.seller.datasources.local.storage
 
-import javax.inject.Inject
-
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.Flow
-
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.Preferences
-
+import androidx.datastore.preferences.core.edit
 import com.bed.core.data.datasources.storage.StorageDataSource
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
 class LocalStorageDataSourceImpl @Inject constructor(
     private val datastore: DataStore<Preferences>
@@ -21,5 +18,4 @@ class LocalStorageDataSourceImpl @Inject constructor(
     override suspend fun save(value: Pair<String, String>) {
         datastore.edit { preferences -> preferences[buildKey(value.first)] = value.second }
     }
-
 }

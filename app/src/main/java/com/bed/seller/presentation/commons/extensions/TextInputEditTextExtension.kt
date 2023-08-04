@@ -1,11 +1,9 @@
 package com.bed.seller.presentation.commons.extensions
 
 import android.view.inputmethod.EditorInfo
-
 import androidx.core.os.postDelayed
-import androidx.core.widget.doOnTextChanged
 import androidx.core.widget.doAfterTextChanged
-
+import androidx.core.widget.doOnTextChanged
 import com.google.android.material.textfield.TextInputEditText
 
 fun TextInputEditText.getTextChanged(value: (String) -> Unit) {

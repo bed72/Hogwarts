@@ -7,4 +7,3 @@ data class PermissionModel(
     val description: String,
     override val key: Long = id.toLong()
 ) : ListItem
-

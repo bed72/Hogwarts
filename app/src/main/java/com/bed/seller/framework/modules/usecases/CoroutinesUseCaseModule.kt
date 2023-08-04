@@ -1,12 +1,11 @@
 package com.bed.seller.framework.modules.usecases
 
+import com.bed.core.usecases.coroutines.CoroutinesUseCase
+import com.bed.core.usecases.coroutines.CoroutinesUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
-
-import com.bed.core.usecases.coroutines.CoroutinesUseCase
-import com.bed.core.usecases.coroutines.CoroutinesUseCaseImpl
 
 @Module
 @InstallIn(ViewModelComponent::class)

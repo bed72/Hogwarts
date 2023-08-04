@@ -3,31 +3,23 @@ package com.bed.seller.presentation.ui
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnticipateInterpolator
-
 import androidx.annotation.NavigationRes
-
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-
-import androidx.navigation.NavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
-import androidx.navigation.ui.setupActionBarWithNavController
-
-import androidx.core.splashscreen.SplashScreenViewProvider
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-
-import dagger.hilt.android.AndroidEntryPoint
-
+import androidx.core.splashscreen.SplashScreenViewProvider
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.bed.seller.R
-
 import com.bed.seller.databinding.MainActivityBinding
-
-import com.bed.seller.presentation.commons.extensions.dialog
 import com.bed.seller.presentation.commons.connection.CheckConnection
 import com.bed.seller.presentation.commons.connection.CheckConnectionImpl
+import com.bed.seller.presentation.commons.extensions.dialog
 import com.bed.seller.presentation.commons.extensions.preventScreenshotsAndRecentAppThumbnails
+import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -123,7 +115,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun visibilityToolBar(@NavigationRes destination: Int) {
-        with (binding.toolbar) {
+        with(binding.toolbar) {
             visibility = when (destination) {
                 R.id.home_fragment, R.id.products_fragment -> VISIBLE
                 R.id.exit_fragment, R.id.sale_fragment -> VISIBLE

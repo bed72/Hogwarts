@@ -1,21 +1,18 @@
 package com.bed.seller.presentation.commons.fragments
 
-import androidx.annotation.ColorRes
-import androidx.fragment.app.Fragment
-import androidx.core.view.MenuProvider
-import androidx.viewbinding.ViewBinding
-
-import android.os.Bundle
-import android.view.View
-import android.view.Menu
-import android.view.MenuItem
-import android.view.ViewGroup
-import android.view.MenuInflater
-import android.view.LayoutInflater
 import android.content.res.Configuration
-
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import androidx.annotation.ColorRes
+import androidx.core.view.MenuProvider
+import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 import com.bed.seller.R
-
 import com.bed.seller.presentation.commons.extensions.setNavigationBarColor
 
 typealias InflateFragment<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
@@ -69,5 +66,4 @@ abstract class BaseFragment<viewBinding : ViewBinding>(
             Configuration.UI_MODE_NIGHT_YES -> setNavigationBarColor(colorDark)
         }
     }
-
 }

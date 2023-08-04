@@ -14,4 +14,3 @@ data class SignUpRequestModel(
     @SerialName("password")
     val password: String,
 )
-

@@ -11,7 +11,7 @@ import com.bed.core.usecases.coroutines.CoroutinesUseCase
 import com.bed.core.data.repositories.storage.StorageRepository
 
 interface GetStorageUseCase {
-    suspend operator fun invoke(params: String): Flow<String>
+    suspend operator fun invoke(parameters: String): Flow<String>
 }
 
 class GetStorageUseCaseImpl @Inject constructor(

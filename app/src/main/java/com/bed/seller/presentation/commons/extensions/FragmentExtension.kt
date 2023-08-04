@@ -1,36 +1,28 @@
 package com.bed.seller.presentation.commons.extensions
 
-import android.os.Build
-import android.os.Bundle
-
-import android.widget.TextView
-
 import android.animation.ArgbEvaluator
-import android.animation.ValueAnimator
 import android.animation.ObjectAnimator
-
+import android.animation.ValueAnimator
 import android.content.Context
 import android.content.pm.PackageManager
-
+import android.os.Build
+import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-
-import com.google.android.material.snackbar.Snackbar
-
-import androidx.annotation.IdRes
+import android.widget.TextView
 import androidx.annotation.ColorRes
+import androidx.annotation.IdRes
 import androidx.annotation.StringRes
-
-import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
-
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 
 // Colors
 fun Fragment.getColor(@ColorRes id: Int): Int =
-     requireActivity().resources.getColor(id, null)
+    requireActivity().resources.getColor(id, null)
 
 fun Fragment.setStatusBarColor(@ColorRes id: Int) {
     requireActivity().window.statusBarColor = requireActivity().getColor(id)
@@ -66,8 +58,11 @@ fun Fragment.inputMethodManager() =
     context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
 
 fun Fragment.hideKeyboard(view: View? = activity?.window?.decorView?.rootView) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) view?.hideKeyboard(view)
-    else inputMethodManager()?.hideSoftInputFromWindow(view?.applicationWindowToken, 0)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        view?.hideKeyboard(view)
+    } else {
+        inputMethodManager()?.hideSoftInputFromWindow(view?.applicationWindowToken, 0)
+    }
 }
 
 // Animations

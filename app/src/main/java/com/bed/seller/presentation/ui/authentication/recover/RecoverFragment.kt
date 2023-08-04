@@ -2,9 +2,7 @@ package com.bed.seller.presentation.ui.authentication.recover
 
 import android.os.Bundle
 import android.view.View
-
 import com.bed.seller.databinding.RecoverFragmentBinding
-
 import com.bed.seller.presentation.commons.fragments.BaseBottomSheetDialogFragment
 
 class RecoverFragment : BaseBottomSheetDialogFragment<RecoverFragmentBinding>(

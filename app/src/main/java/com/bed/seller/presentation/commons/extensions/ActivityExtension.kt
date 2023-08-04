@@ -2,12 +2,9 @@ package com.bed.seller.presentation.commons.extensions
 
 import android.app.Activity
 import android.content.Context
-import android.view.Window
 import android.view.WindowManager
-
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
-
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 // Dialogs
@@ -20,7 +17,6 @@ fun Activity.dialog(
         .setCancelable(isCancelable)
         .setView(view)
         .create()
-
 
 // Security
 fun Activity.preventScreenshotsAndRecentAppThumbnails() {

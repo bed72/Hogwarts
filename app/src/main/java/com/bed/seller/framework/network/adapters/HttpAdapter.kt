@@ -1,46 +1,40 @@
 package com.bed.seller.framework.network.adapters
 
-import javax.inject.Inject
-
+import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
-import arrow.core.Either
-
-import okhttp3.Protocol
-import okhttp3.logging.HttpLoggingInterceptor
-
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.ExperimentalSerializationApi
-
-import io.ktor.http.ContentType
-import io.ktor.http.HttpHeaders
-
-import io.ktor.serialization.kotlinx.json.json
-
-import io.ktor.client.call.body
+import com.bed.seller.BuildConfig
 import io.ktor.client.HttpClient
+import io.ktor.client.HttpClientConfig
+import io.ktor.client.call.body
+import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.engine.okhttp.OkHttpConfig
+import io.ktor.client.plugins.DefaultRequest
+import io.ktor.client.plugins.HttpTimeout
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.plugins.observer.ResponseObserver
+import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.header
 import io.ktor.client.request.headers
 import io.ktor.client.request.request
-import io.ktor.client.HttpClientConfig
-import io.ktor.client.plugins.HttpTimeout
-import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.statement.HttpResponse
-import io.ktor.client.plugins.DefaultRequest
-import io.ktor.client.plugins.logging.Logging
-import io.ktor.client.plugins.logging.LogLevel
-import io.ktor.client.request.HttpRequestBuilder
-import io.ktor.client.engine.okhttp.OkHttpConfig
-import io.ktor.client.plugins.observer.ResponseObserver
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-
-import com.bed.seller.BuildConfig
+import io.ktor.http.ContentType
+import io.ktor.http.HttpHeaders
+import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
+import okhttp3.Protocol
+import okhttp3.logging.HttpLoggingInterceptor
+import javax.inject.Inject
 interface HttpAdapter {
     val ktor: HttpClient
 }
 class HttpAdapterImpl @Inject constructor() : HttpAdapter {
 
     private val timeout = 15000L
+
     @OptIn(ExperimentalSerializationApi::class)
     private val configureJson get() = Json {
         explicitNulls = false
@@ -120,7 +114,7 @@ suspend inline fun <reified F : Any, reified S : Any> HttpClient.request(
 
     close()
 
-    return if (response.status.value in (200..299) ) success(response) else failure(response)
+    return if (response.status.value in (200..299)) success(response) else failure(response)
 }
 
 suspend inline fun <reified F> failure(response: HttpResponse) = response.body<F>().left()

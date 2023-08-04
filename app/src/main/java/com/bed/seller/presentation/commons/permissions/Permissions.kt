@@ -2,7 +2,6 @@ package com.bed.seller.presentation.commons.permissions
 
 import android.Manifest
 import android.os.Build
-
 import androidx.annotation.RequiresApi
 
 object Permissions {

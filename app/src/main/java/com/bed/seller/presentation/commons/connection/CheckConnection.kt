@@ -2,13 +2,11 @@ package com.bed.seller.presentation.commons.connection
 
 import android.app.Application
 import android.content.Context
-
-import androidx.lifecycle.LiveData
-
-import android.net.Network
-import android.net.NetworkRequest
 import android.net.ConnectivityManager
+import android.net.Network
 import android.net.NetworkCapabilities
+import android.net.NetworkRequest
+import androidx.lifecycle.LiveData
 
 abstract class CheckConnection : LiveData<Boolean>() {
     abstract val request: NetworkRequest
@@ -21,18 +19,18 @@ class CheckConnectionImpl(
 
     override val request: NetworkRequest
         get() = NetworkRequest.Builder().apply {
-        addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
-        addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
-        addTransportType(NetworkCapabilities.TRANSPORT_ETHERNET)
-        addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-        addCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
-    }.build()
+            addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+            addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
+            addTransportType(NetworkCapabilities.TRANSPORT_ETHERNET)
+            addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+            addCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+        }.build()
 
     constructor(application: Application) : this(
         application.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     )
 
-    override val network = object : ConnectivityManager.NetworkCallback(){
+    override val network = object : ConnectivityManager.NetworkCallback() {
         override fun onAvailable(network: Network) {
             super.onAvailable(network)
 
@@ -57,5 +55,4 @@ class CheckConnectionImpl(
 
         connectivity.unregisterNetworkCallback(network)
     }
-
 }

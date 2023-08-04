@@ -3,29 +3,23 @@ package com.bed.seller.presentation.ui.dashboard.home
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
-import android.view.View
-import android.view.MenuItem
 import android.view.MenuInflater
-
-import androidx.lifecycle.Lifecycle
+import android.view.MenuItem
+import android.view.View
 import androidx.activity.addCallback
-import androidx.fragment.app.viewModels
-
-import dagger.hilt.android.AndroidEntryPoint
-
+import androidx.lifecycle.Lifecycle
 import com.bed.seller.R
-
 import com.bed.seller.databinding.HomeFragmentBinding
-
+import com.bed.seller.presentation.commons.extensions.hasPermissions
 import com.bed.seller.presentation.commons.extensions.navigateTo
 import com.bed.seller.presentation.commons.fragments.BaseFragment
 import com.bed.seller.presentation.commons.permissions.Permissions
-import com.bed.seller.presentation.commons.extensions.hasPermissions
+import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::inflate) {
 
-    private val viewModel: HomeViewModel by viewModels()
+//    private val viewModel: HomeViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -74,8 +68,9 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
     }
 
     private fun setupHandlerPermissions() {
-        if (hasPermissions().not())
+        if (hasPermissions().not()) {
             navigateTo(HomeFragmentDirections.actionHomeFragmentToPermissionFragment())
+        }
     }
 
     private fun setupExitApp() {
@@ -84,8 +79,9 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
         }
     }
 
-    private fun hasPermissions() = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU)
+    private fun hasPermissions() = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
         hasPermissions(Permissions.permissionsCommons)
-        else hasPermissions(Permissions.permissionsToTiramisu)
-
+    } else {
+        hasPermissions(Permissions.permissionsToTiramisu)
+    }
 }
