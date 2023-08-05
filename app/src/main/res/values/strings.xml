@@ -18,8 +18,8 @@
     <string name="failure_name_message">Nome inválido.</string>
     <string name="failure_email_message">E-mail inválido.</string>
     <string name="failure_password_message">Senha inválida.</string>
-    <string name="placeholder_password_text_input">Exemplo: G00S@l55</string>
-    <string name="placeholder_email_text_input">Exemplo: email@email.com</string>
+    <string name="placeholder_email_text_input">Seu melhor e-mail</string>
+    <string name="placeholder_password_text_input">Uma senha segura</string>
 
     <!-- SIGN_IN -->
     <string name="sign_in_title">Bem vindo!</string>

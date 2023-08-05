@@ -66,4 +66,5 @@ abstract class BaseFragment<viewBinding : ViewBinding>(
             Configuration.UI_MODE_NIGHT_YES -> setNavigationBarColor(colorDark)
         }
     }
+
 }

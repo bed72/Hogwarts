@@ -10,8 +10,6 @@ import android.view.MenuInflater
 import androidx.lifecycle.Lifecycle
 import androidx.activity.addCallback
 
-import dagger.hilt.android.AndroidEntryPoint
-
 import com.bed.seller.R
 import com.bed.seller.databinding.HomeFragmentBinding
 import com.bed.seller.presentation.commons.extensions.hasPermissions
@@ -19,7 +17,6 @@ import com.bed.seller.presentation.commons.extensions.navigateTo
 import com.bed.seller.presentation.commons.fragments.BaseFragment
 import com.bed.seller.presentation.commons.permissions.Permissions
 
-@AndroidEntryPoint
 class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::inflate) {
 
 //    private val viewModel: HomeViewModel by viewModels()
@@ -43,11 +40,11 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
     override fun onMenuItemSelected(menu: MenuItem): Boolean =
         when (menu.itemId) {
             R.id.settings -> {
-                navigateTo(HomeFragmentDirections.actionHomeFragmentToSettingFragment())
+                navigateTo(HomeFragmentDirections.actionHomeToSetting())
                 true
             }
             R.id.notification -> {
-                navigateTo(HomeFragmentDirections.actionHomeFragmentToNotificationFragment())
+                navigateTo(HomeFragmentDirections.actionHomeToNotification())
                 true
             }
             else -> false
@@ -57,7 +54,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
         setupMenu()
         setupExitApp()
         setupFloatActionBottom()
-        setupHandlerPermissions()
+//        setupHandlerPermissions()
     }
 
     private fun setupMenu() {
@@ -66,25 +63,24 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
 
     private fun setupFloatActionBottom() {
         binding.floatingActionButton.setOnClickListener {
-            navigateTo(HomeFragmentDirections.actionHomeFragmentToSaleFragment())
+            navigateTo(HomeFragmentDirections.actionHomeToSale())
         }
     }
 
     private fun setupHandlerPermissions() {
         if (hasPermissions().not()) {
-            navigateTo(HomeFragmentDirections.actionHomeFragmentToPermissionFragment())
+            navigateTo(HomeFragmentDirections.actionHomeToPermission())
         }
     }
 
     private fun setupExitApp() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            navigateTo(HomeFragmentDirections.actionHomeFragmentToVerifyExitFragment())
+            navigateTo(HomeFragmentDirections.actionHomeToExit())
         }
     }
 
-    private fun hasPermissions() = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+    private fun hasPermissions() = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU)
         hasPermissions(Permissions.permissionsCommons)
-    } else {
-        hasPermissions(Permissions.permissionsToTiramisu)
-    }
+    else hasPermissions(Permissions.permissionsToTiramisu)
+
 }

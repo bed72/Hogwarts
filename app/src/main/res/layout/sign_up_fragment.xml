@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:context=".presentation.ui.authentication.signup.SignUpFragment" >
 
     <ScrollView
         style="@style/ScrollView"
@@ -198,7 +199,7 @@
                 app:layout_constraintTop_toBottomOf="@id/sign_up_flipper_action" >
 
                 <TextView
-                    style="@style/GreyMediumItalicBody"
+                    style="@style/GreyMediumBody"
                     android:text="@string/sign_up_description_already_existing_account"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />

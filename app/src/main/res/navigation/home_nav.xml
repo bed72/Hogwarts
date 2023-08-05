@@ -18,19 +18,19 @@
         android:name="com.bed.seller.presentation.ui.dashboard.home.HomeFragment" >
 
         <action
-            android:id="@+id/action_home_fragment_to_permission_fragment"
+            android:id="@+id/action_home_to_permission"
             app:destination="@id/permission_fragment" />
 
         <action
-            android:id="@+id/action_home_fragment_to_sale_fragment"
+            android:id="@+id/action_home_to_sale"
             app:destination="@id/sale_fragment" />
 
         <action
-            android:id="@+id/action_home_fragment_to_verify_exit_fragment"
+            android:id="@+id/action_home_to_exit"
             app:destination="@id/exit_fragment" />
 
         <action
-            android:id="@+id/action_home_fragment_to_setting_fragment"
+            android:id="@+id/action_home_to_setting"
             app:destination="@id/setting"
             app:exitAnim="@anim/nav_pop_exit_to_left"
             app:enterAnim="@anim/nav_pop_enter_from_right"
@@ -38,7 +38,7 @@
             app:popEnterAnim="@anim/nav_enter_from_left" />
 
         <action
-            android:id="@+id/action_home_fragment_to_notification_fragment"
+            android:id="@+id/action_home_to_notification"
             app:destination="@id/notification"
             app:exitAnim="@anim/nav_pop_exit_to_left"
             app:popExitAnim="@anim/nav_exit_to_right"

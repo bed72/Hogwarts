@@ -33,7 +33,7 @@
 
         <action
             android:id="@+id/action_sign_in_to_sign_up"
-            app:destination="@id/sign_in_fragment"
+            app:destination="@id/sign_up_fragment"
             app:exitAnim="@anim/nav_pop_exit_to_left"
             app:popExitAnim="@anim/nav_exit_to_right"
             app:popEnterAnim="@anim/nav_enter_from_left"
