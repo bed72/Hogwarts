@@ -1,6 +1,5 @@
 import java.util.Properties
 import java.io.FileInputStream
-
 import kotlin.collections.listOf
 
 plugins {
