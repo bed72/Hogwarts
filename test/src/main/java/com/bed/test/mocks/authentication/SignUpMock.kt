@@ -2,10 +2,10 @@ package com.bed.test.mocks.authentication
 
 const val SIGN_UP_MOCK = """
 {
-  "access_token": "eyJhbiOiJIUzI1NiIsImtph...",
+  "access_token": "5CQcsREkB5xcqbY1L....",
   "token_type": "bearer",
   "expires_in": 3600,
-  "refresh_token": "eyJhbiOiJIUzI1NiIsImtph...",
+  "refresh_token": "5CQcsREkB5xcqbY1L...",
   "user": {
     "id": "52cbedfa-d8cb-46c4-8b81-a7dbf82419e7",
     "aud": "authenticated",
@@ -21,7 +21,9 @@ const val SIGN_UP_MOCK = """
         "email"
       ]
     },
-    "user_metadata": {},
+    "user_metadata": {
+        "name": "Bed"
+    },
     "identities": [
       {
         "id": "52cbedfa-d8cb-46c4-8b81-a7dbf82419e7",

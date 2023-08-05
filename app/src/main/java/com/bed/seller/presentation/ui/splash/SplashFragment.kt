@@ -2,12 +2,16 @@ package com.bed.seller.presentation.ui.splash
 
 import android.os.Bundle
 import android.view.View
+
 import androidx.fragment.app.viewModels
+
+import dagger.hilt.android.AndroidEntryPoint
+
 import com.bed.seller.databinding.SplashFragmentBinding
+
 import com.bed.seller.presentation.commons.extensions.navigateTo
 import com.bed.seller.presentation.commons.fragments.BaseFragment
 import com.bed.seller.presentation.ui.splash.states.SplashGetTokenLiveData
-import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SplashFragment : BaseFragment<SplashFragmentBinding>(SplashFragmentBinding::inflate) {

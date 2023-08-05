@@ -1,10 +1,11 @@
 package com.bed.seller.framework.network.interceptors
 
-import io.ktor.http.HttpHeaders
-import io.ktor.http.HttpStatusCode
-import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
+import okhttp3.Interceptor
+
+import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpStatusCode
 
 class AuthInterceptor : Interceptor {
 

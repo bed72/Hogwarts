@@ -1,14 +1,12 @@
 package com.bed.seller.presentation.ui.splash.states
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.switchMap
-import com.bed.core.usecases.coroutines.CoroutinesUseCase
+import androidx.lifecycle.MutableLiveData
+
 import com.bed.core.usecases.storage.GetStorageUseCase
-import com.bed.seller.presentation.ui.splash.states.SplashGetTokenLiveData.Actions.Get
-import com.bed.seller.presentation.ui.splash.states.SplashGetTokenLiveData.States.Failure
-import com.bed.seller.presentation.ui.splash.states.SplashGetTokenLiveData.States.Success
+import com.bed.core.usecases.coroutines.CoroutinesUseCase
 
 class SplashGetTokenLiveData(
     private val coroutinesUseCase: CoroutinesUseCase,
@@ -19,16 +17,16 @@ class SplashGetTokenLiveData(
 
     val state: LiveData<States> = action.switchMap { action ->
         liveData(coroutinesUseCase.main()) {
-            if (action is Get) {
+            if (action is Actions.Get) {
                 getStorageUseCase(action.values).collect { data ->
-                    if (data.isEmpty()) emit(Failure) else emit(Success)
+                    if (data.isEmpty()) emit(States.Failure) else emit(States.Success)
                 }
             }
         }
     }
 
     fun accessToken(data: String) {
-        action.value = Get(data)
+        action.value = Actions.Get(data)
     }
 
     sealed class Actions {
@@ -36,7 +34,7 @@ class SplashGetTokenLiveData(
     }
 
     sealed class States {
-        object Failure : States()
-        object Success : States()
+        data object Failure : States()
+        data object Success : States()
     }
 }

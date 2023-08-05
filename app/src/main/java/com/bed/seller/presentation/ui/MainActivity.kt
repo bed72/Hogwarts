@@ -1,25 +1,34 @@
 package com.bed.seller.presentation.ui
 
+import dagger.hilt.android.AndroidEntryPoint
+
 import android.os.Bundle
-import android.view.View
-import android.view.animation.AnticipateInterpolator
+
 import androidx.annotation.NavigationRes
+
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.core.splashscreen.SplashScreenViewProvider
+
+import android.view.View
+import android.view.animation.AnticipateInterpolator
+
 import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.ui.setupActionBarWithNavController
+
+import androidx.core.splashscreen.SplashScreenViewProvider
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+
 import com.bed.seller.R
+
 import com.bed.seller.databinding.MainActivityBinding
+
+import com.bed.seller.presentation.commons.extensions.dialog
 import com.bed.seller.presentation.commons.connection.CheckConnection
 import com.bed.seller.presentation.commons.connection.CheckConnectionImpl
-import com.bed.seller.presentation.commons.extensions.dialog
 import com.bed.seller.presentation.commons.extensions.preventScreenshotsAndRecentAppThumbnails
-import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {

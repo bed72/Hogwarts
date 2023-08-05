@@ -1,14 +1,13 @@
 package com.bed.seller.presentation.ui.authentication.signup.states
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
-import com.bed.core.usecases.coroutines.CoroutinesUseCase
+import androidx.lifecycle.MutableLiveData
+
 import com.bed.core.usecases.storage.SaveStorageUseCase
-import com.bed.seller.presentation.ui.authentication.signup.states.SignUpSaveTokensLiveData.Actions.Save
-import com.bed.seller.presentation.ui.authentication.signup.states.SignUpSaveTokensLiveData.States.Continue
-import com.bed.seller.presentation.ui.authentication.signup.states.SignUpSaveTokensLiveData.States.Loading
+import com.bed.core.usecases.coroutines.CoroutinesUseCase
+
 
 class SignUpSaveTokensLiveData(
     private val coroutinesUseCase: CoroutinesUseCase,
@@ -19,18 +18,17 @@ class SignUpSaveTokensLiveData(
 
     val state: LiveData<States> = action.switchMap { action ->
         liveData(coroutinesUseCase.main()) {
-            emit(Loading)
+            emit(States.Loading)
 
-            if (action is Save) {
+            if (action is Actions.Save)
                 action.values.forEach { value ->
-                    saveStorageUseCase(value).collect { emit(Continue) }
+                    saveStorageUseCase(value).collect { emit(States.Continue) }
                 }
-            }
         }
     }
 
     fun save(value: List<Pair<String, String>>) {
-        action.value = Save(value)
+        action.value = Actions.Save(value)
     }
 
     sealed class Actions {
@@ -38,7 +36,7 @@ class SignUpSaveTokensLiveData(
     }
 
     sealed class States {
-        object Loading : States()
-        object Continue : States()
+        data object Loading : States()
+        data object Continue : States()
     }
 }

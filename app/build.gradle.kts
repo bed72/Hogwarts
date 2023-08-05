@@ -100,6 +100,7 @@ dependencies {
     implementation("com.google.dagger:hilt-android:$hiltVersion")
 
     val ktorVersion = "2.3.3"
+    implementation("io.ktor:ktor-client-mock:$ktorVersion")
     implementation("io.ktor:ktor-client-core:$ktorVersion")
     implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
     implementation("io.ktor:ktor-client-logging:$ktorVersion")

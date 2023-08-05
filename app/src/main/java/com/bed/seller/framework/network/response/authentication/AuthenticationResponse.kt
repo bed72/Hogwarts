@@ -1,10 +1,11 @@
 package com.bed.seller.framework.network.response.authentication
 
-import com.bed.core.domain.models.authentication.AuthenticationMetadataModel
-import com.bed.core.domain.models.authentication.AuthenticationModel
-import com.bed.core.domain.models.authentication.AuthenticationUserModel
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+
+import com.bed.core.domain.models.authentication.AuthenticationModel
+import com.bed.core.domain.models.authentication.AuthenticationUserModel
+import com.bed.core.domain.models.authentication.AuthenticationMetadataModel
 
 @Serializable
 data class AuthenticationResponse(
