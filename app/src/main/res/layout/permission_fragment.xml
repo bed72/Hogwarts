@@ -14,8 +14,8 @@
 
     <TextView
         android:layout_weight="4"
-        android:layout_height="0dp"
         android:text="@string/permissions_title"
+        android:layout_height="0dp"
         style="@style/SemiBoldHeading5"
         android:layout_width="wrap_content" />
 
@@ -43,7 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/item_permission_component"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"  />
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     <Button
         android:id="@+id/permission_accept_button"

@@ -6,8 +6,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <shape>
-        <solid android:color="@color/grey_300" />
         <size android:height="@dimen/diver_height" />
+        <solid android:color="@color/grey_300" />
     </shape>
 
 </inset>

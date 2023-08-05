@@ -35,9 +35,9 @@
             android:id="@+id/action_sign_in_to_sign_up"
             app:destination="@id/sign_in_fragment"
             app:exitAnim="@anim/nav_pop_exit_to_left"
-            app:enterAnim="@anim/nav_pop_enter_from_right"
             app:popExitAnim="@anim/nav_exit_to_right"
-            app:popEnterAnim="@anim/nav_enter_from_left" />
+            app:popEnterAnim="@anim/nav_enter_from_left"
+            app:enterAnim="@anim/nav_pop_enter_from_right" />
 
         <action
             android:id="@+id/action_sign_in_to_home"

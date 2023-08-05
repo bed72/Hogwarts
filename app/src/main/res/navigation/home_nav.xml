@@ -41,9 +41,9 @@
             android:id="@+id/action_home_fragment_to_notification_fragment"
             app:destination="@id/notification"
             app:exitAnim="@anim/nav_pop_exit_to_left"
-            app:enterAnim="@anim/nav_pop_enter_from_right"
             app:popExitAnim="@anim/nav_exit_to_right"
-            app:popEnterAnim="@anim/nav_enter_from_left" />
+            app:popEnterAnim="@anim/nav_enter_from_left"
+            app:enterAnim="@anim/nav_pop_enter_from_right" />
 
     </fragment>
 

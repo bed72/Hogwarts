@@ -7,9 +7,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".presentation.ui.dashboard.sale.SaleFragment"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:context=".presentation.ui.dashboard.sale.SaleFragment"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" >
 
     <TextView
@@ -38,18 +38,18 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/sale_name_text_input"
         style="@style/TextInput"
+        app:placeholderText="@string/sale_placeholder_name_text_input"
         app:endIconMode="clear_text"
         android:layout_marginTop="@dimen/big_small_margin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:placeholderText="@string/sale_placeholder_name_text_input"  >
+        android:layout_height="wrap_content" >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/magic_link_email_edit_input"
+            tools:text="@string/sale_placeholder_name_text_input"
             android:lines="@integer/max_lines_commons"
             android:maxLines="@integer/max_lines_commons"
             android:maxLength="@integer/max_length_email"
-            tools:text="@string/sale_placeholder_name_text_input"
             style="@style/TextInputEdit"
             android:inputType="textCapWords"
             android:layout_width="match_parent"

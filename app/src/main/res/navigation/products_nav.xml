@@ -22,7 +22,7 @@
 
     <dialog
         android:id="@+id/dashboard_exit_fragment"
-        tools:layout="@layout/dashboard_exit_fragment"
+        tools:layout="@layout/exit_fragment"
         android:name="com.bed.seller.presentation.ui.dashboard.exit.DashboardExitFragment" />
 
 </navigation>
