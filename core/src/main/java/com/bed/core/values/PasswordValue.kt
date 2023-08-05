@@ -19,8 +19,10 @@ value class PasswordValue (val value: String) : ValueObject {
 
         return when {
             value.isEmpty() -> false to "Preencha sua senha."
-            patternNeedsNumberCharacter.matches(value).not() -> false to "A senha presica conter caracteres numéricos."
-            patternNeedsUpperCaseCharacter.matches(value).not() -> false to "A senha presica conter caracteres maiúsculos."
+            patternNeedsNumberCharacter.matches(value).not() ->
+                false to "A senha presica conter caracteres numéricos."
+            patternNeedsUpperCaseCharacter.matches(value).not() ->
+                false to "A senha presica conter caracteres maiúsculos."
             else -> true to value
         }
     }

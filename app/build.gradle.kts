@@ -1,8 +1,5 @@
-import java.util.Properties
-
-import java.io.File
 import java.io.FileInputStream
-
+import java.util.Properties
 import kotlin.collections.listOf
 
 plugins {
@@ -20,11 +17,12 @@ val keys = Properties().apply {
 }
 
 android {
-    compileSdk = 33
+    compileSdk = 34
     namespace = "com.bed.seller"
 
     defaultConfig {
         minSdk = 27
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
         applicationId = "com.bed.seller"
@@ -32,7 +30,6 @@ android {
         buildConfigField("String", "API_KEY", keys.getProperty("API_KEY"))
         buildConfigField("String", "BASE_URL", keys.getProperty("BASE_URL"))
         buildConfigField("String", "DATA_STORE", keys.getProperty("DATA_STORE"))
-
     }
 
     buildFeatures {
@@ -68,13 +65,6 @@ android {
         }
     }
 
-    lint {
-        xmlReport = true
-        sarifReport = true
-        checkDependencies = true
-
-    }
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -84,7 +74,6 @@ android {
         jvmTarget = "17"
         freeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn")
     }
-
 }
 
 dependencies {
@@ -125,7 +114,7 @@ dependencies {
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.1")
 
     implementation(project(":test"))
-//    testImplementation("androidx.arch.core:core-testing:2.2.0")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
 
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
@@ -136,13 +125,28 @@ dependencies {
 detekt {
     toolVersion = "1.23.1"
 
-    autoCorrect = true
-    buildUponDefaultConfig = true
+    parallel = true
+
+    debug = false
+    allRules = false
+    ignoreFailures = false
+    buildUponDefaultConfig = false
+    disableDefaultRuleSets = false
+
+    basePath = projectDir.absolutePath
     ignoredBuildTypes = listOf("release")
     config.setFrom(file("$rootDir/config/detekt/detekt.yml"))
+    source.setFrom(
+        "$rootDir/app/src/main/java",
+        "$rootDir/app/src/test/java",
+        "$rootDir/app/src/androidTest/java",
+        "$rootDir/core/src/main/java",
+        "$rootDir/core/src/test/java",
+        "$rootDir/test/src/main/java"
+    )
 }
 
-project.afterEvaluate {
+afterEvaluate {
     tasks.named("preBuild") {
         dependsOn("detekt")
     }

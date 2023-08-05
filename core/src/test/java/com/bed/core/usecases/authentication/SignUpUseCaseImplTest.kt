@@ -36,9 +36,9 @@ internal class SignUpUseCaseTest {
     @get:Rule
     val rule = MainCoroutineRule()
 
-    private lateinit var useCase: SignUpUseCase
-
     private lateinit var factory: SignUpFactory
+
+    private lateinit var useCase: SignUpUseCase
 
     @Mock
     private lateinit var repository: AuthenticationRepository

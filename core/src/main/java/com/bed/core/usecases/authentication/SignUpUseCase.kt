@@ -9,8 +9,8 @@ import com.bed.core.domain.alias.SignUpType
 import com.bed.core.domain.parameters.authentication.SignUpParameters
 
 import com.bed.core.usecases.UseCase
-import com.bed.core.data.repositories.authentication.AuthenticationRepository
 import com.bed.core.usecases.coroutines.CoroutinesUseCase
+import com.bed.core.data.repositories.authentication.AuthenticationRepository
 
 interface SignUpUseCase {
     operator fun invoke(parameters: SignUpParameters): Flow<SignUpType>

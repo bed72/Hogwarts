@@ -28,6 +28,7 @@ import kotlinx.serialization.json.Json
 import okhttp3.Protocol
 import okhttp3.logging.HttpLoggingInterceptor
 import javax.inject.Inject
+
 interface HttpAdapter {
     val ktor: HttpClient
 }
