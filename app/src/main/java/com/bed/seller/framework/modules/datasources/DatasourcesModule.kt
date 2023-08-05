@@ -5,18 +5,18 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
-import com.bed.core.data.datasources.storage.StorageDataSource
-import com.bed.core.data.datasources.authentication.AuthenticationDatasource
+import com.bed.core.data.datasources.local.storage.LocalStorageDataSource
+import com.bed.core.data.datasources.remote.authentication.RemoteAuthenticationDatasource
 
-import com.bed.seller.datasources.local.storage.LocalStorageDataSourceImpl
+import com.bed.seller.datasources.local.storage.LocalLocalStorageDataSourceImpl
 import com.bed.seller.datasources.remote.authentication.RemoteAuthenticationDatasourceImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
 interface DatasourcesModule {
     @Binds
-    fun bindStorageDatasource(datasource: LocalStorageDataSourceImpl): StorageDataSource
+    fun bindStorageDatasource(datasource: LocalLocalStorageDataSourceImpl): LocalStorageDataSource
 
     @Binds
-    fun bindAuthenticationDatasource(datasource: RemoteAuthenticationDatasourceImpl): AuthenticationDatasource
+    fun bindAuthenticationDatasource(datasource: RemoteAuthenticationDatasourceImpl): RemoteAuthenticationDatasource
 }

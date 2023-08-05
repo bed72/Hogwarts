@@ -4,7 +4,7 @@ import javax.inject.Inject
 
 import kotlinx.coroutines.flow.Flow
 
-import com.bed.core.data.datasources.storage.StorageDataSource
+import com.bed.core.data.datasources.local.storage.LocalStorageDataSource
 
 interface StorageRepository {
     suspend fun get(value: String): Flow<String>
@@ -13,7 +13,7 @@ interface StorageRepository {
 }
 
 class StorageRepositoryImpl @Inject constructor(
-    private val datasource: StorageDataSource
+    private val datasource: LocalStorageDataSource
 ) : StorageRepository {
 
     override suspend fun get(value: String): Flow<String> = datasource.get(value)

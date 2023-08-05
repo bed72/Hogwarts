@@ -1,4 +1,4 @@
-package com.bed.seller.framework.modules.adapters
+package com.bed.seller.framework.modules.clients
 
 import javax.inject.Singleton
 
@@ -17,7 +17,7 @@ import com.bed.seller.BuildConfig
 
 @Module
 @InstallIn(SingletonComponent::class)
-object StorageAdapterModule {
+object StorageClientModule {
     @Provides
     @Singleton
     fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> =

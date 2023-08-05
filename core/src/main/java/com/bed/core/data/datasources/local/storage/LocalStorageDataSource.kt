@@ -1,8 +1,8 @@
-package com.bed.core.data.datasources.storage
+package com.bed.core.data.datasources.local.storage
 
 import kotlinx.coroutines.flow.Flow
 
-interface StorageDataSource {
+interface LocalStorageDataSource {
     suspend fun get(value: String): Flow<String>
 
     suspend fun save(value: Pair<String, String>)

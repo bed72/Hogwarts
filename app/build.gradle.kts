@@ -1,5 +1,6 @@
 import java.util.Properties
 import java.io.FileInputStream
+
 import kotlin.collections.listOf
 
 plugins {
@@ -17,12 +18,12 @@ val keys = Properties().apply {
 }
 
 android {
-    compileSdk = 34
+    compileSdk = 33
     namespace = "com.bed.seller"
 
     defaultConfig {
         minSdk = 27
-        targetSdk = 34
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
         applicationId = "com.bed.seller"
