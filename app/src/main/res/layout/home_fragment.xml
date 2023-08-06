@@ -8,9 +8,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     tools:context=".presentation.ui.dashboard.home.HomeFragment" >
 
-    <TextView
-        android:id="@+id/title"
-        android:text="Home"
+    <androidx.camera.view.PreviewView
+        android:id="@+id/camera_preview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

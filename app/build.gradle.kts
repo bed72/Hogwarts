@@ -18,12 +18,12 @@ val keys = Properties().apply {
 }
 
 android {
-    compileSdk = 33
+    compileSdk = 34
     namespace = "com.bed.seller"
 
     defaultConfig {
         minSdk = 27
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
         applicationId = "com.bed.seller"
@@ -87,6 +87,12 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
+    val cameraxVersion = "1.2.3"
+    implementation("androidx.camera:camera-view:1.3.0-beta02")
+    implementation("androidx.camera:camera-camera2:$cameraxVersion")
+    implementation("androidx.camera:camera-lifecycle:$cameraxVersion")
+    implementation("androidx.camera:camera-extensions:$cameraxVersion")
+
     val navigationVersion = "2.6.0"
     implementation("androidx.navigation:navigation-ui-ktx:$navigationVersion")
     implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
@@ -107,6 +113,7 @@ dependencies {
     implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
 
+    implementation("io.coil-kt:coil-compose:2.4.0")
     implementation("com.airbnb.android:lottie:6.1.0")
     implementation("com.google.android.material:material:1.9.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
@@ -114,7 +121,7 @@ dependencies {
 
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.1")
 
-    implementation(project(":test"))
+    testImplementation(project(":test"))
     testImplementation("androidx.arch.core:core-testing:2.2.0")
     testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
 
