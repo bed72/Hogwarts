@@ -11,8 +11,9 @@ import com.bed.seller.R
 
 import com.bed.seller.databinding.ProductsFragmentBinding
 
-import com.bed.seller.presentation.commons.extensions.navigateTo
 import com.bed.seller.presentation.commons.fragments.BaseFragment
+
+import com.bed.seller.presentation.commons.extensions.fragments.navigateTo
 
 @AndroidEntryPoint
 class ProductsFragment : BaseFragment<ProductsFragmentBinding>(ProductsFragmentBinding::inflate) {

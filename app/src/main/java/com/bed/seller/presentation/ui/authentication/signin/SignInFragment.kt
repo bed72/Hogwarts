@@ -5,9 +5,9 @@ import android.view.View
 import androidx.activity.addCallback
 
 import com.bed.seller.databinding.SignInFragmentBinding
-import com.bed.seller.presentation.commons.extensions.navigateTo
 
 import com.bed.seller.presentation.commons.fragments.BaseFragment
+import com.bed.seller.presentation.commons.extensions.fragments.navigateTo
 
 class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding::inflate) {
 

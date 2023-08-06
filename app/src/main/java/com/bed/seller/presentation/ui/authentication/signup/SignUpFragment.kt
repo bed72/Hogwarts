@@ -2,13 +2,13 @@ package com.bed.seller.presentation.ui.authentication.signup
 
 import android.os.Bundle
 import android.view.View
+
 import androidx.activity.addCallback
 
-
 import com.bed.seller.databinding.SignUpFragmentBinding
-import com.bed.seller.presentation.commons.extensions.navigateTo
 
 import com.bed.seller.presentation.commons.fragments.BaseFragment
+import com.bed.seller.presentation.commons.extensions.fragments.navigateTo
 
 class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding::inflate) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

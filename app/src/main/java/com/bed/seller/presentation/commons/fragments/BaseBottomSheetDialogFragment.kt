@@ -1,12 +1,16 @@
 package com.bed.seller.presentation.commons.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
+
 import android.view.View
 import android.view.ViewGroup
+import android.view.LayoutInflater
+
 import androidx.viewbinding.ViewBinding
-import com.bed.seller.R
+
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+
+import com.bed.seller.R
 
 typealias InflateBottomSheet<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 

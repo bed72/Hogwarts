@@ -9,8 +9,9 @@ import dagger.hilt.android.AndroidEntryPoint
 
 import com.bed.seller.databinding.SplashFragmentBinding
 
-import com.bed.seller.presentation.commons.extensions.navigateTo
 import com.bed.seller.presentation.commons.fragments.BaseFragment
+import com.bed.seller.presentation.commons.extensions.fragments.navigateTo
+
 import com.bed.seller.presentation.ui.splash.states.SplashGetTokenLiveData
 
 @AndroidEntryPoint

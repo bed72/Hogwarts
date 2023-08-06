@@ -1,18 +1,20 @@
 package com.bed.seller.presentation.ui.dashboard.home
 
+import android.util.Log
+
 import android.os.Build
 import android.os.Bundle
 
-import android.util.Log
-
 import android.app.Activity
+import android.content.Intent
 
 import android.view.View
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MenuInflater
 
-import com.google.android.material.snackbar.Snackbar
+import android.provider.MediaStore
+
 import com.google.common.util.concurrent.ListenableFuture
 
 import androidx.lifecycle.Lifecycle
@@ -29,10 +31,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.bed.seller.R
 import com.bed.seller.databinding.HomeFragmentBinding
 
-import com.bed.seller.presentation.commons.extensions.navigateTo
 import com.bed.seller.presentation.commons.fragments.BaseFragment
+
 import com.bed.seller.presentation.commons.permissions.Permissions
-import com.bed.seller.presentation.commons.extensions.hasPermissions
+import com.bed.seller.presentation.commons.extensions.fragments.snackbar
+import com.bed.seller.presentation.commons.extensions.fragments.navigateTo
+import com.bed.seller.presentation.commons.extensions.fragments.hasPermissions
 
 class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::inflate) {
 
@@ -41,24 +45,27 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
     private lateinit var cameraSelector: CameraSelector
     private lateinit var cameraProviderFuture: ListenableFuture<ProcessCameraProvider>
 
-    private val multiple =
-        registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(5)) { uris ->
-            if (uris.isNotEmpty()) Log.d("PhotoPicker", "Number of items selected: $uris")
-            else Log.d("PhotoPicker", "No media selected")
+    private val getPhotoFromGallery =
+        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) {
+            if (it != null) Log.d("Picker", "Photo: $it")
+            else snackbar(binding.root, "No media selected")
         }
 
-    private val gallery = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                val image = it.data?.data
-                Log.d("PhotoPicker", "Number of items selected: $image")
-            }
+    private val getPhotoFromGalleryLegacy get() =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) Log.d("Picker", "Photo: $it.data?.data")
+            else snackbar(binding.root, "No media selected")
         }
 
-    private val camera = registerForActivityResult(ActivityResultContracts.RequestPermission()) { permission ->
-        if (permission) openCamera()
-        else Snackbar
-            .make(binding.root,"The camera permission is required", Snackbar.LENGTH_INDEFINITE)
-            .show()
+    private val getPhotosFromGallery =
+        registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(5)) {
+            if (it.isNotEmpty()) Log.d("Picker", "Photos: $it")
+            else snackbar(binding.root, "No media selected")
+        }
+
+    private val openCamera = registerForActivityResult(ActivityResultContracts.RequestPermission()) { permission ->
+        if (permission) handlerCamera()
+        else snackbar(binding.root, "The camera permission is required")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -113,6 +120,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
         binding.floatingActionButton.setOnClickListener {
 //            camera.launch(android.Manifest.permission.CAMERA)
             openGallery()
+//            openGalleryLegacy()
 //            navigateTo(HomeFragmentDirections.actionHomeToSale())
         }
     }
@@ -134,27 +142,28 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
     else hasPermissions(Permissions.permissionsToTiramisu)
 
     private fun openGallery() {
-//        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-//        gallery.launch(intent)
-        multiple.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo))
-
+        getPhotosFromGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo))
     }
 
-    private fun openCamera() {
+    private fun openGalleryLegacy() {
+        getPhotoFromGalleryLegacy
+            .launch(Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI))
+    }
+
+    private fun handlerCamera() {
         cameraProviderFuture.addListener({
-            val cameraProvider = cameraProviderFuture.get()
+            val provider = cameraProviderFuture.get()
 
             val preview = Preview.Builder().build().also{
                 it.setSurfaceProvider(binding.cameraPreview.surfaceProvider)
             }
 
-            try{
-                cameraProvider.unbindAll()
-                cameraProvider.bindToLifecycle(this, cameraSelector, preview)
+            try {
+                provider.unbindAll()
+                provider.bindToLifecycle(this, cameraSelector, preview)
             } catch (exception: Exception) {
-                Log.d("TAG", "Use case binding failed")
+                snackbar(binding.root, "The camera is broke")
             }
-
         }, ContextCompat.getMainExecutor(requireContext()))
     }
 
