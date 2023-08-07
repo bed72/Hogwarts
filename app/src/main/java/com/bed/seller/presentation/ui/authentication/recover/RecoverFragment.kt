@@ -22,7 +22,7 @@ class RecoverFragment : BaseBottomSheetDialogFragment<RecoverFragmentBinding>(
     }
 
     private fun closeBottomSheet() {
-        binding.recoverPasswordCloseButton.setOnClickListener {
+        binding.closeButton.setOnClickListener {
             dismiss()
         }
     }

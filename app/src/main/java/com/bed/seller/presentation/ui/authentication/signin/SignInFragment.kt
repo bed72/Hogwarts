@@ -37,13 +37,13 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
     }
 
     private fun setupSignUpButton() {
-        binding.signInCreateAccountButton.setOnClickListener {
+        binding.createAccountButton.setOnClickListener {
             navigateTo(SignInFragmentDirections.actionSignInToSignUp())
         }
     }
 
     private fun setupRecoverAccountButton() {
-        binding.signInRecoverPasswordButton.setOnClickListener {
+        binding.recoverPasswordButton.setOnClickListener {
             navigateTo(SignInFragmentDirections.actionSignInToRecover())
         }
     }

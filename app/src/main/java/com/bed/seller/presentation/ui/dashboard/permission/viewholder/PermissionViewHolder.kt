@@ -7,15 +7,15 @@ import android.view.LayoutInflater
 import com.bed.seller.databinding.ItemPermissionComponentBinding
 
 import com.bed.seller.presentation.commons.recyclers.GenericViewHolder
-import com.bed.seller.presentation.ui.dashboard.permission.model.PermissionModel
+import com.bed.seller.presentation.ui.dashboard.permission.model.PermissionScreenModel
 
 class PermissionViewHolder(
-    itemPermissionComponentBinding: ItemPermissionComponentBinding
-) : GenericViewHolder<PermissionModel>(itemPermissionComponentBinding) {
+    binding: ItemPermissionComponentBinding
+) : GenericViewHolder<PermissionScreenModel>(binding) {
 
-    private val description: TextView = itemPermissionComponentBinding.itemPermissionText
+    private val description: TextView = binding.itemText
 
-    override fun bind(data: PermissionModel) {
+    override fun bind(data: PermissionScreenModel) {
         description.text = data.description
     }
 

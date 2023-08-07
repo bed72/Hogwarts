@@ -27,7 +27,7 @@
             app:layout_constraintBottom_toBottomOf="parent" >
 
             <TextView
-                android:id="@+id/sign_in_title_text_view"
+                android:id="@+id/title_text"
                 android:text="@string/sign_in_title"
                 style="@style/MediumHeading3"
                 android:layout_width="wrap_content"
@@ -38,7 +38,7 @@
                 app:layout_constraintRight_toRightOf="parent" />
 
             <TextView
-                android:id="@+id/sign_in_sub_title_text_view"
+                android:id="@+id/sub_title_text"
                 style="@style/GreyMediumBody"
                 android:layout_marginTop="@dimen/small_margin"
                 android:layout_width="wrap_content"
@@ -46,11 +46,11 @@
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:text="@string/sign_in_sub_title"
-                app:layout_constraintTop_toBottomOf="@+id/sign_in_title_text_view" />
+                app:layout_constraintTop_toBottomOf="@+id/title_text"
+                android:text="@string/sign_in_sub_title" />
 
             <TextView
-                android:id="@+id/sign_in_email_text_view"
+                android:id="@+id/email_text"
                 android:text="@string/title_email_text_input"
                 style="@style/MediumBody1"
                 android:layout_marginTop="@dimen/normal_margin"
@@ -59,33 +59,33 @@
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/sign_in_sub_title_text_view" />
+                app:layout_constraintTop_toBottomOf="@+id/sub_title_text" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/sign_in_email_text_input"
+                android:id="@+id/email_text_input"
                 style="@style/TextInput"
                 android:layout_width="0dp"
                 app:endIconMode="clear_text"
                 android:layout_marginTop="@dimen/big_small_margin"
                 android:layout_height="wrap_content"
+                app:placeholderText="@string/placeholder_email_text_input"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:placeholderText="@string/placeholder_email_text_input"
                 app:layout_constraintVertical_chainStyle="packed"
-                app:layout_constraintTop_toBottomOf="@+id/sign_in_email_text_view" >
+                app:layout_constraintTop_toBottomOf="@+id/email_text" >
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/sign_in_email_edit_input"
+                    android:id="@+id/email_edit_input"
                     style="@style/TextInputEdit"
+                    tools:text="@string/placeholder_email_text_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
-                    tools:text="@string/placeholder_email_text_input" />
+                    android:inputType="textEmailAddress" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/sign_in_password_text_view"
+                android:id="@+id/password_text"
                 android:text="@string/title_password_text_input"
                 style="@style/MediumBody1"
                 android:layout_marginTop="@dimen/normal_margin"
@@ -94,10 +94,10 @@
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/sign_in_email_text_input" />
+                app:layout_constraintTop_toBottomOf="@+id/email_text_input" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/sign_in_password_text_input"
+                android:id="@+id/password_text_input"
                 style="@style/TextInput"
                 android:layout_width="0dp"
                 android:layout_marginTop="@dimen/big_small_margin"
@@ -107,10 +107,10 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintVertical_chainStyle="packed"
-                app:layout_constraintTop_toBottomOf="@id/sign_in_password_text_view" >
+                app:layout_constraintTop_toBottomOf="@id/password_text" >
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/sign_in_password_edit_input"
+                    android:id="@+id/password_edit_input"
                     style="@style/TextInputEdit"
                     tools:text="@string/placeholder_password_text_input"
                     android:inputType="textPassword"
@@ -120,17 +120,17 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
-                android:id="@+id/sign_in_remember_credentials_and_recover_account"
+                android:id="@+id/remember_credentials_and_recover_account"
                 android:layout_marginTop="@dimen/normal_margin"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="@id/sign_in_password_text_input"
-                app:layout_constraintTop_toBottomOf="@id/sign_in_password_text_input"
-                app:layout_constraintStart_toStartOf="@id/sign_in_password_text_input" >
+                app:layout_constraintEnd_toEndOf="@id/password_text_input"
+                app:layout_constraintTop_toBottomOf="@id/password_text_input"
+                app:layout_constraintStart_toStartOf="@id/password_text_input" >
 
                 <CheckBox
-                    android:id="@+id/sign_in_remember_password_check_box"
+                    android:id="@+id/remember_password_check_box"
                     style="@style/CheckBox"
                     android:paddingEnd="0dp"
                     android:layout_weight="4"
@@ -142,7 +142,7 @@
                     android:button="@drawable/checkbox_states" />
 
                 <Button
-                    android:id="@+id/sign_in_recover_password_button"
+                    android:id="@+id/recover_password_button"
                     style="@style/TextButtonDark"
                     android:layout_weight="1"
                     android:textAlignment="center"
@@ -153,14 +153,14 @@
             </LinearLayout>
 
             <ViewFlipper
-                android:id="@+id/sign_in_action_view_flipper"
+                android:id="@+id/action_flipper"
                 android:layout_width="0dp"
                 android:layout_marginTop="@dimen/normal_margin"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintVertical_chainStyle="packed"
-                app:layout_constraintTop_toBottomOf="@id/sign_in_remember_credentials_and_recover_account" >
+                app:layout_constraintTop_toBottomOf="@id/remember_credentials_and_recover_account" >
 
                 <Button
                     android:id="@+id/sign_in_button"
@@ -170,6 +170,7 @@
                     android:layout_width="match_parent" />
 
                 <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/progress"
                     android:indeterminate="true"
                     android:layout_width="@dimen/progress_bar_dimens"
                     android:layout_height="@dimen/progress_bar_dimens"
@@ -183,7 +184,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/sign_in_action_view_flipper" >
+                app:layout_constraintTop_toBottomOf="@id/action_flipper" >
 
                 <TextView
                     style="@style/GreyMediumBody"
@@ -192,7 +193,7 @@
                     android:text="@string/sign_in_description_create_account" />
 
                 <TextView
-                    android:id="@+id/sign_in_create_account_button"
+                    android:id="@+id/create_account_button"
                     android:text="@string/title_create_account"
                     android:layout_marginStart="@dimen/big_small_margin"
                     android:layout_width="wrap_content"

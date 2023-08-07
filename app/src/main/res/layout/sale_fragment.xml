@@ -13,11 +13,10 @@
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" >
 
     <TextView
-        android:layout_weight="4"
-        android:layout_height="0dp"
         android:text="@string/sale_title"
         style="@style/SemiBoldHeading5"
-        android:layout_width="wrap_content" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <TextView
         style="@style/GreyMediumNormalBody"
@@ -26,6 +25,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sale_subtitle" />
+
+    <!--    <androidx.camera.view.PreviewView-->
+    <!--        android:id="@+id/camera_preview"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent" />-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/selected_images_recycler"
+        tools:itemCount="6"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/item_image_component"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     <TextView
         android:text="@string/sale_title_name_text_input"
@@ -36,7 +50,7 @@
         android:layout_height="wrap_content" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/sale_name_text_input"
+        android:id="@+id/name_text_input"
         style="@style/TextInput"
         app:placeholderText="@string/sale_placeholder_name_text_input"
         app:endIconMode="clear_text"
@@ -45,7 +59,7 @@
         android:layout_height="wrap_content" >
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/magic_link_email_edit_input"
+            android:id="@+id/name_edit_input"
             tools:text="@string/sale_placeholder_name_text_input"
             android:lines="@integer/max_lines_commons"
             android:maxLines="@integer/max_lines_commons"
@@ -58,7 +72,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/sale_save_button"
+        android:id="@+id/save_button"
         android:text="@string/sale_title_save_button"
         style="@style/NormalButton"
         android:layout_height="@dimen/button_height"
@@ -66,8 +80,8 @@
         android:layout_width="match_parent" />
 
     <Button
-        android:id="@+id/sale_cancel_button"
-        android:text="@string/sale_title_cancel_button"
+        android:id="@+id/cancel_button"
+        android:text="@string/title_cancel_button"
         style="@style/CancelButton"
         android:layout_height="@dimen/button_height"
         android:layout_marginTop="@dimen/small_margin"

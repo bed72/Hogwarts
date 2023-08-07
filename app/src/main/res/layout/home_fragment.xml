@@ -8,13 +8,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     tools:context=".presentation.ui.dashboard.home.HomeFragment" >
 
-<!--    <androidx.camera.view.PreviewView-->
-<!--        android:id="@+id/camera_preview"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent" />-->
-
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/floating_action_button"
+        android:id="@+id/create_product_button"
         android:text="@string/home_fab_title_button"
         app:icon="@drawable/ic_add"
         android:layout_margin="@dimen/normal_margin"

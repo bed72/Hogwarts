@@ -39,9 +39,9 @@
     <string name="sign_up_description_already_existing_account">Já possui uma conta?</string>
 
     <!-- RECOVER_PASSWORD -->
-    <string name="recover_password_title_button">Enviar</string>
-    <string name="recover_password_title">Recuperar senha</string>
-    <string name="recover_password_description_icon_button">Botão para fechar o Dialog</string>
+    <string name="recover_password_title">Recuperar conta</string>
+    <string name="recover_password_send_recover_button">Enviar</string>
+    <string name="recover_password_placeholder_email_text_input">Seu e-mail da sua conta</string>
 
     <!-- PERMISSIONS -->
     <string name="permissions_signal">∗</string>
@@ -63,7 +63,6 @@
     <!-- SALE -->
     <string name="sale_title_save_button">Criar</string>
     <string name="sale_title_name_text_input">Nome</string>
-    <string name="sale_title_cancel_button">Cancelar</string>
     <string name="sale_title">Nova oferta  &#127919;</string>
     <string name="sale_placeholder_name_text_input">Café</string>
     <string name="sale_title_name_text_input_text_input">Nome</string>
@@ -92,4 +91,6 @@
     <string name="dialog_connection_title">Opps, não há conexão</string>
     <string name="dialog_connection_button_title">Verificar a conexão</string>
 
+    <!-- BUTTON -->
+    <string name="title_cancel_button">Cancelar</string>
 </resources>

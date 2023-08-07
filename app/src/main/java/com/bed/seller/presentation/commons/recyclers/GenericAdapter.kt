@@ -1,6 +1,7 @@
 package com.bed.seller.presentation.commons.recyclers
 
 import android.view.ViewGroup
+
 import androidx.recyclerview.widget.ListAdapter
 
 inline fun <T : ListItem, VH : GenericViewHolder<T>> getGenericAdapterOf(

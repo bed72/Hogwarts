@@ -182,5 +182,4 @@
     <style name="LightGreenRegularBody" parent="RegularBody2">
         <item name="android:textColor">@color/dark_surfaceTintColor</item>
     </style>
-
 </resources>

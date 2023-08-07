@@ -31,11 +31,11 @@
             android:text="@string/splash_title_loading" />
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:layout_width="@dimen/progress_bar_size"
+            android:layout_height="@dimen/progress_bar_size"
             android:indeterminate="true"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/extra_large_margin"
-            android:layout_width="@dimen/progress_bar_size"
-            android:layout_height="@dimen/progress_bar_size" />
+            android:layout_marginTop="@dimen/extra_large_margin" />
 
     </LinearLayout>
 

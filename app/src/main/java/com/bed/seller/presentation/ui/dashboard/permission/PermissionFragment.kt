@@ -4,8 +4,6 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 
-import dagger.hilt.android.AndroidEntryPoint
-
 import androidx.annotation.RequiresApi
 
 import androidx.activity.result.ActivityResultLauncher
@@ -22,7 +20,7 @@ import com.bed.seller.presentation.commons.extensions.fragments.snackbar
 import com.bed.seller.presentation.commons.fragments.BaseBottomSheetDialogFragment
 import com.bed.seller.presentation.commons.extensions.fragments.shouldRequestPermission
 
-import com.bed.seller.presentation.ui.dashboard.permission.model.PermissionModel
+import com.bed.seller.presentation.ui.dashboard.permission.model.PermissionScreenModel
 import com.bed.seller.presentation.ui.dashboard.permission.viewholder.PermissionViewHolder
 
 class PermissionFragment : BaseBottomSheetDialogFragment<PermissionFragmentBinding>(
@@ -86,7 +84,7 @@ class PermissionFragment : BaseBottomSheetDialogFragment<PermissionFragmentBindi
 
     private fun setupAdapter() {
         resources.getStringArray(R.array.permissions_request).mapIndexed { id, description ->
-            PermissionModel(id, description)
+            PermissionScreenModel(id, description)
         }.run { adapterPermission.submitList(this) }
     }
 

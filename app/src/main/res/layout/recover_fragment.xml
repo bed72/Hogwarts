@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout
-    android:id="@+id/recover_password_bottom_sheet"
     android:padding="@dimen/normal_padding"
     android:orientation="vertical"
     style="@style/BottomSheetDialog"
@@ -13,28 +12,11 @@
     tools:context=".presentation.ui.authentication.recover.RecoverFragment"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" >
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:layout_weight="4"
-            android:text="@string/recover_password_title"
-            style="@style/SemiBoldHeading5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/recover_password_close_button"
-            style="@style/IconButton"
-            android:layout_weight="0"
-            app:icon="@drawable/ic_close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/recover_password_description_icon_button" />
-
-    </LinearLayout>
+    <TextView
+        android:text="@string/recover_password_title"
+        style="@style/SemiBoldHeading5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <TextView
         android:text="@string/title_email_text_input"
@@ -49,36 +31,51 @@
         android:layout_marginTop="@dimen/big_small_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:placeholderText="@string/placeholder_email_text_input" >
+        app:placeholderText="@string/recover_password_placeholder_email_text_input" >
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/recover_password_email_edit_input"
+            android:id="@+id/email_edit_input"
             style="@style/TextInputEdit"
+            tools:text="@string/recover_password_placeholder_email_text_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            tools:text="@string/placeholder_email_text_input" />
+            android:inputType="textEmailAddress" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <ViewFlipper
-        android:id="@+id/recover_password_flipper_action"
-        android:layout_marginTop="@dimen/small_margin"
+        android:id="@+id/action_flipper"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/normal_margin">
 
-        <Button
-            android:id="@+id/recover_password_button"
-            android:text="@string/recover_password_title_button"
-            style="@style/CancelButton"
-            android:layout_height="@dimen/button_height"
-            android:layout_width="match_parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/recover_button"
+                android:text="@string/recover_password_send_recover_button"
+                style="@style/NormalButton"
+                android:layout_height="@dimen/button_height"
+                android:layout_width="match_parent" />
+
+            <Button
+                android:id="@+id/close_button"
+                style="@style/CancelButton"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginTop="@dimen/small_margin"
+                android:layout_width="match_parent"
+                android:text="@string/title_cancel_button" />
+
+        </LinearLayout>
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
-            android:id="@+id/recover_password_progress"
+            android:id="@+id/progress_indicator"
             android:layout_width="@dimen/progress_bar_dimens"
-            android:layout_height="@dimen/progress_bar_dimens"
             android:indeterminate="true"
+            android:layout_height="@dimen/progress_bar_dimens"
             android:layout_gravity="center" />
 
     </ViewFlipper>
