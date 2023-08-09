@@ -2,6 +2,9 @@
     <string name="empty_value" />
     <string name="app_name">Go Seller</string>
 
+    <string name="pattern_save_images">images</string>
+    <string name="pattern_date_images">ddMMyyhhmmss</string>
+
     <!-- SPLASH -->
     <string name="splash_icon_description">Ícone da aplicação, um megafone.</string>
     <string name="splash_title_loading">Estamos configurando tudo para você…</string>

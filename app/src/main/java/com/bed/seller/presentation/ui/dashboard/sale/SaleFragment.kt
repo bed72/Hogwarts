@@ -2,25 +2,32 @@ package com.bed.seller.presentation.ui.dashboard.sale
 
 import javax.inject.Inject
 
+import java.io.File
+import java.util.Date
+import java.util.Locale
+import java.text.SimpleDateFormat
+
+import android.net.Uri
+import android.Manifest
 import android.util.Log
 import android.view.View
 import android.os.Bundle
 import android.app.Activity
 import android.content.Intent
 import android.provider.MediaStore
+import android.content.pm.PackageManager
+import androidx.activity.result.ActivityResultLauncher
 
 import dagger.hilt.android.AndroidEntryPoint
 
+import androidx.core.content.FileProvider
 import androidx.core.content.ContextCompat
-
-import com.google.common.util.concurrent.ListenableFuture
-
-import androidx.camera.core.Preview
-import androidx.camera.core.CameraSelector
-import androidx.camera.lifecycle.ProcessCameraProvider
 
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+
+import com.bed.seller.BuildConfig
+import com.bed.seller.R
 
 import com.bed.seller.databinding.SaleFragmentBinding
 import com.bed.seller.presentation.ui.dashboard.home.model.HomeScreenModel
@@ -37,8 +44,7 @@ class SaleFragment : BaseBottomSheetDialogFragment<SaleFragmentBinding>(SaleFrag
     @Inject
     lateinit var imageLoader: ImageLoader
 
-    private lateinit var cameraSelector: CameraSelector
-    private lateinit var cameraProviderFuture: ListenableFuture<ProcessCameraProvider>
+    private lateinit var bed: ActivityResultLauncher<Uri>
 
     private val adapterImages by lazy {
         getGenericAdapterOf { HomeViewHolder.create(it, imageLoader) }
@@ -62,16 +68,13 @@ class SaleFragment : BaseBottomSheetDialogFragment<SaleFragmentBinding>(SaleFrag
             else snackbar(binding.root, "No media selected")
         }
 
-    private val openCamera = registerForActivityResult(ActivityResultContracts.RequestPermission()) { permission ->
-        if (permission) handlerCamera()
-        else snackbar(binding.root, "The camera permission is required")
+    private val getCamera = registerForActivityResult(ActivityResultContracts.TakePicture()) {
+
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-        cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
+    private val getPermissionCamera = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+        if (it) getCamera.launch(createImageUri())
+        else snackbar(binding.root, "The camera permission is required")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -83,16 +86,22 @@ class SaleFragment : BaseBottomSheetDialogFragment<SaleFragmentBinding>(SaleFrag
     private fun setupComponents() {
         initAdapter()
 
+        setupSave()
         setupCancel()
-//      camera.launch(android.Manifest.permission.CAMERA)
-//      openGallery()
-//      openGalleryLegacy()
     }
 
     private fun initAdapter() {
         binding.selectedImagesRecycler.run {
             setHasFixedSize(true)
             adapter = adapterImages
+        }
+    }
+
+    private fun setupSave() {
+        binding.saveButton.setOnClickListener {
+            handlerCamera()
+//      openGallery()
+//      openGalleryLegacy()
         }
     }
 
@@ -112,19 +121,25 @@ class SaleFragment : BaseBottomSheetDialogFragment<SaleFragmentBinding>(SaleFrag
     }
 
     private fun handlerCamera() {
-        cameraProviderFuture.addListener({
-            val provider = cameraProviderFuture.get()
+        val permission = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
 
-            val preview = Preview.Builder().build().also{
-//                it.setSurfaceProvider(binding.cameraPreview.surfaceProvider)
-            }
+        if (permission == PackageManager.PERMISSION_GRANTED) getCamera.launch(createImageUri())
+        else getPermissionCamera.launch(Manifest.permission.CAMERA)
+    }
 
-            try {
-                provider.unbindAll()
-                provider.bindToLifecycle(this, cameraSelector, preview)
-            } catch (exception: Exception) {
-                snackbar(binding.root, "The camera is broke")
-            }
-        }, ContextCompat.getMainExecutor(requireContext()))
+    private fun createImageUri(): Uri {
+        val name = SimpleDateFormat(getString(R.string.pattern_date_images), Locale.US).run {
+            format(Date())
+        }
+        val dir = File(requireContext().filesDir, getString(R.string.pattern_save_images)).apply {
+            mkdir()
+        }
+
+        return FileProvider
+            .getUriForFile(
+                requireContext(),
+                "${BuildConfig.APPLICATION_ID}.provider",
+                File(dir,  "${name}.jpg")
+            )
     }
 }

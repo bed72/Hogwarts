@@ -26,15 +26,11 @@
         android:layout_height="wrap_content"
         android:text="@string/sale_subtitle" />
 
-    <!--    <androidx.camera.view.PreviewView-->
-    <!--        android:id="@+id/camera_preview"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent" />-->
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/selected_images_recycler"
         tools:itemCount="6"
         android:clipToPadding="false"
+        android:layout_marginTop="@dimen/normal_margin"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
