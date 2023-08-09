@@ -16,7 +16,6 @@ import android.app.Activity
 import android.content.Intent
 import android.provider.MediaStore
 import android.content.pm.PackageManager
-import androidx.activity.result.ActivityResultLauncher
 
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,8 +25,8 @@ import androidx.core.content.ContextCompat
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 
-import com.bed.seller.BuildConfig
 import com.bed.seller.R
+import com.bed.seller.BuildConfig
 
 import com.bed.seller.databinding.SaleFragmentBinding
 import com.bed.seller.presentation.ui.dashboard.home.model.HomeScreenModel
@@ -43,8 +42,6 @@ class SaleFragment : BaseBottomSheetDialogFragment<SaleFragmentBinding>(SaleFrag
 
     @Inject
     lateinit var imageLoader: ImageLoader
-
-    private lateinit var bed: ActivityResultLauncher<Uri>
 
     private val adapterImages by lazy {
         getGenericAdapterOf { HomeViewHolder.create(it, imageLoader) }
@@ -68,11 +65,10 @@ class SaleFragment : BaseBottomSheetDialogFragment<SaleFragmentBinding>(SaleFrag
             else snackbar(binding.root, "No media selected")
         }
 
-    private val getCamera = registerForActivityResult(ActivityResultContracts.TakePicture()) {
+    private val getCamera = registerForActivityResult(ActivityResultContracts.TakePicture()) { }
 
-    }
-
-    private val getPermissionCamera = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+    private val getPermissionCamera =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
         if (it) getCamera.launch(createImageUri())
         else snackbar(binding.root, "The camera permission is required")
     }
