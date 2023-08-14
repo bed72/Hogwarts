@@ -103,12 +103,13 @@ class SaleFragment : BaseBottomSheetDialogFragment<SaleFragmentBinding>(SaleFrag
 
     private fun setupCancel() {
         binding.cancelButton.setOnClickListener {
-            dismiss()
+//            dismiss()
+            openGallery()
         }
     }
 
     private fun openGallery() {
-        getPhotosFromGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo))
+        getPhotosFromGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
 
     private fun openGalleryLegacy() {
