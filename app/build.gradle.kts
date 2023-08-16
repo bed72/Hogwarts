@@ -11,6 +11,7 @@ plugins {
     id("io.gitlab.arturbosch.detekt")
     id("androidx.navigation.safeargs")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
 }
 
 val keys = Properties().apply {
@@ -22,7 +23,7 @@ android {
     namespace = "com.bed.seller"
 
     defaultConfig {
-        minSdk = 27
+        minSdk = 28
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -87,13 +88,13 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
-    val cameraxVersion = "1.2.3"
-    implementation("androidx.camera:camera-view:1.3.0-beta02")
-    implementation("androidx.camera:camera-camera2:$cameraxVersion")
-    implementation("androidx.camera:camera-lifecycle:$cameraxVersion")
-    implementation("androidx.camera:camera-extensions:$cameraxVersion")
+//    val cameraxVersion = "1.2.3"
+//    implementation("androidx.camera:camera-view:1.3.0-beta02")
+//    implementation("androidx.camera:camera-camera2:$cameraxVersion")
+//    implementation("androidx.camera:camera-lifecycle:$cameraxVersion")
+//    implementation("androidx.camera:camera-extensions:$cameraxVersion")
 
-    val navigationVersion = "2.6.0"
+    val navigationVersion = "2.7.0"
     implementation("androidx.navigation:navigation-ui-ktx:$navigationVersion")
     implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
 
@@ -112,6 +113,9 @@ dependencies {
     implementation("io.ktor:ktor-client-logging:$ktorVersion")
     implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+
+    implementation(platform("com.google.firebase:firebase-bom:32.2.2"))
+    implementation("com.google.firebase:firebase-analytics-ktx")
 
     implementation("io.coil-kt:coil-compose:2.4.0")
     implementation("com.airbnb.android:lottie:6.1.0")

@@ -14,7 +14,9 @@ import android.view.View
 import android.os.Bundle
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.provider.MediaStore
+import android.graphics.ImageDecoder
 import android.content.pm.PackageManager
 
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,6 +45,8 @@ class SaleFragment : BaseBottomSheetDialogFragment<SaleFragmentBinding>(SaleFrag
     @Inject
     lateinit var imageLoader: ImageLoader
 
+    private var image: Uri = Uri.EMPTY
+
     private val adapterImages by lazy {
         getGenericAdapterOf { HomeViewHolder.create(it, imageLoader) }
     }
@@ -65,7 +69,13 @@ class SaleFragment : BaseBottomSheetDialogFragment<SaleFragmentBinding>(SaleFrag
             else snackbar(binding.root, "No media selected")
         }
 
-    private val getCamera = registerForActivityResult(ActivityResultContracts.TakePicture()) { }
+    private val getCamera = registerForActivityResult(ActivityResultContracts.TakePicture()) {
+        if (it) {
+            val bitmap = loadBitmapFromUri(image)
+            adapterImages.submitList(listOf(image).mapIndexed { id, image -> HomeScreenModel(id, image) })
+
+        }
+    }
 
     private val getPermissionCamera =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
@@ -125,18 +135,24 @@ class SaleFragment : BaseBottomSheetDialogFragment<SaleFragmentBinding>(SaleFrag
     }
 
     private fun createImageUri(): Uri {
-        val name = SimpleDateFormat(getString(R.string.pattern_date_images), Locale.US).run {
-            format(Date())
-        }
-        val dir = File(requireContext().filesDir, getString(R.string.pattern_save_images)).apply {
-            mkdir()
-        }
-
-        return FileProvider
-            .getUriForFile(
+        val name = SimpleDateFormat(getString(R.string.pattern_date_images), Locale.US).run { format(Date()) }
+        val directory = File(requireContext().filesDir, getString(R.string.pattern_save_images)).apply { mkdir() }
+        return FileProvider.getUriForFile(
                 requireContext(),
                 "${BuildConfig.APPLICATION_ID}.provider",
-                File(dir,  "${name}.jpg")
-            )
+                File(directory, "${name}.jpg")
+            ).apply { image = this }
+    }
+
+
+    private fun clearCache(){
+        requireContext().cacheDir.deleteRecursively()
+    }
+
+    private fun loadBitmapFromUri(uri: Uri): Bitmap {
+        val src = ImageDecoder.createSource(requireContext().contentResolver, uri)
+        return ImageDecoder.decodeBitmap(src) { decoder, _, _ ->
+            decoder.isMutableRequired = true
+        }
     }
 }
