@@ -5,12 +5,13 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
-import com.bed.core.domain.alias.SignUpType
-import com.bed.core.domain.parameters.authentication.SignUpParameters
-
 import com.bed.core.usecases.UseCase
 import com.bed.core.usecases.coroutines.CoroutinesUseCase
-import com.bed.core.data.repositories.authentication.AuthenticationRepository
+
+import com.bed.core.data.repositories.AuthenticationRepository
+
+import com.bed.core.domain.alias.SignUpType
+import com.bed.core.domain.parameters.authentication.SignUpParameters
 
 interface SignUpUseCase {
     operator fun invoke(parameters: SignUpParameters): Flow<SignUpType>

@@ -1,10 +1,10 @@
-package com.bed.core.data.repositories.storage
+package com.bed.core.data.repositories
 
 import javax.inject.Inject
 
 import kotlinx.coroutines.flow.Flow
 
-import com.bed.core.data.datasources.local.storage.LocalStorageDataSource
+import com.bed.core.data.datasources.local.LocalStorageDataSource
 
 interface StorageRepository {
     suspend fun get(value: String): Flow<String>

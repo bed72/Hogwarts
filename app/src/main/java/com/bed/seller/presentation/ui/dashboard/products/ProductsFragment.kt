@@ -5,8 +5,6 @@ import android.view.View
 
 import androidx.activity.addCallback
 
-import dagger.hilt.android.AndroidEntryPoint
-
 import com.bed.seller.R
 
 import com.bed.seller.databinding.ProductsFragmentBinding
@@ -15,7 +13,6 @@ import com.bed.seller.presentation.commons.fragments.BaseFragment
 
 import com.bed.seller.presentation.commons.extensions.fragments.navigateTo
 
-@AndroidEntryPoint
 class ProductsFragment : BaseFragment<ProductsFragmentBinding>(ProductsFragmentBinding::inflate) {
 
 //    private val viewModel: ProductsViewModel by viewModels()

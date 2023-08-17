@@ -21,6 +21,7 @@ import android.content.pm.PackageManager
 
 import dagger.hilt.android.AndroidEntryPoint
 
+
 import androidx.core.content.FileProvider
 import androidx.core.content.ContextCompat
 
@@ -46,6 +47,8 @@ class SaleFragment : BaseBottomSheetDialogFragment<SaleFragmentBinding>(SaleFrag
     lateinit var imageLoader: ImageLoader
 
     private var image: Uri = Uri.EMPTY
+
+//    private val viewModel: SaleViewModel by viewModels()
 
     private val adapterImages by lazy {
         getGenericAdapterOf { HomeViewHolder.create(it, imageLoader) }
@@ -113,8 +116,8 @@ class SaleFragment : BaseBottomSheetDialogFragment<SaleFragmentBinding>(SaleFrag
 
     private fun setupCancel() {
         binding.cancelButton.setOnClickListener {
-//            dismiss()
-            openGallery()
+            dismiss()
+//            openGallery()
         }
     }
 

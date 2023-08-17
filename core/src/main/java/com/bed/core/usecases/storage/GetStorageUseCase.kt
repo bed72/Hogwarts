@@ -8,7 +8,7 @@ import kotlinx.coroutines.withContext
 import com.bed.core.usecases.FlowUseCase
 
 import com.bed.core.usecases.coroutines.CoroutinesUseCase
-import com.bed.core.data.repositories.storage.StorageRepository
+import com.bed.core.data.repositories.StorageRepository
 
 interface GetStorageUseCase {
     suspend operator fun invoke(parameters: String): Flow<String>

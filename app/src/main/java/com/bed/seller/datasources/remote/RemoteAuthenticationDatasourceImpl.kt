@@ -1,4 +1,4 @@
-package com.bed.seller.datasources.remote.authentication
+package com.bed.seller.datasources.remote
 
 import javax.inject.Inject
 
@@ -19,7 +19,7 @@ import com.bed.seller.framework.network.response.authentication.toModel
 import com.bed.seller.framework.network.response.message.MessageResponse
 import com.bed.seller.framework.network.response.authentication.AuthenticationResponse
 
-import com.bed.core.data.datasources.remote.authentication.RemoteAuthenticationDatasource
+import com.bed.core.data.datasources.remote.RemoteAuthenticationDatasource
 
 class RemoteAuthenticationDatasourceImpl @Inject constructor(
     private val client: HttpClient,
@@ -34,5 +34,4 @@ class RemoteAuthenticationDatasourceImpl @Inject constructor(
         }
             .map { success -> success.toModel() }
             .mapLeft { failure -> failure.toModel() }
-
 }

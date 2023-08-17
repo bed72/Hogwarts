@@ -1,4 +1,4 @@
-package com.bed.core.data.datasources.remote.authentication
+package com.bed.core.data.datasources.remote
 
 import com.bed.core.domain.alias.SignUpType
 

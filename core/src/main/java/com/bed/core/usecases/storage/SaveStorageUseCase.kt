@@ -8,7 +8,7 @@ import kotlinx.coroutines.withContext
 import com.bed.core.usecases.UseCase
 import com.bed.core.usecases.coroutines.CoroutinesUseCase
 
-import com.bed.core.data.repositories.storage.StorageRepository
+import com.bed.core.data.repositories.StorageRepository
 
 interface SaveStorageUseCase {
     operator fun invoke(params: Pair<String, String>): Flow<Unit>

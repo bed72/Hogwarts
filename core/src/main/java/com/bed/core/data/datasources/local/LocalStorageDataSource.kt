@@ -1,4 +1,4 @@
-package com.bed.core.data.datasources.local.storage
+package com.bed.core.data.datasources.local
 
 import kotlinx.coroutines.flow.Flow
 

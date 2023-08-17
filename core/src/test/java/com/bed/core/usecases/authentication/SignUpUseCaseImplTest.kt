@@ -28,7 +28,7 @@ import com.bed.test.factories.authentication.SignUpFactory
 import com.bed.core.domain.models.failure.MessageModel
 import com.bed.core.domain.models.authentication.AuthenticationModel
 
-import com.bed.core.data.repositories.authentication.AuthenticationRepository
+import com.bed.core.data.repositories.AuthenticationRepository
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
