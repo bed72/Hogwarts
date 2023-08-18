@@ -11,7 +11,6 @@ import android.view.MenuInflater
 import dagger.hilt.android.AndroidEntryPoint
 
 import androidx.lifecycle.Lifecycle
-
 import androidx.activity.addCallback
 
 import com.bed.seller.R
@@ -70,13 +69,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
 
     private fun setupFloatActionBottom() {
         binding.createProductButton.setOnClickListener {
-            navigateTo(HomeFragmentDirections.actionHomeToSale())
-        }
-    }
-
-    private fun setupHandlerPermissions() {
-        if (hasPermissions().not()) {
-            navigateTo(HomeFragmentDirections.actionHomeToPermission())
+            navigateTo(HomeFragmentDirections.actionHomeToOffer())
         }
     }
 
@@ -84,6 +77,10 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             navigateTo(HomeFragmentDirections.actionHomeToExit())
         }
+    }
+
+    private fun setupHandlerPermissions() {
+        if (hasPermissions().not()) navigateTo(HomeFragmentDirections.actionHomeToPermission())
     }
 
     private fun hasPermissions() = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU)

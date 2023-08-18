@@ -1,4 +1,4 @@
-package com.bed.seller.presentation.ui.dashboard.sale
+package com.bed.seller.presentation.ui.dashboard.offers
 
 import javax.inject.Inject
 
@@ -21,7 +21,6 @@ import android.content.pm.PackageManager
 
 import dagger.hilt.android.AndroidEntryPoint
 
-
 import androidx.core.content.FileProvider
 import androidx.core.content.ContextCompat
 
@@ -31,9 +30,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.bed.seller.R
 import com.bed.seller.BuildConfig
 
-import com.bed.seller.databinding.SaleFragmentBinding
-import com.bed.seller.presentation.ui.dashboard.home.model.HomeScreenModel
-import com.bed.seller.presentation.ui.dashboard.home.viewholder.HomeViewHolder
+import com.bed.seller.databinding.OfferFragmentBinding
+import com.bed.seller.presentation.ui.dashboard.offers.model.ImageOfferScreenModel
+import com.bed.seller.presentation.ui.dashboard.offers.viewholder.ImageOfferViewHolder
 
 import com.bed.seller.presentation.commons.loaders.ImageLoader
 import com.bed.seller.presentation.commons.recyclers.getGenericAdapterOf
@@ -41,7 +40,7 @@ import com.bed.seller.presentation.commons.extensions.fragments.snackbar
 import com.bed.seller.presentation.commons.fragments.BaseBottomSheetDialogFragment
 
 @AndroidEntryPoint
-class SaleFragment : BaseBottomSheetDialogFragment<SaleFragmentBinding>(SaleFragmentBinding::inflate) {
+class OfferFragment : BaseBottomSheetDialogFragment<OfferFragmentBinding>(OfferFragmentBinding::inflate) {
 
     @Inject
     lateinit var imageLoader: ImageLoader
@@ -51,7 +50,7 @@ class SaleFragment : BaseBottomSheetDialogFragment<SaleFragmentBinding>(SaleFrag
 //    private val viewModel: SaleViewModel by viewModels()
 
     private val adapterImages by lazy {
-        getGenericAdapterOf { HomeViewHolder.create(it, imageLoader) }
+        getGenericAdapterOf { ImageOfferViewHolder.create(it, imageLoader) }
     }
 
     private val getPhotoFromGallery =
@@ -68,14 +67,14 @@ class SaleFragment : BaseBottomSheetDialogFragment<SaleFragmentBinding>(SaleFrag
 
     private val getPhotosFromGallery =
         registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(5)) {
-            if (it.isNotEmpty()) adapterImages.submitList(it.mapIndexed { id, image -> HomeScreenModel(id, image) })
+            if (it.isNotEmpty()) adapterImages.submitList(it.mapIndexed { id, image -> ImageOfferScreenModel(id, image) })
             else snackbar(binding.root, "No media selected")
         }
 
     private val getCamera = registerForActivityResult(ActivityResultContracts.TakePicture()) {
         if (it) {
             val bitmap = loadBitmapFromUri(image)
-            adapterImages.submitList(listOf(image).mapIndexed { id, image -> HomeScreenModel(id, image) })
+            adapterImages.submitList(listOf(image).mapIndexed { id, image -> ImageOfferScreenModel(id, image) })
 
         }
     }

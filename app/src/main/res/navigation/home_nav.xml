@@ -22,8 +22,8 @@
             app:destination="@id/permission_fragment" />
 
         <action
-            android:id="@+id/action_home_to_sale"
-            app:destination="@id/sale_fragment" />
+            android:id="@+id/action_home_to_offer"
+            app:destination="@id/offer_fragment" />
 
         <action
             android:id="@+id/action_home_to_exit"
@@ -53,9 +53,9 @@
         android:name="com.bed.seller.presentation.ui.dashboard.permission.PermissionFragment" />
 
     <dialog
-        android:id="@+id/sale_fragment"
-        tools:layout="@layout/sale_fragment"
-        android:name="com.bed.seller.presentation.ui.dashboard.sale.SaleFragment" />
+        android:id="@+id/offer_fragment"
+        tools:layout="@layout/offer_fragment"
+        android:name="com.bed.seller.presentation.ui.dashboard.offers.OfferFragment" />
 
     <dialog
         android:id="@+id/exit_fragment"

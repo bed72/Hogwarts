@@ -1,4 +1,4 @@
-package com.bed.seller.presentation.ui.dashboard.sale
+package com.bed.seller.presentation.ui.dashboard.offers
 
 import javax.inject.Inject
 
@@ -9,6 +9,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import com.bed.core.usecases.coroutines.CoroutinesUseCase
 
 @HiltViewModel
-class SaleViewModel @Inject constructor(
+class OfferViewModel @Inject constructor(
     private val coroutinesUseCase: CoroutinesUseCase
 ) : ViewModel()

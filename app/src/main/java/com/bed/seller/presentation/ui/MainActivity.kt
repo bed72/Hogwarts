@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.home_fragment,
-                R.id.sale_fragment,
+                R.id.offer_fragment,
                 R.id.products_fragment,
                 R.id.exit_fragment,
                 R.id.exit_fragment,
@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity() {
     private fun visibilityBottomBar(@NavigationRes destination: Int) {
         binding.bottomNavMain.visibility = when (destination) {
             R.id.home_fragment, R.id.products_fragment -> VISIBLE
-            R.id.exit_fragment, R.id.sale_fragment -> VISIBLE
+            R.id.exit_fragment, R.id.offer_fragment -> VISIBLE
             else -> GONE
         }
     }
@@ -127,7 +127,7 @@ class MainActivity : AppCompatActivity() {
         with(binding.toolbar) {
             visibility = when (destination) {
                 R.id.home_fragment, R.id.products_fragment -> VISIBLE
-                R.id.exit_fragment, R.id.sale_fragment -> VISIBLE
+                R.id.exit_fragment, R.id.offer_fragment -> VISIBLE
                 R.id.setting_fragment, R.id.notification_fragment -> VISIBLE
                 else -> GONE
             }

@@ -9,7 +9,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    tools:context=".presentation.ui.dashboard.sale.SaleFragment"
+    tools:context=".presentation.ui.dashboard.offers.OfferFragment"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" >
 
     <TextView

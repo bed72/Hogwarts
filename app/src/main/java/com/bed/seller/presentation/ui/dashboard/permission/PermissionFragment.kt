@@ -64,14 +64,13 @@ class PermissionFragment : BaseBottomSheetDialogFragment<PermissionFragmentBindi
             ActivityResultContracts.RequestMultiplePermissions()
         ) { permissions ->
             val grant = permissions.all { it.value }
-            val identified = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            val identified = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU)
                 permissions.all { it.key in Permissions.permissionsCommons }
-            } else permissions.all { it.key in Permissions.permissionsToTiramisu }
+            else permissions.all { it.key in Permissions.permissionsToTiramisu }
 
-
-            if (grant and identified) snackbar(requireView(), getString(R.string.permissions_success))
-            else snackbar(requireView(), getString(R.string.permissions_failure))
-
+            if (grant and identified)
+                snackbar(requireView(), getString(R.string.permissions_success)) { dismiss() }
+            else snackbar(requireView(), getString(R.string.permissions_failure)) { dismiss() }
         }
     }
 
@@ -89,11 +88,8 @@ class PermissionFragment : BaseBottomSheetDialogFragment<PermissionFragmentBindi
     }
 
     private fun setupPermissions() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-            requestPermissions()
-        } else {
-            requestPermissionsTiramisu()
-        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) requestPermissions()
+        else requestPermissionsTiramisu()
     }
 
     private fun requestPermissions() {
