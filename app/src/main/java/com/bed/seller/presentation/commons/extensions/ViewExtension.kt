@@ -1,8 +1,11 @@
 package com.bed.seller.presentation.commons.extensions
 
+import kotlin.system.exitProcess
+
 import android.os.Build
 import android.view.View
 import android.view.WindowInsets
+
 import androidx.annotation.RequiresApi
 
 // Keyboard
@@ -16,4 +19,8 @@ fun View.showKeyboard(view: View) {
 fun View.hideKeyboard(view: View) {
     windowInsetsController?.hide(WindowInsets.Type.ime())
     view.clearFocus()
+}
+
+fun View.closeApplication() {
+    exitProcess(0)
 }

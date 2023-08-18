@@ -8,6 +8,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     tools:context=".presentation.ui.dashboard.home.HomeFragment" >
 
+    <com.airbnb.lottie.LottieAnimationView
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true"
+        android:layout_width="@dimen/permission_icon_size"
+        android:layout_height="@dimen/permission_icon_size"
+        app:lottie_rawRes="@raw/empty"
+        android:layout_gravity="center" />
+
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/create_product_button"
         android:text="@string/home_fab_title_button"

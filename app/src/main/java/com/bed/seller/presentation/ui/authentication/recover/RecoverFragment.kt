@@ -22,8 +22,6 @@ class RecoverFragment : BaseBottomSheetDialogFragment<RecoverFragmentBinding>(
     }
 
     private fun closeBottomSheet() {
-        binding.closeButton.setOnClickListener {
-            dismiss()
-        }
+        binding.closeButton.setOnClickListener { dismiss() }
     }
 }

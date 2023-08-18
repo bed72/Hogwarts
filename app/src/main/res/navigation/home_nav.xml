@@ -27,7 +27,7 @@
 
         <action
             android:id="@+id/action_home_to_exit"
-            app:destination="@id/exit_fragment" />
+            app:destination="@id/dashboard_exit_fragment" />
 
         <action
             android:id="@+id/action_home_to_setting"
@@ -58,7 +58,7 @@
         android:name="com.bed.seller.presentation.ui.dashboard.offers.OfferFragment" />
 
     <dialog
-        android:id="@+id/exit_fragment"
+        android:id="@+id/dashboard_exit_fragment"
         tools:layout="@layout/exit_fragment"
         android:name="com.bed.seller.presentation.ui.dashboard.exit.DashboardExitFragment" />
 

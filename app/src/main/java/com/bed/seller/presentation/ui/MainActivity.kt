@@ -2,15 +2,14 @@ package com.bed.seller.presentation.ui
 
 import dagger.hilt.android.AndroidEntryPoint
 
+import android.view.View
 import android.os.Bundle
+import android.view.animation.AnticipateInterpolator
 
 import androidx.annotation.NavigationRes
 
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-
-import android.view.View
-import android.view.animation.AnticipateInterpolator
 
 import androidx.navigation.NavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -37,19 +36,24 @@ class MainActivity : AppCompatActivity() {
         dialog(this, R.layout.dialog_connection_fragment)
     }
 
-    private lateinit var connection: CheckConnection
+    private val connection: CheckConnection by lazy {
+        CheckConnectionImpl(application)
+    }
+
     private lateinit var binding: MainActivityBinding
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setSplashScreen()
-
         super.onCreate(savedInstanceState)
+
+        installSplashScreen().run {
+            setKeepOnScreenCondition { false }
+            setOnExitAnimationListener { setAnimation(it) }
+        }
 
         preventScreenshotsAndRecentAppThumbnails()
 
-        connection = CheckConnectionImpl(application)
         binding = MainActivityBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
@@ -59,13 +63,6 @@ class MainActivity : AppCompatActivity() {
         setupNavigationBarController()
         setupComponentAppBarController()
         setupComponentNavigationBarController()
-    }
-
-    private fun setSplashScreen() {
-        installSplashScreen().apply {
-            setKeepOnScreenCondition { false }
-            setOnExitAnimationListener { setAnimation(it) }
-        }
     }
 
     private fun setAnimation(provider: SplashScreenViewProvider) {
@@ -80,16 +77,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupConnection() {
+        if (connection.isActiveNetworkMetered) alert.show()
+
         connection.observe(this) { if (it) alert.dismiss() else alert.show() }
     }
 
     private fun setupNavigationBarController() {
-        val navigationContainerFragment = supportFragmentManager
-            .findFragmentById(R.id.nav_host_container) as NavHostFragment
+        val navigation = supportFragmentManager.findFragmentById(R.id.navigation) as NavHostFragment
 
-        navController = navigationContainerFragment.navController
+        navController = navigation.navController
 
-        binding.bottomNavMain.setupWithNavController(navController)
+        binding.bottomNavigation.setupWithNavController(navController)
     }
 
     private fun setupComponentAppBarController() {
@@ -98,8 +96,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.home_fragment,
                 R.id.offer_fragment,
                 R.id.products_fragment,
-                R.id.exit_fragment,
-                R.id.exit_fragment,
+                R.id.dashboard_exit_fragment,
             )
         )
 
@@ -116,19 +113,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun visibilityBottomBar(@NavigationRes destination: Int) {
-        binding.bottomNavMain.visibility = when (destination) {
+        binding.bottomNavigation.visibility = when (destination) {
             R.id.home_fragment, R.id.products_fragment -> VISIBLE
-            R.id.exit_fragment, R.id.offer_fragment -> VISIBLE
+            R.id.offer_fragment, R.id.dashboard_exit_fragment -> VISIBLE
             else -> GONE
         }
     }
 
     private fun visibilityToolBar(@NavigationRes destination: Int) {
-        with(binding.toolbar) {
+        with (binding.toolbar) {
             visibility = when (destination) {
                 R.id.home_fragment, R.id.products_fragment -> VISIBLE
-                R.id.exit_fragment, R.id.offer_fragment -> VISIBLE
                 R.id.setting_fragment, R.id.notification_fragment -> VISIBLE
+                R.id.offer_fragment, R.id.dashboard_exit_fragment -> VISIBLE
                 else -> GONE
             }
         }

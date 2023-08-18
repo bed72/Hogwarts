@@ -3,14 +3,10 @@ package com.bed.seller.presentation.ui.dashboard.exit
 import android.os.Bundle
 import android.view.View
 
-import kotlin.system.exitProcess
-
-import dagger.hilt.android.AndroidEntryPoint
-
 import com.bed.seller.databinding.ExitFragmentBinding
+import com.bed.seller.presentation.commons.extensions.closeApplication
 import com.bed.seller.presentation.commons.fragments.BaseBottomSheetDialogFragment
 
-@AndroidEntryPoint
 class DashboardExitFragment : BaseBottomSheetDialogFragment<ExitFragmentBinding>(
     ExitFragmentBinding::inflate
 ) {
@@ -26,7 +22,7 @@ class DashboardExitFragment : BaseBottomSheetDialogFragment<ExitFragmentBinding>
     }
 
     private fun setupButtonCloseApp() {
-        binding.yesButton.setOnClickListener { exitProcess(0) }
+        binding.yesButton.setOnClickListener { it.closeApplication() }
     }
 
     private fun setupButtonCloseBottomSheet() {

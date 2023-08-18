@@ -3,15 +3,12 @@ package com.bed.seller.presentation.ui.authentication.exit
 import android.os.Bundle
 import android.view.View
 
-import kotlin.system.exitProcess
-
-import dagger.hilt.android.AndroidEntryPoint
-
 import com.bed.seller.databinding.ExitFragmentBinding
+
+import com.bed.seller.presentation.commons.extensions.closeApplication
 import com.bed.seller.presentation.commons.fragments.BaseBottomSheetDialogFragment
 
-@AndroidEntryPoint
-class AuthExitFragment : BaseBottomSheetDialogFragment<ExitFragmentBinding>(
+class AuthenticationExitFragment : BaseBottomSheetDialogFragment<ExitFragmentBinding>(
     ExitFragmentBinding::inflate
 ) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -26,7 +23,7 @@ class AuthExitFragment : BaseBottomSheetDialogFragment<ExitFragmentBinding>(
     }
 
     private fun setupButtonCloseApp() {
-        binding.yesButton.setOnClickListener { exitProcess(0) }
+        binding.yesButton.setOnClickListener { it.closeApplication() }
     }
 
     private fun setupButtonCloseBottomSheet() {

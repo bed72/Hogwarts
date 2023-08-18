@@ -9,6 +9,7 @@
 
     <fragment
         android:id="@+id/sign_in_fragment"
+        android:label="@string/empty_value"
         tools:layout="@layout/sign_in_fragment"
         android:name="com.bed.seller.presentation.ui.authentication.signin.SignInFragment" >
 
@@ -56,12 +57,9 @@
 
     <fragment
         android:id="@+id/sign_up_fragment"
+        android:label="@string/empty_value"
         tools:layout="@layout/sign_up_fragment"
         android:name="com.bed.seller.presentation.ui.authentication.signup.SignUpFragment" >
-
-        <action
-            android:id="@+id/action_sign_up_to_exit"
-            app:destination="@id/authentication_exit_fragment" />
 
         <action
             android:id="@+id/action_sign_up_to_sign_in"
@@ -94,6 +92,6 @@
     <dialog
         android:id="@+id/authentication_exit_fragment"
         tools:layout="@layout/exit_fragment"
-        android:name="com.bed.seller.presentation.ui.authentication.exit.AuthExitFragment" />
+        android:name="com.bed.seller.presentation.ui.authentication.exit.AuthenticationExitFragment" />
 
 </navigation>

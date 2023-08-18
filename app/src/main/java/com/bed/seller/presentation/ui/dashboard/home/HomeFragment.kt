@@ -8,8 +8,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.MenuInflater
 
-import dagger.hilt.android.AndroidEntryPoint
-
 import androidx.lifecycle.Lifecycle
 import androidx.activity.addCallback
 
@@ -22,7 +20,6 @@ import com.bed.seller.presentation.commons.permissions.Permissions
 import com.bed.seller.presentation.commons.extensions.fragments.navigateTo
 import com.bed.seller.presentation.commons.extensions.fragments.hasPermissions
 
-@AndroidEntryPoint
 class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::inflate) {
 
 //    private val viewModel: HomeViewModel by viewModels()
