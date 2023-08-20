@@ -14,11 +14,14 @@ value class PasswordValue (val value: String) : ValueObject<PasswordValue> {
     }
 
     private fun rule(value: String): Pair<Boolean, String> {
+        val minSize = 6
         val patternNeedsNumberCharacter = ".*\\d.*".toRegex()
         val patternNeedsUpperCaseCharacter = ".*[A-Z].*".toRegex()
 
         return when {
-            value.isEmpty() -> false to "Preencha sua senha."
+            value.isEmpty() -> false to "Preencha uma senha válida."
+            value.length <= minSize ->
+                false to "A senha presica conter mais de 5 caracteres."
             patternNeedsNumberCharacter.matches(value).not() ->
                 false to "A senha presica conter caracteres numéricos."
             patternNeedsUpperCaseCharacter.matches(value).not() ->

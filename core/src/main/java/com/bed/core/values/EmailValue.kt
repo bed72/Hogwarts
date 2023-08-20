@@ -17,8 +17,7 @@ value class EmailValue(val value: String) : ValueObject<EmailValue> {
         val pattern = "^[a-zA-Z\\d+_.-]+@[a-zA-Z\\d.-]+\\.[a-zA-z]{2,3}\$".toRegex()
 
         return when {
-            value.isEmpty() -> false to "Preencha seu e-mail."
-            pattern.matches(value).not() -> false to "O e-mail precisa ser válido."
+            pattern.matches(value).not() -> false to "Preencha um e-mail válido."
             else -> true to value
         }
     }

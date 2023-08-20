@@ -78,9 +78,15 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
     private fun observeSignUpState() {
         viewModel.states.observe(viewLifecycleOwner) { states ->
             binding.actionFlipper.displayedChild = when (states) {
-                SignUpViewModel.States.Loading -> { FLIPPER_LOADING }
-                is SignUpViewModel.States.Failure -> { FLIPPER_FAILURE }
-                is SignUpViewModel.States.Success -> { FLIPPER_SUCCESS }
+                SignUpViewModel.States.Loading -> FLIPPER_LOADING
+                is SignUpViewModel.States.Failure -> {
+                    snackbar(requireView(), states.data)
+                    FLIPPER_FAILURE
+                }
+                is SignUpViewModel.States.Success -> {
+                    navigateTo(SignUpFragmentDirections.actionSingUpToHome())
+                    FLIPPER_SUCCESS
+                }
             }
         }
     }
@@ -100,11 +106,7 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
     }
 
     private fun setupSingUpButton() {
-        binding.signUpButton.setOnClickListener {
-            binding.actionFlipper.displayedChild = FLIPPER_LOADING
-            validateParameter()
-//            navigateTo(SignUpFragmentDirections.actionSingUpToHome())
-        }
+        binding.signUpButton.setOnClickListener { validateParameter() }
     }
 
     private fun setupSignInButton() {
@@ -122,8 +124,8 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
 
     companion object {
         private const val FIRST_MESSAGE = 0
-        private const val FLIPPER_LOADING = 0
-        private const val FLIPPER_FAILURE = 1
+        private const val FLIPPER_LOADING = 1
+        private const val FLIPPER_FAILURE = 0
         private const val FLIPPER_SUCCESS = FLIPPER_FAILURE
     }
 }
