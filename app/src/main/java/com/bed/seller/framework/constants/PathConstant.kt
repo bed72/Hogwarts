@@ -1,6 +1,6 @@
-package com.bed.seller.framework.network.paths
+package com.bed.seller.framework.constants
 
-enum class ApiPath(val value: String) {
+enum class PathConstant(val value: String) {
     LOGOUT("/auth/v1/logout"),
     GET_USER("/auth/v1/user"),
     SIGN_UP("/auth/v1/signup"),

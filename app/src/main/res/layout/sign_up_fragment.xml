@@ -39,7 +39,7 @@
                 app:layout_constraintRight_toRightOf="parent" />
 
             <TextView
-                android:id="@+id/sub_title_text"
+                android:id="@+id/subtitle_text"
                 style="@style/RegularBody2"
                 android:layout_marginTop="@dimen/small_margin"
                 android:layout_width="wrap_content"
@@ -60,7 +60,7 @@
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/sub_title_text" />
+                app:layout_constraintTop_toBottomOf="@+id/subtitle_text" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/name_text_input"
@@ -162,7 +162,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <ViewFlipper
-                android:id="@+id/sign_up_flipper_action"
+                android:id="@+id/action_flipper"
                 android:layout_marginTop="@dimen/normal_margin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -174,7 +174,6 @@
                 <Button
                     android:id="@+id/sign_up_button"
                     android:text="@string/title_create_account"
-                    android:enabled="false"
                     style="@style/CancelButton"
                     android:layout_height="@dimen/button_height"
                     android:layout_width="match_parent" />
@@ -195,7 +194,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/sign_up_flipper_action" >
+                app:layout_constraintTop_toBottomOf="@id/action_flipper" >
 
                 <TextView
                     style="@style/GreyMediumBody"
@@ -204,7 +203,7 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:id="@+id/sign_up_already_existing_account_button"
+                    android:id="@+id/already_existing_account_button"
                     android:text="@string/sign_up_title_already_existing_account_button"
                     android:layout_marginStart="@dimen/big_small_margin"
                     android:layout_width="wrap_content"

@@ -5,12 +5,12 @@ import arrow.core.right
 import arrow.core.Either
 
 @JvmInline
-value class EmailValue(val value: String) : ValueObject {
+value class EmailValue(val value: String) : ValueObject<EmailValue> {
 
-    override operator fun invoke(): Either<String, String> {
+    override fun validate(): Either<String, EmailValue> {
         val (isValid, message) = rule(value)
 
-        return if (isValid) value.right() else message.left()
+        return if (isValid) this.right() else message.left()
     }
 
     private fun rule(value: String): Pair<Boolean, String> {

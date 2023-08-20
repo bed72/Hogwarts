@@ -1,18 +1,18 @@
 package com.bed.seller.presentation.ui.splash
 
+import androidx.fragment.app.viewModels
+
 import android.os.Bundle
 import android.view.View
-
-import androidx.fragment.app.viewModels
 
 import dagger.hilt.android.AndroidEntryPoint
 
 import com.bed.seller.databinding.SplashFragmentBinding
 
+import com.bed.seller.framework.constants.StorageConstant
+
 import com.bed.seller.presentation.commons.fragments.BaseFragment
 import com.bed.seller.presentation.commons.extensions.fragments.navigateTo
-
-import com.bed.seller.presentation.ui.splash.states.SplashGetTokenLiveData
 
 @AndroidEntryPoint
 class SplashFragment : BaseFragment<SplashFragmentBinding>(SplashFragmentBinding::inflate) {
@@ -25,15 +25,16 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(SplashFragmentBinding
         observeStates()
     }
 
-    private fun observeStates() {
-        with(viewModel.get) {
-            accessToken("DATA_STORE_ACCESS_TOKEN")
 
-            state.observe(viewLifecycleOwner) { state ->
+    private fun observeStates() {
+        with(viewModel) {
+            getAccessToken(StorageConstant.DATASTORE_REFRESH_TOKEN.value)
+
+            states.observe(viewLifecycleOwner) { state ->
                 when (state) {
-                    SplashGetTokenLiveData.States.Success ->
+                    SplashViewModel.States.Success ->
                         navigateTo(SplashFragmentDirections.actionSplashToHome())
-                    SplashGetTokenLiveData.States.Failure ->
+                    SplashViewModel.States.Failure ->
                         navigateTo(SplashFragmentDirections.actionSplashToSignIn())
                 }
             }

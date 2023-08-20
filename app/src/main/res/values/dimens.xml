@@ -1,7 +1,7 @@
 <resources>
     <!-- Splash Icon Sizes -->
     <dimen name="diver_height">0.6dp</dimen>
-    <dimen name="splash_icon_size">240dp</dimen>
+    <dimen name="splash_icon_size">292dp</dimen>
     <dimen name="permission_icon_size">192dp</dimen>
 
     <!-- Progress Sizes -->

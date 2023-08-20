@@ -9,7 +9,7 @@ import dagger.hilt.components.SingletonComponent
 
 import com.bed.seller.mappers.Mapper
 import com.bed.seller.mappers.authentication.SignUpMapper
-import com.bed.core.domain.parameters.authentication.SignUpParameters
+import com.bed.core.domain.parameters.authentication.SignUpParameter
 import com.bed.seller.framework.network.request.authentication.SignUpRequest
 
 @Module
@@ -17,5 +17,5 @@ import com.bed.seller.framework.network.request.authentication.SignUpRequest
 interface MappersModule {
     @Binds
     @Named("SignUpMapper")
-    fun bindSignUpMapper(mapper: SignUpMapper): Mapper<SignUpParameters, SignUpRequest>
+    fun bindSignUpMapper(mapper: SignUpMapper): Mapper<SignUpParameter, SignUpRequest>
 }

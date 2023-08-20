@@ -7,7 +7,7 @@ import com.bed.core.values.NameValue
 import com.bed.core.values.EmailValue
 import com.bed.core.values.PasswordValue
 
-import com.bed.core.domain.parameters.authentication.SignUpParameters
+import com.bed.core.domain.parameters.authentication.SignUpParameter
 
 import com.bed.core.domain.models.failure.MessageModel
 import com.bed.core.domain.models.authentication.AuthenticationModel
@@ -15,13 +15,13 @@ import com.bed.core.domain.models.authentication.AuthenticationUserModel
 import com.bed.core.domain.models.authentication.AuthenticationMetadataModel
 
 class SignUpFactory {
-    val validParams = SignUpParameters(
+    val validParams = SignUpParameter(
         NameValue("Gabriel Ramos"),
         EmailValue("email@email.com"),
         PasswordValue("P@ssw0rD"),
     )
 
-    val invalidParams = SignUpParameters(
+    val invalidParams = SignUpParameter(
         NameValue(""),
         EmailValue(""),
         PasswordValue(""),

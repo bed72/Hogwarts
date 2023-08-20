@@ -10,10 +10,9 @@ fun TextInputEditText.getTextChanged(value: (String) -> Unit) {
     doOnTextChanged { text, _, _, _ -> value(text.toString()) }
 }
 
-fun TextInputEditText.debounce(delay: Long = 300L, action: (String) -> Unit) {
+fun TextInputEditText.debounce(delay: Long = 400L, action: (String) -> Unit) {
     doAfterTextChanged { text ->
         var counter = getTag(id) as? Int ?: 0
-        // The handler could it be null
         handler?.removeCallbacksAndMessages(counter)
         handler?.postDelayed(delay, ++counter) { action(text.toString()) }
 

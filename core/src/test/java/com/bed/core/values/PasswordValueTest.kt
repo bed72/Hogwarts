@@ -10,7 +10,7 @@ internal class PasswordValueTest {
     fun `Should return message failure when Password is invalid`() {
         val message = PasswordValue("")
 
-        val validator = message()
+        val validator = message.validate()
 
         assertTrue(validator.isLeft())
         validator.mapLeft { assertEquals(it, "Preencha sua senha.") }
@@ -20,7 +20,7 @@ internal class PasswordValueTest {
     fun `Should return message failure when Password is invalid with partial validations number character required`() {
         val message = PasswordValue("Pa")
 
-        val validator = message()
+        val validator = message.validate()
 
         assertTrue(validator.isLeft())
         validator.mapLeft { assertEquals(it, "A senha presica conter caracteres numéricos.") }
@@ -30,7 +30,7 @@ internal class PasswordValueTest {
     fun `Should return message failure when Password is invalid with partial validations capital character required`() {
         val message = PasswordValue("passw0")
 
-        val validator = message()
+        val validator = message.validate()
 
         assertTrue(validator.isLeft())
         validator.mapLeft { assertEquals(it, "A senha presica conter caracteres maiúsculos.") }
@@ -40,7 +40,7 @@ internal class PasswordValueTest {
     fun `Should return the Name when value is valid`() {
         val name = PasswordValue("P@ssw0rD")
 
-        val validator = name()
+        val validator = name.validate()
 
         assertTrue(validator.isRight())
         validator.map { assertEquals(it, "P@ssw0rD") }

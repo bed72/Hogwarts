@@ -16,7 +16,7 @@ abstract class UseCase<in P, out R> {
         emit(doWork(parameter))
     }
 
-    protected abstract suspend fun doWork(parameters: P): R
+    protected abstract suspend fun doWork(parameter: P): R
 }
 
 abstract class FlowUseCaseWithoutParameter<out R : Any> {
@@ -28,5 +28,5 @@ abstract class FlowUseCaseWithoutParameter<out R : Any> {
 abstract class FlowUseCase<in P, out R : Any> {
     suspend operator fun invoke(parameter: P): Flow<R> = createFlowObservable(parameter)
 
-    protected abstract suspend fun createFlowObservable(parameters: P): Flow<R>
+    protected abstract suspend fun createFlowObservable(parameter: P): Flow<R>
 }

@@ -2,7 +2,7 @@ package com.bed.core.domain.parameters
 
 import arrow.core.Either
 
-abstract class Parameters<out T> {
+abstract class Parameter<out T> {
     abstract fun isValid(): Either<List<String>, T>
 
     companion object {

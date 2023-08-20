@@ -35,10 +35,10 @@
         <action
             android:id="@+id/action_sign_in_to_sign_up"
             app:destination="@id/sign_up_fragment"
-            app:exitAnim="@anim/nav_pop_exit_to_left"
-            app:popExitAnim="@anim/nav_exit_to_right"
-            app:popEnterAnim="@anim/nav_enter_from_left"
-            app:enterAnim="@anim/nav_pop_enter_from_right" />
+            app:exitAnim="@anim/pop_exit_to_left"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:enterAnim="@anim/pop_enter_from_right" />
 
         <action
             android:id="@+id/action_sign_in_to_home"
@@ -48,10 +48,10 @@
             app:popUpToInclusive="true"
             app:popUpToSaveState="true"
             app:popUpTo="@+id/main_nav"
-            app:exitAnim="@anim/nav_exit_fade_out"
-            app:enterAnim="@anim/nav_enter_fade_in"
-            app:popExitAnim="@anim/nav_pop_exit_fade_out"
-            app:popEnterAnim="@anim/nav_pop_enter_fade_in" />
+            app:exitAnim="@anim/exit_fade_out"
+            app:enterAnim="@anim/enter_fade_in"
+            app:popExitAnim="@anim/pop_exit_fade_out"
+            app:popEnterAnim="@anim/pop_enter_fade_in" />
 
     </fragment>
 
@@ -64,10 +64,10 @@
         <action
             android:id="@+id/action_sign_up_to_sign_in"
             app:destination="@id/sign_in_fragment"
-            app:exitAnim="@anim/nav_exit_to_right"
-            app:enterAnim="@anim/nav_enter_from_left"
-            app:popExitAnim="@anim/nav_pop_exit_to_left"
-            app:popEnterAnim="@anim/nav_pop_enter_from_right" />
+            app:exitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/pop_exit_to_left"
+            app:popEnterAnim="@anim/pop_enter_from_right" />
 
         <action
             android:id="@+id/action_sing_up_to_home"
@@ -77,10 +77,10 @@
             app:popUpToInclusive="true"
             app:popUpToSaveState="true"
             app:popUpTo="@+id/main_nav"
-            app:exitAnim="@anim/nav_exit_fade_out"
-            app:enterAnim="@anim/nav_enter_fade_in"
-            app:popExitAnim="@anim/nav_pop_exit_fade_out"
-            app:popEnterAnim="@anim/nav_pop_enter_fade_in" />
+            app:exitAnim="@anim/exit_fade_out"
+            app:enterAnim="@anim/enter_fade_in"
+            app:popExitAnim="@anim/pop_exit_fade_out"
+            app:popEnterAnim="@anim/pop_enter_fade_in" />
 
     </fragment>
 

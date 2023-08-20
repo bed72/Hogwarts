@@ -4,8 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    tools:context=".presentation.ui.dashboard.products.ProductsFragment" >
+    tools:context=".presentation.ui.dashboard.products.ProductsFragment">
 
+    <com.airbnb.lottie.LottieAnimationView
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true"
+        android:layout_width="@dimen/permission_icon_size"
+        android:layout_height="@dimen/permission_icon_size"
+        app:lottie_rawRes="@raw/empty"
+        android:layout_gravity="center" />
 
 </FrameLayout>

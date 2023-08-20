@@ -31,13 +31,14 @@ import com.bed.seller.R
 import com.bed.seller.BuildConfig
 
 import com.bed.seller.databinding.OfferFragmentBinding
-import com.bed.seller.presentation.ui.dashboard.offers.model.ImageOfferScreenModel
-import com.bed.seller.presentation.ui.dashboard.offers.viewholder.ImageOfferViewHolder
 
 import com.bed.seller.presentation.commons.loaders.ImageLoader
 import com.bed.seller.presentation.commons.recyclers.getGenericAdapterOf
 import com.bed.seller.presentation.commons.extensions.fragments.snackbar
 import com.bed.seller.presentation.commons.fragments.BaseBottomSheetDialogFragment
+
+import com.bed.seller.presentation.ui.dashboard.offers.model.ImageOfferScreenModel
+import com.bed.seller.presentation.ui.dashboard.offers.viewholder.ImageOfferViewHolder
 
 @AndroidEntryPoint
 class OfferFragment : BaseBottomSheetDialogFragment<OfferFragmentBinding>(OfferFragmentBinding::inflate) {
@@ -72,11 +73,9 @@ class OfferFragment : BaseBottomSheetDialogFragment<OfferFragmentBinding>(OfferF
         }
 
     private val getCamera = registerForActivityResult(ActivityResultContracts.TakePicture()) {
-        if (it) {
-            val bitmap = loadBitmapFromUri(image)
-            adapterImages.submitList(listOf(image).mapIndexed { id, image -> ImageOfferScreenModel(id, image) })
-
-        }
+        if (it) adapterImages.submitList(listOf(image).mapIndexed { id, image ->
+            ImageOfferScreenModel(id, image)
+        })
     }
 
     private val getPermissionCamera =

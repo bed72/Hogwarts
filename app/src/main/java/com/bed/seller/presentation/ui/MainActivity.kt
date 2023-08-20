@@ -32,12 +32,12 @@ import com.bed.seller.presentation.commons.extensions.preventScreenshotsAndRecen
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val alert: AlertDialog by lazy {
-        dialog(this, R.layout.dialog_connection_fragment)
-    }
-
     private val connection: CheckConnection by lazy {
         CheckConnectionImpl(application)
+    }
+
+    private val alert: AlertDialog by lazy {
+        dialog(this, R.layout.dialog_connection_fragment)
     }
 
     private lateinit var binding: MainActivityBinding

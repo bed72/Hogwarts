@@ -7,11 +7,11 @@ import io.ktor.client.request.url
 import io.ktor.client.request.setBody
 
 import com.bed.core.domain.alias.SignUpType
-import com.bed.core.domain.parameters.authentication.SignUpParameters
+import com.bed.core.domain.parameters.authentication.SignUpParameter
 
 import com.bed.seller.mappers.authentication.SignUpMapper
 
-import com.bed.seller.framework.network.paths.ApiPath
+import com.bed.seller.framework.constants.PathConstant
 import com.bed.seller.framework.network.clients.request
 import com.bed.seller.framework.network.clients.HttpClient
 import com.bed.seller.framework.network.response.message.toModel
@@ -26,10 +26,10 @@ class RemoteAuthenticationDatasourceImpl @Inject constructor(
     private val mapper: SignUpMapper
 ) : RemoteAuthenticationDatasource {
 
-    override suspend fun signUp(parameters: SignUpParameters): SignUpType =
+    override suspend fun signUp(parameters: SignUpParameter): SignUpType =
         client.ktor.request<MessageResponse, AuthenticationResponse> {
             method = HttpMethod.Post
-            url(ApiPath.SIGN_UP.value)
+            url(PathConstant.SIGN_UP.value)
             setBody(mapper(parameters))
         }
             .map { success -> success.toModel() }

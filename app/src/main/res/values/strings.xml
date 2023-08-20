@@ -7,7 +7,6 @@
 
     <!-- SPLASH -->
     <string name="splash_icon_description">Ícone da aplicação, um megafone.</string>
-    <string name="splash_title_loading">Estamos configurando tudo para você…</string>
 
     <!-- EXIT -->
     <string name="exit_snackbar">Sair</string>
@@ -34,8 +33,12 @@
     <string name="sign_in_sub_title">Olá.\nAcesse sua conta e divulge seus produtos</string>
 
     <!-- SIGN_UP -->
+    <string name="sign_up_valid_name">Nome %s válido.</string>
+    <string name="sign_up_valid_email">E-mail %s válido.</string>
+    <string name="sign_up_valid_password">Senha válida.</string>
+
     <string name="sign_up_title_name_text_input">Nome</string>
-    <string name="sign_up_placeholder_name_text_input">Exemplo: Gabriel</string>
+    <string name="sign_up_placeholder_name_text_input">Seu nome</string>
     <string name="sign_up_title_already_existing_account_button">Entrar</string>
     <string name="sign_up_sub_title">Entre com seu nome, e-mail e senha.</string>
     <string name="sign_up_generic_error">Verifique seus dados e tente novamente.</string>

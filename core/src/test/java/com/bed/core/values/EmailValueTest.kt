@@ -10,7 +10,7 @@ internal class EmailValueTest {
     fun `Should return message failure when E-mail is invalid`() {
         val message = EmailValue("")
 
-        val validator = message()
+        val validator = message.validate()
 
         assertTrue(validator.isLeft())
         validator.mapLeft { assertEquals(it, "Preencha seu e-mail.") }
@@ -20,7 +20,7 @@ internal class EmailValueTest {
     fun `Should return message failure when E-mail is invalid with partial validations`() {
         val message = EmailValue("email.com")
 
-        val validator = message()
+        val validator = message.validate()
 
         assertTrue(validator.isLeft())
         validator.mapLeft { assertEquals(it, "O e-mail precisa ser válido.") }
@@ -30,7 +30,7 @@ internal class EmailValueTest {
     fun `Should return the E-mail when value is valid`() {
         val name = EmailValue("email@email.com")
 
-        val validator = name()
+        val validator = name.validate()
 
         assertTrue(validator.isRight())
         validator.map { assertEquals(it, "email@email.com") }

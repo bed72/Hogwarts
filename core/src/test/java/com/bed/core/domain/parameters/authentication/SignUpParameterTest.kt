@@ -10,7 +10,7 @@ import com.bed.core.values.PasswordValue
 
 import com.bed.test.factories.authentication.SignUpFactory
 
-internal class SignUpParametersTest {
+internal class SignUpParameterTest {
     private lateinit var factory: SignUpFactory
 
     @Before

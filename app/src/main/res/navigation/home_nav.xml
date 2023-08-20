@@ -32,18 +32,18 @@
         <action
             android:id="@+id/action_home_to_setting"
             app:destination="@id/setting"
-            app:exitAnim="@anim/nav_pop_exit_to_left"
-            app:enterAnim="@anim/nav_pop_enter_from_right"
-            app:popExitAnim="@anim/nav_exit_to_right"
-            app:popEnterAnim="@anim/nav_enter_from_left" />
+            app:exitAnim="@anim/pop_exit_to_left"
+            app:enterAnim="@anim/pop_enter_from_right"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popEnterAnim="@anim/enter_from_left" />
 
         <action
             android:id="@+id/action_home_to_notification"
             app:destination="@id/notification"
-            app:exitAnim="@anim/nav_pop_exit_to_left"
-            app:popExitAnim="@anim/nav_exit_to_right"
-            app:popEnterAnim="@anim/nav_enter_from_left"
-            app:enterAnim="@anim/nav_pop_enter_from_right" />
+            app:exitAnim="@anim/pop_exit_to_left"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:enterAnim="@anim/pop_enter_from_right" />
 
     </fragment>
 

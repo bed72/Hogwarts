@@ -10,17 +10,29 @@ import androidx.lifecycle.MutableLiveData
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 
+import com.bed.seller.framework.constants.StorageConstant
+import com.bed.seller.presentation.commons.states.NameState
+import com.bed.seller.presentation.commons.states.EmailState
+import com.bed.seller.presentation.commons.states.PasswordState
+
+import com.bed.core.usecases.storage.SaveStorageUseCase
 import com.bed.core.usecases.authentication.SignUpUseCase
 import com.bed.core.usecases.coroutines.CoroutinesUseCase
 
 import com.bed.core.domain.models.authentication.AuthenticationModel
-import com.bed.core.domain.parameters.authentication.SignUpParameters
+import com.bed.core.domain.parameters.authentication.SignUpParameter
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     signUpUseCase: SignUpUseCase,
     coroutinesUseCase: CoroutinesUseCase,
+    private val saveStorageUseCase: SaveStorageUseCase
 ) : ViewModel() {
+
+    val name = NameState(coroutinesUseCase)
+    val email = EmailState(coroutinesUseCase)
+    val password = PasswordState(coroutinesUseCase)
+
     private val actions = MutableLiveData<Actions>()
 
     val states: LiveData<States> = actions.switchMap { action ->
@@ -28,27 +40,39 @@ class SignUpViewModel @Inject constructor(
             if (action is Actions.SignUp) {
                 emit(States.Loading)
 
-                signUpUseCase(action.parameters).collect { data ->
+                signUpUseCase(action.parameter).collect { data ->
                     data.fold(
                         { failure -> emit(States.Failure(failure.message)) },
-                        { success -> emit(States.Success(success)) }
+                        { success ->
+                            save(success)
+                            emit(States.Success(success))
+                        }
                     )
                 }
             }
         }
     }
 
-    fun signUp(params: SignUpParameters) {
-        actions.value = Actions.SignUp(params)
+    fun signUp(parameter: SignUpParameter) {
+        actions.value = Actions.SignUp(parameter)
+    }
+
+    private fun save(parameter: AuthenticationModel) {
+        listOf(
+            StorageConstant.DATASTORE_ACCESS_TOKEN.value to parameter.accessToken,
+            StorageConstant.DATASTORE_REFRESH_TOKEN.value to parameter.refreshToken
+        ).run {
+            forEach { saveStorageUseCase(it)  }
+        }
     }
 
     sealed class Actions {
-        data class SignUp(val parameters: SignUpParameters) : Actions()
+        data class SignUp(val parameter: SignUpParameter) : Actions()
     }
 
     sealed class States {
         data object Loading : States()
-        data class Failure(val message: String) : States()
+        data class Failure(val data: String) : States()
         data class Success(val data: AuthenticationModel) : States()
     }
 }

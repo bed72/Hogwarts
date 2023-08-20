@@ -2,6 +2,6 @@ package com.bed.core.values
 
 import arrow.core.Either
 
-sealed interface ValueObject {
-    operator fun invoke(): Either<String, String>
+sealed interface ValueObject<out T> {
+    fun validate(): Either<String, T>
 }
