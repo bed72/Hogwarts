@@ -10,9 +10,9 @@ import androidx.lifecycle.MutableLiveData
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 
-import com.bed.seller.framework.constants.StorageConstant
 import com.bed.seller.presentation.commons.states.NameState
 import com.bed.seller.presentation.commons.states.EmailState
+import com.bed.seller.presentation.commons.states.StorageState
 import com.bed.seller.presentation.commons.states.PasswordState
 
 import com.bed.core.usecases.storage.SaveStorageUseCase
@@ -26,8 +26,10 @@ import com.bed.core.domain.parameters.authentication.SignUpParameter
 class SignUpViewModel @Inject constructor(
     signUpUseCase: SignUpUseCase,
     coroutinesUseCase: CoroutinesUseCase,
-    private val saveStorageUseCase: SaveStorageUseCase
+    saveStorageUseCase: SaveStorageUseCase
 ) : ViewModel() {
+
+    private val storage = StorageState(saveStorageUseCase)
 
     val name = NameState(coroutinesUseCase)
     val email = EmailState(coroutinesUseCase)
@@ -44,7 +46,7 @@ class SignUpViewModel @Inject constructor(
                     data.fold(
                         { failure -> emit(States.Failure(failure.message)) },
                         { success ->
-                            save(success)
+                            storage.save(success)
                             emit(States.Success(success))
                         }
                     )
@@ -55,15 +57,6 @@ class SignUpViewModel @Inject constructor(
 
     fun signUp(parameter: SignUpParameter) {
         actions.value = Actions.SignUp(parameter)
-    }
-
-    private fun save(parameter: AuthenticationModel) {
-        listOf(
-            StorageConstant.DATASTORE_ACCESS_TOKEN.value to parameter.accessToken,
-            StorageConstant.DATASTORE_REFRESH_TOKEN.value to parameter.refreshToken
-        ).run {
-            forEach { saveStorageUseCase(it)  }
-        }
     }
 
     sealed class Actions {

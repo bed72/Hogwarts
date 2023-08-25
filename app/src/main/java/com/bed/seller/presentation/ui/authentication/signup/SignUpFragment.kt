@@ -1,7 +1,6 @@
 package com.bed.seller.presentation.ui.authentication.signup
 
 import android.os.Bundle
-
 import android.view.View
 
 import androidx.fragment.app.viewModels
@@ -14,6 +13,7 @@ import com.bed.seller.databinding.SignUpFragmentBinding
 
 import com.bed.core.domain.parameters.authentication.SignUpParameter
 
+import com.bed.seller.presentation.commons.states.States
 import com.bed.seller.presentation.commons.states.NameState
 import com.bed.seller.presentation.commons.states.EmailState
 import com.bed.seller.presentation.commons.states.PasswordState
@@ -78,26 +78,25 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
     private fun observeSignUpState() {
         viewModel.states.observe(viewLifecycleOwner) { states ->
             binding.actionFlipper.displayedChild = when (states) {
-                SignUpViewModel.States.Loading -> FLIPPER_LOADING
+                SignUpViewModel.States.Loading -> States.FLIPPER_LOADING
                 is SignUpViewModel.States.Failure -> {
                     snackbar(requireView(), states.data)
-                    FLIPPER_FAILURE
+                    States.FLIPPER_FAILURE
                 }
                 is SignUpViewModel.States.Success -> {
                     navigateTo(SignUpFragmentDirections.actionSingUpToHome())
-                    FLIPPER_SUCCESS
+                    States.FLIPPER_SUCCESS
                 }
             }
         }
     }
 
     private fun setupComponents() {
-        setupFormInput()
-        setupSingUpButton()
-        setupSignInButton()
+        setupForm()
+        setupButtons()
     }
 
-    private fun setupFormInput() {
+    private fun setupForm() {
         with (binding) {
             nameEditInput.debounce { viewModel.name.set(it) }
             emailEditInput.debounce { viewModel.email.set(it) }
@@ -105,27 +104,20 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
         }
     }
 
-    private fun setupSingUpButton() {
-        binding.signUpButton.setOnClickListener { validateParameter() }
-    }
+    private fun setupButtons() {
+        with (binding) {
+            signUpButton.setOnClickListener { validateParameter() }
 
-    private fun setupSignInButton() {
-        binding.alreadyExistingAccountButton.setOnClickListener {
-            navigateTo(SignUpFragmentDirections.actionSignUpToSignIn())
+            alreadyExistingAccountButton.setOnClickListener {
+                navigateTo(SignUpFragmentDirections.actionSignUpToSignIn())
+            }
         }
     }
 
     private fun validateParameter() {
         parameter.isValid().fold(
-            { failure -> snackbar(requireView(), failure[FIRST_MESSAGE]) },
+            { failure -> snackbar(requireView(), failure[States.FIRST_MESSAGE]) },
             { success -> viewModel.signUp(success) }
         )
-    }
-
-    companion object {
-        private const val FIRST_MESSAGE = 0
-        private const val FLIPPER_LOADING = 1
-        private const val FLIPPER_FAILURE = 0
-        private const val FLIPPER_SUCCESS = FLIPPER_FAILURE
     }
 }

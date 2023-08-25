@@ -8,9 +8,15 @@ import dagger.hilt.android.components.ViewModelComponent
 import com.bed.core.usecases.authentication.SignUpUseCase
 import com.bed.core.usecases.authentication.SignUpUseCaseImpl
 
+import com.bed.core.usecases.authentication.SignInUseCase
+import com.bed.core.usecases.authentication.SignInUseCaseImpl
+
 @Module
 @InstallIn(ViewModelComponent::class)
 interface AuthenticationUseCaseModule {
     @Binds
     fun bindSignUpUseCase(useCase: SignUpUseCaseImpl): SignUpUseCase
+
+    @Binds
+    fun bindSignInUseCase(useCase: SignInUseCaseImpl): SignInUseCase
 }

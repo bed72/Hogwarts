@@ -13,7 +13,7 @@ internal class NameValueTest {
         val validator = message.validate()
 
         assertTrue(validator.isLeft())
-        validator.mapLeft { assertEquals(it, "Preencha seu nome e sobrenome.") }
+        validator.mapLeft { assertEquals(it, "Preencha um nome e sobrenome válidos.") }
     }
 
     @Test
@@ -23,7 +23,7 @@ internal class NameValueTest {
         val validator = message.validate()
 
         assertTrue(validator.isLeft())
-        validator.mapLeft { assertEquals(it, "O nome e o sobrenome precisam ser válidos.") }
+        validator.mapLeft { assertEquals(it, "Preencha um nome e sobrenome válidos.") }
     }
 
     @Test
@@ -33,6 +33,6 @@ internal class NameValueTest {
         val validator = name.validate()
 
         assertTrue(validator.isRight())
-        validator.map { assertEquals(it, "Gabriel Ramos") }
+        validator.map { assertEquals(it.value, "Gabriel Ramos") }
     }
 }

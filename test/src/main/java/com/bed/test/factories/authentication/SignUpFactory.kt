@@ -15,13 +15,13 @@ import com.bed.core.domain.models.authentication.AuthenticationUserModel
 import com.bed.core.domain.models.authentication.AuthenticationMetadataModel
 
 class SignUpFactory {
-    val validParams = SignUpParameter(
+    val signUpParameter = SignUpParameter(
         NameValue("Gabriel Ramos"),
         EmailValue("email@email.com"),
         PasswordValue("P@ssw0rD"),
     )
 
-    val invalidParams = SignUpParameter(
+    val invalidParameter = SignUpParameter(
         NameValue(""),
         EmailValue(""),
         PasswordValue(""),
@@ -32,7 +32,7 @@ class SignUpFactory {
 
     private fun create(mock: Mock) = when (mock) {
         Mock.Failure ->
-            MessageModel("Este e-mail já foi cadastrado.", "", "").left()
+            MessageModel("Este e-mail já foi cadastrado.").left()
         Mock.Success -> AuthenticationModel(
             3600,
             "5CQcsREkB5xcqbY1L...",

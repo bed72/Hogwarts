@@ -53,7 +53,7 @@ internal class SignUpUseCaseTest {
     fun `Should return value not null when trying sign up account`() = runTest {
         whenever(repository.signUp(any())).thenReturn(factory.failure)
 
-        val response = useCase(factory.validParams).first()
+        val response = useCase(factory.signUpParameter).first()
 
         assertNotNull(response)
     }
@@ -62,7 +62,7 @@ internal class SignUpUseCaseTest {
     fun `Should only call repository once when trying sign up account`() = runTest {
         whenever(repository.signUp(any())).thenReturn(factory.failure)
 
-        useCase(factory.validParams).first()
+        useCase(factory.signUpParameter).first()
 
         verify(repository, times(1)).signUp(any())
     }
@@ -71,7 +71,7 @@ internal class SignUpUseCaseTest {
     fun `Should return failure value when trying a sign up account`() = runTest {
         whenever(repository.signUp(any())).thenReturn(factory.failure)
 
-        val response = useCase(factory.validParams).first()
+        val response = useCase(factory.signUpParameter).first()
 
         assertTrue(response is Either.Left<MessageModel>)
     }
@@ -80,10 +80,10 @@ internal class SignUpUseCaseTest {
     fun `Should return failure value with status and message when trying a sign up account`() = runTest {
         whenever(repository.signUp(any())).thenReturn(factory.failure)
 
-        val response = useCase(factory.validParams).first()
+        val response = useCase(factory.signUpParameter).first()
 
         response.onLeft { failure ->
-            assertEquals(failure.error, "Este e-mail já foi cadastrado.")
+            assertEquals(failure.message, "Este e-mail já foi cadastrado.")
         }
     }
 
@@ -91,7 +91,7 @@ internal class SignUpUseCaseTest {
     fun `Should return success value when trying a sign up account`() = runTest {
         whenever(repository.signUp(any())).thenReturn(factory.success)
 
-        val response = useCase(factory.validParams).first()
+        val response = useCase(factory.signUpParameter).first()
 
         assertTrue(response is Either.Right<AuthenticationModel>)
     }
@@ -100,7 +100,7 @@ internal class SignUpUseCaseTest {
     fun `Should return success value with status and message when trying a sign up account`() = runTest {
         whenever(repository.signUp(any())).thenReturn(factory.success)
 
-        val response = useCase(factory.validParams).first()
+        val response = useCase(factory.signUpParameter).first()
 
         response.onRight { success ->
             assertEquals(success.expireIn, 3600)

@@ -1,4 +1,4 @@
-package com.bed.seller.presentation.ui.authentication
+package com.bed.seller.presentation.ui.authentication.signup
 
 import org.junit.Rule
 import org.junit.Test
@@ -21,12 +21,11 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import androidx.lifecycle.Observer
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 
+import com.bed.core.usecases.storage.SaveStorageUseCase
 import com.bed.core.usecases.authentication.SignUpUseCase
 
 import com.bed.test.rule.MainCoroutineRule
 import com.bed.test.factories.authentication.SignUpFactory
-
-import com.bed.seller.presentation.ui.authentication.signup.SignUpViewModel
 
 @RunWith(MockitoJUnitRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -39,7 +38,10 @@ internal class SignUpModelViewModelTest {
     var instantExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var useCase: SignUpUseCase
+    private lateinit var signUpUseCase: SignUpUseCase
+
+    @Mock
+    private lateinit var saveStorageUseCase: SaveStorageUseCase
 
     @Mock
     private lateinit var observer: Observer<SignUpViewModel.States>
@@ -52,37 +54,38 @@ internal class SignUpModelViewModelTest {
     fun setUp() {
         factory = SignUpFactory()
         signUpViewModel = SignUpViewModel(
-            useCase,
+            signUpUseCase,
             rule.dispatcher,
+            saveStorageUseCase
         ).apply { states.observeForever(observer) }
     }
 
     @Test
-    fun `Should emit Loading State when trying to create an account with success`() = runTest {
-        whenever(useCase(any())).thenReturn(flowOf(factory.success))
+    fun `Should emit Loading State when trying to sign up with return success`() = runTest {
+        whenever(signUpUseCase(any())).thenReturn(flowOf(factory.success))
 
-        signUpViewModel.signUp(factory.validParams)
+        signUpViewModel.signUp(factory.signUpParameter)
 
         verify(observer).onChanged(isA<SignUpViewModel.States.Loading>())
         verify(observer).onChanged(isA<SignUpViewModel.States.Success>())
     }
 
     @Test
-    fun `Should emit Loading State when trying to create an account with failure`() = runTest {
-        whenever(useCase(any())).thenReturn(flowOf(factory.failure))
+    fun `Should emit Loading State when trying to sign up with return failure`() = runTest {
+        whenever(signUpUseCase(any())).thenReturn(flowOf(factory.failure))
 
-        signUpViewModel.signUp(factory.validParams)
+        signUpViewModel.signUp(factory.signUpParameter)
 
         verify(observer).onChanged(isA<SignUpViewModel.States.Loading>())
         verify(observer).onChanged(isA<SignUpViewModel.States.Failure>())
     }
 
     @Test
-    fun `Should return AuthenticationModel in Success State when trying to create an account with returns success`() =
+    fun `Should return AuthenticationModel in Success State when trying to sign up with return success`() =
         runTest {
-            whenever(useCase(any())).thenReturn(flowOf(factory.success))
+            whenever(signUpUseCase(any())).thenReturn(flowOf(factory.success))
 
-            signUpViewModel.signUp(factory.validParams)
+            signUpViewModel.signUp(factory.signUpParameter)
 
             val (success) = signUpViewModel.states.value as SignUpViewModel.States.Success
             assertEquals(success.expireIn, 3600)
@@ -93,12 +96,12 @@ internal class SignUpModelViewModelTest {
         }
 
     @Test
-    fun `Should return Failure State when trying to create an account with returns failure`() = runTest {
-        whenever(useCase(any())).thenReturn(flowOf(factory.failure))
+    fun `Should return Failure State when trying to create an account with return failure`() = runTest {
+        whenever(signUpUseCase(any())).thenReturn(flowOf(factory.failure))
 
-        signUpViewModel.signUp(factory.validParams)
+        signUpViewModel.signUp(factory.signUpParameter)
 
         val (failure) = signUpViewModel.states.value as SignUpViewModel.States.Failure
-        assertEquals(failure, "")
+        assertEquals(failure, "Este e-mail já foi cadastrado.")
     }
 }

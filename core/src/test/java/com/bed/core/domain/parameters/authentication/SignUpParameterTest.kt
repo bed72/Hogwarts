@@ -19,8 +19,8 @@ internal class SignUpParameterTest {
     }
 
     @Test
-    fun `Should try validate SignUpParams return success`() {
-        factory.validParams.isValid().map { (name, email, password) ->
+    fun `Should try validate SignUpParameter return success`() {
+        factory.signUpParameter.isValid().map { (name, email, password) ->
             assertEquals(name.value, "Gabriel Ramos")
             assertEquals(email.value, "email@email.com")
             assertEquals(password.value, "P@ssw0rD")
@@ -28,48 +28,48 @@ internal class SignUpParameterTest {
     }
 
     @Test
-    fun `Should try validate SignUpParams return failure when name is invalid`() {
-        factory.invalidParams
+    fun `Should try validate SignUpParameter return failure when name is invalid`() {
+        factory.invalidParameter
             .copy(
                 name = NameValue(""),
                 email = EmailValue("email@email.com"),
                 password = PasswordValue("P@ssw0rD"),
             )
             .isValid()
-            .mapLeft { message -> assertEquals(message, listOf("Preencha seu nome e sobrenome.")) }
+            .mapLeft { message -> assertEquals(message, listOf("Preencha um nome e sobrenome válidos.")) }
     }
 
     @Test
-    fun `Should try validate SignUpParams return failure when e-mail is invalid`() {
-        factory.invalidParams
+    fun `Should try validate SignUpParameter return failure when e-mail is invalid`() {
+        factory.invalidParameter
             .copy(
                 name = NameValue("Gabriel Ramos"),
                 email = EmailValue(""),
                 password = PasswordValue("P@ssw0rD"),
             )
             .isValid()
-            .mapLeft { message -> assertEquals(message, listOf("Preencha seu e-mail.")) }
+            .mapLeft { message -> assertEquals(message, listOf("Preencha um e-mail válido.")) }
     }
 
     @Test
-    fun `Should try validate SignUpParams return failure when password is invalid`() {
-        factory.invalidParams
+    fun `Should try validate SignUpParameter return failure when password is invalid`() {
+        factory.invalidParameter
             .copy(
                 name = NameValue("Gabriel Ramos"),
                 email = EmailValue("email@email.com"),
                 password = PasswordValue(""),
             )
-            .isValid().mapLeft { message -> assertEquals(message, listOf("Preencha sua senha.")) }
+            .isValid().mapLeft { message -> assertEquals(message, listOf("Preencha uma senha válida.")) }
     }
 
     @Test
-    fun `Should try validate SignUpParams return failure when name and password is invalid`() {
+    fun `Should try validate SignUpParameter return failure when name and password is invalid`() {
         val expect = listOf(
-            "O nome e o sobrenome precisam ser válidos.",
+            "Preencha um nome e sobrenome válidos.",
             "A senha presica conter caracteres numéricos.",
         )
 
-        factory.invalidParams
+        factory.invalidParameter
             .copy(
                 name = NameValue("Ga"),
                 email = EmailValue("email@email.com"),
@@ -79,13 +79,13 @@ internal class SignUpParameterTest {
     }
 
     @Test
-    fun `Should try validate SignUpParams return failure when name and e-mail is invalid`() {
+    fun `Should try validate SignUpParameter return failure when name and e-mail is invalid`() {
         val expect = listOf(
-            "O nome e o sobrenome precisam ser válidos.",
-            "O e-mail precisa ser válido.",
+            "Preencha um nome e sobrenome válidos.",
+            "Preencha um e-mail válido.",
         )
 
-        factory.invalidParams
+        factory.invalidParameter
             .copy(
                 name = NameValue("Ga"),
                 email = EmailValue("emailemail.com"),
@@ -95,14 +95,30 @@ internal class SignUpParameterTest {
     }
 
     @Test
-    fun `Should try validate SignUpParams return failure when name, e-mail and password is invalid`() {
+    fun `Should try validate SignUpParameter return failure when e-mail and password is invalid`() {
         val expect = listOf(
-            "O nome e o sobrenome precisam ser válidos.",
-            "O e-mail precisa ser válido.",
+            "Preencha um e-mail válido.",
+            "A senha presica conter caracteres numéricos.",
+        )
+
+        factory.invalidParameter
+            .copy(
+                name = NameValue("Gabriel Ramos"),
+                email = EmailValue("emailemail.com"),
+                password = PasswordValue("Password"),
+            )
+            .isValid().mapLeft { message -> assertEquals(message, expect) }
+    }
+
+    @Test
+    fun `Should try validate SignUpParameter return failure when name, e-mail and password is invalid`() {
+        val expect = listOf(
+            "Preencha um nome e sobrenome válidos.",
+            "Preencha um e-mail válido.",
             "A senha presica conter caracteres maiúsculos.",
         )
 
-        factory.invalidParams
+        factory.invalidParameter
             .copy(
                 name = NameValue("Ga"),
                 email = EmailValue("emailemail.com"),
