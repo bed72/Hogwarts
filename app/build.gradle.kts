@@ -28,6 +28,16 @@ android {
         versionName = "1.0"
         applicationId = "com.bed.seller"
 
+        testInstrumentationRunner = "com.bed.seller.CustomTestRunner"
+        testInstrumentationRunnerArguments.putAll(
+            mapOf(
+                "coverage" to "true",
+                "disableAnalytics" to "true",
+                "clearPackageData" to "true",
+                "useTestStorageService" to "false"
+            )
+        )
+
         buildConfigField("String", "API_KEY", keys.getProperty("API_KEY"))
         buildConfigField("String", "BASE_URL", keys.getProperty("BASE_URL"))
         buildConfigField("String", "DATA_STORE", keys.getProperty("DATA_STORE"))
@@ -35,6 +45,11 @@ android {
 
     buildFeatures {
         viewBinding = true
+    }
+
+    testOptions {
+        animationsDisabled = true
+        execution = "ANDROIDX_TEST_ORCHESTRATOR"
     }
 
     buildTypes {
@@ -120,9 +135,26 @@ dependencies {
     testImplementation("androidx.arch.core:core-testing:2.2.0")
     testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
 
+    androidTestUtil("androidx.test:orchestrator:1.4.2")
+
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
 
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:$hiltVersion")
+
+    val espressoVersion = "3.5.1"
+    androidTestImplementation("androidx.test.espresso:espresso-core:$espressoVersion")
+    androidTestImplementation ("androidx.test.espresso:espresso-contrib:$espressoVersion")
+
+    androidTestImplementation("androidx.test:runner:1.5.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.navigation:navigation-testing:$navigationVersion")
+
+    androidTestImplementation("com.squareup.okhttp3:mockwebserver:4.9.3")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:$hiltVersion")
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+
+    debugImplementation("androidx.fragment:fragment-testing:1.6.1")
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.12")
 }
 

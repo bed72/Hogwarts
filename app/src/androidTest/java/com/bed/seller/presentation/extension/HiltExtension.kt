@@ -22,16 +22,13 @@ import android.content.Intent
 import android.content.ComponentName
 
 import androidx.annotation.StyleRes
-import androidx.navigation.Navigation
 import androidx.fragment.app.Fragment
 import androidx.core.util.Preconditions
-import androidx.lifecycle.ViewModelStore
 import androidx.fragment.testing.manifest.R
-import androidx.navigation.NavHostController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.core.app.ActivityScenario.launch
 
-import com.bed.seller.R.navigation
+import com.bed.seller.HiltTestActivity
 
 /**
  * launchFragmentInContainer from the androidx.fragment:fragment-testing library
@@ -42,13 +39,13 @@ import com.bed.seller.R.navigation
  * [HiltTestActivity] in the debug folder and include it in the debug AndroidManifest.xml file
  * as can be found in this project.
  */
+
 inline fun <reified T : Fragment> launchFragmentInHiltContainer(
     fragmentArgs: Bundle? = null,
-    navHostController: NavHostController? = null,
     @StyleRes themeResId: Int = R.style.FragmentScenarioEmptyFragmentActivityTheme,
     crossinline action: Fragment.() -> Unit = {}
 ) {
-    val startActivityIntent = Intent.makeMainActivity(
+    val startActivity = Intent.makeMainActivity(
         ComponentName(
             ApplicationProvider.getApplicationContext(),
             HiltTestActivity::class.java
@@ -58,21 +55,12 @@ inline fun <reified T : Fragment> launchFragmentInHiltContainer(
         themeResId
     )
 
-    launch<HiltTestActivity>(startActivityIntent).onActivity { activity ->
+    launch<HiltTestActivity>(startActivity).onActivity { activity ->
         val fragment: Fragment = activity.supportFragmentManager.fragmentFactory.instantiate(
             Preconditions.checkNotNull(T::class.java.classLoader),
             T::class.java.name
         )
         fragment.arguments = fragmentArgs
-        fragment.viewLifecycleOwnerLiveData.observeForever { viewLifecycleOwner ->
-            if (viewLifecycleOwner != null) {
-                navHostController?.let {
-                    it.setGraph(navigation.main_nav)
-                    it.setViewModelStore(ViewModelStore())
-                    Navigation.setViewNavController(fragment.requireView(), it)
-                }
-            }
-        }
         activity.supportFragmentManager
             .beginTransaction()
             .add(id.content, fragment, "")

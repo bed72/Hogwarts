@@ -14,8 +14,10 @@ fun String.asJsonString(): String {
         val builder = StringBuilder()
         val inputStream = (InstrumentationRegistry.getInstrumentation().targetContext
             .applicationContext as HiltTestApplication).assets.open(this)
-        val reader = InputStreamReader(inputStream, "UTF-8")
-        reader.readLines().forEach { builder.append(it) }
+        InputStreamReader(inputStream, "UTF-8").run {
+            readLines().forEach { builder.append(it) }
+        }
+
 
         return builder.toString()
     } catch (exception: IOException) { throw exception }
