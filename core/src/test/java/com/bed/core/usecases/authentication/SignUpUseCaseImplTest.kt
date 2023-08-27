@@ -105,10 +105,9 @@ internal class SignUpUseCaseTest {
         response.onRight { success ->
             assertEquals(success.expireIn, 3600)
             assertEquals(success.accessToken, "5CQcsREkB5xcqbY1L...")
-            assertEquals(success.refreshToken, "5CQcsREkB5xcqbY1L...")
+            assertEquals(success.refreshToken, "5CQcsREkB5xcqbY1L..")
             assertEquals(success.user.email, "bed@email.com")
             assertEquals(success.user.userMetadata.name, "Bed")
         }
     }
-
 }
