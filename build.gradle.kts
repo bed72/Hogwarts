@@ -1,7 +1,7 @@
 buildscript {
     dependencies {
         classpath("com.google.dagger:hilt-android-gradle-plugin:2.47")
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.7.0")
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.7.1")
     }
 }
 
@@ -13,4 +13,27 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version "1.9.0" apply false
     id("org.jetbrains.kotlin.android") version "1.9.0" apply false
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.0" apply false
+}
+
+tasks.register("copyGitHooks", Copy::class.java) {
+    group = "git hooks"
+    into("$rootDir/.git/hooks/")
+    from("$rootDir/scripts/pre-commit")
+    description = "Copies the git hooks from /git-hooks to the .git folder."
+}
+
+tasks.register("installGitHooks", Exec::class.java) {
+    group = "git hooks"
+    workingDir = rootDir
+    commandLine = listOf("chmod")
+    args("-R", "+x", ".git/hooks/")
+    dependsOn("copyGitHooks")
+    description = "Installs the pre-commit git hooks from /git-hooks."
+    doLast {
+        logger.info("Git hook installed successfully.")
+    }
+}
+
+afterEvaluate {
+    tasks.getByPath(":app:preBuild").dependsOn(":installGitHooks")
 }

@@ -11,7 +11,7 @@ import com.bed.core.usecases.coroutines.CoroutinesUseCase
 import com.bed.core.data.repositories.StorageRepository
 
 interface GetStorageUseCase {
-    suspend operator fun invoke(parameters: String): Flow<String>
+    suspend operator fun invoke(parameter: String): Flow<String>
 }
 
 class GetStorageUseCaseImpl @Inject constructor(
@@ -19,7 +19,6 @@ class GetStorageUseCaseImpl @Inject constructor(
     private val repository: StorageRepository
 ) : GetStorageUseCase, FlowUseCase<String, String>() {
 
-    override suspend fun createFlowObservable(parameters: String): Flow<String> =
-        withContext(useCase.io()) { repository.get(parameters) }
-
+    override suspend fun createFlowObservable(parameter: String): Flow<String> =
+        withContext(useCase.io()) { repository.get(parameter) }
 }
