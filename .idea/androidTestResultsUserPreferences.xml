@@ -24,6 +24,7 @@
                 <map>
                   <entry key="Duration" value="90" />
                   <entry key="Tests" value="360" />
+                  <entry key="bed" value="120" />
                   <entry key="motorola moto g(9) play" value="120" />
                 </map>
               </option>

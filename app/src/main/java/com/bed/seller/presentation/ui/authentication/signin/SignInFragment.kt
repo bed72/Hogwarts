@@ -14,16 +14,17 @@ import com.bed.seller.databinding.SignInFragmentBinding
 
 import com.bed.core.domain.parameters.authentication.SignInParameter
 
-import com.bed.seller.presentation.commons.extensions.debounce
-
 import com.bed.seller.presentation.commons.states.States
 import com.bed.seller.presentation.commons.states.EmailState
 import com.bed.seller.presentation.commons.states.PasswordState
 
 import com.bed.seller.presentation.commons.fragments.BaseFragment
 
+import com.bed.seller.presentation.commons.extensions.debounce
+import com.bed.seller.presentation.commons.extensions.actionKeyboard
 import com.bed.seller.presentation.commons.extensions.fragments.snackbar
 import com.bed.seller.presentation.commons.extensions.fragments.navigateTo
+import com.bed.seller.presentation.commons.extensions.fragments.hideKeyboard
 
 @AndroidEntryPoint
 class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding::inflate) {
@@ -98,6 +99,7 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
         with (binding) {
             emailEditInput.debounce { viewModel.email.set(it) }
             passwordEditInput.debounce { viewModel.password.set(it) }
+            passwordEditInput.actionKeyboard { validateParameter() }
         }
     }
 
@@ -114,6 +116,7 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
     }
 
     private fun validateParameter() {
+        hideKeyboard()
         parameter.isValid().fold(
             { failure -> snackbar(requireView(), failure[States.FIRST_MESSAGE]) },
             { success -> viewModel.signIn(success) }

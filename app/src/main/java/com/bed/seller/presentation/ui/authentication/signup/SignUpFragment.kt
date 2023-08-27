@@ -21,8 +21,10 @@ import com.bed.seller.presentation.commons.states.PasswordState
 import com.bed.seller.presentation.commons.fragments.BaseFragment
 
 import com.bed.seller.presentation.commons.extensions.debounce
+import com.bed.seller.presentation.commons.extensions.actionKeyboard
 import com.bed.seller.presentation.commons.extensions.fragments.snackbar
 import com.bed.seller.presentation.commons.extensions.fragments.navigateTo
+import com.bed.seller.presentation.commons.extensions.fragments.hideKeyboard
 
 @AndroidEntryPoint
 class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding::inflate) {
@@ -101,6 +103,7 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
             nameEditInput.debounce { viewModel.name.set(it) }
             emailEditInput.debounce { viewModel.email.set(it) }
             passwordEditInput.debounce { viewModel.password.set(it) }
+            passwordEditInput.actionKeyboard { validateParameter() }
         }
     }
 
@@ -115,6 +118,7 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
     }
 
     private fun validateParameter() {
+        hideKeyboard()
         parameter.isValid().fold(
             { failure -> snackbar(requireView(), failure[States.FIRST_MESSAGE]) },
             { success -> viewModel.signUp(success) }

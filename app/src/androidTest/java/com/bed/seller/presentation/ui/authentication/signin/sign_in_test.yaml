@@ -1,0 +1,12 @@
+# sign_in_test.yaml
+
+appId: com.bed.seller.debug
+---
+- launchApp
+
+- assertVisible: "Bem vindo!"
+- assertVisible: "Olá.\nAcesse sua conta e divulge seus produtos"
+
+- tapOn:
+    id: "sign_in_button"
+- assertVisible: "Preencha um e-mail válido."
