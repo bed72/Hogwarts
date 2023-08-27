@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 echo "
-===============
-|  Running detekt...
-===============
++=====================+
+|  Running Detekt...  |
++=====================+
 "
 
 ./gradlew --no-daemon --stacktrace -PdisablePreDex detekt
@@ -11,4 +11,17 @@ detektStatus=$?
 
 # return 1 exit code if running checks fails
 [ $detektStatus -ne 0 ] && exit 1
+
+echo "
++====================+
+|  Running Tests...  |
++====================+
+"
+
+./gradlew --no-daemon --stacktrace -PdisablePreDex test
+
+testStatus=$?
+
+# return 1 exit code if running checks fails
+[ testStatus -ne 0 ] && exit 1
 exit 0
