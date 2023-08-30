@@ -58,5 +58,4 @@ Link do Projeto: [https://github.com/bed72/Hogwarts](https://github.com/bed72/Ho
 <p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
 
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://github.com/bed72
-[product-screenshot]: images/screenshot.png
+[linkedin-url]: https://www.linkedin.com/in/gabriel-ramos-bed/
