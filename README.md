@@ -34,7 +34,7 @@ Este é um projeto Android desenvolvido em Kotlin que tem como objetivo aprimora
 
 6. **Detekt:** O Detekt é uma ferramenta de análise estática de código para projetos Kotlin, com foco especial em projetos Android. Ele é usado como uma alternativa ao lint padrão do Android e fornece análises mais detalhadas e personalizáveis para melhorar a qualidade e a consistência do código.
 
-7. **Ktor:** O Ktor é um framework assíncrono de código aberto para construir aplicativos de servidor e cliente em Kotlin. Ele é projetado para ser conciso, expressivo e altamente flexível, permitindo o desenvolvimento de aplicações web e móveis de maneira eficiente.
+7. **Ktor:** (Branch feature-ktor) O Ktor é um framework assíncrono de código aberto para construir aplicativos de servidor e cliente em Kotlin. Ele é projetado para ser conciso, expressivo e altamente flexível, permitindo o desenvolvimento de aplicações web e móveis de maneira eficiente.
 
 8. **DataStore:** O DataStore é uma biblioteca de persistência de dados desenvolvida pela Google para o Android. Ela oferece uma alternativa mais moderna e eficiente para persistir dados em comparação com o "SharedPreferences".
 
