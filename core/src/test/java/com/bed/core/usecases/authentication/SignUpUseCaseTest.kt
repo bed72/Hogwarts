@@ -23,12 +23,13 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 import com.bed.test.rule.MainCoroutineRule
-import com.bed.test.factories.authentication.SignUpFactory
+
+import com.bed.core.data.repositories.AuthenticationRepository
+
+import com.bed.test.factories.authentication.AuthenticationFactory
 
 import com.bed.core.domain.models.failure.MessageModel
 import com.bed.core.domain.models.authentication.AuthenticationModel
-
-import com.bed.core.data.repositories.AuthenticationRepository
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
@@ -36,7 +37,7 @@ internal class SignUpUseCaseTest {
     @get:Rule
     val rule = MainCoroutineRule()
 
-    private lateinit var factory: SignUpFactory
+    private lateinit var factory: AuthenticationFactory
 
     private lateinit var useCase: SignUpUseCase
 
@@ -45,7 +46,7 @@ internal class SignUpUseCaseTest {
 
     @Before
     fun setup() {
-        factory = SignUpFactory()
+        factory = AuthenticationFactory()
         useCase = SignUpUseCaseImpl(rule.dispatcher, repository)
     }
 
@@ -53,7 +54,7 @@ internal class SignUpUseCaseTest {
     fun `Should return value not null when trying sign up account`() = runTest {
         whenever(repository.signUp(any())).thenReturn(factory.failure)
 
-        val response = useCase(factory.signUpParameter).first()
+        val response = useCase(factory.authenticationParameter).first()
 
         assertNotNull(response)
     }
@@ -62,7 +63,7 @@ internal class SignUpUseCaseTest {
     fun `Should only call repository once when trying sign up account`() = runTest {
         whenever(repository.signUp(any())).thenReturn(factory.failure)
 
-        useCase(factory.signUpParameter).first()
+        useCase(factory.authenticationParameter).first()
 
         verify(repository, times(1)).signUp(any())
     }
@@ -71,7 +72,7 @@ internal class SignUpUseCaseTest {
     fun `Should return failure value when trying a sign up account`() = runTest {
         whenever(repository.signUp(any())).thenReturn(factory.failure)
 
-        val response = useCase(factory.signUpParameter).first()
+        val response = useCase(factory.authenticationParameter).first()
 
         assertTrue(response is Either.Left<MessageModel>)
     }
@@ -80,10 +81,10 @@ internal class SignUpUseCaseTest {
     fun `Should return failure value with status and message when trying a sign up account`() = runTest {
         whenever(repository.signUp(any())).thenReturn(factory.failure)
 
-        val response = useCase(factory.signUpParameter).first()
+        val response = useCase(factory.authenticationParameter).first()
 
         response.onLeft { failure ->
-            assertEquals(failure.message, "Este e-mail já foi cadastrado.")
+            assertEquals(failure.message, "Ops, um erro aconteceu.")
         }
     }
 
@@ -91,7 +92,7 @@ internal class SignUpUseCaseTest {
     fun `Should return success value when trying a sign up account`() = runTest {
         whenever(repository.signUp(any())).thenReturn(factory.success)
 
-        val response = useCase(factory.signUpParameter).first()
+        val response = useCase(factory.authenticationParameter).first()
 
         assertTrue(response is Either.Right<AuthenticationModel>)
     }
@@ -100,14 +101,14 @@ internal class SignUpUseCaseTest {
     fun `Should return success value with status and message when trying a sign up account`() = runTest {
         whenever(repository.signUp(any())).thenReturn(factory.success)
 
-        val response = useCase(factory.signUpParameter).first()
+        val response = useCase(factory.authenticationParameter).first()
 
         response.onRight { success ->
-            assertEquals(success.expireIn, 3600)
-            assertEquals(success.accessToken, "5CQcsREkB5xcqbY1L...")
-            assertEquals(success.refreshToken, "5CQcsREkB5xcqbY1L...")
-            assertEquals(success.user.email, "bed@email.com")
-            assertEquals(success.user.userMetadata.name, "Bed")
+            assertEquals(success.uid, "5CQcsREkB5xcqbY1L...")
+            assertEquals(success.name, "Gabriel Ramos")
+            assertEquals(success.email, "bed@gmail.com")
+            assertEquals(success.photo, "https://github.com/bed72.png")
+            assertEquals(success.emailVerified, false)
         }
     }
 }

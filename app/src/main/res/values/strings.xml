@@ -15,9 +15,10 @@
     <string name="exit_title">Deseja sair do App?  &#128542;</string>
 
     <!-- SIGN_IN and SIGN_UP -->
-    <string name="title_create_account">Criar</string>
     <string name="title_email_text_input">E-mail</string>
     <string name="title_password_text_input">Senha</string>
+    <string name="title_create_account">Criar conta</string>
+    <string name="title_create_account_button">Criar</string>
     <string name="failure_name_message">Nome inválido.</string>
     <string name="failure_email_message">E-mail inválido.</string>
     <string name="failure_password_message">Senha inválida.</string>
@@ -37,10 +38,8 @@
     <string name="sign_up_valid_email">E-mail %s válido.</string>
     <string name="sign_up_valid_password">Senha válida.</string>
 
-    <string name="sign_up_title_name_text_input">Nome</string>
+    <string name="sign_up_sub_title">Entre com seu e-mail e senha.</string>
     <string name="sign_up_title_already_existing_account_button">Entrar</string>
-    <string name="sign_up_sub_title">Entre com seu nome, e-mail e senha.</string>
-    <string name="sign_up_placeholder_name_text_input">Seu nome e sobrenome</string>
     <string name="sign_up_generic_error">Verifique seus dados e tente novamente.</string>
     <string name="sign_up_success_create_account">Sua conta foi criada com sucesso.</string>
     <string name="sign_up_description_already_existing_account">Já possui uma conta?</string>

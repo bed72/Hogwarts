@@ -12,7 +12,7 @@ import com.bed.seller.R
 
 import com.bed.seller.databinding.SignInFragmentBinding
 
-import com.bed.core.domain.parameters.authentication.SignInParameter
+import com.bed.core.domain.parameters.authentication.AuthenticationParameter
 
 import com.bed.seller.presentation.commons.states.States
 import com.bed.seller.presentation.commons.states.EmailState
@@ -29,7 +29,7 @@ import com.bed.seller.presentation.commons.extensions.fragments.hideKeyboard
 @AndroidEntryPoint
 class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding::inflate) {
 
-    private var parameter = SignInParameter()
+    private var parameter = AuthenticationParameter()
 
     private val viewModel: SignInViewModel by viewModels()
 

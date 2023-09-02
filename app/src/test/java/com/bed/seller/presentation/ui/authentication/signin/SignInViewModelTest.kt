@@ -25,7 +25,7 @@ import com.bed.core.usecases.storage.SaveStorageUseCase
 import com.bed.core.usecases.authentication.SignInUseCase
 
 import com.bed.test.rule.MainCoroutineRule
-import com.bed.test.factories.authentication.SignInFactory
+import com.bed.test.factories.authentication.AuthenticationFactory
 
 @RunWith(MockitoJUnitRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -46,13 +46,13 @@ internal class SignInViewModelTest {
     @Mock
     private lateinit var observer: Observer<SignInViewModel.States>
 
-    private lateinit var factory: SignInFactory
+    private lateinit var factory: AuthenticationFactory
 
     private lateinit var signInViewModel: SignInViewModel
 
     @Before
     fun setUp() {
-        factory = SignInFactory()
+        factory = AuthenticationFactory()
         signInViewModel = SignInViewModel(
             signInUseCase,
             rule.dispatcher,
@@ -64,7 +64,7 @@ internal class SignInViewModelTest {
     fun `Should emit Loading State when trying to sign in with return success`() = runTest {
         whenever(signInUseCase(any())).thenReturn(flowOf(factory.success))
 
-        signInViewModel.signIn(factory.signInParameter)
+        signInViewModel.signIn(factory.authenticationParameter)
 
         verify(observer).onChanged(isA<SignInViewModel.States.Loading>())
         verify(observer).onChanged(isA<SignInViewModel.States.Success>())
@@ -74,7 +74,7 @@ internal class SignInViewModelTest {
     fun `Should emit Loading State when trying to sign in with return failure`() = runTest {
         whenever(signInUseCase(any())).thenReturn(flowOf(factory.failure))
 
-        signInViewModel.signIn(factory.signInParameter)
+        signInViewModel.signIn(factory.authenticationParameter)
 
         verify(observer).onChanged(isA<SignInViewModel.States.Loading>())
         verify(observer).onChanged(isA<SignInViewModel.States.Failure>())
@@ -85,23 +85,23 @@ internal class SignInViewModelTest {
         runTest {
             whenever(signInUseCase(any())).thenReturn(flowOf(factory.success))
 
-            signInViewModel.signIn(factory.signInParameter)
+            signInViewModel.signIn(factory.authenticationParameter)
 
             val (success) = signInViewModel.states.value as SignInViewModel.States.Success
-            assertEquals(success.expireIn, 3600)
-            assertEquals(success.accessToken, "5CQcsREkB5xcqbY1L...")
-            assertEquals(success.refreshToken, "5CQcsREkB5xcqbY1L...")
-            assertEquals(success.user.email, "bed@email.com")
-            assertEquals(success.user.userMetadata.name, "Bed")
+            assertEquals(success.uid, "5CQcsREkB5xcqbY1L...")
+            assertEquals(success.name, "Gabriel Ramos")
+            assertEquals(success.email, "bed@gmail.com")
+            assertEquals(success.photo, "https://github.com/bed72.png")
+            assertEquals(success.emailVerified, false)
         }
 
     @Test
     fun `Should return Failure State when trying to create an account with returns failure`() = runTest {
         whenever(signInUseCase(any())).thenReturn(flowOf(factory.failure))
 
-        signInViewModel.signIn(factory.signInParameter)
+        signInViewModel.signIn(factory.authenticationParameter)
 
         val (failure) = signInViewModel.states.value as SignInViewModel.States.Failure
-        assertEquals(failure, "Credenciais inválidas.")
+        assertEquals(failure, "Ops, um erro aconteceu.")
     }
 }

@@ -40,6 +40,8 @@ Este é um projeto Android desenvolvido em Kotlin que tem como objetivo aprimora
 
 9. **Espresso:** O Espresso é um framework de teste de interface desenvolvido pela Google para testar a interação do usuário com aplicativos Android. Ele foi projetado para automatizar testes de UI e garantir que a interface do usuário esteja funcionando conforme o esperado.
 
+10. **Firebase** (Branch feature-firebase) O Firebase é uma plataforma de desenvolvimento de aplicativos móveis e web oferecida pelo Google.
+
 <p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
 
 ## Licença

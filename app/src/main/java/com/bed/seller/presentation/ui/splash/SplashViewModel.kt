@@ -10,32 +10,32 @@ import androidx.lifecycle.MutableLiveData
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 
-import com.bed.core.usecases.storage.GetStorageUseCase
+import com.bed.core.usecases.authentication.VerifyUseCase
 import com.bed.core.usecases.coroutines.CoroutinesUseCase
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
+    private val verifyUseCase: VerifyUseCase,
     private val coroutinesUseCase: CoroutinesUseCase,
-    private val getStorageUseCase: GetStorageUseCase,
 ) : ViewModel() {
     private val actions = MutableLiveData<Actions>()
 
     val states: LiveData<States> = actions.switchMap { action ->
         liveData(coroutinesUseCase.main()) {
-            if (action is Actions.Get) {
-                getStorageUseCase(action.values).collect { data ->
-                    if (data.isEmpty()) emit(States.Failure) else emit(States.Success)
+            if (action is Actions.IsLoggedIn) {
+                verifyUseCase().collect { data ->
+                    if (data) emit(States.Success) else emit(States.Failure)
                 }
             }
         }
     }
 
-    fun getAccessToken(data: String) {
-        actions.value = Actions.Get(data)
+    fun isLoggedIn() {
+        actions.value = Actions.IsLoggedIn
     }
 
     sealed class Actions {
-        data class Get(val values: String) : Actions()
+        data object IsLoggedIn : Actions()
     }
 
     sealed class States {

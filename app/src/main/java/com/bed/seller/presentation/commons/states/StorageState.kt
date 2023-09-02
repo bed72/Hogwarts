@@ -11,8 +11,8 @@ class StorageState(
 
     fun save(parameter: AuthenticationModel) {
         listOf(
-            StorageConstant.DATASTORE_ACCESS_TOKEN.value to parameter.accessToken,
-            StorageConstant.DATASTORE_REFRESH_TOKEN.value to parameter.refreshToken
+            StorageConstant.DATASTORE_UID_USER.value to parameter.uid,
+            StorageConstant.DATASTORE_EMAIL_USER.value to parameter.email
         ).run {
             forEach { saveStorageUseCase(it)  }
         }

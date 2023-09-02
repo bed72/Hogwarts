@@ -11,16 +11,16 @@ import com.bed.core.usecases.coroutines.CoroutinesUseCase
 import com.bed.core.data.repositories.AuthenticationRepository
 
 import com.bed.core.domain.alias.AuthenticationType
-import com.bed.core.domain.parameters.authentication.SignUpParameter
+import com.bed.core.domain.parameters.authentication.AuthenticationParameter
 
 interface SignUpUseCase {
-    operator fun invoke(parameter: SignUpParameter): Flow<AuthenticationType>
+    operator fun invoke(parameter: AuthenticationParameter): Flow<AuthenticationType>
 }
 
 class SignUpUseCaseImpl @Inject constructor(
     private val useCase: CoroutinesUseCase,
     private val repository: AuthenticationRepository,
-) : SignUpUseCase, UseCase<SignUpParameter, AuthenticationType>() {
-    override suspend fun doWork(parameter: SignUpParameter): AuthenticationType =
+) : SignUpUseCase, UseCase<AuthenticationParameter, AuthenticationType>() {
+    override suspend fun doWork(parameter: AuthenticationParameter): AuthenticationType =
         withContext(useCase.io()) { repository.signUp(parameter) }
 }

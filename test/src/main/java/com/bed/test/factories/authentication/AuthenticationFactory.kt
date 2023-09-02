@@ -6,20 +6,18 @@ import arrow.core.right
 import com.bed.core.values.EmailValue
 import com.bed.core.values.PasswordValue
 
-import com.bed.core.domain.parameters.authentication.SignInParameter
-
 import com.bed.core.domain.models.failure.MessageModel
 import com.bed.core.domain.models.authentication.AuthenticationModel
-import com.bed.core.domain.models.authentication.AuthenticationUserModel
-import com.bed.core.domain.models.authentication.AuthenticationMetadataModel
 
-class SignInFactory {
-    val signInParameter = SignInParameter(
+import com.bed.core.domain.parameters.authentication.AuthenticationParameter
+
+class AuthenticationFactory {
+    val authenticationParameter = AuthenticationParameter(
         EmailValue("email@email.com"),
         PasswordValue("P@ssw0rD"),
     )
 
-    val invalidParameter = SignInParameter(
+    val invalidParameter = AuthenticationParameter(
         EmailValue(""),
         PasswordValue(""),
     )
@@ -29,12 +27,13 @@ class SignInFactory {
 
     private fun create(mock: Mock) = when (mock) {
         Mock.Failure ->
-            MessageModel("Credenciais inválidas.").left()
+            MessageModel("Ops, um erro aconteceu.").left()
         Mock.Success -> AuthenticationModel(
-            3600,
             "5CQcsREkB5xcqbY1L...",
-            "5CQcsREkB5xcqbY1L...",
-            AuthenticationUserModel("bed@email.com", AuthenticationMetadataModel("Bed"))
+            "Gabriel Ramos",
+            "bed@gmail.com",
+            "https://github.com/bed72.png",
+            false
         ).right()
     }
 

@@ -10,22 +10,22 @@ import com.bed.core.values.PasswordValue
 
 import com.bed.core.domain.parameters.Parameter
 
-data class SignInParameter(
+data class AuthenticationParameter(
     val email: EmailValue,
     val password: PasswordValue,
-) : Parameter<SignInParameter>() {
-    override fun isValid(): Either<List<String>, SignInParameter> = either {
+) : Parameter<AuthenticationParameter>() {
+    override fun isValid(): Either<List<String>, AuthenticationParameter> = either {
         val params = email.validate() to password.validate()
 
         zipOrAccumulate(
             { before, after -> combine(before, after) },
             { ensure(params.first.isRight()) { prepare(params.first.leftOrNull()) } },
             { ensure(params.second.isRight()) { prepare(params.second.leftOrNull()) } },
-        ) { _, _ -> SignInParameter( email, password) }
+        ) { _, _ -> AuthenticationParameter( email, password) }
     }
 
     companion object {
         operator fun invoke() =
-            SignInParameter(EmailValue(""), PasswordValue(""))
+            AuthenticationParameter(EmailValue(""), PasswordValue(""))
     }
 }

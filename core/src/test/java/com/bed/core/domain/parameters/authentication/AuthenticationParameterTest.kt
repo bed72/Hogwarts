@@ -7,19 +7,19 @@ import org.junit.Assert.assertEquals
 import com.bed.core.values.EmailValue
 import com.bed.core.values.PasswordValue
 
-import com.bed.test.factories.authentication.SignInFactory
+import com.bed.test.factories.authentication.AuthenticationFactory
 
-internal class SignInParameterTest {
-    private lateinit var factory: SignInFactory
+internal class AuthenticationParameterTest {
+    private lateinit var factory: AuthenticationFactory
 
     @Before
     fun setUp() {
-        factory = SignInFactory()
+        factory = AuthenticationFactory()
     }
 
     @Test
     fun `Should try validate SignInParameter return success`() {
-        factory.signInParameter.isValid().map { (email, password) ->
+        factory.authenticationParameter.isValid().map { (email, password) ->
             assertEquals(email.value, "email@email.com")
             assertEquals(password.value, "P@ssw0rD")
         }

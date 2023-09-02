@@ -11,6 +11,7 @@ plugins {
     id("io.gitlab.arturbosch.detekt")
     id("androidx.navigation.safeargs")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
 }
 
 val keys = Properties().apply {
@@ -115,25 +116,23 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
     implementation("com.google.dagger:hilt-android:$hiltVersion")
 
-    val ktorVersion = "2.3.3"
-    implementation("io.ktor:ktor-client-core:$ktorVersion")
-    implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
-    implementation("io.ktor:ktor-client-logging:$ktorVersion")
-    implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+
+    implementation(platform("com.google.firebase:firebase-bom:32.2.3"))
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-analytics-ktx")
+
 
     implementation("io.coil-kt:coil-compose:2.4.0")
     implementation("com.airbnb.android:lottie:6.1.0")
 //    implementation("io.github.mmolosay:debounce:1.0.0")
     implementation("com.google.android.material:material:1.9.0")
-//    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
     implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11")
 
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.1")
 
     testImplementation(project(":test"))
     testImplementation("androidx.arch.core:core-testing:2.2.0")
-    testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
 
     androidTestUtil("androidx.test:orchestrator:1.4.2")
 

@@ -7,10 +7,10 @@ import com.bed.core.domain.models.failure.MessageModel
 
 @Serializable
 data class MessageResponse(
-    @SerialName("msg")
+    @SerialName("message")
     val message: String?
 )
 
 fun MessageResponse.toModel() = MessageModel(
-    message ?: "Ops credenciais inválidas.",
+    message ?: "Ops, um erro aconteceu.",
 )

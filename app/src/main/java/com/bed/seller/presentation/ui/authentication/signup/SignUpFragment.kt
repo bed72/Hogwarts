@@ -11,10 +11,7 @@ import com.bed.seller.R
 
 import com.bed.seller.databinding.SignUpFragmentBinding
 
-import com.bed.core.domain.parameters.authentication.SignUpParameter
-
 import com.bed.seller.presentation.commons.states.States
-import com.bed.seller.presentation.commons.states.NameState
 import com.bed.seller.presentation.commons.states.EmailState
 import com.bed.seller.presentation.commons.states.PasswordState
 
@@ -26,10 +23,12 @@ import com.bed.seller.presentation.commons.extensions.fragments.snackbar
 import com.bed.seller.presentation.commons.extensions.fragments.navigateTo
 import com.bed.seller.presentation.commons.extensions.fragments.hideKeyboard
 
+import com.bed.core.domain.parameters.authentication.AuthenticationParameter
+
 @AndroidEntryPoint
 class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding::inflate) {
 
-    private var parameter = SignUpParameter()
+    private var parameter = AuthenticationParameter()
 
     private val viewModel: SignUpViewModel by viewModels()
 
@@ -44,16 +43,6 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
 
     private fun observeFormState() {
         with (viewModel) {
-            name.states.observe(viewLifecycleOwner) { states ->
-                when (states) {
-                    is NameState.States.Failure -> binding.nameTextInput.error = states.data
-                    is NameState.States.Success -> {
-                        parameter = parameter.copy(name = states.data)
-                        binding.nameTextInput.helperText =
-                            getString(R.string.sign_up_valid_name, states.data.value)
-                    }
-                }
-            }
             email.states.observe(viewLifecycleOwner) { states ->
                 when (states) {
                     is EmailState.States.Failure -> binding.emailTextInput.error = states.data
@@ -100,7 +89,6 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
 
     private fun setupForm() {
         with (binding) {
-            nameEditInput.debounce { viewModel.name.set(it) }
             emailEditInput.debounce { viewModel.email.set(it) }
             passwordEditInput.debounce { viewModel.password.set(it) }
             passwordEditInput.actionKeyboard { validateParameter() }

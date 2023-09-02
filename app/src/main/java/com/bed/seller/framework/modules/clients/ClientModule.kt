@@ -7,13 +7,13 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
-import com.bed.seller.framework.network.clients.HttpClient
-import com.bed.seller.framework.network.clients.HttpClientImpl
+import com.bed.seller.framework.network.clients.FirebaseClient
+import com.bed.seller.framework.network.clients.FirebaseClientImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface HttpClientModule {
+interface ClientModule {
     @Binds
     @Singleton
-    fun bindHttpClient(client: HttpClientImpl): HttpClient
+    fun bindFirebaseClient(client: FirebaseClientImpl): FirebaseClient
 }

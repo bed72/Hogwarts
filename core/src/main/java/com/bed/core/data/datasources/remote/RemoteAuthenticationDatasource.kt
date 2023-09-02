@@ -2,10 +2,10 @@ package com.bed.core.data.datasources.remote
 
 import com.bed.core.domain.alias.AuthenticationType
 
-import com.bed.core.domain.parameters.authentication.SignInParameter
-import com.bed.core.domain.parameters.authentication.SignUpParameter
+import com.bed.core.domain.parameters.authentication.AuthenticationParameter
 
 interface RemoteAuthenticationDatasource {
-    suspend fun signUp(parameter: SignUpParameter): AuthenticationType
-    suspend fun signIn(parameter: SignInParameter): AuthenticationType
+    suspend fun verify(): Boolean
+    suspend fun signUp(parameter: AuthenticationParameter): AuthenticationType
+    suspend fun signIn(parameter: AuthenticationParameter): AuthenticationType
 }
