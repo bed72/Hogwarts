@@ -19,6 +19,13 @@
         android:layout_height="wrap_content" />
 
     <TextView
+        style="@style/GreyMediumBody"
+        android:layout_marginTop="@dimen/small_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/recover_password_description" />
+
+    <TextView
         android:text="@string/title_email_text_input"
         style="@style/MediumBody1"
         android:layout_marginTop="@dimen/small_margin"
