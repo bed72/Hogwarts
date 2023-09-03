@@ -13,7 +13,7 @@ internal class PasswordValueTest {
         val validator = message.validate()
 
         assertTrue(validator.isLeft())
-        validator.mapLeft { assertEquals(it, "Preencha uma senha válida.") }
+        validator.mapLeft { assertEquals("Preencha uma senha válida.", it) }
     }
 
     @Test
@@ -23,7 +23,7 @@ internal class PasswordValueTest {
         val validator = message.validate()
 
         assertTrue(validator.isLeft())
-        validator.mapLeft { assertEquals(it, "A senha presica conter mais de 5 caracteres.") }
+        validator.mapLeft { assertEquals("A senha presica conter mais de 5 caracteres.", it) }
     }
 
     @Test
@@ -33,7 +33,7 @@ internal class PasswordValueTest {
         val validator = message.validate()
 
         assertTrue(validator.isLeft())
-        validator.mapLeft { assertEquals(it, "A senha presica conter caracteres numéricos.") }
+        validator.mapLeft { assertEquals("A senha presica conter caracteres numéricos.", it) }
     }
 
     @Test
@@ -43,7 +43,7 @@ internal class PasswordValueTest {
         val validator = message.validate()
 
         assertTrue(validator.isLeft())
-        validator.mapLeft { assertEquals(it, "A senha presica conter caracteres maiúsculos.") }
+        validator.mapLeft { assertEquals("A senha presica conter caracteres maiúsculos.", it) }
     }
 
     @Test
@@ -53,6 +53,6 @@ internal class PasswordValueTest {
         val validator = name.validate()
 
         assertTrue(validator.isRight())
-        validator.map { assertEquals(it.value, "P@ssw0rD") }
+        validator.map { assertEquals("P@ssw0rD", it.value ) }
     }
 }

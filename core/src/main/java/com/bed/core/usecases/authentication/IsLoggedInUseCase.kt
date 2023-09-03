@@ -10,14 +10,14 @@ import com.bed.core.usecases.coroutines.CoroutinesUseCase
 
 import com.bed.core.data.repositories.AuthenticationRepository
 
-interface VerifyUseCase {
+interface IsLoggedInUseCase {
     operator fun invoke(): Flow<Boolean>
 }
 
-class VerifyUseCaseImpl @Inject constructor(
+class IsLoggedInUseCaseImpl @Inject constructor(
     private val useCase: CoroutinesUseCase,
     private val repository: AuthenticationRepository,
-) : VerifyUseCase, UseCaseWithoutParameter<Boolean>() {
+) : IsLoggedInUseCase, UseCaseWithoutParameter<Boolean>() {
     override suspend fun doWork(): Boolean =
-        withContext(useCase.io()) { repository.verify() }
+        withContext(useCase.io()) { repository.isLoggedIn() }
 }

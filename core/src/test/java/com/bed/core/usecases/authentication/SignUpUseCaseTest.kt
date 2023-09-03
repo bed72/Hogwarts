@@ -51,8 +51,17 @@ internal class SignUpUseCaseTest {
     }
 
     @Test
-    fun `Should return value not null when trying sign up account`() = runTest {
+    fun `Should return value not null when trying sign up account with failure`() = runTest {
         whenever(repository.signUp(any())).thenReturn(factory.failure)
+
+        val response = useCase(factory.authenticationParameter).first()
+
+        assertNotNull(response)
+    }
+
+    @Test
+    fun `Should return value not null when trying sign up account with success`() = runTest {
+        whenever(repository.signUp(any())).thenReturn(factory.success)
 
         val response = useCase(factory.authenticationParameter).first()
 
@@ -84,7 +93,7 @@ internal class SignUpUseCaseTest {
         val response = useCase(factory.authenticationParameter).first()
 
         response.onLeft { failure ->
-            assertEquals(failure.message, "Ops, um erro aconteceu.")
+            assertEquals("Ops, um erro aconteceu.", failure.message)
         }
     }
 
@@ -104,11 +113,11 @@ internal class SignUpUseCaseTest {
         val response = useCase(factory.authenticationParameter).first()
 
         response.onRight { success ->
-            assertEquals(success.uid, "5CQcsREkB5xcqbY1L...")
-            assertEquals(success.name, "Gabriel Ramos")
-            assertEquals(success.email, "bed@gmail.com")
-            assertEquals(success.photo, "https://github.com/bed72.png")
-            assertEquals(success.emailVerified, false)
+            assertEquals("5CQcsREkB5xcqbY1L...", success.uid)
+            assertEquals("Gabriel Ramos", success.name)
+            assertEquals("bed@gmail.com", success.email)
+            assertEquals("https://github.com/bed72.png", success.photo )
+            assertEquals(false, success.emailVerified)
         }
     }
 }

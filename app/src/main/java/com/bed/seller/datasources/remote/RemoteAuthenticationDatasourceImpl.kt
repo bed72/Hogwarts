@@ -23,7 +23,7 @@ import com.bed.seller.framework.network.response.authentication.AuthenticationRe
 class RemoteAuthenticationDatasourceImpl @Inject constructor(
     private val client: FirebaseClient
 ) : RemoteAuthenticationDatasource {
-    override suspend fun verify(): Boolean = client.authentication.currentUser != null
+    override suspend fun isLoggedIn(): Boolean = client.authentication.currentUser != null
 
     override suspend fun signUp(parameter: AuthenticationParameter): AuthenticationType =
         suspendCoroutine { continuation ->

@@ -13,7 +13,7 @@ internal class EmailValueTest {
         val validator = message.validate()
 
         assertTrue(validator.isLeft())
-        validator.mapLeft { assertEquals(it, "Preencha um e-mail válido.") }
+        validator.mapLeft { assertEquals("Preencha um e-mail válido.", it) }
     }
 
     @Test
@@ -23,7 +23,7 @@ internal class EmailValueTest {
         val validator = message.validate()
 
         assertTrue(validator.isLeft())
-        validator.mapLeft { assertEquals(it, "Preencha um e-mail válido.") }
+        validator.mapLeft { assertEquals("Preencha um e-mail válido.", it) }
     }
 
     @Test
@@ -33,6 +33,6 @@ internal class EmailValueTest {
         val validator = name.validate()
 
         assertTrue(validator.isRight())
-        validator.map { assertEquals(it.value, "email@email.com") }
+        validator.map { assertEquals("email@email.com", it.value) }
     }
 }

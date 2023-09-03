@@ -88,11 +88,11 @@ internal class SignInViewModelTest {
             signInViewModel.signIn(factory.authenticationParameter)
 
             val (success) = signInViewModel.states.value as SignInViewModel.States.Success
-            assertEquals(success.uid, "5CQcsREkB5xcqbY1L...")
-            assertEquals(success.name, "Gabriel Ramos")
-            assertEquals(success.email, "bed@gmail.com")
-            assertEquals(success.photo, "https://github.com/bed72.png")
-            assertEquals(success.emailVerified, false)
+            assertEquals("5CQcsREkB5xcqbY1L...", success.uid)
+            assertEquals("Gabriel Ramos", success.name)
+            assertEquals("bed@gmail.com", success.email)
+            assertEquals("https://github.com/bed72.png", success.photo)
+            assertEquals(false, success.emailVerified)
         }
 
     @Test
@@ -102,6 +102,6 @@ internal class SignInViewModelTest {
         signInViewModel.signIn(factory.authenticationParameter)
 
         val (failure) = signInViewModel.states.value as SignInViewModel.States.Failure
-        assertEquals(failure, "Ops, um erro aconteceu.")
+        assertEquals("Ops, um erro aconteceu.", failure)
     }
 }

@@ -20,8 +20,8 @@ internal class AuthenticationParameterTest {
     @Test
     fun `Should try validate SignInParameter return success`() {
         factory.authenticationParameter.isValid().map { (email, password) ->
-            assertEquals(email.value, "email@email.com")
-            assertEquals(password.value, "P@ssw0rD")
+            assertEquals("email@email.com", email.value)
+            assertEquals("P@ssw0rD", password.value)
         }
     }
 
@@ -33,7 +33,7 @@ internal class AuthenticationParameterTest {
                 password = PasswordValue("P@ssw0rD"),
             )
             .isValid()
-            .mapLeft { message -> assertEquals(message, listOf("Preencha um e-mail válido.")) }
+            .mapLeft { message -> assertEquals(listOf("Preencha um e-mail válido."), message) }
     }
 
     @Test
@@ -43,7 +43,7 @@ internal class AuthenticationParameterTest {
                 email = EmailValue("email@email.com"),
                 password = PasswordValue(""),
             )
-            .isValid().mapLeft { message -> assertEquals(message, listOf("Preencha uma senha válida.")) }
+            .isValid().mapLeft { message -> assertEquals(listOf("Preencha uma senha válida."), message) }
     }
 
     @Test
@@ -58,6 +58,6 @@ internal class AuthenticationParameterTest {
                 email = EmailValue("emailemail.com"),
                 password = PasswordValue("Password"),
             )
-            .isValid().mapLeft { message -> assertEquals(message, expect) }
+            .isValid().mapLeft { message -> assertEquals(expect, message) }
     }
 }

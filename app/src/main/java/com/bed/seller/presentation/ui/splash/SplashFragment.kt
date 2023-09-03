@@ -4,11 +4,13 @@ import androidx.fragment.app.viewModels
 
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AnimationUtils
 
 import dagger.hilt.android.AndroidEntryPoint
 
-import com.bed.seller.databinding.SplashFragmentBinding
+import com.bed.seller.R
 
+import com.bed.seller.databinding.SplashFragmentBinding
 
 import com.bed.seller.presentation.commons.fragments.BaseFragment
 import com.bed.seller.presentation.commons.extensions.fragments.navigateTo
@@ -31,12 +33,19 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(SplashFragmentBinding
 
             states.observe(viewLifecycleOwner) { state ->
                 when (state) {
+                    SplashViewModel.States.Loading -> animate()
                     SplashViewModel.States.Success ->
                         navigateTo(SplashFragmentDirections.actionSplashToHome())
                     SplashViewModel.States.Failure ->
                         navigateTo(SplashFragmentDirections.actionSplashToSignIn())
                 }
             }
+        }
+    }
+
+    private fun animate() {
+        AnimationUtils.loadAnimation(requireContext(), R.anim.exit_to_right).apply {
+            binding.iconImage.startAnimation(this)
         }
     }
 }

@@ -10,20 +10,22 @@ import androidx.lifecycle.MutableLiveData
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 
-import com.bed.core.usecases.authentication.VerifyUseCase
+import com.bed.core.usecases.authentication.IsLoggedInUseCase
 import com.bed.core.usecases.coroutines.CoroutinesUseCase
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val verifyUseCase: VerifyUseCase,
     private val coroutinesUseCase: CoroutinesUseCase,
+    private val isLoggedInUseCase: IsLoggedInUseCase,
 ) : ViewModel() {
     private val actions = MutableLiveData<Actions>()
 
     val states: LiveData<States> = actions.switchMap { action ->
         liveData(coroutinesUseCase.main()) {
+            emit(States.Loading)
+
             if (action is Actions.IsLoggedIn) {
-                verifyUseCase().collect { data ->
+                isLoggedInUseCase().collect { data ->
                     if (data) emit(States.Success) else emit(States.Failure)
                 }
             }
@@ -39,6 +41,7 @@ class SplashViewModel @Inject constructor(
     }
 
     sealed class States {
+        data object Loading : States()
         data object Failure : States()
         data object Success : States()
     }
