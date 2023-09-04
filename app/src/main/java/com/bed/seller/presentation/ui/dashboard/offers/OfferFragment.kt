@@ -57,19 +57,19 @@ class OfferFragment : BaseBottomSheetDialogFragment<OfferFragmentBinding>(OfferF
     private val getPhotoFromGallery =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) {
             if (it != null) Log.d("Picker", "Photo: $it")
-            else snackbar(binding.root, "No media selected")
+            else snackbar("No media selected")
         }
 
     private val getPhotoFromGalleryLegacy get() =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) Log.d("Picker", "Photo: $it.data?.data")
-            else snackbar(binding.root, "No media selected")
+            else snackbar("No media selected")
         }
 
     private val getPhotosFromGallery =
         registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(5)) {
             if (it.isNotEmpty()) adapterImages.submitList(it.mapIndexed { id, image -> ImageOfferScreenModel(id, image) })
-            else snackbar(binding.root, "No media selected")
+            else snackbar("No media selected")
         }
 
     private val getCamera = registerForActivityResult(ActivityResultContracts.TakePicture()) {

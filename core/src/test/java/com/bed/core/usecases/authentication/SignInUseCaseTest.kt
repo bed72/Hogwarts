@@ -54,7 +54,7 @@ internal class SignInUseCaseTest {
     fun `Should return value not null when trying sign in account with failure`() = runTest {
         whenever(repository.signIn(any())).thenReturn(factory.failure)
 
-        val response = useCase(factory.authenticationParameter).first()
+        val response = useCase(factory.signInAndSingUpValidParameter).first()
 
         assertNotNull(response)
     }
@@ -63,7 +63,7 @@ internal class SignInUseCaseTest {
     fun `Should return value not null when trying sign in account with success`() = runTest {
         whenever(repository.signIn(any())).thenReturn(factory.success)
 
-        val response = useCase(factory.authenticationParameter).first()
+        val response = useCase(factory.signInAndSingUpValidParameter).first()
 
         assertNotNull(response)
     }
@@ -72,7 +72,7 @@ internal class SignInUseCaseTest {
     fun `Should only call repository once when trying sign in account`() = runTest {
         whenever(repository.signIn(any())).thenReturn(factory.failure)
 
-        useCase(factory.authenticationParameter).first()
+        useCase(factory.signInAndSingUpValidParameter).first()
 
         verify(repository, times(1)).signIn(any())
     }
@@ -81,7 +81,7 @@ internal class SignInUseCaseTest {
     fun `Should return failure value when trying a sign in account`() = runTest {
         whenever(repository.signIn(any())).thenReturn(factory.failure)
 
-        val response = useCase(factory.authenticationParameter).first()
+        val response = useCase(factory.signInAndSingUpValidParameter).first()
 
         assertTrue(response is Either.Left<MessageModel>)
     }
@@ -90,7 +90,7 @@ internal class SignInUseCaseTest {
     fun `Should return failure value with status and message when trying a sign in account`() = runTest {
         whenever(repository.signIn(any())).thenReturn(factory.failure)
 
-        val response = useCase(factory.authenticationParameter).first()
+        val response = useCase(factory.signInAndSingUpValidParameter).first()
 
         response.onLeft { failure ->
             assertEquals("Ops, um erro aconteceu.", failure.message)
@@ -101,7 +101,7 @@ internal class SignInUseCaseTest {
     fun `Should return success value when trying a sign in account`() = runTest {
         whenever(repository.signIn(any())).thenReturn(factory.success)
 
-        val response = useCase(factory.authenticationParameter).first()
+        val response = useCase(factory.signInAndSingUpValidParameter).first()
 
         assertTrue(response is Either.Right<AuthenticationModel>)
     }
@@ -110,7 +110,7 @@ internal class SignInUseCaseTest {
     fun `Should return success value with status and message when trying a sign in account`() = runTest {
         whenever(repository.signIn(any())).thenReturn(factory.success)
 
-        val response = useCase(factory.authenticationParameter).first()
+        val response = useCase(factory.signInAndSingUpValidParameter).first()
 
         response.onRight { success ->
             assertEquals("5CQcsREkB5xcqbY1L...", success.uid)

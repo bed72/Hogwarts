@@ -18,16 +18,16 @@ internal class AuthenticationParameterTest {
     }
 
     @Test
-    fun `Should try validate SignInParameter return success`() {
-        factory.authenticationParameter.isValid().map { (email, password) ->
+    fun `Should try validate Authentication Parameter return success`() {
+        factory.signInAndSingUpValidParameter.isValid().map { (email, password) ->
             assertEquals("email@email.com", email.value)
             assertEquals("P@ssw0rD", password.value)
         }
     }
 
     @Test
-    fun `Should try validate SignInParameter return failure when e-mail is invalid`() {
-        factory.invalidParameter
+    fun `Should try validate Authentication Parameter return failure when e-mail is invalid`() {
+        factory.signInAndSingUpInvalidParameter
             .copy(
                 email = EmailValue(""),
                 password = PasswordValue("P@ssw0rD"),
@@ -37,8 +37,8 @@ internal class AuthenticationParameterTest {
     }
 
     @Test
-    fun `Should try validate SignInParameter return failure when password is invalid`() {
-        factory.invalidParameter
+    fun `Should try validate Authentication Parameter return failure when password is invalid`() {
+        factory.signInAndSingUpInvalidParameter
             .copy(
                 email = EmailValue("email@email.com"),
                 password = PasswordValue(""),
@@ -47,13 +47,13 @@ internal class AuthenticationParameterTest {
     }
 
     @Test
-    fun `Should try validate SignInParameter return failure when e-mail and password is invalid`() {
+    fun `Should try validate Authentication Parameter return failure when e-mail and password is invalid`() {
         val expect = listOf(
             "Preencha um e-mail válido.",
             "A senha presica conter caracteres numéricos.",
         )
 
-        factory.invalidParameter
+        factory.signInAndSingUpInvalidParameter
             .copy(
                 email = EmailValue("emailemail.com"),
                 password = PasswordValue("Password"),

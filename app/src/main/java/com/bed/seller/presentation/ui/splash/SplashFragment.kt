@@ -34,13 +34,15 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(SplashFragmentBinding
             states.observe(viewLifecycleOwner) { state ->
                 when (state) {
                     SplashViewModel.States.Loading -> animate()
-                    SplashViewModel.States.Success ->
-                        navigateTo(SplashFragmentDirections.actionSplashToHome())
-                    SplashViewModel.States.Failure ->
-                        navigateTo(SplashFragmentDirections.actionSplashToSignIn())
+                    is SplashViewModel.States.IsLoggedIn -> navigate(state.isSuccess)
                 }
             }
         }
+    }
+
+    private fun navigate(isSuccess: Boolean) {
+        if (isSuccess) navigateTo(SplashFragmentDirections.actionSplashToHome())
+        else navigateTo(SplashFragmentDirections.actionSplashToSignIn())
     }
 
     private fun animate() {

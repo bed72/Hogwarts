@@ -15,13 +15,13 @@ data class AuthenticationParameter(
     val password: PasswordValue,
 ) : Parameter<AuthenticationParameter>() {
     override fun isValid(): Either<List<String>, AuthenticationParameter> = either {
-        val params = email.validate() to password.validate()
+        val parameter = email.validate() to password.validate()
 
         zipOrAccumulate(
             { before, after -> combine(before, after) },
-            { ensure(params.first.isRight()) { prepare(params.first.leftOrNull()) } },
-            { ensure(params.second.isRight()) { prepare(params.second.leftOrNull()) } },
-        ) { _, _ -> AuthenticationParameter( email, password) }
+            { ensure(parameter.first.isRight()) { prepare(parameter.first.leftOrNull()) } },
+            { ensure(parameter.second.isRight()) { prepare(parameter.second.leftOrNull()) } },
+        ) { _, _ -> AuthenticationParameter(email, password) }
     }
 
     companion object {

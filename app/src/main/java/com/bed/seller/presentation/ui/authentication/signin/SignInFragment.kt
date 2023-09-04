@@ -72,7 +72,7 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
             binding.actionFlipper.displayedChild = when (states) {
                 SignInViewModel.States.Loading -> States.FLIPPER_LOADING
                 is SignInViewModel.States.Failure -> {
-                    snackbar(requireView(), states.data)
+                    snackbar(states.data)
                     States.FLIPPER_FAILURE
                 }
                 is SignInViewModel.States.Success -> {
@@ -118,7 +118,7 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
     private fun validateParameter() {
         hideKeyboard()
         parameter.isValid().fold(
-            { failure -> snackbar(requireView(), failure[States.FIRST_MESSAGE]) },
+            { failure -> snackbar(failure[States.FIRST_MESSAGE]) },
             { success -> viewModel.signIn(success) }
         )
     }

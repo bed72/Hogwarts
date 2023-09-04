@@ -10,14 +10,23 @@ import com.bed.core.domain.models.failure.MessageModel
 import com.bed.core.domain.models.authentication.AuthenticationModel
 
 import com.bed.core.domain.parameters.authentication.AuthenticationParameter
+import com.bed.core.domain.parameters.authentication.RecoverParameter
 
 class AuthenticationFactory {
-    val authenticationParameter = AuthenticationParameter(
+    val recoverValidParameter = RecoverParameter(
+        EmailValue("email@email.com")
+    )
+
+    val recoverInvalidParameter = RecoverParameter(
+        EmailValue("email@email.com")
+    )
+
+    val signInAndSingUpValidParameter = AuthenticationParameter(
         EmailValue("email@email.com"),
         PasswordValue("P@ssw0rD"),
     )
 
-    val invalidParameter = AuthenticationParameter(
+    val signInAndSingUpInvalidParameter = AuthenticationParameter(
         EmailValue(""),
         PasswordValue(""),
     )

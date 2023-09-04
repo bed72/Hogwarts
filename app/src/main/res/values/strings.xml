@@ -47,6 +47,9 @@
     <!-- RECOVER_PASSWORD -->
     <string name="recover_password_title">Recuperar conta</string>
     <string name="recover_password_send_recover_button">Enviar</string>
+    <string name="recover_password_open_email_title_button">Verificar</string>
+    <string name="recover_password_success_title">Verifique seu e-mail.</string>
+    <string name="recover_password_failure_title">Ops um erro aconteceu.  &#128542;</string>
     <string name="recover_password_placeholder_email_text_input">E-mail da sua conta</string>
     <string name="recover_password_description">Vamos lhe enviar um e-mail para trocar sua senha.</string>
 

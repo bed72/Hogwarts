@@ -4,6 +4,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.Before
 import org.junit.runner.RunWith
+import org.junit.Assert.assertEquals
 
 import org.mockito.Mock
 import org.mockito.kotlin.isA
@@ -54,7 +55,7 @@ internal class SplashViewModelTest {
         splashViewModel.isLoggedIn()
 
         verify(observer).onChanged(isA<SplashViewModel.States.Loading>())
-        verify(observer).onChanged(isA<SplashViewModel.States.Success>())
+        verify(observer).onChanged(isA<SplashViewModel.States.IsLoggedIn>())
     }
 
     @Test
@@ -64,6 +65,28 @@ internal class SplashViewModelTest {
         splashViewModel.isLoggedIn()
 
         verify(observer).onChanged(isA<SplashViewModel.States.Loading>())
-        verify(observer).onChanged(isA<SplashViewModel.States.Failure>())
+        verify(observer).onChanged(isA<SplashViewModel.States.IsLoggedIn>())
     }
+
+    @Test
+    fun `Should return true in Success State when trying is logged in with return success`() =
+        runTest {
+            whenever(isLoggedInUseCase()).thenReturn(flowOf(true))
+
+            splashViewModel.isLoggedIn()
+
+            val (success) = splashViewModel.states.value as SplashViewModel.States.IsLoggedIn
+            assertEquals(true, success)
+        }
+
+    @Test
+    fun `Should return true in Success State when trying is logged in with return failure`() =
+        runTest {
+            whenever(isLoggedInUseCase()).thenReturn(flowOf(false))
+
+            splashViewModel.isLoggedIn()
+
+            val (success) = splashViewModel.states.value as SplashViewModel.States.IsLoggedIn
+            assertEquals(false, success)
+        }
 }

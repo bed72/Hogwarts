@@ -13,6 +13,7 @@ import com.bed.core.data.datasources.remote.RemoteAuthenticationDatasource
 
 import com.bed.core.domain.alias.AuthenticationType
 import com.bed.core.domain.parameters.authentication.AuthenticationParameter
+import com.bed.core.domain.parameters.authentication.RecoverParameter
 
 import com.bed.seller.framework.network.clients.FirebaseClient
 import com.bed.seller.framework.network.response.message.toModel
@@ -24,6 +25,14 @@ class RemoteAuthenticationDatasourceImpl @Inject constructor(
     private val client: FirebaseClient
 ) : RemoteAuthenticationDatasource {
     override suspend fun isLoggedIn(): Boolean = client.authentication.currentUser != null
+    override suspend fun recover(parameter: RecoverParameter): Boolean =
+        suspendCoroutine { continuation ->
+            client
+                .authentication
+                .sendPasswordResetEmail(parameter.email.value)
+                .addOnSuccessListener { continuation.resume(true) }
+                .addOnFailureListener { continuation.resume(false) }
+        }
 
     override suspend fun signUp(parameter: AuthenticationParameter): AuthenticationType =
         suspendCoroutine { continuation ->

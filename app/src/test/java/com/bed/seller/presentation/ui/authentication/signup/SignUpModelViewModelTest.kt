@@ -64,7 +64,7 @@ internal class SignUpModelViewModelTest {
     fun `Should emit Loading State when trying to sign up with return success`() = runTest {
         whenever(signUpUseCase(any())).thenReturn(flowOf(factory.success))
 
-        signUpViewModel.signUp(factory.authenticationParameter)
+        signUpViewModel.signUp(factory.signInAndSingUpValidParameter)
 
         verify(observer).onChanged(isA<SignUpViewModel.States.Loading>())
         verify(observer).onChanged(isA<SignUpViewModel.States.Success>())
@@ -74,7 +74,7 @@ internal class SignUpModelViewModelTest {
     fun `Should emit Loading State when trying to sign up with return failure`() = runTest {
         whenever(signUpUseCase(any())).thenReturn(flowOf(factory.failure))
 
-        signUpViewModel.signUp(factory.authenticationParameter)
+        signUpViewModel.signUp(factory.signInAndSingUpValidParameter)
 
         verify(observer).onChanged(isA<SignUpViewModel.States.Loading>())
         verify(observer).onChanged(isA<SignUpViewModel.States.Failure>())
@@ -85,7 +85,7 @@ internal class SignUpModelViewModelTest {
         runTest {
             whenever(signUpUseCase(any())).thenReturn(flowOf(factory.success))
 
-            signUpViewModel.signUp(factory.authenticationParameter)
+            signUpViewModel.signUp(factory.signInAndSingUpValidParameter)
 
             val (success) = signUpViewModel.states.value as SignUpViewModel.States.Success
             assertEquals("5CQcsREkB5xcqbY1L...", success.uid)
@@ -99,7 +99,7 @@ internal class SignUpModelViewModelTest {
     fun `Should return Failure State when trying to create an account with return failure`() = runTest {
         whenever(signUpUseCase(any())).thenReturn(flowOf(factory.failure))
 
-        signUpViewModel.signUp(factory.authenticationParameter)
+        signUpViewModel.signUp(factory.signInAndSingUpValidParameter)
 
         val (failure) = signUpViewModel.states.value as SignUpViewModel.States.Failure
         assertEquals("Ops, um erro aconteceu.", failure)

@@ -28,12 +28,12 @@ class SignInViewModel @Inject constructor(
     saveStorageUseCase: SaveStorageUseCase
 ) : ViewModel() {
 
+    private val actions = MutableLiveData<Actions>()
+
     private val storage = StorageState(saveStorageUseCase)
 
     val email = EmailState(coroutinesUseCase)
     val password = PasswordState(coroutinesUseCase)
-
-    private val actions = MutableLiveData<Actions>()
 
     val states: LiveData<States> = actions.switchMap { action ->
         liveData(coroutinesUseCase.main()) {

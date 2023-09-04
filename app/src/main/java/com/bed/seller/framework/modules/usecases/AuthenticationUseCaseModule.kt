@@ -5,20 +5,26 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 
-import com.bed.core.usecases.authentication.IsLoggedInUseCase
-import com.bed.core.usecases.authentication.IsLoggedInUseCaseImpl
-
 import com.bed.core.usecases.authentication.SignUpUseCase
 import com.bed.core.usecases.authentication.SignUpUseCaseImpl
 
 import com.bed.core.usecases.authentication.SignInUseCase
 import com.bed.core.usecases.authentication.SignInUseCaseImpl
 
+import com.bed.core.usecases.authentication.IsLoggedInUseCase
+import com.bed.core.usecases.authentication.IsLoggedInUseCaseImpl
+
+import com.bed.core.usecases.authentication.RecoverUseCase
+import com.bed.core.usecases.authentication.RecoverUseCaseImpl
+
 @Module
 @InstallIn(ViewModelComponent::class)
 interface AuthenticationUseCaseModule {
     @Binds
-    fun bindVerify(useCase: IsLoggedInUseCaseImpl): IsLoggedInUseCase
+    fun bindIsLoggedIn(useCase: IsLoggedInUseCaseImpl): IsLoggedInUseCase
+
+    @Binds
+    fun bindPasswordReset(useCase: RecoverUseCaseImpl): RecoverUseCase
 
     @Binds
     fun bindSignUpUseCase(useCase: SignUpUseCaseImpl): SignUpUseCase

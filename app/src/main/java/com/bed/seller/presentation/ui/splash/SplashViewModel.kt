@@ -24,11 +24,8 @@ class SplashViewModel @Inject constructor(
         liveData(coroutinesUseCase.main()) {
             emit(States.Loading)
 
-            if (action is Actions.IsLoggedIn) {
-                isLoggedInUseCase().collect { data ->
-                    if (data) emit(States.Success) else emit(States.Failure)
-                }
-            }
+            if (action is Actions.IsLoggedIn)
+                isLoggedInUseCase().collect { emit(States.IsLoggedIn(it)) }
         }
     }
 
@@ -42,7 +39,6 @@ class SplashViewModel @Inject constructor(
 
     sealed class States {
         data object Loading : States()
-        data object Failure : States()
-        data object Success : States()
+        data class IsLoggedIn(val isSuccess: Boolean) : States()
     }
 }

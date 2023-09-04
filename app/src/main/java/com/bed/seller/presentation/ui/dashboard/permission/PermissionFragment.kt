@@ -68,9 +68,8 @@ class PermissionFragment : BaseBottomSheetDialogFragment<PermissionFragmentBindi
                 permissions.all { it.key in Permissions.permissionsCommons }
             else permissions.all { it.key in Permissions.permissionsToTiramisu }
 
-            if (grant and identified)
-                snackbar(requireView(), getString(R.string.permissions_success)) { dismiss() }
-            else snackbar(requireView(), getString(R.string.permissions_failure)) { dismiss() }
+            if (grant and identified) snackbar(R.string.permissions_success) { dismiss() }
+            else snackbar(R.string.permissions_failure) { dismiss() }
         }
     }
 

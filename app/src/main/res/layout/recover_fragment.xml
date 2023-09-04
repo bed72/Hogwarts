@@ -33,6 +33,7 @@
         android:layout_height="wrap_content" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/email_text_input"
         style="@style/TextInput"
         app:endIconMode="clear_text"
         android:layout_marginTop="@dimen/big_small_margin"
@@ -52,14 +53,14 @@
 
     <ViewFlipper
         android:id="@+id/action_flipper"
+        android:layout_marginTop="@dimen/normal_margin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/normal_margin">
+        android:layout_height="wrap_content" >
 
         <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content" >
 
             <Button
                 android:id="@+id/recover_button"
@@ -70,19 +71,19 @@
 
             <Button
                 android:id="@+id/close_button"
+                android:text="@string/title_cancel_button"
                 style="@style/CancelButton"
                 android:layout_height="@dimen/button_height"
                 android:layout_marginTop="@dimen/small_margin"
-                android:layout_width="match_parent"
-                android:text="@string/title_cancel_button" />
+                android:layout_width="match_parent" />
 
         </LinearLayout>
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/progress_indicator"
             android:layout_width="@dimen/progress_bar_dimens"
-            android:indeterminate="true"
             android:layout_height="@dimen/progress_bar_dimens"
+            android:indeterminate="true"
             android:layout_gravity="center" />
 
     </ViewFlipper>
