@@ -62,4 +62,36 @@ internal class RecoverViewModelTest {
         verify(observer).onChanged(isA<RecoverViewModel.States.Loading>())
         verify(observer).onChanged(isA<RecoverViewModel.States.Recover>())
     }
+
+    @Test
+    fun `Should issue the Loading Status when verifying that you are recover with a failure return`() = runTest {
+        whenever(recoverUseCase(any())).thenReturn(flowOf(false))
+
+        recoverViewModel.recover(factory.recoverValidParameter)
+
+        verify(observer).onChanged(isA<RecoverViewModel.States.Loading>())
+        verify(observer).onChanged(isA<RecoverViewModel.States.Recover>())
+    }
+
+    @Test
+    fun `Should return true in Success State when trying is recover with return success`() =
+        runTest {
+            whenever(recoverUseCase(any())).thenReturn(flowOf(true))
+
+            recoverViewModel.recover(factory.recoverValidParameter)
+
+            val (success) = recoverViewModel.states.value as RecoverViewModel.States.Recover
+            assertEquals(true, success)
+        }
+
+    @Test
+    fun `Should return true in Success State when trying is recover with return failure`() =
+        runTest {
+            whenever(recoverUseCase(any())).thenReturn(flowOf(false))
+
+            recoverViewModel.recover(factory.recoverValidParameter)
+
+            val (success) = recoverViewModel.states.value as RecoverViewModel.States.Recover
+            assertEquals(false, success)
+        }
 }
