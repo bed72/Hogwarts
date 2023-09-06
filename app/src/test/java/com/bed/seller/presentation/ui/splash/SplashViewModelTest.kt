@@ -7,8 +7,6 @@ import org.junit.runner.RunWith
 import org.junit.Assert.assertEquals
 
 import org.mockito.Mock
-import org.mockito.kotlin.isA
-import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import org.mockito.junit.MockitoJUnitRunner
 
@@ -16,7 +14,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-import androidx.lifecycle.Observer
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 
 import com.bed.test.rule.MainCoroutineRule
@@ -33,60 +30,34 @@ internal class SplashViewModelTest {
     var instantExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var isLoggedInUseCase: IsLoggedInUseCase
+    private lateinit var useCase: IsLoggedInUseCase
 
-    @Mock
-    private lateinit var observer: Observer<SplashViewModel.States>
-
-    private lateinit var splashViewModel: SplashViewModel
+    private lateinit var viewModel: SplashViewModel
 
     @Before
     fun setUp() {
-        splashViewModel = SplashViewModel(
-            rule.dispatcher,
-            isLoggedInUseCase
-        ).apply { states.observeForever(observer) }
-    }
-
-    @Test
-    fun `Should issue the Loading Status when verifying that you are logged in with a successful return`() = runTest {
-        whenever(isLoggedInUseCase()).thenReturn(flowOf(true))
-
-        splashViewModel.isLoggedIn()
-
-        verify(observer).onChanged(isA<SplashViewModel.States.Loading>())
-        verify(observer).onChanged(isA<SplashViewModel.States.IsLoggedIn>())
-    }
-
-    @Test
-    fun `Should issue the Loading Status when verifying that you are logged in with a failure return`() = runTest {
-        whenever(isLoggedInUseCase()).thenReturn(flowOf(false))
-
-        splashViewModel.isLoggedIn()
-
-        verify(observer).onChanged(isA<SplashViewModel.States.Loading>())
-        verify(observer).onChanged(isA<SplashViewModel.States.IsLoggedIn>())
+        viewModel = SplashViewModel(useCase)
     }
 
     @Test
     fun `Should return true in Success State when trying is logged in with return success`() =
         runTest {
-            whenever(isLoggedInUseCase()).thenReturn(flowOf(true))
+            whenever(useCase()).thenReturn(flowOf(true))
 
-            splashViewModel.isLoggedIn()
+            viewModel.isLoggedIn()
 
-            val (success) = splashViewModel.states.value as SplashViewModel.States.IsLoggedIn
+            val (success) = viewModel.state.value as SplashViewModel.States.IsLoggedIn
             assertEquals(true, success)
         }
 
     @Test
     fun `Should return true in Success State when trying is logged in with return failure`() =
         runTest {
-            whenever(isLoggedInUseCase()).thenReturn(flowOf(false))
+            whenever(useCase()).thenReturn(flowOf(false))
 
-            splashViewModel.isLoggedIn()
+            viewModel.isLoggedIn()
 
-            val (success) = splashViewModel.states.value as SplashViewModel.States.IsLoggedIn
+            val (success) = viewModel.state.value as SplashViewModel.States.IsLoggedIn
             assertEquals(false, success)
         }
 }

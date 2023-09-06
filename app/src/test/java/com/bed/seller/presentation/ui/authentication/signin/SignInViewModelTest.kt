@@ -48,12 +48,12 @@ internal class SignInViewModelTest {
 
     private lateinit var factory: AuthenticationFactory
 
-    private lateinit var signInViewModel: SignInViewModel
+    private lateinit var viewModel: SignInViewModel
 
     @Before
     fun setUp() {
         factory = AuthenticationFactory()
-        signInViewModel = SignInViewModel(
+        viewModel = SignInViewModel(
             signInUseCase,
             rule.dispatcher,
             saveStorageUseCase
@@ -64,7 +64,7 @@ internal class SignInViewModelTest {
     fun `Should emit Loading State when trying to sign in with return success`() = runTest {
         whenever(signInUseCase(any())).thenReturn(flowOf(factory.success))
 
-        signInViewModel.signIn(factory.signInAndSingUpValidParameter)
+        viewModel.signIn(factory.signInAndSingUpValidParameter)
 
         verify(observer).onChanged(isA<SignInViewModel.States.Loading>())
         verify(observer).onChanged(isA<SignInViewModel.States.Success>())
@@ -74,7 +74,7 @@ internal class SignInViewModelTest {
     fun `Should emit Loading State when trying to sign in with return failure`() = runTest {
         whenever(signInUseCase(any())).thenReturn(flowOf(factory.failure))
 
-        signInViewModel.signIn(factory.signInAndSingUpValidParameter)
+        viewModel.signIn(factory.signInAndSingUpValidParameter)
 
         verify(observer).onChanged(isA<SignInViewModel.States.Loading>())
         verify(observer).onChanged(isA<SignInViewModel.States.Failure>())
@@ -85,9 +85,9 @@ internal class SignInViewModelTest {
         runTest {
             whenever(signInUseCase(any())).thenReturn(flowOf(factory.success))
 
-            signInViewModel.signIn(factory.signInAndSingUpValidParameter)
+            viewModel.signIn(factory.signInAndSingUpValidParameter)
 
-            val (success) = signInViewModel.states.value as SignInViewModel.States.Success
+            val (success) = viewModel.states.value as SignInViewModel.States.Success
             assertEquals("5CQcsREkB5xcqbY1L...", success.uid)
             assertEquals("Gabriel Ramos", success.name)
             assertEquals("bed@gmail.com", success.email)
@@ -99,9 +99,9 @@ internal class SignInViewModelTest {
     fun `Should return Failure State when trying to create an account with returns failure`() = runTest {
         whenever(signInUseCase(any())).thenReturn(flowOf(factory.failure))
 
-        signInViewModel.signIn(factory.signInAndSingUpValidParameter)
+        viewModel.signIn(factory.signInAndSingUpValidParameter)
 
-        val (failure) = signInViewModel.states.value as SignInViewModel.States.Failure
+        val (failure) = viewModel.states.value as SignInViewModel.States.Failure
         assertEquals("Ops, um erro aconteceu.", failure)
     }
 }

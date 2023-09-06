@@ -2,10 +2,11 @@ package com.bed.seller.presentation.commons.extensions.fragments
 
 import androidx.fragment.app.Fragment
 
+import android.os.Build
+
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 
-import android.os.Build
 import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 
@@ -24,3 +25,6 @@ fun Fragment.openExternalApp(app: String, context: Context? = this.requireContex
         it.startActivity(it.packageManager.getLaunchIntentForPackage(app))
     }
 }
+
+
+

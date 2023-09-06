@@ -35,29 +35,27 @@ internal class RecoverViewModelTest {
     var instantExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var recoverUseCase: RecoverUseCase
+    private lateinit var useCase: RecoverUseCase
 
     @Mock
     private lateinit var observer: Observer<RecoverViewModel.States>
 
     private lateinit var factory: AuthenticationFactory
 
-    private lateinit var recoverViewModel: RecoverViewModel
+    private lateinit var viewModel: RecoverViewModel
 
     @Before
     fun setUp() {
         factory = AuthenticationFactory()
-        recoverViewModel = RecoverViewModel(
-            rule.dispatcher,
-            recoverUseCase
-        ).apply { states.observeForever(observer) }
+        viewModel = RecoverViewModel(rule.dispatcher, useCase)
+            .apply { states.observeForever(observer) }
     }
 
     @Test
     fun `Should issue the Loading Status when verifying that you are recover with a successful return`() = runTest {
-        whenever(recoverUseCase(any())).thenReturn(flowOf(true))
+        whenever(useCase(any())).thenReturn(flowOf(true))
 
-        recoverViewModel.recover(factory.recoverValidParameter)
+        viewModel.recover(factory.recoverValidParameter)
 
         verify(observer).onChanged(isA<RecoverViewModel.States.Loading>())
         verify(observer).onChanged(isA<RecoverViewModel.States.Recover>())
@@ -65,9 +63,9 @@ internal class RecoverViewModelTest {
 
     @Test
     fun `Should issue the Loading Status when verifying that you are recover with a failure return`() = runTest {
-        whenever(recoverUseCase(any())).thenReturn(flowOf(false))
+        whenever(useCase(any())).thenReturn(flowOf(false))
 
-        recoverViewModel.recover(factory.recoverValidParameter)
+        viewModel.recover(factory.recoverValidParameter)
 
         verify(observer).onChanged(isA<RecoverViewModel.States.Loading>())
         verify(observer).onChanged(isA<RecoverViewModel.States.Recover>())
@@ -76,22 +74,22 @@ internal class RecoverViewModelTest {
     @Test
     fun `Should return true in Success State when trying is recover with return success`() =
         runTest {
-            whenever(recoverUseCase(any())).thenReturn(flowOf(true))
+            whenever(useCase(any())).thenReturn(flowOf(true))
 
-            recoverViewModel.recover(factory.recoverValidParameter)
+            viewModel.recover(factory.recoverValidParameter)
 
-            val (success) = recoverViewModel.states.value as RecoverViewModel.States.Recover
+            val (success) = viewModel.states.value as RecoverViewModel.States.Recover
             assertEquals(true, success)
         }
 
     @Test
     fun `Should return true in Success State when trying is recover with return failure`() =
         runTest {
-            whenever(recoverUseCase(any())).thenReturn(flowOf(false))
+            whenever(useCase(any())).thenReturn(flowOf(false))
 
-            recoverViewModel.recover(factory.recoverValidParameter)
+            viewModel.recover(factory.recoverValidParameter)
 
-            val (success) = recoverViewModel.states.value as RecoverViewModel.States.Recover
+            val (success) = viewModel.states.value as RecoverViewModel.States.Recover
             assertEquals(false, success)
         }
 }

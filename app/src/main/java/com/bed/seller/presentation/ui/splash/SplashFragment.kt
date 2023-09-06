@@ -1,6 +1,11 @@
 package com.bed.seller.presentation.ui.splash
 
+import kotlinx.coroutines.launch
+
+import androidx.lifecycle.Lifecycle
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 
 import android.os.Bundle
 import android.view.View
@@ -28,13 +33,17 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(SplashFragmentBinding
 
 
     private fun observeStates() {
-        with(viewModel) {
-            isLoggedIn()
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                with(viewModel) {
+                    isLoggedIn()
 
-            states.observe(viewLifecycleOwner) { state ->
-                when (state) {
-                    SplashViewModel.States.Loading -> animate()
-                    is SplashViewModel.States.IsLoggedIn -> navigate(state.isSuccess)
+                    state.collect { state ->
+                        when (state) {
+                            SplashViewModel.States.Loading -> animate()
+                            is SplashViewModel.States.IsLoggedIn -> navigate(state.isSuccess)
+                        }
+                    }
                 }
             }
         }

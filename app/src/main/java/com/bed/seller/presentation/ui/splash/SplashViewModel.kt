@@ -2,39 +2,40 @@ package com.bed.seller.presentation.ui.splash
 
 import javax.inject.Inject
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.liveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.switchMap
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 
 import com.bed.core.usecases.authentication.IsLoggedInUseCase
-import com.bed.core.usecases.coroutines.CoroutinesUseCase
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val coroutinesUseCase: CoroutinesUseCase,
     private val isLoggedInUseCase: IsLoggedInUseCase,
 ) : ViewModel() {
-    private val actions = MutableLiveData<Actions>()
+    private val _state = MutableStateFlow<States>(States.Loading)
 
-    val states: LiveData<States> = actions.switchMap { action ->
-        liveData(coroutinesUseCase.main()) {
-            emit(States.Loading)
+    val state: StateFlow<States> = _state.asStateFlow()
 
-            if (action is Actions.IsLoggedIn)
-                isLoggedInUseCase().collect { emit(States.IsLoggedIn(it)) }
+    fun isLoggedIn() {
+        viewModelScope.launch {
+            isLoggedInUseCase().onStart { onLoading() }.collect { onSuccess(it) }
         }
     }
 
-    fun isLoggedIn() {
-        actions.value = Actions.IsLoggedIn
+    private fun onLoading() {
+        _state.update { States.Loading }
     }
 
-    sealed class Actions {
-        data object IsLoggedIn : Actions()
+    private fun onSuccess(success: Boolean) {
+        _state.update { States.IsLoggedIn(success) }
     }
 
     sealed class States {
