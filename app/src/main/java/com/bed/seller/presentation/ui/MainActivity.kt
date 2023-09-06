@@ -23,7 +23,6 @@ import com.bed.seller.R
 
 import com.bed.seller.databinding.MainActivityBinding
 
-import com.bed.seller.presentation.commons.states.States
 import com.bed.seller.presentation.commons.extensions.dialog
 import com.bed.seller.presentation.commons.constants.ScreensConstants
 import com.bed.seller.presentation.commons.connection.CheckConnection
@@ -86,11 +85,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupComponentAppBarController() {
-        appBarConfiguration = AppBarConfiguration(ScreensConstants.SHOW_APP_BAR_IN)
+        appBarConfiguration = AppBarConfiguration(ScreensConstants.showAppBarIn)
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
     }
+
 
     private fun setupComponentNavigationBarController() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -101,11 +101,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun visibilityBottomBar(@NavigationRes destination: Int) {
-        if (destination in ScreensConstants.SHOW_BOTTOM_BAR_IN) States.VISIBLE else States.GONE
+        binding.bottomNavigation.visibility = ScreensConstants.showBottomBarIn(destination)
     }
 
     private fun visibilityToolBar(@NavigationRes destination: Int) {
-        if (destination in ScreensConstants.SHOW_TOOL_BAR_IN) States.VISIBLE else States.GONE
+        binding.toolbar.visibility = ScreensConstants.showToolbarIn(destination)
     }
 
     private fun visibilityGoBackInToolBar(@NavigationRes destination: Int) {
