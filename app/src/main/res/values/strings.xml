@@ -14,7 +14,7 @@
     <string name="exit_title_yes_button">Sim</string>
     <string name="exit_title">Deseja sair do App?  &#128542;</string>
 
-    <!-- SIGN_IN and SIGN_UP -->
+    <!-- SIGN IN, SIGN UP, RECOVER and RESET -->
     <string name="title_email_text_input">E-mail</string>
     <string name="title_password_text_input">Senha</string>
     <string name="title_create_account">Criar conta</string>
@@ -25,7 +25,7 @@
     <string name="placeholder_email_text_input">Seu melhor e-mail</string>
     <string name="placeholder_password_text_input">Uma senha segura</string>
 
-    <!-- SIGN_IN -->
+    <!-- SIGN IN -->
     <string name="sign_in_title">Bem vindo!</string>
     <string name="sign_in_title_button">Entrar</string>
     <string name="sign_in_title_check_box">Lembrar de mim</string>
@@ -33,7 +33,7 @@
     <string name="sign_in_description_create_account">Não possui uma conta?</string>
     <string name="sign_in_sub_title">Olá.\nAcesse sua conta e divulge seus produtos</string>
 
-    <!-- SIGN_UP -->
+    <!-- SIGN UP -->
     <string name="sign_up_valid_name">Nome %s válido.</string>
     <string name="sign_up_valid_email">E-mail %s válido.</string>
     <string name="sign_up_valid_password">Senha válida.</string>
@@ -44,7 +44,7 @@
     <string name="sign_up_success_create_account">Sua conta foi criada com sucesso.</string>
     <string name="sign_up_description_already_existing_account">Já possui uma conta?</string>
 
-    <!-- RECOVER_PASSWORD -->
+    <!-- RECOVER PASSWORD -->
     <string name="recover_password_title">Recuperar conta</string>
     <string name="recover_password_send_recover_button">Enviar</string>
     <string name="recover_password_open_email_title_button">Verificar</string>
@@ -52,6 +52,13 @@
     <string name="recover_password_failure_title">Ops um erro aconteceu.  &#128542;</string>
     <string name="recover_password_placeholder_email_text_input">E-mail da sua conta</string>
     <string name="recover_password_description">Vamos lhe enviar um e-mail para trocar sua senha.</string>
+
+    <!-- RESET PASSWORD title_create_account_button -->
+    <string name="reset_title_button">Enviar</string>
+    <string name="reset_password_title">Vamos recuperar sua conta</string>
+    <string name="reset_repeat_our_password_text_input">Repita sua senha</string>
+    <string name="reset_password_sub_title">Entre com uma nova senha para que possa ter acesso a sua conta.</string>
+
 
     <!-- PERMISSIONS -->
     <string name="permissions_signal">∗</string>
@@ -89,7 +96,7 @@
     <string name="home_toolbar_icon_title">Notificações</string>
     <string name="products_toolbar_icon_title">Produtos</string>
 
-    <!-- BOTTOM_NAVIGATION -->
+    <!-- BOTTOM NAVIGATION -->
     <string name="title_home">Olá, Bed</string>
     <string name="bottom_home">Promoções</string>
     <string name="bottom_products">Produtos</string>
@@ -102,4 +109,5 @@
 
     <!-- BUTTON -->
     <string name="title_cancel_button">Cancelar</string>
+
 </resources>

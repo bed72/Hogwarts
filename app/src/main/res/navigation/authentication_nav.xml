@@ -9,20 +9,8 @@
 
     <fragment
         android:id="@+id/sign_in_fragment"
-        android:label="@string/empty_value"
         tools:layout="@layout/sign_in_fragment"
         android:name="com.bed.seller.presentation.ui.authentication.signin.SignInFragment" >
-
-<!--        <argument-->
-<!--            app:nullable="true"-->
-<!--            app:argType="string"-->
-<!--            android:name="pathArg"-->
-<!--            android:defaultValue="@null" />-->
-
-<!--        <deepLink-->
-<!--            android:id="@+id/magic_link_deep_link"-->
-<!--            app:action="ACTION_VIEW"-->
-<!--            app:uri="go://sale/seller/{pathArg}" />-->
 
         <action
             android:id="@+id/action_sign_in_to_recover"
@@ -57,7 +45,6 @@
 
     <fragment
         android:id="@+id/sign_up_fragment"
-        android:label="@string/empty_value"
         tools:layout="@layout/sign_up_fragment"
         android:name="com.bed.seller.presentation.ui.authentication.signup.SignUpFragment" >
 
@@ -72,6 +59,41 @@
         <action
             android:id="@+id/action_sing_up_to_home"
             app:destination="@+id/home"
+            app:restoreState="true"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true"
+            app:popUpToSaveState="true"
+            app:popUpTo="@+id/main_nav"
+            app:exitAnim="@anim/exit_fade_out"
+            app:enterAnim="@anim/enter_fade_in"
+            app:popExitAnim="@anim/pop_exit_fade_out"
+            app:popEnterAnim="@anim/pop_enter_fade_in" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/reset_fragment"
+        tools:layout="@layout/reset_fragment"
+        android:name="com.bed.seller.presentation.ui.authentication.reset.ResetFragment" >
+
+            <argument
+                app:nullable="true"
+                android:name="code"
+                app:argType="string"
+                android:defaultValue="@null" />
+
+            <deepLink
+                android:id="@+id/reset"
+                app:action="ACTION_VIEW"
+                app:uri="https://seller-9041b.firebaseapp.com/__/auth/action?{code}" />
+
+        <action
+            android:id="@+id/action_recover_to_exit"
+            app:destination="@id/authentication_exit_fragment" />
+
+        <action
+            android:id="@+id/action_recover_to_sign_in"
+            app:destination="@id/sign_in_fragment"
             app:restoreState="true"
             app:launchSingleTop="true"
             app:popUpToInclusive="true"

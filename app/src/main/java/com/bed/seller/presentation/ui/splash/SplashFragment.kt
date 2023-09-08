@@ -31,7 +31,6 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(SplashFragmentBinding
         observeStates()
     }
 
-
     private fun observeStates() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {

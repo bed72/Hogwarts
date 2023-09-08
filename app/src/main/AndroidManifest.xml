@@ -5,8 +5,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
+        android:required="false"
+        android:name="android.hardware.camera" />
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -87,9 +87,10 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
-                    android:scheme="go"
-                    android:host="sale"
-                    android:path="/seller/" />
+                    android:scheme="https"
+                    android:path="/__/auth/action"
+                    android:host="seller-9041b.firebaseapp.com" />
+
 
             </intent-filter>
 
