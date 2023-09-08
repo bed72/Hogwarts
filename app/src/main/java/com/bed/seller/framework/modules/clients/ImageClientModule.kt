@@ -1,18 +1,16 @@
 package com.bed.seller.framework.modules.clients
 
-import android.content.Context
-
-import coil.ImageLoader
-
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.android.components.FragmentComponent
+
+import com.bed.seller.presentation.commons.loaders.ImageLoader
+import com.bed.seller.presentation.commons.loaders.CoilImageLoader
 
 @Module
-@InstallIn(SingletonComponent::class)
-object ImageClientModule {
-    @Provides
-    fun provideImageClient(@ApplicationContext context: Context) = ImageLoader(context)
+@InstallIn(FragmentComponent::class)
+interface ImageClientModule {
+    @Binds
+    fun bindImageLoader(loader: CoilImageLoader): ImageLoader
 }

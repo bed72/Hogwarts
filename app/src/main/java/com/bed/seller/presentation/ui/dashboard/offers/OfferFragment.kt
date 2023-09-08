@@ -21,6 +21,7 @@ import android.content.pm.PackageManager
 
 import dagger.hilt.android.AndroidEntryPoint
 
+import androidx.fragment.app.viewModels
 import androidx.core.content.FileProvider
 import androidx.core.content.ContextCompat
 
@@ -48,7 +49,7 @@ class OfferFragment : BaseBottomSheetDialogFragment<OfferFragmentBinding>(OfferF
 
     private var image: Uri = Uri.EMPTY
 
-//    private val viewModel: SaleViewModel by viewModels()
+    private val viewModel: OfferViewModel by viewModels()
 
     private val adapterImages by lazy {
         getGenericAdapterOf { ImageOfferViewHolder.create(it, imageLoader) }

@@ -112,21 +112,19 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
 
-    val hiltVersion = "2.47"
+    val hiltVersion = "2.48"
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
     implementation("com.google.dagger:hilt-android:$hiltVersion")
 
-
     implementation(platform("com.google.firebase:firebase-bom:32.2.3"))
-    implementation("com.google.firebase:firebase-auth-ktx")
-    implementation("com.google.firebase:firebase-analytics-ktx")
-
+    implementation("com.google.firebase:firebase-auth-ktx:22.1.1")
+    implementation("com.google.firebase:firebase-analytics-ktx:21.3.0")
 
     implementation("io.coil-kt:coil-compose:2.4.0")
     implementation("com.airbnb.android:lottie:6.1.0")
 //    implementation("io.github.mmolosay:debounce:1.0.0")
     implementation("com.google.android.material:material:1.9.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
     implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11")
 
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.1")

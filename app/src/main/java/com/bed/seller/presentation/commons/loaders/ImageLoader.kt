@@ -7,6 +7,7 @@ import android.widget.ImageView
 import androidx.annotation.DrawableRes
 
 import coil.request.ImageRequest
+import coil.ImageLoader as CoilLoader
 import coil.transform.RoundedCornersTransformation
 
 import com.bed.seller.R
@@ -22,9 +23,7 @@ interface ImageLoader {
     )
 }
 
-class CoilImageLoader @Inject constructor(
-    private val loader: coil.ImageLoader
-) : ImageLoader {
+class CoilImageLoader @Inject constructor() : ImageLoader {
     override fun load(
         url: Any,
         border: Float,
@@ -42,6 +41,6 @@ class CoilImageLoader @Inject constructor(
             .apply(builder)
             .build()
 
-        loader.enqueue(request)
+        CoilLoader(imageView.context).enqueue(request)
     }
 }
