@@ -15,6 +15,8 @@
     <string name="exit_title">Deseja sair do App?  &#128542;</string>
 
     <!-- SIGN IN, SIGN UP, RECOVER and RESET -->
+    <string name="valid_password">Senha válida.</string>
+    <string name="valid_email">E-mail %s válido.</string>
     <string name="title_email_text_input">E-mail</string>
     <string name="title_password_text_input">Senha</string>
     <string name="title_create_account">Criar conta</string>
@@ -33,11 +35,6 @@
     <string name="sign_in_description_create_account">Não possui uma conta?</string>
     <string name="sign_in_sub_title">Olá.\nAcesse sua conta e divulge seus produtos</string>
 
-    <!-- SIGN UP -->
-    <string name="sign_up_valid_name">Nome %s válido.</string>
-    <string name="sign_up_valid_email">E-mail %s válido.</string>
-    <string name="sign_up_valid_password">Senha válida.</string>
-
     <string name="sign_up_sub_title">Entre com seu e-mail e senha.</string>
     <string name="sign_up_title_already_existing_account_button">Entrar</string>
     <string name="sign_up_generic_error">Verifique seus dados e tente novamente.</string>
@@ -45,20 +42,20 @@
     <string name="sign_up_description_already_existing_account">Já possui uma conta?</string>
 
     <!-- RECOVER PASSWORD -->
-    <string name="recover_password_title">Recuperar conta</string>
-    <string name="recover_password_send_recover_button">Enviar</string>
-    <string name="recover_password_open_email_title_button">Verificar</string>
-    <string name="recover_password_success_title">Verifique seu e-mail.</string>
-    <string name="recover_password_failure_title">Ops um erro aconteceu.  &#128542;</string>
-    <string name="recover_password_placeholder_email_text_input">E-mail da sua conta</string>
-    <string name="recover_password_description">Vamos lhe enviar um e-mail para trocar sua senha.</string>
+    <string name="recover_title">Recuperar conta</string>
+    <string name="recover_send_recover_button">Enviar</string>
+    <string name="recover_open_email_title_button">Verificar</string>
+    <string name="recover_success_title">Verifique seu e-mail.</string>
+    <string name="recover_placeholder_email_text_input">E-mail da sua conta</string>
+    <string name="recover_description">Vamos lhe enviar um e-mail para trocar sua senha.</string>
 
-    <!-- RESET PASSWORD title_create_account_button -->
+    <!-- RESET PASSWORD -->
     <string name="reset_title_button">Enviar</string>
     <string name="reset_password_title">Vamos recuperar sua conta</string>
+    <string name="reset_success_title">Senha alterada com sucesso.</string>
     <string name="reset_repeat_our_password_text_input">Repita sua senha</string>
+    <string name="reset_are_passwords_same">As senhas precisam ser iguais.</string>
     <string name="reset_password_sub_title">Entre com uma nova senha para que possa ter acesso a sua conta.</string>
-
 
     <!-- PERMISSIONS -->
     <string name="permissions_signal">∗</string>
@@ -109,5 +106,8 @@
 
     <!-- BUTTON -->
     <string name="title_cancel_button">Cancelar</string>
+
+    <!-- GENERIC FAILURE -->
+    <string name="generic_failure_title">Ops um erro aconteceu.  &#128542;</string>
 
 </resources>

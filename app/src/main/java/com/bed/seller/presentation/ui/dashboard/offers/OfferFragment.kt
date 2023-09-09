@@ -107,8 +107,8 @@ class OfferFragment : BaseBottomSheetDialogFragment<OfferFragmentBinding>(OfferF
 
     private fun setupSave() {
         binding.saveButton.setOnClickListener {
-            handlerCamera()
-//      openGallery()
+//            handlerCamera()
+      openGallery()
 //      openGalleryLegacy()
         }
     }

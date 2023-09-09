@@ -13,7 +13,7 @@
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" >
 
     <TextView
-        android:text="@string/recover_password_title"
+        android:text="@string/recover_title"
         style="@style/SemiBoldHeading5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -23,7 +23,7 @@
         android:layout_marginTop="@dimen/small_margin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/recover_password_description" />
+        android:text="@string/recover_description" />
 
     <TextView
         android:text="@string/title_email_text_input"
@@ -39,12 +39,12 @@
         android:layout_marginTop="@dimen/big_small_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:placeholderText="@string/recover_password_placeholder_email_text_input" >
+        app:placeholderText="@string/recover_placeholder_email_text_input" >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/email_edit_input"
             style="@style/TextInputEdit"
-            tools:text="@string/recover_password_placeholder_email_text_input"
+            tools:text="@string/recover_placeholder_email_text_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress" />
@@ -64,7 +64,7 @@
 
             <Button
                 android:id="@+id/recover_button"
-                android:text="@string/recover_password_send_recover_button"
+                android:text="@string/recover_send_recover_button"
                 style="@style/NormalButton"
                 android:layout_height="@dimen/button_height"
                 android:layout_width="match_parent" />

@@ -31,17 +31,17 @@ class RecoverViewModel @Inject constructor(
         liveData(coroutinesUseCase.main()) {
             emit(States.Loading)
 
-            if (action is Actions.PasswordReset)
+            if (action is Actions.Recover)
                 recoverUseCase(action.parameter).collect { emit(States.Recover(it)) }
         }
     }
 
     fun recover(parameter: RecoverParameter) {
-        actions.value = Actions.PasswordReset(parameter)
+        actions.value = Actions.Recover(parameter)
     }
 
     sealed class Actions {
-        data class PasswordReset(val parameter: RecoverParameter) : Actions()
+        data class Recover(val parameter: RecoverParameter) : Actions()
     }
 
     sealed class States {

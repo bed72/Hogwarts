@@ -47,7 +47,7 @@ class RecoverFragment : BaseBottomSheetDialogFragment<RecoverFragmentBinding>(
                 is EmailState.States.Failure -> binding.emailTextInput.error = states.data
                 is EmailState.States.Success -> {
                     parameter = parameter.copy(email = states.data)
-                    binding.emailTextInput.helperText = getString(R.string.sign_up_valid_email, states.data.value)
+                    binding.emailTextInput.helperText = getString(R.string.valid_email, states.data.value)
                 }
             }
         }
@@ -91,13 +91,13 @@ class RecoverFragment : BaseBottomSheetDialogFragment<RecoverFragmentBinding>(
     }
 
     private fun handlerFailureMessage(): Int {
-        snackbar(R.string.recover_password_failure_title) { dismiss() }
+        snackbar(R.string.generic_failure_title) { dismiss() }
 
         return States.FLIPPER_FAILURE
     }
 
     private fun handlerSuccessMessage(): Int {
-        snackbar(R.string.recover_password_success_title, R.string.recover_password_open_email_title_button, ::dismiss, ::navigateToEmail)
+        snackbar(R.string.recover_success_title, R.string.recover_open_email_title_button, ::dismiss, ::navigateToEmail)
 
         return States.FLIPPER_SUCCESS
     }

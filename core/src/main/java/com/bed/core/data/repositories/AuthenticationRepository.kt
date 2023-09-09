@@ -7,9 +7,11 @@ import com.bed.core.data.datasources.remote.RemoteAuthenticationDatasource
 import com.bed.core.domain.alias.AuthenticationType
 import com.bed.core.domain.parameters.authentication.AuthenticationParameter
 import com.bed.core.domain.parameters.authentication.RecoverParameter
+import com.bed.core.domain.parameters.authentication.ResetParameter
 
 interface AuthenticationRepository {
     suspend fun isLoggedIn(): Boolean
+    suspend fun reset(parameter: ResetParameter): Boolean
     suspend fun recover(parameter: RecoverParameter): Boolean
     suspend fun signUp(parameter: AuthenticationParameter): AuthenticationType
     suspend fun signIn(parameter: AuthenticationParameter): AuthenticationType
@@ -20,8 +22,9 @@ class AuthenticationRepositoryImpl @Inject constructor(
 ) : AuthenticationRepository {
     override suspend fun isLoggedIn(): Boolean = datasource.isLoggedIn()
 
-    override suspend fun recover(parameter: RecoverParameter): Boolean =
-        datasource.recover(parameter)
+    override suspend fun reset(parameter: ResetParameter): Boolean = datasource.reset(parameter)
+
+    override suspend fun recover(parameter: RecoverParameter): Boolean = datasource.recover(parameter)
 
     override suspend fun signUp(parameter: AuthenticationParameter): AuthenticationType =
         datasource.signUp(parameter)

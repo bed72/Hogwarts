@@ -49,7 +49,7 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
                     is EmailState.States.Success -> {
                         parameter = parameter.copy(email = states.data)
                         binding.emailTextInput.helperText =
-                            getString(R.string.sign_up_valid_email, states.data.value)
+                            getString(R.string.valid_email, states.data.value)
                     }
                 }
             }
@@ -59,7 +59,7 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
                     is PasswordState.States.Success -> {
                         parameter = parameter.copy(password = states.data)
                         binding.passwordTextInput.helperText =
-                            getString(R.string.sign_up_valid_password)
+                            getString(R.string.valid_password)
                     }
                 }
             }

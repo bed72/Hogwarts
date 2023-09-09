@@ -2,7 +2,7 @@
 
 <navigation
     android:id="@+id/authentication"
-    app:startDestination="@id/sign_in_fragment"
+    app:startDestination="@id/reset_fragment"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android" >
@@ -86,10 +86,6 @@
                 android:id="@+id/reset"
                 app:action="ACTION_VIEW"
                 app:uri="https://seller-9041b.firebaseapp.com/__/auth/action?{code}" />
-
-        <action
-            android:id="@+id/action_recover_to_exit"
-            app:destination="@id/authentication_exit_fragment" />
 
         <action
             android:id="@+id/action_recover_to_sign_in"
