@@ -2,7 +2,7 @@
 
 <navigation
     android:id="@+id/authentication"
-    app:startDestination="@id/reset_fragment"
+    app:startDestination="@id/sign_in_fragment"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android" >

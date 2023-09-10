@@ -106,7 +106,7 @@ class ResetFragment : BaseFragment<ResetFragmentBinding>(ResetFragmentBinding::i
     private fun validateParameter() {
         hideKeyboard(binding.root)
         parameter.isValid().fold(
-            { failure -> snackbar(failure[SECOND_MESSAGE]) },
+            { failure -> snackbar(failure.first()) },
             { success -> viewModel.reset(success) }
         )
     }
@@ -123,9 +123,5 @@ class ResetFragment : BaseFragment<ResetFragmentBinding>(ResetFragmentBinding::i
         navigateTo(ResetFragmentDirections.actionRecoverToSignIn())
 
         return States.FLIPPER_SUCCESS
-    }
-
-    companion object {
-        private const val SECOND_MESSAGE = 1
     }
 }

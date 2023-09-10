@@ -2,7 +2,7 @@
 
 <navigation
     android:id="@+id/main_nav"
-    app:startDestination="@id/authentication"
+    app:startDestination="@id/splash_fragment"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android" >
