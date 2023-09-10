@@ -30,7 +30,7 @@ internal class AuthenticationParameterTest {
         factory.signInAndSingUpInvalidParameter
             .copy(
                 email = EmailValue(""),
-                password = PasswordValue("P@ssw0rD"),
+                password = PasswordValue("P@ssw0rD")
             )
             .isValid()
             .mapLeft { message -> assertEquals(listOf("Preencha um e-mail válido."), message) }
@@ -41,23 +41,49 @@ internal class AuthenticationParameterTest {
         factory.signInAndSingUpInvalidParameter
             .copy(
                 email = EmailValue("email@email.com"),
-                password = PasswordValue(""),
+                password = PasswordValue("")
             )
             .isValid().mapLeft { message -> assertEquals(listOf("Preencha uma senha válida."), message) }
     }
 
     @Test
-    fun `Should try validate Authentication Parameter return failure when e-mail and password is invalid`() {
+    fun `Should try validate Authentication Parameter return failure when e-mail and password is invalid by uppercase characters`() {
         val expect = listOf(
             "Preencha um e-mail válido.",
-            "A senha presica conter caracteres numéricos.",
+            "A senha presica conter caracteres maiúsculos."
         )
 
         factory.signInAndSingUpInvalidParameter
             .copy(
                 email = EmailValue("emailemail.com"),
-                password = PasswordValue("Password"),
+                password = PasswordValue("passw0rd")
             )
+            .isValid().mapLeft { message -> assertEquals(expect, message) }
+    }
+
+    @Test
+    fun `Should try validate Authentication Parameter return failure when e-mail and password is invalid by need number`() {
+        val expect = listOf(
+            "Preencha um e-mail válido.",
+            "A senha presica conter caracteres numéricos."
+        )
+
+        factory.signInAndSingUpInvalidParameter
+            .copy(
+                email = EmailValue("emailemail.com"),
+                password = PasswordValue("Password")
+            )
+            .isValid().mapLeft { message -> assertEquals(expect, message) }
+    }
+
+    @Test
+    fun `Should try validate Authentication Parameter return failure when e-mail and password is empty`() {
+        val expect = listOf(
+            "Preencha um e-mail válido.",
+            "Preencha uma senha válida."
+        )
+
+        factory.signInAndSingUpInvalidParameter
             .isValid().mapLeft { message -> assertEquals(expect, message) }
     }
 }

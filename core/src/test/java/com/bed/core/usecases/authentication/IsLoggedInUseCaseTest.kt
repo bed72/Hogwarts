@@ -39,7 +39,7 @@ internal class IsLoggedInUseCaseTest {
     }
 
     @Test
-    fun `Should return value not null when trying verify is logged in account with failure`() = runTest {
+    fun `Should return value not null when trying verify is logged in account with return failure`() = runTest {
         whenever(repository.isLoggedIn()).thenReturn(false)
 
         val response = useCase().first()
@@ -48,7 +48,7 @@ internal class IsLoggedInUseCaseTest {
     }
 
     @Test
-    fun `Should return value not null when trying verify is logged in account with success`() = runTest {
+    fun `Should return value not null when trying verify is logged in account with return success`() = runTest {
         whenever(repository.isLoggedIn()).thenReturn(true)
 
         val response = useCase().first()
@@ -66,7 +66,7 @@ internal class IsLoggedInUseCaseTest {
     }
 
     @Test
-    fun `Should return failure value when trying verify is logged in account with failure`() = runTest {
+    fun `Should return failure value when trying verify is logged in account`() = runTest {
         whenever(repository.isLoggedIn()).thenReturn(false)
 
         val response = useCase().first()
@@ -75,7 +75,7 @@ internal class IsLoggedInUseCaseTest {
     }
 
     @Test
-    fun `Should return failure value when trying verify is logged in account with success`() = runTest {
+    fun `Should return success value when trying verify is logged in account`() = runTest {
         whenever(repository.isLoggedIn()).thenReturn(true)
 
         val response = useCase().first()

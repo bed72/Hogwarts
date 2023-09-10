@@ -96,7 +96,7 @@ internal class SignInViewModelTest {
         }
 
     @Test
-    fun `Should return Failure State when trying to create an account with returns failure`() = runTest {
+    fun `Should return MessageModel in Failure State when trying to sign in with return failure`() = runTest {
         whenever(signInUseCase(any())).thenReturn(flowOf(factory.failure))
 
         viewModel.signIn(factory.signInAndSingUpValidParameter)

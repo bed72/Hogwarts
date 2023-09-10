@@ -4,21 +4,35 @@ import arrow.core.left
 import arrow.core.right
 
 import com.bed.core.values.EmailValue
+import com.bed.core.values.StringValue
 import com.bed.core.values.PasswordValue
 
 import com.bed.core.domain.models.failure.MessageModel
 import com.bed.core.domain.models.authentication.AuthenticationModel
 
-import com.bed.core.domain.parameters.authentication.AuthenticationParameter
+import com.bed.core.domain.parameters.authentication.ResetParameter
 import com.bed.core.domain.parameters.authentication.RecoverParameter
+import com.bed.core.domain.parameters.authentication.AuthenticationParameter
 
 class AuthenticationFactory {
+    val resetValidParameter = ResetParameter(
+        StringValue("5CQcsREkB5xcqbY1L..."),
+        PasswordValue("P@ssw0rD"),
+        PasswordValue("P@ssw0rD"),
+    )
+
+    val resetInvalidParameter = ResetParameter(
+        StringValue(""),
+        PasswordValue(""),
+        PasswordValue(""),
+    )
+
     val recoverValidParameter = RecoverParameter(
         EmailValue("email@email.com")
     )
 
     val recoverInvalidParameter = RecoverParameter(
-        EmailValue("email@email.com")
+        EmailValue("")
     )
 
     val signInAndSingUpValidParameter = AuthenticationParameter(

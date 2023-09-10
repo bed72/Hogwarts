@@ -1,4 +1,4 @@
-package com.bed.seller.presentation.ui.authentication.recover
+package com.bed.seller.presentation.ui.authentication.reset
 
 import org.junit.Rule
 import org.junit.Test
@@ -20,14 +20,15 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import androidx.lifecycle.Observer
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 
-import com.bed.core.usecases.authentication.RecoverUseCase
-
 import com.bed.test.rule.MainCoroutineRule
+
+import com.bed.core.usecases.authentication.ResetUseCase
+import com.bed.seller.presentation.ui.authentication.recover.RecoverViewModel
 import com.bed.test.factories.authentication.AuthenticationFactory
 
 @RunWith(MockitoJUnitRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)
-internal class RecoverViewModelTest {
+internal class ResetViewModelTest {
     @get:Rule
     val rule = MainCoroutineRule()
 
@@ -35,61 +36,61 @@ internal class RecoverViewModelTest {
     var instantExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var useCase: RecoverUseCase
+    private lateinit var useCase: ResetUseCase
 
     @Mock
-    private lateinit var observer: Observer<RecoverViewModel.States>
+    private lateinit var observer: Observer<ResetViewModel.States>
 
     private lateinit var factory: AuthenticationFactory
 
-    private lateinit var viewModel: RecoverViewModel
+    private lateinit var viewModel: ResetViewModel
 
     @Before
     fun setUp() {
         factory = AuthenticationFactory()
-        viewModel = RecoverViewModel(rule.dispatcher, useCase)
+        viewModel = ResetViewModel(rule.dispatcher, useCase)
             .apply { states.observeForever(observer) }
     }
 
     @Test
-    fun `Should emit Loading State when trying to recover account with return success`() = runTest {
+    fun `Should emit Loading State when trying to reset password with return success`() = runTest {
         whenever(useCase(any())).thenReturn(flowOf(true))
 
-        viewModel.recover(factory.recoverValidParameter)
+        viewModel.reset(factory.resetValidParameter)
 
-        verify(observer).onChanged(isA<RecoverViewModel.States.Loading>())
-        verify(observer).onChanged(isA<RecoverViewModel.States.Recover>())
+        verify(observer).onChanged(isA<ResetViewModel.States.Loading>())
+        verify(observer).onChanged(isA<ResetViewModel.States.Reset>())
     }
 
     @Test
-    fun `Should emit Loading State when trying to recover account with return failure`() = runTest {
+    fun `Should emit Loading State when trying to reset password with return failure`() = runTest {
         whenever(useCase(any())).thenReturn(flowOf(false))
 
-        viewModel.recover(factory.recoverValidParameter)
+        viewModel.reset(factory.resetValidParameter)
 
-        verify(observer).onChanged(isA<RecoverViewModel.States.Loading>())
-        verify(observer).onChanged(isA<RecoverViewModel.States.Recover>())
+        verify(observer).onChanged(isA<ResetViewModel.States.Loading>())
+        verify(observer).onChanged(isA<ResetViewModel.States.Reset>())
     }
 
     @Test
-    fun `Should return true in Recover State when trying is recover with return success`() =
+    fun `Should return true in Reset State when trying is reset password with return success`() =
         runTest {
             whenever(useCase(any())).thenReturn(flowOf(true))
 
-            viewModel.recover(factory.recoverValidParameter)
+            viewModel.reset(factory.resetValidParameter)
 
-            val (success) = viewModel.states.value as RecoverViewModel.States.Recover
+            val (success) = viewModel.states.value as ResetViewModel.States.Reset
             assertEquals(true, success)
         }
 
     @Test
-    fun `Should return false in Recover State when trying is recover with return failure`() =
+    fun `Should return false in Reset State when trying is reset password with return failure`() =
         runTest {
             whenever(useCase(any())).thenReturn(flowOf(false))
 
-            viewModel.recover(factory.recoverValidParameter)
+            viewModel.reset(factory.resetInvalidParameter)
 
-            val (success) = viewModel.states.value as RecoverViewModel.States.Recover
+            val (success) = viewModel.states.value as ResetViewModel.States.Reset
             assertEquals(false, success)
         }
 }

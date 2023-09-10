@@ -40,7 +40,7 @@ internal class SplashViewModelTest {
     }
 
     @Test
-    fun `Should return true in Success State when trying is logged in with return success`() =
+    fun `Should return true in IsLoggedIn State when trying is logged in with return success`() =
         runTest {
             whenever(useCase()).thenReturn(flowOf(true))
 
@@ -51,7 +51,7 @@ internal class SplashViewModelTest {
         }
 
     @Test
-    fun `Should return true in Success State when trying is logged in with return failure`() =
+    fun `Should return false in IsLoggedIn State when trying is logged in with return failure`() =
         runTest {
             whenever(useCase()).thenReturn(flowOf(false))
 

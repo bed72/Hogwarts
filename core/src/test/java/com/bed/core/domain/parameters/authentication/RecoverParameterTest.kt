@@ -24,9 +24,16 @@ internal class RecoverParameterTest {
     }
 
     @Test
+    fun `Should try validate Recover Parameter return failure when partial e-mail is invalid`() {
+        factory.recoverInvalidParameter
+            .copy(EmailValue("emailemail.com"))
+            .isValid()
+            .mapLeft { message -> assertEquals(listOf("Preencha um e-mail válido."), message) }
+    }
+
+    @Test
     fun `Should try validate Recover Parameter return failure when e-mail is invalid`() {
         factory.recoverInvalidParameter
-            .copy(EmailValue(""))
             .isValid()
             .mapLeft { message -> assertEquals(listOf("Preencha um e-mail válido."), message) }
     }

@@ -44,7 +44,7 @@ internal class RecoverUseCaseTest {
     }
 
     @Test
-    fun `Should return value not null when trying verify is recover account with failure`() = runTest {
+    fun `Should return value not null when trying verify is recover account with return failure`() = runTest {
         whenever(repository.recover(any())).thenReturn(false)
 
         val response = useCase(factory.recoverValidParameter).first()
@@ -53,7 +53,7 @@ internal class RecoverUseCaseTest {
     }
 
     @Test
-    fun `Should return value not null when trying verify is recover account with success`() = runTest {
+    fun `Should return value not null when trying verify is recover account with return success`() = runTest {
         whenever(repository.recover(any())).thenReturn(true)
 
         val response = useCase(factory.recoverValidParameter).first()
@@ -71,7 +71,7 @@ internal class RecoverUseCaseTest {
     }
 
     @Test
-    fun `Should return failure value when trying verify is recover account with failure`() = runTest {
+    fun `Should return failure value when trying verify is recover account`() = runTest {
         whenever(repository.recover(any())).thenReturn(false)
 
         val response = useCase(factory.recoverValidParameter).first()
@@ -80,7 +80,7 @@ internal class RecoverUseCaseTest {
     }
 
     @Test
-    fun `Should return failure value when trying verify is recover account with success`() = runTest {
+    fun `Should return success value when trying verify is recover account`() = runTest {
         whenever(repository.recover(any())).thenReturn(true)
 
         val response = useCase(factory.recoverValidParameter).first()

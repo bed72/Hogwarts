@@ -20,8 +20,8 @@ import com.bed.core.domain.parameters.authentication.ResetParameter
 
 @HiltViewModel
 class ResetViewModel @Inject constructor(
-    resetUseCase: ResetUseCase,
-    coroutinesUseCase: CoroutinesUseCase
+    coroutinesUseCase: CoroutinesUseCase,
+    resetUseCase: ResetUseCase
 ) : ViewModel() {
     private val actions = MutableLiveData<Actions>()
 

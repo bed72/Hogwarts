@@ -51,7 +51,7 @@ internal class SignInUseCaseTest {
     }
 
     @Test
-    fun `Should return value not null when trying sign in account with failure`() = runTest {
+    fun `Should return value not null when trying sign in account with return failure`() = runTest {
         whenever(repository.signIn(any())).thenReturn(factory.failure)
 
         val response = useCase(factory.signInAndSingUpValidParameter).first()
@@ -60,7 +60,7 @@ internal class SignInUseCaseTest {
     }
 
     @Test
-    fun `Should return value not null when trying sign in account with success`() = runTest {
+    fun `Should return value not null when trying sign in account with return success`() = runTest {
         whenever(repository.signIn(any())).thenReturn(factory.success)
 
         val response = useCase(factory.signInAndSingUpValidParameter).first()
