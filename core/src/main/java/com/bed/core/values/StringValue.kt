@@ -16,7 +16,7 @@ value class StringValue(val value: String) : ValueObject<StringValue> {
     private fun rule(value: String): Pair<Boolean, String> {
 
         return when {
-            value.isBlank() -> false to "Preencha um valor válido."
+            value.isBlank() -> false to Values.INVALID_VALUE.value
             else -> true to value
         }
     }

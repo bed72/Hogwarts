@@ -48,8 +48,7 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
                     is EmailState.States.Failure -> binding.emailTextInput.error = states.data
                     is EmailState.States.Success -> {
                         parameter = parameter.copy(email = states.data)
-                        binding.emailTextInput.helperText =
-                            getString(R.string.valid_email, states.data.value)
+                        binding.emailTextInput.helperText = getString(R.string.valid_email, states.data.value)
                     }
                 }
             }
@@ -58,8 +57,7 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
                     is PasswordState.States.Failure -> binding.passwordTextInput.error = states.data
                     is PasswordState.States.Success -> {
                         parameter = parameter.copy(password = states.data)
-                        binding.passwordTextInput.helperText =
-                            getString(R.string.valid_password)
+                        binding.passwordTextInput.helperText = getString(R.string.valid_password)
                     }
                 }
             }
@@ -75,6 +73,7 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
                     States.FLIPPER_FAILURE
                 }
                 is SignUpViewModel.States.Success -> {
+                    snackbar(R.string.sign_up_success_message)
                     navigateTo(SignUpFragmentDirections.actionSingUpToHome())
                     States.FLIPPER_SUCCESS
                 }

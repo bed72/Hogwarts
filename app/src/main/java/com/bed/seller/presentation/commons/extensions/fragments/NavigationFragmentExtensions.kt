@@ -10,6 +10,10 @@ import androidx.navigation.NavDirections
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
 
+fun Fragment.navigateBack() = findNavController().popBackStack()
+
+fun Fragment.navigateClear(@IdRes destination: Int) = findNavController().clearBackStack(destination)
+
 fun Fragment.navigateBack(@IdRes destination: Int) = findNavController().popBackStack(destination, true)
 
 fun Fragment.navigateTo(@IdRes destination: Int) = findNavController().navigate(destination)

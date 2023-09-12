@@ -27,6 +27,9 @@
     <string name="placeholder_email_text_input">Seu melhor e-mail</string>
     <string name="placeholder_password_text_input">Uma senha segura</string>
 
+    <!-- SIGN UP -->
+    <string name="sign_up_success_message">Bem vindo.  &#128151;</string>
+
     <!-- SIGN IN -->
     <string name="sign_in_title">Bem vindo!</string>
     <string name="sign_in_title_button">Entrar</string>

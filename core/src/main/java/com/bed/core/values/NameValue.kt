@@ -17,7 +17,7 @@ value class NameValue(val value: String) : ValueObject<NameValue> {
         val pattern = "\\b[A-Za-zÀ-ú][A-Za-zÀ-ú]+,?\\s[A-Za-zÀ-ú][A-Za-zÀ-ú]{2,19}\\b".toRegex()
 
         return when {
-            pattern.matches(value).not() -> false to "Preencha um nome e sobrenome válidos."
+            pattern.matches(value).not() -> false to Values.INVALID_NAME.value
             else -> true to value
         }
     }

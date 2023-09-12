@@ -24,6 +24,7 @@ import com.bed.seller.presentation.commons.extensions.actionKeyboard
 import com.bed.seller.presentation.commons.extensions.fragments.snackbar
 import com.bed.seller.presentation.commons.extensions.fragments.navigateTo
 import com.bed.seller.presentation.commons.extensions.fragments.hideKeyboard
+import com.bed.seller.presentation.commons.extensions.fragments.navigateBack
 
 @AndroidEntryPoint
 class ResetFragment : BaseFragment<ResetFragmentBinding>(ResetFragmentBinding::inflate) {
@@ -120,7 +121,7 @@ class ResetFragment : BaseFragment<ResetFragmentBinding>(ResetFragmentBinding::i
     private fun handlerSuccessMessage(): Int {
         snackbar(R.string.reset_success_title)
 
-        navigateTo(ResetFragmentDirections.actionRecoverToSignIn())
+        navigateBack()
 
         return States.FLIPPER_SUCCESS
     }

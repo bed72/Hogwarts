@@ -5,6 +5,7 @@ import arrow.core.raise.either
 import arrow.core.raise.ensure
 import arrow.core.raise.zipOrAccumulate
 
+import com.bed.core.values.Values
 import com.bed.core.values.StringValue
 import com.bed.core.values.PasswordValue
 
@@ -25,7 +26,7 @@ data class ResetParameter(
             { ensure(parameter.third.isRight()) { prepare(parameter.third.leftOrNull()) } },
             {
                 ensure(password.value == repeatPassword.value) {
-                    prepare("As senhas precisam ser iguais.")
+                    prepare(Values.INVALID_PASSWORD_NOT_EQUALS.value)
                 }
             }
         ) { _, _, _, _ -> ResetParameter(code, password, repeatPassword) }

@@ -87,19 +87,6 @@
                 app:action="ACTION_VIEW"
                 app:uri="https://seller-9041b.firebaseapp.com/__/auth/action?{code}" />
 
-        <action
-            android:id="@+id/action_recover_to_sign_in"
-            app:destination="@id/sign_in_fragment"
-            app:restoreState="true"
-            app:launchSingleTop="true"
-            app:popUpToInclusive="true"
-            app:popUpToSaveState="true"
-            app:popUpTo="@+id/main_nav"
-            app:exitAnim="@anim/exit_fade_out"
-            app:enterAnim="@anim/enter_fade_in"
-            app:popExitAnim="@anim/pop_exit_fade_out"
-            app:popEnterAnim="@anim/pop_enter_fade_in" />
-
     </fragment>
 
     <dialog

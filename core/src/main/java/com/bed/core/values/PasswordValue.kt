@@ -19,13 +19,13 @@ value class PasswordValue (val value: String) : ValueObject<PasswordValue> {
         val patternNeedsUpperCaseCharacter = ".*[A-Z].*".toRegex()
 
         return when {
-            value.isEmpty() -> false to "Preencha uma senha válida."
+            value.isEmpty() -> false to Values.INVALID_PASSWORD.value
             value.length <= minSize ->
-                false to "A senha presica conter mais de 5 caracteres."
+                false to Values.INVALID_PASSWORD_MIN_SIZE.value
             patternNeedsNumberCharacter.matches(value).not() ->
-                false to "A senha presica conter caracteres numéricos."
+                false to Values.INVALID_PASSWORD_NEEDS_NUMBER.value
             patternNeedsUpperCaseCharacter.matches(value).not() ->
-                false to "A senha presica conter caracteres maiúsculos."
+                false to Values.INVALID_PASSWORD_NEEDS_UPPER_CASE_LETTERS.value
             else -> true to value
         }
     }
