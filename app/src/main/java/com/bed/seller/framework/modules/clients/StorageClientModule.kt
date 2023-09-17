@@ -21,5 +21,5 @@ object StorageClientModule {
     @Provides
     @Singleton
     fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> =
-        preferencesDataStore(name = BuildConfig.DATA_STORE).getValue(context, String::javaClass)
+        preferencesDataStore(name = "ohhFerta").getValue(context, String::javaClass)
 }

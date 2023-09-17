@@ -1,5 +1,5 @@
-import java.util.Properties
-import java.io.FileInputStream
+//import java.util.Properties
+//import java.io.FileInputStream
 
 import kotlin.collections.listOf
 
@@ -14,9 +14,9 @@ plugins {
     id("com.google.gms.google-services")
 }
 
-val keys = Properties().apply {
-    load(FileInputStream(File(rootProject.rootDir, "secrets.properties")))
-}
+//val keys = Properties().apply {
+//    load(FileInputStream(File(rootProject.rootDir, "secrets.properties")))
+//}
 
 android {
     compileSdk = 34
@@ -39,9 +39,8 @@ android {
             )
         )
 
-        buildConfigField("String", "API_KEY", keys.getProperty("API_KEY"))
-        buildConfigField("String", "BASE_URL", keys.getProperty("BASE_URL"))
-        buildConfigField("String", "DATA_STORE", keys.getProperty("DATA_STORE"))
+//        buildConfigField("String", "API_KEY", keys.getProperty("API_KEY"))
+//        buildConfigField("String", "BASE_URL", keys.getProperty("BASE_URL"))
     }
 
     buildFeatures {
