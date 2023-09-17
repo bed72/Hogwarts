@@ -25,6 +25,11 @@ import com.bed.seller.framework.network.response.authentication.AuthenticationRe
 class RemoteAuthenticationDatasourceImpl @Inject constructor(
     private val client: FirebaseClient
 ) : RemoteAuthenticationDatasource {
+
+    init {
+        client.authentication.setLanguageCode("pt-BR")
+    }
+
     override suspend fun isLoggedIn(): Boolean = client.authentication.currentUser != null
     override suspend fun reset(parameter: ResetParameter): Boolean = suspendCoroutine { continuation ->
         client
@@ -52,7 +57,7 @@ class RemoteAuthenticationDatasourceImpl @Inject constructor(
                     data.user?.let { continuation.resume(buildSuccess(it).right()) }
                 }
                 .addOnFailureListener {
-                    continuation.resume(buildFailure(it.message).left())
+                    continuation.resume(buildFailure(it.localizedMessage).left())
                 }
         }
 
