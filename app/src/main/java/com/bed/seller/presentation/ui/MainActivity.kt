@@ -3,7 +3,6 @@ package com.bed.seller.presentation.ui
 import dagger.hilt.android.AndroidEntryPoint
 
 import android.os.Bundle
-import android.view.animation.AnticipateInterpolator
 
 import androidx.annotation.NavigationRes
 
@@ -16,7 +15,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 
-import androidx.core.splashscreen.SplashScreenViewProvider
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 
 import com.bed.seller.R
@@ -43,7 +41,6 @@ class MainActivity : AppCompatActivity() {
 
         installSplashScreen().run {
             setKeepOnScreenCondition { false }
-            setOnExitAnimationListener { setAnimation(it) }
         }
 
         preventScreenshotsAndRecentAppThumbnails()
@@ -57,17 +54,6 @@ class MainActivity : AppCompatActivity() {
         setupNavigationBarController()
         setupComponentAppBarController()
         setupComponentNavigationBarController()
-    }
-
-    private fun setAnimation(provider: SplashScreenViewProvider) {
-        provider.iconView
-            .animate()
-            .rotation(ANIMATION_ROTATION)
-            .setDuration(ANIMATION_DURATION)
-            .translationZ(ANIMATION_PROPERTY)
-            .setInterpolator(AnticipateInterpolator())
-            .withEndAction { provider.remove() }
-            .start()
     }
 
     private fun setupConnection() {
@@ -105,7 +91,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun visibilityToolBar(@NavigationRes destination: Int) {
-        binding.toolbar.visibility = ScreensConstants.showToolbarIn(destination)
+        binding.toolbar.visibility = ScreensConstants.showToolBarIn(destination)
     }
 
     private fun visibilityGoBackInToolBar(@NavigationRes destination: Int) {

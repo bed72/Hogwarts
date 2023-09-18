@@ -12,7 +12,9 @@
     <string name="exit_snackbar">Sair</string>
     <string name="exit_title_no_button">Não</string>
     <string name="exit_title_yes_button">Sim</string>
+    <string name="exit_description">Até mais…</string>
     <string name="exit_title">Deseja sair do App?  &#128542;</string>
+    <string name="exit_description_logout">Quando voltar pricisaremos que entre com seu e-mail e senha.</string>
 
     <!-- SIGN IN, SIGN UP, RECOVER and RESET -->
     <string name="valid_password">Senha válida.</string>
@@ -89,6 +91,8 @@
 
     <!-- SETTINGS -->
     <string name="setting_title">Configurações</string>
+    <string name="setting_logout_title_button">Sair</string>
+    <string name="setting_logout_title_failure">Não foi possível deslogar da sua conta.</string>
 
     <!-- TOOLBAR -->
     <string name="toolbar_title">Olá,</string>

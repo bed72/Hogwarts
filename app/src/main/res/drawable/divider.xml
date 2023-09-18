@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <inset
-    android:insetLeft="@dimen/small_margin"
-    android:insetRight="@dimen/small_margin"
+    android:insetLeft="@dimen/small_space"
+    android:insetRight="@dimen/small_space"
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <shape>

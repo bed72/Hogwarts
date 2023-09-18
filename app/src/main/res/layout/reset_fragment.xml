@@ -16,7 +16,7 @@
         android:layout_height="wrap_content" >
 
         <LinearLayout
-            android:padding="@dimen/normal_padding"
+            android:padding="@dimen/normal_space"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
@@ -29,7 +29,7 @@
 
             <TextView
                 style="@style/RegularBody2"
-                android:layout_marginTop="@dimen/small_margin"
+                android:layout_marginTop="@dimen/small_space"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/reset_password_sub_title" />
@@ -37,7 +37,7 @@
             <TextView
                 android:text="@string/title_password_text_input"
                 style="@style/MediumBody1"
-                android:layout_marginTop="@dimen/normal_margin"
+                android:layout_marginTop="@dimen/normal_space"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -65,7 +65,7 @@
             <TextView
                 android:text="@string/reset_repeat_our_password_text_input"
                 style="@style/MediumBody1"
-                android:layout_marginTop="@dimen/normal_margin"
+                android:layout_marginTop="@dimen/normal_space"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -92,7 +92,7 @@
 
             <ViewFlipper
                 android:id="@+id/action_flipper"
-                android:layout_marginTop="@dimen/normal_margin"
+                android:layout_marginTop="@dimen/normal_space"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 

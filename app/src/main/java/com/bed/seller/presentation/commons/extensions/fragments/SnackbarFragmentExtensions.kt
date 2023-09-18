@@ -12,6 +12,7 @@ import com.bed.seller.R
 
 fun Fragment.snackbar(view: View, message: String) =
     Snackbar.make(view, message, Snackbar.LENGTH_LONG).show()
+
 fun Fragment.snackbar(message: String) =
     Snackbar.make(this.requireView(), message, Snackbar.LENGTH_LONG).show()
 

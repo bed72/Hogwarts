@@ -54,11 +54,11 @@ class RecoverFragment : BaseBottomSheetDialogFragment<RecoverFragmentBinding>(
     }
 
     private fun observeRecoverStates() {
-        viewModel.states.observe(viewLifecycleOwner) { state ->
-            binding.actionFlipper.displayedChild = when (state) {
+        viewModel.states.observe(viewLifecycleOwner) { states ->
+            binding.actionFlipper.displayedChild = when (states) {
                 RecoverViewModel.States.Loading -> States.FLIPPER_LOADING
                 is RecoverViewModel.States.Recover ->
-                    if (state.isSuccess) handlerSuccessMessage() else handlerFailureMessage()
+                    if (states.isSuccess) handlerSuccessMessage() else handlerFailureMessage()
             }
         }
     }

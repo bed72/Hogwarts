@@ -11,6 +11,32 @@
         android:id="@+id/setting_fragment"
         android:label="@string/setting_title"
         tools:layout="@layout/setting_fragment"
-        android:name="com.bed.seller.presentation.ui.dashboard.setting.SettingFragment" />
+        android:name="com.bed.seller.presentation.ui.dashboard.setting.SettingFragment" >
+
+        <action
+            android:id="@+id/action_setting_to_logout"
+            app:destination="@id/sign_out_fragment" />
+
+    </fragment>
+
+    <dialog
+        android:id="@+id/sign_out_fragment"
+        tools:layout="@layout/exit_fragment"
+        android:name="com.bed.seller.presentation.ui.authentication.signout.SignOutExitFragment" >
+
+        <action
+            android:id="@+id/action_sign_out_to_sign_in"
+            app:destination="@+id/authentication"
+            app:restoreState="true"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true"
+            app:popUpToSaveState="true"
+            app:popUpTo="@+id/main_nav"
+            app:exitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/pop_exit_to_left"
+            app:popEnterAnim="@anim/pop_enter_from_right" />
+
+    </dialog>
 
 </navigation>

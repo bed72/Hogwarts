@@ -28,15 +28,12 @@
     <dimen name="button_height">54dp</dimen>
     <dimen name="button_corner_radius">14dp</dimen>
 
-    <!-- Margin Spacings Sizes -->
-    <dimen name="big_small_margin">4dp</dimen>
-    <dimen name="small_margin">8dp</dimen>
-    <dimen name="normal_margin">16dp</dimen>
-    <dimen name="large_margin">32dp</dimen>
-    <dimen name="extra_large_margin">64dp</dimen>
-
-    <!-- Padding Spacings Sizes -->
-    <dimen name="normal_padding">16dp</dimen>
+    <!-- Spacings Sizes -->
+    <dimen name="extra_small_space">4dp</dimen>
+    <dimen name="small_space">8dp</dimen>
+    <dimen name="normal_space">16dp</dimen>
+    <dimen name="large_space">32dp</dimen>
+    <dimen name="extra_large_space">64dp</dimen>
 
     <!-- Regular Size Fonts -->
     <dimen name="regular_body_1">16sp</dimen>

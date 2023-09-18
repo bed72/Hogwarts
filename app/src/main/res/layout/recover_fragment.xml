@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout
-    android:padding="@dimen/normal_padding"
+    android:padding="@dimen/normal_space"
     android:orientation="vertical"
     style="@style/BottomSheetDialog"
     android:layout_width="match_parent"
@@ -20,7 +20,7 @@
 
     <TextView
         style="@style/GreyMediumBody"
-        android:layout_marginTop="@dimen/small_margin"
+        android:layout_marginTop="@dimen/small_space"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/recover_description" />
@@ -28,7 +28,7 @@
     <TextView
         android:text="@string/title_email_text_input"
         style="@style/MediumBody1"
-        android:layout_marginTop="@dimen/small_margin"
+        android:layout_marginTop="@dimen/small_space"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
@@ -36,7 +36,7 @@
         android:id="@+id/email_text_input"
         style="@style/TextInput"
         app:endIconMode="clear_text"
-        android:layout_marginTop="@dimen/big_small_margin"
+        android:layout_marginTop="@dimen/extra_small_space"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:placeholderText="@string/recover_placeholder_email_text_input" >
@@ -53,7 +53,7 @@
 
     <ViewFlipper
         android:id="@+id/action_flipper"
-        android:layout_marginTop="@dimen/normal_margin"
+        android:layout_marginTop="@dimen/normal_space"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
@@ -74,7 +74,7 @@
                 android:text="@string/title_cancel_button"
                 style="@style/CancelButton"
                 android:layout_height="@dimen/button_height"
-                android:layout_marginTop="@dimen/small_margin"
+                android:layout_marginTop="@dimen/small_space"
                 android:layout_width="match_parent" />
 
         </LinearLayout>

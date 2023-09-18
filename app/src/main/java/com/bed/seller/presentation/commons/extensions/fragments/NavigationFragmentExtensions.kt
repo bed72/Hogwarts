@@ -23,5 +23,8 @@ fun Fragment.navigateTo(directions: NavDirections) = findNavController().navigat
 fun Fragment.navigateTo(@IdRes destination: Int, args: Bundle) =
     findNavController().navigate(destination, args)
 
-fun Fragment.navigateTo(directions: NavDirections, args: FragmentNavigator.Extras) =
+fun Fragment.navigateToArgs(directions: NavDirections, args: FragmentNavigator.Extras) =
     findNavController().navigate(directions, args)
+
+fun Fragment.navigateToArgs(@IdRes destination: Int, args: Bundle?) =
+    findNavController().navigate(destination, args)

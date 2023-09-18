@@ -26,11 +26,13 @@ class RemoteAuthenticationDatasourceImpl @Inject constructor(
     private val client: FirebaseClient
 ) : RemoteAuthenticationDatasource {
 
-    init {
-        client.authentication.setLanguageCode("pt-BR")
-    }
+    init { client.authentication.setLanguageCode("pt-BR") }
 
-    override suspend fun isLoggedIn(): Boolean = client.authentication.currentUser != null
+    override fun signOut(): Boolean =
+        try { client.authentication.signOut().run { true } }
+        catch (exception: Exception) { false }
+    override fun isLoggedIn(): Boolean = client.authentication.currentUser != null
+
     override suspend fun reset(parameter: ResetParameter): Boolean = suspendCoroutine { continuation ->
         client
             .authentication

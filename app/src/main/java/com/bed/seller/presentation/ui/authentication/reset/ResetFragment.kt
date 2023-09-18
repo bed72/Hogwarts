@@ -2,8 +2,10 @@ package com.bed.seller.presentation.ui.authentication.reset
 
 import android.os.Bundle
 import android.view.View
+
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import androidx.activity.OnBackPressedCallback
 
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,7 +26,6 @@ import com.bed.seller.presentation.commons.extensions.actionKeyboard
 import com.bed.seller.presentation.commons.extensions.fragments.snackbar
 import com.bed.seller.presentation.commons.extensions.fragments.navigateTo
 import com.bed.seller.presentation.commons.extensions.fragments.hideKeyboard
-import com.bed.seller.presentation.commons.extensions.fragments.navigateBack
 
 @AndroidEntryPoint
 class ResetFragment : BaseFragment<ResetFragmentBinding>(ResetFragmentBinding::inflate) {
@@ -33,6 +34,18 @@ class ResetFragment : BaseFragment<ResetFragmentBinding>(ResetFragmentBinding::i
     private val viewModel: ResetViewModel by viewModels()
 
     private val arguments by navArgs<ResetFragmentArgs>()
+
+    private val onBackPressed = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            navigateTo(ResetFragmentDirections.actionResetToSignIn())
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressed)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -121,7 +134,7 @@ class ResetFragment : BaseFragment<ResetFragmentBinding>(ResetFragmentBinding::i
     private fun handlerSuccessMessage(): Int {
         snackbar(R.string.reset_success_title)
 
-        navigateBack()
+        navigateTo(ResetFragmentDirections.actionResetToSignIn())
 
         return States.FLIPPER_SUCCESS
     }

@@ -20,7 +20,7 @@
         android:id="@+id/create_product_button"
         android:text="@string/home_fab_title_button"
         app:icon="@drawable/ic_add"
-        android:layout_margin="@dimen/normal_margin"
+        android:layout_margin="@dimen/normal_space"
         style="@style/FloatingActionButton"
         android:layout_gravity="bottom|end"
         android:layout_width="wrap_content"

@@ -38,7 +38,7 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(SplashFragmentBinding
                 with(viewModel) {
                     isLoggedIn()
 
-                    state.collect { state ->
+                    states.collect { state ->
                         when (state) {
                             SplashViewModel.States.Loading -> animate()
                             is SplashViewModel.States.IsLoggedIn -> navigate(state.isSuccess)

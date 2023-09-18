@@ -3,11 +3,8 @@ package com.bed.seller.presentation.ui.splash
 import javax.inject.Inject
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,12 +19,12 @@ class SplashViewModel @Inject constructor(
 ) : ViewModel() {
     private val _state = MutableStateFlow<States>(States.Loading)
 
-    val state: StateFlow<States> = _state.asStateFlow()
+    val states: StateFlow<States> get() = _state.asStateFlow()
 
     fun isLoggedIn() {
-        viewModelScope.launch {
-            isLoggedInUseCase().onStart { onLoading() }.collect { onSuccess(it) }
-        }
+        onLoading()
+
+        onSuccess(isLoggedInUseCase())
     }
 
     private fun onLoading() {

@@ -20,10 +20,15 @@ import com.bed.core.usecases.authentication.RecoverUseCaseImpl
 import com.bed.core.usecases.authentication.IsLoggedInUseCase
 import com.bed.core.usecases.authentication.IsLoggedInUseCaseImpl
 
+import com.bed.core.usecases.authentication.SignOutUseCase
+import com.bed.core.usecases.authentication.SignOutUseCaseImpl
 
 @Module
 @InstallIn(ViewModelComponent::class)
 interface AuthenticationUseCaseModule {
+    @Binds
+    fun bindSignOut(useCase: SignOutUseCaseImpl): SignOutUseCase
+
     @Binds
     fun bindIsLoggedIn(useCase: IsLoggedInUseCaseImpl): IsLoggedInUseCase
 

@@ -10,7 +10,8 @@ import com.bed.core.domain.parameters.authentication.RecoverParameter
 import com.bed.core.domain.parameters.authentication.ResetParameter
 
 interface AuthenticationRepository {
-    suspend fun isLoggedIn(): Boolean
+    fun signOut(): Boolean
+    fun isLoggedIn(): Boolean
     suspend fun reset(parameter: ResetParameter): Boolean
     suspend fun recover(parameter: RecoverParameter): Boolean
     suspend fun signUp(parameter: AuthenticationParameter): AuthenticationType
@@ -20,7 +21,9 @@ interface AuthenticationRepository {
 class AuthenticationRepositoryImpl @Inject constructor(
     private val datasource: RemoteAuthenticationDatasource
 ) : AuthenticationRepository {
-    override suspend fun isLoggedIn(): Boolean = datasource.isLoggedIn()
+    override fun signOut(): Boolean = datasource.signOut()
+
+    override fun isLoggedIn(): Boolean = datasource.isLoggedIn()
 
     override suspend fun reset(parameter: ResetParameter): Boolean = datasource.reset(parameter)
 

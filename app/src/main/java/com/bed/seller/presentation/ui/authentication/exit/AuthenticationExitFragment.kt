@@ -18,15 +18,13 @@ class AuthenticationExitFragment : BaseBottomSheetDialogFragment<ExitFragmentBin
     }
 
     private fun setupComponents() {
-        setupButtonCloseApp()
-        setupButtonCloseBottomSheet()
+        setupButtons()
     }
 
-    private fun setupButtonCloseApp() {
-        binding.yesButton.setOnClickListener { it.closeApplication() }
-    }
-
-    private fun setupButtonCloseBottomSheet() {
-        binding.noButton.setOnClickListener { dismiss() }
+    private fun setupButtons() {
+        with (binding) {
+            yesButton.setOnClickListener { it.closeApplication() }
+            noButton.setOnClickListener { dismiss() }
+        }
     }
 }

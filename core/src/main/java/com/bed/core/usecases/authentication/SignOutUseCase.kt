@@ -4,12 +4,12 @@ import javax.inject.Inject
 
 import com.bed.core.data.repositories.AuthenticationRepository
 
-interface IsLoggedInUseCase {
+interface SignOutUseCase {
     operator fun invoke(): Boolean
 }
 
-class IsLoggedInUseCaseImpl @Inject constructor(
+class SignOutUseCaseImpl @Inject constructor(
     private val repository: AuthenticationRepository,
-) : IsLoggedInUseCase {
-    override fun invoke(): Boolean = repository.isLoggedIn()
+) : SignOutUseCase {
+    override fun invoke(): Boolean = repository.signOut()
 }

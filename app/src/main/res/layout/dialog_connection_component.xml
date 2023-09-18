@@ -4,7 +4,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:layout_gravity="center"
-    android:paddingHorizontal="@dimen/large_margin"
+    android:paddingHorizontal="@dimen/large_space"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -13,22 +13,22 @@
     <com.airbnb.lottie.LottieAnimationView
         app:lottie_loop="true"
         app:lottie_autoPlay="true"
-        android:layout_width="@dimen/extra_large_margin"
-        android:layout_height="@dimen/extra_large_margin"
+        android:layout_width="@dimen/extra_large_space"
+        android:layout_height="@dimen/extra_large_space"
         app:lottie_rawRes="@raw/wifi"
-        android:layout_marginTop="@dimen/large_margin" />
+        android:layout_marginTop="@dimen/large_space" />
 
     <TextView
         style="@style/SemiBoldHeading5"
-        android:layout_marginTop="@dimen/normal_margin"
+        android:layout_marginTop="@dimen/normal_space"
         android:text="@string/dialog_connection_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <TextView
         android:text="@string/dialog_connection_subtitle"
-        android:layout_marginTop="@dimen/normal_margin"
-        android:layout_marginBottom="@dimen/large_margin"
+        android:layout_marginTop="@dimen/normal_space"
+        android:layout_marginBottom="@dimen/large_space"
         style="@style/GreyMediumNormalBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
