@@ -5,12 +5,11 @@ import org.junit.Assert.assertTrue
 import org.junit.Assert.assertEquals
 
 internal class NameValueTest {
-
     @Test
     fun `Should return message failure when Name is invalid`() {
-        val message = NameValue("")
+        val value = NameValue("")
 
-        val validator = message.validate()
+        val validator = value.validate()
 
         assertTrue(validator.isLeft())
         validator.mapLeft { assertEquals("Preencha um nome e sobrenome válidos.", it) }
@@ -18,9 +17,9 @@ internal class NameValueTest {
 
     @Test
     fun `Should return message failure when Name is invalid with partial validations`() {
-        val message = NameValue("Ga Ra")
+        val value = NameValue("Ga Ra")
 
-        val validator = message.validate()
+        val validator = value.validate()
 
         assertTrue(validator.isLeft())
         validator.mapLeft { assertEquals("Preencha um nome e sobrenome válidos.", it) }
@@ -28,9 +27,9 @@ internal class NameValueTest {
 
     @Test
     fun `Should return the Name when value is valid`() {
-        val name = NameValue("Gabriel Ramos")
+        val value = NameValue("Gabriel Ramos")
 
-        val validator = name.validate()
+        val validator = value.validate()
 
         assertTrue(validator.isRight())
         validator.map { assertEquals("Gabriel Ramos", it.value) }

@@ -8,12 +8,12 @@ import arrow.core.Either
 value class EmailValue(val value: String) : ValueObject<EmailValue> {
 
     override fun validate(): Either<String, EmailValue> {
-        val (isValid, message) = rule(value)
+        val (isValid, message) = rule()
 
         return if (isValid) this.right() else message.left()
     }
 
-    private fun rule(value: String): Pair<Boolean, String> {
+    private fun rule(): Pair<Boolean, String> {
         val pattern = "^[a-zA-Z\\d+_.-]+@[a-zA-Z\\d.-]+\\.[a-zA-z]{2,3}\$".toRegex()
 
         return when {

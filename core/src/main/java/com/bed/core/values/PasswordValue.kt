@@ -8,12 +8,12 @@ import arrow.core.Either
 value class PasswordValue (val value: String) : ValueObject<PasswordValue> {
 
     override fun validate(): Either<String, PasswordValue> {
-        val (isValid, message) = rule(value)
+        val (isValid, message) = rule()
 
         return if (isValid) this.right() else message.left()
     }
 
-    private fun rule(value: String): Pair<Boolean, String> {
+    private fun rule(): Pair<Boolean, String> {
         val minSize = 6
         val patternNeedsNumberCharacter = ".*\\d.*".toRegex()
         val patternNeedsUpperCaseCharacter = ".*[A-Z].*".toRegex()

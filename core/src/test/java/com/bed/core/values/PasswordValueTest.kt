@@ -5,12 +5,11 @@ import org.junit.Assert.assertTrue
 import org.junit.Assert.assertEquals
 
 internal class PasswordValueTest {
-
     @Test
     fun `Should return message failure when Password is invalid`() {
-        val message = PasswordValue("")
+        val value = PasswordValue("")
 
-        val validator = message.validate()
+        val validator = value.validate()
 
         assertTrue(validator.isLeft())
         validator.mapLeft { assertEquals("Preencha uma senha válida.", it) }
@@ -18,9 +17,9 @@ internal class PasswordValueTest {
 
     @Test
     fun `Should return message failure when Password is invalid with partial validations length more 5 character required`() {
-        val message = PasswordValue("Pa")
+        val value = PasswordValue("Pa")
 
-        val validator = message.validate()
+        val validator = value.validate()
 
         assertTrue(validator.isLeft())
         validator.mapLeft { assertEquals("A senha presica conter mais de 5 caracteres.", it) }
@@ -28,9 +27,9 @@ internal class PasswordValueTest {
 
     @Test
     fun `Should return message failure when Password is invalid with partial validations numeric character required`() {
-        val message = PasswordValue("password")
+        val value = PasswordValue("password")
 
-        val validator = message.validate()
+        val validator = value.validate()
 
         assertTrue(validator.isLeft())
         validator.mapLeft { assertEquals("A senha presica conter caracteres numéricos.", it) }
@@ -38,9 +37,9 @@ internal class PasswordValueTest {
 
     @Test
     fun `Should return message failure when Password is invalid with partial validations capital character required`() {
-        val message = PasswordValue("passw0rd")
+        val value = PasswordValue("passw0rd")
 
-        val validator = message.validate()
+        val validator = value.validate()
 
         assertTrue(validator.isLeft())
         validator.mapLeft { assertEquals("A senha presica conter caracteres maiúsculos.", it) }
@@ -48,9 +47,9 @@ internal class PasswordValueTest {
 
     @Test
     fun `Should return the Name when value is valid`() {
-        val name = PasswordValue("P@ssw0rD")
+        val value = PasswordValue("P@ssw0rD")
 
-        val validator = name.validate()
+        val validator = value.validate()
 
         assertTrue(validator.isRight())
         validator.map { assertEquals("P@ssw0rD", it.value ) }

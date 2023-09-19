@@ -7,9 +7,9 @@ import org.junit.Assert.assertEquals
 internal class StringValueTest {
     @Test
     fun `Should return message failure when Sting is invalid`() {
-        val message = StringValue("")
+        val value = StringValue("")
 
-        val validator = message.validate()
+        val validator = value.validate()
 
         assertTrue(validator.isLeft())
         validator.mapLeft { assertEquals("Preencha um valor válido.", it) }
@@ -17,9 +17,9 @@ internal class StringValueTest {
 
     @Test
     fun `Should return the String when value is invalid`() {
-        val message = StringValue("bed")
+        val value = StringValue("bed")
 
-        val validator = message.validate()
+        val validator = value.validate()
 
         assertTrue(validator.isRight())
         validator.map { assertEquals("bed", it.value) }

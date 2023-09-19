@@ -5,12 +5,11 @@ import org.junit.Assert.assertTrue
 import org.junit.Assert.assertEquals
 
 internal class EmailValueTest {
-
     @Test
     fun `Should return message failure when E-mail is invalid`() {
-        val message = EmailValue("")
+        val value = EmailValue("")
 
-        val validator = message.validate()
+        val validator = value.validate()
 
         assertTrue(validator.isLeft())
         validator.mapLeft { assertEquals("Preencha um e-mail válido.", it) }
@@ -18,9 +17,9 @@ internal class EmailValueTest {
 
     @Test
     fun `Should return message failure when E-mail is invalid with partial validations`() {
-        val message = EmailValue("email.com")
+        val value = EmailValue("email.com")
 
-        val validator = message.validate()
+        val validator = value.validate()
 
         assertTrue(validator.isLeft())
         validator.mapLeft { assertEquals("Preencha um e-mail válido.", it) }
@@ -28,9 +27,9 @@ internal class EmailValueTest {
 
     @Test
     fun `Should return the E-mail when value is valid`() {
-        val name = EmailValue("email@email.com")
+        val value = EmailValue("email@email.com")
 
-        val validator = name.validate()
+        val validator = value.validate()
 
         assertTrue(validator.isRight())
         validator.map { assertEquals("email@email.com", it.value) }
