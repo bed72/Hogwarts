@@ -6,7 +6,7 @@ import org.junit.Assert.assertEquals
 
 import com.bed.core.values.EmailValue
 
-import com.bed.test.factories.authentication.AuthenticationFactory
+import com.bed.test.factories.AuthenticationFactory
 
 internal class RecoverParameterTest {
     private lateinit var factory: AuthenticationFactory

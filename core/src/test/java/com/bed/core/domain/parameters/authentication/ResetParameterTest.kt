@@ -7,7 +7,7 @@ import org.junit.Assert.assertEquals
 import com.bed.core.values.StringValue
 import com.bed.core.values.PasswordValue
 
-import com.bed.test.factories.authentication.AuthenticationFactory
+import com.bed.test.factories.AuthenticationFactory
 
 internal class ResetParameterTest {
     private lateinit var factory: AuthenticationFactory

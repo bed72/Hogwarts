@@ -10,7 +10,7 @@ import org.junit.Assert.assertEquals
 internal class DateValueTest {
     @Test
     fun `Should return message when Date is invalid`() {
-        val value = DateValue(LocalDateTime.of(2023, Month.JUNE, 27, 12, 0))
+        val value = DateValue(LocalDateTime.of(2023, Month.JULY, 27, 12, 0))
 
         val validator = value.validate()
 

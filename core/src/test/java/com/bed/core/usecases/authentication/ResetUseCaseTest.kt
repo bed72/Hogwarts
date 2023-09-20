@@ -22,7 +22,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import com.bed.test.rule.MainCoroutineRule
 
 import com.bed.core.data.repositories.AuthenticationRepository
-import com.bed.test.factories.authentication.AuthenticationFactory
+import com.bed.test.factories.AuthenticationFactory
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)

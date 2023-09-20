@@ -1,4 +1,4 @@
-package com.bed.test.factories.authentication
+package com.bed.test.factories
 
 import arrow.core.left
 import arrow.core.right

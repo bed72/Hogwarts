@@ -23,7 +23,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.bed.core.usecases.authentication.RecoverUseCase
 
 import com.bed.test.rule.MainCoroutineRule
-import com.bed.test.factories.authentication.AuthenticationFactory
+import com.bed.test.factories.AuthenticationFactory
 
 @RunWith(MockitoJUnitRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)

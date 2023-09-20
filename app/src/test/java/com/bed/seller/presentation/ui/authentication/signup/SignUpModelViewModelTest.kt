@@ -25,7 +25,7 @@ import com.bed.core.usecases.storage.SaveStorageUseCase
 import com.bed.core.usecases.authentication.SignUpUseCase
 
 import com.bed.test.rule.MainCoroutineRule
-import com.bed.test.factories.authentication.AuthenticationFactory
+import com.bed.test.factories.AuthenticationFactory
 
 @RunWith(MockitoJUnitRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)

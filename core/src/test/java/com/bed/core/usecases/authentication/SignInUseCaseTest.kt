@@ -26,7 +26,7 @@ import com.bed.test.rule.MainCoroutineRule
 
 import com.bed.core.data.repositories.AuthenticationRepository
 
-import com.bed.test.factories.authentication.AuthenticationFactory
+import com.bed.test.factories.AuthenticationFactory
 
 import com.bed.core.domain.models.failure.MessageModel
 import com.bed.core.domain.models.authentication.AuthenticationModel
