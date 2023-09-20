@@ -4,10 +4,19 @@ import java.time.Month
 import java.time.LocalDateTime
 
 import org.junit.Test
+import org.junit.Before
 import org.junit.Assert.assertTrue
 import org.junit.Assert.assertEquals
 
+import com.bed.test.factories.OfferFactory
+
 internal class DateValueTest {
+    private lateinit var factory: OfferFactory
+
+    @Before
+    fun setUp() {
+        factory = OfferFactory()
+    }
     @Test
     fun `Should return message when Date is invalid`() {
         val value = DateValue(LocalDateTime.of(2023, Month.JULY, 27, 12, 0))
@@ -20,11 +29,11 @@ internal class DateValueTest {
 
     @Test
     fun `Should return the format Date when value is valid`() {
-        val value = DateValue(LocalDateTime.now())
+        val value = DateValue(factory.createAt)
 
         val validator = value.validate()
 
         assertTrue(validator.isRight())
-        validator.map { assertEquals("19/09/2023", it.toDate()) }
+        validator.map { assertEquals("27/06/2072", it.toDate()) }
     }
 }

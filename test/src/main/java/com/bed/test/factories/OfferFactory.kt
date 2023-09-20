@@ -13,15 +13,15 @@ import com.bed.core.values.StringValue
 import com.bed.core.domain.parameters.offer.OfferParameter
 
 class OfferFactory {
-    val createAt: LocalDateTime get() = LocalDateTime.of(2772, Month.JUNE, 27, 12, 0)
-    val validateAt: LocalDateTime get() = LocalDateTime.of(2772, Month.JULY, 27, 12, 0)
+    val createAt: LocalDateTime get() = LocalDateTime.of(2072, Month.JUNE, 27, 12, 0)
+    val validateAt: LocalDateTime get() = LocalDateTime.of(2072, Month.JULY, 27, 12, 0)
 
     val offerValidParameter = OfferParameter(
         StringValue("Coffee"),
         PriceValue(27.72),
         StringValue("The better coffee this city."),
         DateValue(createAt),
-        DateValue(LocalDateTime.of(2772, Month.JULY, 27, 12, 0))
+        DateValue(validateAt)
     )
 
     val offerInvalidParameter = OfferParameter(

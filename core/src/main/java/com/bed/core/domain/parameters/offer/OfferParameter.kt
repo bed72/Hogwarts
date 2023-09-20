@@ -18,14 +18,14 @@ data class OfferParameter(
     val price: PriceValue,
     val description: StringValue,
     val createdAt: DateValue,
-    val validateAt: DateValue
+    val validatedAt: DateValue
 ) : Parameter<OfferParameter>() {
     override fun isValid(): Either<List<String>, OfferParameter> = either {
         val nameIsValid = name.validate()
         val priceIsValid = price.validate()
         val descriptionIsValid = description.validate()
         val createdAtIsValid = createdAt.validate()
-        val validateAtIsValid = createdAt.validate()
+        val validateAtIsValid = validatedAt.validate()
 
         zipOrAccumulate(
             { before, after -> combine(before, after) },
@@ -34,7 +34,7 @@ data class OfferParameter(
             { ensure(descriptionIsValid.isRight()) { prepare(descriptionIsValid.leftOrNull()) } },
             { ensure(createdAtIsValid.isRight()) { prepare(createdAtIsValid.leftOrNull()) } },
             { ensure(validateAtIsValid.isRight()) { prepare(validateAtIsValid.leftOrNull()) } },
-        ) { _, _, _, _, _ -> OfferParameter(name, price, description, createdAt, validateAt) }
+        ) { _, _, _, _, _ -> OfferParameter(name, price, description, createdAt, validatedAt) }
     }
 
     companion object {

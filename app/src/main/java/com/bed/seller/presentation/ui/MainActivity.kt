@@ -100,9 +100,9 @@ class MainActivity : AppCompatActivity() {
         if (isTopLevelDestination.not()) binding.toolbar.setNavigationIcon(R.drawable.ic_back)
     }
 
-    companion object {
-        private const val ANIMATION_PROPERTY = 0F
-        private const val ANIMATION_ROTATION = 360F
-        private const val ANIMATION_DURATION = 2000L
-    }
+//    companion object {
+//        private const val ANIMATION_PROPERTY = 0F
+//        private const val ANIMATION_ROTATION = 360F
+//        private const val ANIMATION_DURATION = 2000L
+//    }
 }
