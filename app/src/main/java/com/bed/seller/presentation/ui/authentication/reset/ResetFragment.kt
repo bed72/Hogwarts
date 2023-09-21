@@ -11,7 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 import com.bed.seller.R
 
-import com.bed.core.values.StringValue
+import com.bed.core.values.CodeValue
 
 import com.bed.seller.databinding.ResetFragmentBinding
 
@@ -55,7 +55,7 @@ class ResetFragment : BaseFragment<ResetFragmentBinding>(ResetFragmentBinding::i
         observeFormState()
         observeResetState()
 
-        parameter = parameter.copy(code = StringValue(handleCode(arguments.code)))
+        parameter = parameter.copy(code = CodeValue(handleCode(arguments.code)))
     }
 
     private fun observeFormState() {

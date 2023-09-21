@@ -7,18 +7,21 @@ import arrow.core.raise.zipOrAccumulate
 
 import java.time.LocalDateTime
 
-import com.bed.core.values.DateValue
+import com.bed.core.values.CodeValue
 import com.bed.core.values.PriceValue
-import com.bed.core.values.StringValue
+import com.bed.core.values.CreatedAtValue
+import com.bed.core.values.DescriptionValue
+import com.bed.core.values.ProductNameValue
+import com.bed.core.values.ValidatedAtValue
 
 import com.bed.core.domain.parameters.Parameter
 
 data class OfferParameter(
-    val name: StringValue,
+    val name: ProductNameValue,
     val price: PriceValue,
-    val description: StringValue,
-    val createdAt: DateValue,
-    val validatedAt: DateValue
+    val description: DescriptionValue,
+    val createdAt: CreatedAtValue,
+    val validatedAt: ValidatedAtValue
 ) : Parameter<OfferParameter>() {
     override fun isValid(): Either<List<String>, OfferParameter> = either {
         val nameIsValid = name.validate()
@@ -40,11 +43,11 @@ data class OfferParameter(
     companion object {
         operator fun invoke() =
             OfferParameter(
-                StringValue(""),
+                ProductNameValue(""),
                 PriceValue(0.0),
-                StringValue(""),
-                DateValue(LocalDateTime.now()),
-                DateValue(LocalDateTime.now())
+                DescriptionValue(""),
+                CreatedAtValue(LocalDateTime.now()),
+                ValidatedAtValue(LocalDateTime.now())
             )
     }
 }

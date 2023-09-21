@@ -4,20 +4,20 @@ import org.junit.Test
 import org.junit.Assert.assertTrue
 import org.junit.Assert.assertEquals
 
-internal class StringValueTest {
+internal class CodeValueTest {
     @Test
     fun `Should return message failure when Sting is invalid`() {
-        val value = StringValue("")
+        val value = CodeValue("")
 
         val validator = value.validate()
 
         assertTrue(validator.isLeft())
-        validator.mapLeft { assertEquals("Preencha um valor válido.", it) }
+        validator.mapLeft { assertEquals("O código não é válido.", it) }
     }
 
     @Test
     fun `Should return the String when value is invalid`() {
-        val value = StringValue("bed")
+        val value = CodeValue("bed")
 
         val validator = value.validate()
 

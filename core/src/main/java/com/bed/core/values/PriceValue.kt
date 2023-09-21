@@ -15,10 +15,10 @@ value class PriceValue(val value: Double) : ValueObject<PriceValue> {
     }
 
     private fun rule(): Pair<Boolean, String> = when {
-            value <= 0 -> false to "Preencha um valor maior que 0."
-            value.isNaN() -> false to "Preencha um valor valído."
-            else -> true to toPrice()
-        }
+        value.isNaN() -> false to Values.INVALID_PRICE.value
+        value <= 0 -> false to Values.INVALID_PRICE_NEEDS_BIGGER_ZERO.value
+        else -> true to toPrice()
+    }
 }
 
 fun PriceValue.toPrice(): String = DecimalFormat("R$ #,###,##0.00").format(value)

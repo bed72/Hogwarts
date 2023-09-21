@@ -6,13 +6,13 @@ import arrow.core.raise.ensure
 import arrow.core.raise.zipOrAccumulate
 
 import com.bed.core.values.Values
-import com.bed.core.values.StringValue
+import com.bed.core.values.CodeValue
 import com.bed.core.values.PasswordValue
 
 import com.bed.core.domain.parameters.Parameter
 
 data class ResetParameter(
-    val code: StringValue,
+    val code: CodeValue,
     val password: PasswordValue,
     val repeatPassword: PasswordValue
 ) : Parameter<ResetParameter>() {
@@ -34,6 +34,6 @@ data class ResetParameter(
 
     companion object {
         operator fun invoke() =
-            ResetParameter(StringValue(""), PasswordValue(""), PasswordValue(""))
+            ResetParameter(CodeValue(""), PasswordValue(""), PasswordValue(""))
     }
 }

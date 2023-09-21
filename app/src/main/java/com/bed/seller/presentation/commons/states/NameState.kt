@@ -5,7 +5,7 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.MutableLiveData
 
-import com.bed.core.values.NameValue
+import com.bed.core.values.UserNameValue
 import com.bed.core.usecases.coroutines.CoroutinesUseCase
 
 class NameState(useCase: CoroutinesUseCase) {
@@ -15,7 +15,7 @@ class NameState(useCase: CoroutinesUseCase) {
     val states: LiveData<States> = actions.switchMap { action ->
         liveData(useCase.main()) {
             if (action is Actions.Validate) {
-                NameValue(action.parameter).validate().fold(
+                UserNameValue(action.parameter).validate().fold(
                     { failure -> emit(States.Failure(failure)) },
                     { success -> emit(States.Success(success)) }
                 )
@@ -33,6 +33,6 @@ class NameState(useCase: CoroutinesUseCase) {
 
     sealed class States {
         data class Failure(val data: String) : States()
-        data class Success(val data: NameValue) : States()
+        data class Success(val data: UserNameValue) : States()
     }
 }

@@ -12,7 +12,7 @@ internal class PriceValueTest {
         val validator = value.validate()
 
         assertTrue(validator.isLeft())
-        validator.mapLeft { assertEquals("Preencha um valor maior que 0.", it) }
+        validator.mapLeft { assertEquals("Preencha um valor maior que R\$ 0.", it) }
     }
 
     @Test

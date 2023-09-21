@@ -6,30 +6,33 @@ import arrow.core.right
 import java.time.Month
 import java.time.LocalDateTime
 
-import com.bed.core.values.DateValue
+import com.bed.core.values.CodeValue
 import com.bed.core.values.PriceValue
-import com.bed.core.values.StringValue
+import com.bed.core.values.CreatedAtValue
+import com.bed.core.values.DescriptionValue
+import com.bed.core.values.ProductNameValue
 
 import com.bed.core.domain.parameters.offer.OfferParameter
+import com.bed.core.values.ValidatedAtValue
 
 class OfferFactory {
     val createAt: LocalDateTime get() = LocalDateTime.of(2072, Month.JUNE, 27, 12, 0)
     val validateAt: LocalDateTime get() = LocalDateTime.of(2072, Month.JULY, 27, 12, 0)
 
     val offerValidParameter = OfferParameter(
-        StringValue("Coffee"),
+        ProductNameValue("Coffee"),
         PriceValue(27.72),
-        StringValue("The better coffee this city."),
-        DateValue(createAt),
-        DateValue(validateAt)
+        DescriptionValue("The better coffee this city."),
+        CreatedAtValue(createAt),
+        ValidatedAtValue(validateAt)
     )
 
     val offerInvalidParameter = OfferParameter(
-        StringValue(""),
+        ProductNameValue(""),
         PriceValue(0.0),
-        StringValue(""),
-        DateValue(LocalDateTime.now()),
-        DateValue(LocalDateTime.of(1997, Month.JULY, 3, 10, 27))
+        DescriptionValue(""),
+        CreatedAtValue(LocalDateTime.now()),
+        ValidatedAtValue(LocalDateTime.of(1997, Month.JULY, 3, 10, 27))
     )
 
     val failure get() = create(Mock.Failure)

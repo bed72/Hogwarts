@@ -10,30 +10,31 @@ import org.junit.Assert.assertEquals
 
 import com.bed.test.factories.OfferFactory
 
-internal class DateValueTest {
+internal class ValidatedAtValueTest {
     private lateinit var factory: OfferFactory
 
     @Before
     fun setUp() {
         factory = OfferFactory()
     }
+
     @Test
     fun `Should return message when Date is invalid`() {
-        val value = DateValue(LocalDateTime.of(2023, Month.JULY, 27, 12, 0))
+        val value = ValidatedAtValue(LocalDateTime.of(2023, Month.JULY, 27, 12, 0))
 
         val validator = value.validate()
 
         assertTrue(validator.isLeft())
-        validator.mapLeft { assertEquals("Preencha uma data válida.", it) }
+        validator.mapLeft { assertEquals("A data precisa ser a partir de amanhã.", it) }
     }
 
     @Test
     fun `Should return the format Date when value is valid`() {
-        val value = DateValue(factory.createAt)
+        val value = ValidatedAtValue(factory.validateAt)
 
         val validator = value.validate()
 
         assertTrue(validator.isRight())
-        validator.map { assertEquals("27/06/2072", it.toDate()) }
+        validator.map { assertEquals("27/07/2072", it.toDate()) }
     }
 }

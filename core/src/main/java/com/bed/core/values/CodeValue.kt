@@ -5,9 +5,9 @@ import arrow.core.right
 import arrow.core.Either
 
 @JvmInline
-value class StringValue(val value: String) : ValueObject<StringValue> {
+value class CodeValue(val value: String) : ValueObject<CodeValue> {
 
-    override fun validate(): Either<String, StringValue> {
+    override fun validate(): Either<String, CodeValue> {
         val (isValid, message) = rule()
 
         return if (isValid) this.right() else message.left()
@@ -15,7 +15,7 @@ value class StringValue(val value: String) : ValueObject<StringValue> {
 
     private fun rule(): Pair<Boolean, String> =
         when {
-            value.isBlank() -> false to Values.INVALID_VALUE.value
+            value.isBlank() -> false to Values.INVALID_CODE.value
             else -> true to value
         }
 }

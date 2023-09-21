@@ -4,7 +4,7 @@ import org.junit.Test
 import org.junit.Before
 import org.junit.Assert.assertEquals
 
-import com.bed.core.values.StringValue
+import com.bed.core.values.CodeValue
 import com.bed.core.values.PasswordValue
 
 import com.bed.test.factories.AuthenticationFactory
@@ -30,12 +30,12 @@ internal class ResetParameterTest {
     fun `Should try validate Reset Parameter return failure when code is invalid`() {
         factory.resetInvalidParameter
             .copy(
-                code = StringValue(""),
+                code = CodeValue(""),
                 password = PasswordValue("P@ssw0rD"),
                 repeatPassword = PasswordValue("P@ssw0rD")
             )
             .isValid()
-            .mapLeft { message -> assertEquals(listOf("Preencha um valor válido."), message) }
+            .mapLeft { message -> assertEquals(listOf("O código não é válido."), message) }
     }
 
     @Test
@@ -47,7 +47,7 @@ internal class ResetParameterTest {
 
         factory.resetInvalidParameter
             .copy(
-                code = StringValue("5CQcsREkB5xcqbY1L.."),
+                code = CodeValue("5CQcsREkB5xcqbY1L.."),
                 password = PasswordValue(""),
                 repeatPassword = PasswordValue("P@ssw0rD")
             )
@@ -64,7 +64,7 @@ internal class ResetParameterTest {
 
         factory.resetInvalidParameter
             .copy(
-                code = StringValue("5CQcsREkB5xcqbY1L.."),
+                code = CodeValue("5CQcsREkB5xcqbY1L.."),
                 password = PasswordValue("P@ssworD"),
                 repeatPassword = PasswordValue("P@ssw0rD")
             )
@@ -81,7 +81,7 @@ internal class ResetParameterTest {
 
         factory.resetInvalidParameter
             .copy(
-                code = StringValue("5CQcsREkB5xcqbY1L.."),
+                code = CodeValue("5CQcsREkB5xcqbY1L.."),
                 password = PasswordValue("p@ssw0rd"),
                 repeatPassword = PasswordValue("P@ssw0rD")
             )
@@ -98,7 +98,7 @@ internal class ResetParameterTest {
 
         factory.resetInvalidParameter
             .copy(
-                code = StringValue("5CQcsREkB5xcqbY1L.."),
+                code = CodeValue("5CQcsREkB5xcqbY1L.."),
                 password = PasswordValue("P@ssw0rD"),
                 repeatPassword = PasswordValue("")
             )
@@ -115,7 +115,7 @@ internal class ResetParameterTest {
 
         factory.resetInvalidParameter
             .copy(
-                code = StringValue("5CQcsREkB5xcqbY1L.."),
+                code = CodeValue("5CQcsREkB5xcqbY1L.."),
                 password = PasswordValue("P@ssw0rD"),
                 repeatPassword = PasswordValue("P@ssworD")
             )
@@ -132,7 +132,7 @@ internal class ResetParameterTest {
 
         factory.resetInvalidParameter
             .copy(
-                code = StringValue("5CQcsREkB5xcqbY1L.."),
+                code = CodeValue("5CQcsREkB5xcqbY1L.."),
                 password = PasswordValue("P@ssw0rD"),
                 repeatPassword = PasswordValue("p@ssw0rd")
             )
@@ -143,14 +143,14 @@ internal class ResetParameterTest {
     @Test
     fun `Should try validate Reset Parameter return failure when code, password and repeat password is empty`() {
         val expect = listOf(
-            "Preencha um valor válido.",
+            "O código não é válido.",
             "Preencha uma senha válida.",
             "Preencha uma senha válida."
         )
 
         factory.resetInvalidParameter
             .copy(
-                code = StringValue(""),
+                code = CodeValue(""),
                 password = PasswordValue(""),
                 repeatPassword = PasswordValue("")
             )
