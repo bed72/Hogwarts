@@ -1,53 +1,35 @@
 package com.bed.core.domain.parameters.offer
 
 import arrow.core.Either
-import arrow.core.raise.either
-import arrow.core.raise.ensure
-import arrow.core.raise.zipOrAccumulate
+import arrow.core.left
+import arrow.core.right
 
 import java.time.LocalDateTime
 
-import com.bed.core.values.CodeValue
-import com.bed.core.values.PriceValue
-import com.bed.core.values.CreatedAtValue
-import com.bed.core.values.DescriptionValue
-import com.bed.core.values.ProductNameValue
-import com.bed.core.values.ValidatedAtValue
+import com.bed.core.values.Price
+import com.bed.core.values.CreatedAt
+import com.bed.core.values.Description
+import com.bed.core.values.ProductName
+import com.bed.core.values.ValidatedAt
 
 import com.bed.core.domain.parameters.Parameter
 
 data class OfferParameter(
-    val name: ProductNameValue,
-    val price: PriceValue,
-    val description: DescriptionValue,
-    val createdAt: CreatedAtValue,
-    val validatedAt: ValidatedAtValue
-) : Parameter<OfferParameter>() {
-    override fun isValid(): Either<List<String>, OfferParameter> = either {
-        val nameIsValid = name.validate()
-        val priceIsValid = price.validate()
-        val descriptionIsValid = description.validate()
-        val createdAtIsValid = createdAt.validate()
-        val validateAtIsValid = validatedAt.validate()
+    val name: ProductName = ProductName(""),
+    val price: Price = Price(0.0),
+    val description: Description = Description(""),
+    val createdAt: CreatedAt = CreatedAt(LocalDateTime.now()),
+    val validatedAt: ValidatedAt = ValidatedAt(LocalDateTime.now())
+) : Parameter<OfferParameter> {
+    override fun isValid(): Either<MutableSet<String?>, OfferParameter> {
+        val data = mutableSetOf(
+            name.message,
+            price.message,
+            description.message,
+            createdAt.message,
+            validatedAt.message
+        ).apply { removeIf { it == null } }
 
-        zipOrAccumulate(
-            { before, after -> combine(before, after) },
-            { ensure(nameIsValid.isRight()) { prepare(nameIsValid.leftOrNull()) } },
-            { ensure(priceIsValid.isRight()) { prepare(priceIsValid.leftOrNull()) } },
-            { ensure(descriptionIsValid.isRight()) { prepare(descriptionIsValid.leftOrNull()) } },
-            { ensure(createdAtIsValid.isRight()) { prepare(createdAtIsValid.leftOrNull()) } },
-            { ensure(validateAtIsValid.isRight()) { prepare(validateAtIsValid.leftOrNull()) } },
-        ) { _, _, _, _, _ -> OfferParameter(name, price, description, createdAt, validatedAt) }
-    }
-
-    companion object {
-        operator fun invoke() =
-            OfferParameter(
-                ProductNameValue(""),
-                PriceValue(0.0),
-                DescriptionValue(""),
-                CreatedAtValue(LocalDateTime.now()),
-                ValidatedAtValue(LocalDateTime.now())
-            )
+        return if (data.all { it == null }) this.right() else data.left()
     }
 }

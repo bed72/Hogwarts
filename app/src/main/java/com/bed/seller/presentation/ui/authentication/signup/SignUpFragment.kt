@@ -107,7 +107,7 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
     private fun validateParameter() {
         hideKeyboard()
         parameter.isValid().fold(
-            { failure -> snackbar(failure.first()) },
+            { failure -> snackbar(failure.first() ?: getString(R.string.generic_failure_title)) },
             { success -> viewModel.signUp(success) }
         )
     }

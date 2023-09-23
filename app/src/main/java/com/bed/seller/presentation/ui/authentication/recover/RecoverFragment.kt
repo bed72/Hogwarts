@@ -85,7 +85,7 @@ class RecoverFragment : BaseBottomSheetDialogFragment<RecoverFragmentBinding>(
     private fun validateParameter() {
         hideKeyboard(binding.root)
         parameter.isValid().fold(
-            { failure -> snackbar(failure.first()) },
+            { failure -> snackbar(failure.first() ?: getString(R.string.generic_failure_title)) },
             { success -> viewModel.recover(success) }
         )
     }

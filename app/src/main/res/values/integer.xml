@@ -6,5 +6,5 @@
 
     <integer name="max_length_name">16</integer>
     <integer name="max_length_email">128</integer>
-    <integer name="max_length_password">16</integer>
+    <integer name="max_length_password">20</integer>
 </resources>

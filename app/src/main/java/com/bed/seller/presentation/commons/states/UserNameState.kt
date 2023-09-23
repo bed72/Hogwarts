@@ -5,21 +5,20 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.MutableLiveData
 
-import com.bed.core.values.UserNameValue
+import com.bed.core.values.UserName
+
 import com.bed.core.usecases.coroutines.CoroutinesUseCase
 
-class NameState(useCase: CoroutinesUseCase) {
+class UserNameState(useCase: CoroutinesUseCase) {
 
     private val actions = MutableLiveData<Actions>()
 
     val states: LiveData<States> = actions.switchMap { action ->
         liveData(useCase.main()) {
-            if (action is Actions.Validate) {
-                UserNameValue(action.parameter).validate().fold(
-                    { failure -> emit(States.Failure(failure)) },
-                    { success -> emit(States.Success(success)) }
-                )
-            }
+            if (action is Actions.Validate)
+                UserName(action.parameter).apply {
+                    if (isValid) emit(States.Success(this)) else emit(States.Failure(message))
+                }
         }
     }
 
@@ -32,7 +31,7 @@ class NameState(useCase: CoroutinesUseCase) {
     }
 
     sealed class States {
-        data class Failure(val data: String) : States()
-        data class Success(val data: UserNameValue) : States()
+        data class Success(val data: UserName) : States()
+        data class Failure(val data: String? = "Opss") : States()
     }
 }

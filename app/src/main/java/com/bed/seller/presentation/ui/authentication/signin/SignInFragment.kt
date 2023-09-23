@@ -118,7 +118,7 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
     private fun validateParameter() {
         hideKeyboard()
         parameter.isValid().fold(
-            { failure -> snackbar(failure.first()) },
+            { failure -> snackbar(failure.first()?: getString(R.string.generic_failure_title)) },
             { success -> viewModel.signIn(success) }
         )
     }

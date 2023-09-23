@@ -47,7 +47,7 @@ internal class RecoverViewModelTest {
     @Before
     fun setUp() {
         factory = AuthenticationFactory()
-        viewModel = RecoverViewModel(rule.dispatcher, useCase)
+        viewModel = RecoverViewModel(useCase, rule.dispatcher)
             .apply { states.observeForever(observer) }
     }
 

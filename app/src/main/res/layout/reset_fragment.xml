@@ -62,34 +62,6 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:text="@string/reset_repeat_our_password_text_input"
-                style="@style/MediumBody1"
-                android:layout_marginTop="@dimen/normal_space"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/repeat_password_text_input"
-                style="@style/TextInput"
-                app:endIconMode="password_toggle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:placeholderText="@string/reset_repeat_our_password_text_input" >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/repeat_password_edit_input"
-                    android:lines="@integer/max_lines_commons"
-                    android:maxLines="@integer/max_lines_commons"
-                    android:maxLength="@integer/max_length_password"
-                    style="@style/TextInputEdit"
-                    tools:text="@string/reset_repeat_our_password_text_input"
-                    android:inputType="textPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
             <ViewFlipper
                 android:id="@+id/action_flipper"
                 android:layout_marginTop="@dimen/normal_space"

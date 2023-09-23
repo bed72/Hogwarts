@@ -8,7 +8,6 @@ import com.bed.core.domain.models.authentication.AuthenticationModel
 class StorageState(
     private val saveStorageUseCase: SaveStorageUseCase
 ) {
-
     fun save(parameter: AuthenticationModel) {
         listOf(
             StorageConstant.DATASTORE_UID_USER.value to parameter.uid,
@@ -17,5 +16,4 @@ class StorageState(
             forEach { saveStorageUseCase(it)  }
         }
     }
-
 }

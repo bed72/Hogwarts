@@ -76,6 +76,9 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email_edit_input"
+                    android:lines="@integer/max_lines_commons"
+                    android:maxLines="@integer/max_lines_commons"
+                    android:maxLength="@integer/max_length_email"
                     style="@style/TextInputEdit"
                     tools:text="@string/placeholder_email_text_input"
                     android:layout_width="match_parent"
@@ -111,6 +114,9 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password_edit_input"
+                    android:lines="@integer/max_lines_commons"
+                    android:maxLines="@integer/max_lines_commons"
+                    android:maxLength="@integer/max_length_password"
                     style="@style/TextInputEdit"
                     tools:text="@string/placeholder_password_text_input"
                     android:inputType="textPassword"

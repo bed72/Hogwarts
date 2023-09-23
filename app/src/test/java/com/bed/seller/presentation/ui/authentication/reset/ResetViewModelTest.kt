@@ -47,7 +47,7 @@ internal class ResetViewModelTest {
     @Before
     fun setUp() {
         factory = AuthenticationFactory()
-        viewModel = ResetViewModel(rule.dispatcher, useCase)
+        viewModel = ResetViewModel(useCase, rule.dispatcher)
             .apply { states.observeForever(observer) }
     }
 

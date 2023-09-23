@@ -11,16 +11,16 @@ import dagger.hilt.android.AndroidEntryPoint
 
 import com.bed.seller.R
 
-import com.bed.core.values.CodeValue
+import com.bed.core.values.Code
 
 import com.bed.seller.databinding.ResetFragmentBinding
 
 import com.bed.core.domain.parameters.authentication.ResetParameter
 
+import com.bed.seller.presentation.commons.states.States
 import com.bed.seller.presentation.commons.states.PasswordState
 import com.bed.seller.presentation.commons.fragments.BaseFragment
 
-import com.bed.seller.presentation.commons.states.States
 import com.bed.seller.presentation.commons.extensions.debounce
 import com.bed.seller.presentation.commons.extensions.actionKeyboard
 import com.bed.seller.presentation.commons.extensions.fragments.snackbar
@@ -55,7 +55,7 @@ class ResetFragment : BaseFragment<ResetFragmentBinding>(ResetFragmentBinding::i
         observeFormState()
         observeResetState()
 
-        parameter = parameter.copy(code = CodeValue(handleCode(arguments.code)))
+        parameter = parameter.copy(code = Code(handleCode(arguments.code)))
     }
 
     private fun observeFormState() {
@@ -66,15 +66,6 @@ class ResetFragment : BaseFragment<ResetFragmentBinding>(ResetFragmentBinding::i
                     is PasswordState.States.Success -> {
                         parameter = parameter.copy(password = states.data)
                         binding.passwordTextInput.helperText = getString(R.string.valid_password)
-                    }
-                }
-            }
-            repeatPassword.states.observe(viewLifecycleOwner) { states ->
-                when (states) {
-                    is PasswordState.States.Failure -> binding.repeatPasswordTextInput.error = states.data
-                    is PasswordState.States.Success -> {
-                        parameter = parameter.copy(repeatPassword = states.data)
-                        binding.repeatPasswordTextInput.helperText = getString(R.string.valid_password)
                     }
                 }
             }
@@ -97,10 +88,9 @@ class ResetFragment : BaseFragment<ResetFragmentBinding>(ResetFragmentBinding::i
     }
 
     private fun setupForm() {
-        with (binding) {
-            passwordEditInput.debounce { viewModel.password.set(it) }
-            repeatPasswordEditInput.debounce { viewModel.repeatPassword.set(it) }
-            repeatPasswordEditInput.actionKeyboard { validateParameter() }
+        with (binding.passwordEditInput) {
+            debounce { viewModel.password.set(it) }
+            actionKeyboard { validateParameter() }
         }
     }
 
@@ -120,7 +110,7 @@ class ResetFragment : BaseFragment<ResetFragmentBinding>(ResetFragmentBinding::i
     private fun validateParameter() {
         hideKeyboard(binding.root)
         parameter.isValid().fold(
-            { failure -> snackbar(failure.first()) },
+            { failure -> snackbar(failure.first() ?: getString(R.string.generic_failure_title)) },
             { success -> viewModel.reset(success) }
         )
     }

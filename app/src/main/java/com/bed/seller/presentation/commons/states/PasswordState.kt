@@ -5,9 +5,9 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.MutableLiveData
 
-import com.bed.core.values.EmailValue
+import com.bed.core.values.Password
+
 import com.bed.core.usecases.coroutines.CoroutinesUseCase
-import com.bed.core.values.PasswordValue
 
 class PasswordState(useCase: CoroutinesUseCase) {
 
@@ -16,10 +16,9 @@ class PasswordState(useCase: CoroutinesUseCase) {
     val states: LiveData<States> = actions.switchMap { action ->
         liveData(useCase.main()) {
             if (action is Actions.Validate)
-                PasswordValue(action.parameter).validate().fold(
-                    { failure -> emit(States.Failure(failure)) },
-                    { success -> emit(States.Success(success)) }
-                )
+                Password(action.parameter).apply {
+                    if (isValid) emit(States.Success(this)) else emit(States.Failure(message))
+                }
         }
     }
 
@@ -32,7 +31,7 @@ class PasswordState(useCase: CoroutinesUseCase) {
     }
 
     sealed class States {
-        data class Failure(val data: String) : States()
-        data class Success(val data: PasswordValue) : States()
+        data class Success(val data: Password) : States()
+        data class Failure(val data: String? = "Opss") : States()
     }
 }

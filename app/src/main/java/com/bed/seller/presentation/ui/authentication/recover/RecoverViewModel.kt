@@ -20,8 +20,8 @@ import com.bed.core.domain.parameters.authentication.RecoverParameter
 
 @HiltViewModel
 class RecoverViewModel @Inject constructor(
-    coroutinesUseCase: CoroutinesUseCase,
     recoverUseCase: RecoverUseCase,
+    coroutinesUseCase: CoroutinesUseCase,
 ) : ViewModel() {
     private val actions = MutableLiveData<Actions>()
 
