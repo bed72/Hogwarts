@@ -19,10 +19,7 @@ internal class AuthenticationParameterTest {
 
     @Test
     fun `Should try validate Authentication Parameter return success`() {
-        factory.signInAndSingUpValidParameter.isValid().map { (email, password) ->
-            assertEquals("email@email.com", email.value)
-            assertEquals("P@ssw0rD", password.value)
-        }
+        assertEquals(mutableSetOf<String>(), factory.signInAndSingUpValidParameter.hasMessages())
     }
 
     @Test
@@ -32,8 +29,8 @@ internal class AuthenticationParameterTest {
                 email = Email(""),
                 password = Password("P@ssw0rD")
             )
-            .isValid()
-            .mapLeft { message -> assertEquals(mutableSetOf("O e-mail não pode ser nulo."), message) }
+            .hasMessages()
+            .firstNotNullOf { message -> assertEquals("O e-mail não pode ser nulo.", message) }
     }
 
     @Test
@@ -43,9 +40,8 @@ internal class AuthenticationParameterTest {
                 email = Email("email@email.com"),
                 password = Password("")
             )
-            .isValid().mapLeft { message ->
-                assertEquals(mutableSetOf("A senha não pode ser nula."), message)
-            }
+            .hasMessages()
+            .firstNotNullOf { message -> assertEquals("A senha não pode ser nula.", message) }
     }
 
     @Test
@@ -55,8 +51,9 @@ internal class AuthenticationParameterTest {
                 email = Email("email@email.com"),
                 password = Password("Pa")
             )
-            .isValid().mapLeft { message ->
-                assertEquals(mutableSetOf("A senha precisa ser maior que 4 caracteres."), message)
+            .hasMessages()
+            .firstNotNullOf { message ->
+                assertEquals("A senha precisa ser maior que 4 caracteres.", message)
             }
     }
 
@@ -67,8 +64,9 @@ internal class AuthenticationParameterTest {
                 email = Email("email@email.com"),
                 password = Password("P@ssw0rDP@ssw0rDP@ssw0rDP@ssw0rDP@ssw0rD")
             )
-            .isValid().mapLeft { message ->
-                assertEquals(mutableSetOf("A senha precisa ser menor que 16 caracteres."), message)
+            .hasMessages()
+            .firstNotNullOf { message ->
+                assertEquals("A senha precisa ser menor que 16 caracteres.", message)
             }
     }
 
@@ -79,12 +77,14 @@ internal class AuthenticationParameterTest {
             "A senha presica conter caracteres maiúsculos, minúsculas e números."
         )
 
-        factory.signInAndSingUpInvalidParameter
+        val response = factory.signInAndSingUpInvalidParameter
             .copy(
                 email = Email("emailemail.com"),
                 password = Password("passw0rd")
             )
-            .isValid().mapLeft { message -> assertEquals(expect, message) }
+            .hasMessages()
+
+        assertEquals(expect, response)
     }
 
     @Test
@@ -94,19 +94,22 @@ internal class AuthenticationParameterTest {
             "A senha presica conter caracteres maiúsculos, minúsculas e números."
         )
 
-        factory.signInAndSingUpInvalidParameter
+        val response = factory.signInAndSingUpInvalidParameter
             .copy(
                 email = Email("emailemail.com"),
                 password = Password("Password")
             )
-            .isValid().mapLeft { message -> assertEquals(expect, message) }
+            .hasMessages()
+
+        assertEquals(expect, response)
     }
 
     @Test
     fun `Should try validate Authentication Parameter return failure when e-mail and password is empty`() {
         val expect = mutableSetOf("O e-mail não pode ser nulo.", "A senha não pode ser nula.")
 
-        factory.signInAndSingUpInvalidParameter
-            .isValid().mapLeft { message -> assertEquals(expect, message) }
+        val response = factory.signInAndSingUpInvalidParameter.hasMessages()
+
+        assertEquals(expect, response)
     }
 }

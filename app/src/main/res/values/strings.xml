@@ -57,7 +57,7 @@
     <!-- RESET PASSWORD -->
     <string name="reset_title_button">Enviar</string>
     <string name="reset_password_title">Vamos recuperar sua conta</string>
-    <string name="reset_success_title">Senha alterada com sucesso.</string>
+    <string name="reset_success_title">Senha alterada com sucesso  &#128274;</string>
     <string name="reset_password_sub_title">Entre com uma nova senha para que possa ter acesso a sua conta.</string>
 
     <!-- PERMISSIONS -->

@@ -109,10 +109,10 @@ class ResetFragment : BaseFragment<ResetFragmentBinding>(ResetFragmentBinding::i
 
     private fun validateParameter() {
         hideKeyboard(binding.root)
-        parameter.isValid().fold(
-            { failure -> snackbar(failure.first() ?: getString(R.string.generic_failure_title)) },
-            { success -> viewModel.reset(success) }
-        )
+        with (parameter.hasMessages()) {
+            if (isEmpty()) viewModel.reset(parameter)
+            else snackbar(first() ?: getString(R.string.generic_failure_title))
+        }
     }
 
     private fun handlerFailureMessage(): Int {

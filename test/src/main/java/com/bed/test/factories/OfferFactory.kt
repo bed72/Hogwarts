@@ -9,20 +9,19 @@ import java.time.LocalDateTime
 import com.bed.core.values.Price
 import com.bed.core.values.CreatedAt
 import com.bed.core.values.Description
+import com.bed.core.values.ValidatedAt
 import com.bed.core.values.ProductName
 
 import com.bed.core.domain.parameters.offer.OfferParameter
-import com.bed.core.values.ValidatedAt
 
 class OfferFactory {
-    val createAt: LocalDateTime get() = LocalDateTime.of(2072, Month.JUNE, 27, 12, 0)
     val validateAt: LocalDateTime get() = LocalDateTime.of(2072, Month.JULY, 27, 12, 0)
 
     val offerValidParameter = OfferParameter(
         ProductName("Coffee"),
         Price(27.72),
         Description("The better coffee this city."),
-        CreatedAt(createAt),
+        CreatedAt(LocalDateTime.now()),
         ValidatedAt(validateAt)
     )
 

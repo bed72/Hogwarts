@@ -7,13 +7,13 @@ import org.junit.Test
 import org.junit.Before
 import org.junit.Assert.assertEquals
 
-import com.bed.test.factories.OfferFactory
-
 import com.bed.core.values.Price
 import com.bed.core.values.CreatedAt
 import com.bed.core.values.Description
 import com.bed.core.values.ProductName
 import com.bed.core.values.ValidatedAt
+
+import com.bed.test.factories.OfferFactory
 
 internal class OfferParameterTest {
     private lateinit var factory: OfferFactory
@@ -25,13 +25,7 @@ internal class OfferParameterTest {
 
     @Test
     fun `Should try validate Offer Parameter return success`() {
-        factory.offerValidParameter.isValid().map { data ->
-            assertEquals("Coffee", data.name.value)
-            assertEquals(27.72, data.price.value, 0.0)
-            assertEquals("The better coffee this city.", data.description.value)
-            assertEquals(factory.createAt, data.createdAt.value)
-            assertEquals(factory.validateAt, data.validatedAt.value)
-        }
+        assertEquals(mutableSetOf<String>(), factory.offerValidParameter.hasMessages())
     }
 
     @Test
@@ -45,7 +39,7 @@ internal class OfferParameterTest {
             "A data precisa ser após o dia de hoje."
         )
 
-        factory.offerValidParameter
+        val response = factory.offerValidParameter
             .copy(
                 name = ProductName(""),
                 price = Price(0.0),
@@ -53,8 +47,9 @@ internal class OfferParameterTest {
                 createdAt = CreatedAt(invalidDate),
                 validatedAt =  ValidatedAt(invalidDate)
             )
-            .isValid()
-            .mapLeft { message -> assertEquals(expect, message) }
+            .hasMessages()
+
+        assertEquals(expect, response)
     }
 
     @Test
@@ -67,8 +62,8 @@ internal class OfferParameterTest {
                 createdAt = CreatedAt(LocalDateTime.now()),
                 validatedAt =  ValidatedAt(factory.validateAt)
             )
-            .isValid()
-            .mapLeft { message -> assertEquals(mutableSetOf("Preencha um nome de produto válido."), message) }
+            .hasMessages()
+            .firstNotNullOf { message -> assertEquals("Preencha um nome de produto válido.", message) }
     }
 
     @Test
@@ -81,8 +76,8 @@ internal class OfferParameterTest {
                 createdAt = CreatedAt(LocalDateTime.now()),
                 validatedAt =  ValidatedAt(factory.validateAt)
             )
-            .isValid()
-            .mapLeft { message -> assertEquals(mutableSetOf("Preencha um valor maior que R\$ 0,0."), message) }
+            .hasMessages()
+            .firstNotNullOf { message -> assertEquals("Preencha um valor maior que R\$ 0,0.", message) }
     }
 
     @Test
@@ -95,8 +90,8 @@ internal class OfferParameterTest {
                 createdAt = CreatedAt(LocalDateTime.now()),
                 validatedAt =  ValidatedAt(factory.validateAt)
             )
-            .isValid()
-            .mapLeft { message -> assertEquals(mutableSetOf("A descrição não pode ser nula."), message) }
+            .hasMessages()
+            .firstNotNullOf { message -> assertEquals("A descrição não pode ser nula.", message) }
     }
 
     @Test
@@ -111,8 +106,8 @@ internal class OfferParameterTest {
                 createdAt = CreatedAt(invalidDate),
                 validatedAt =  ValidatedAt(factory.validateAt)
             )
-            .isValid()
-            .mapLeft { message -> assertEquals(mutableSetOf("A data não corresponde ao dia de hoje."), message) }
+            .hasMessages()
+            .firstNotNullOf { message -> assertEquals("A data não corresponde ao dia de hoje.", message) }
     }
 
     @Test
@@ -127,8 +122,8 @@ internal class OfferParameterTest {
                 createdAt = CreatedAt(LocalDateTime.now()),
                 validatedAt =  ValidatedAt(invalidDate)
             )
-            .isValid()
-            .mapLeft { message -> assertEquals(mutableSetOf("A data precisa ser após o dia de hoje."), message) }
+            .hasMessages()
+            .firstNotNullOf { message -> assertEquals("A data precisa ser após o dia de hoje.", message) }
     }
 
     @Test
@@ -138,7 +133,7 @@ internal class OfferParameterTest {
             "Preencha um valor maior que R\$ 0,0."
         )
 
-        factory.offerValidParameter
+        val response = factory.offerValidParameter
             .copy(
                 name = ProductName(""),
                 price = Price(0.0),
@@ -146,7 +141,8 @@ internal class OfferParameterTest {
                 createdAt = CreatedAt(LocalDateTime.now()),
                 validatedAt =  ValidatedAt(factory.validateAt)
             )
-            .isValid()
-            .mapLeft { message -> assertEquals(expect, message) }
+            .hasMessages()
+
+        assertEquals(expect, response)
     }
 }

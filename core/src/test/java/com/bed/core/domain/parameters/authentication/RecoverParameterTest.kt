@@ -18,23 +18,21 @@ internal class RecoverParameterTest {
 
     @Test
     fun `Should try validate Recover Parameter return success`() {
-        factory.recoverValidParameter.isValid().map { (email) ->
-            assertEquals("email@email.com", email.value)
-        }
+        assertEquals(mutableSetOf<String>(), factory.recoverValidParameter.hasMessages())
     }
 
     @Test
     fun `Should try validate Recover Parameter return failure when partial e-mail is invalid`() {
         factory.recoverInvalidParameter
             .copy(Email("emailemail.com"))
-            .isValid()
-            .mapLeft { message -> assertEquals(mutableSetOf("Preencha um e-mail válido."), message) }
+            .hasMessages()
+            .firstNotNullOf { message -> assertEquals("Preencha um e-mail válido.", message) }
     }
 
     @Test
     fun `Should try validate Recover Parameter return failure when e-mail is invalid`() {
         factory.recoverInvalidParameter
-            .isValid()
-            .mapLeft { message -> assertEquals(mutableSetOf("O e-mail não pode ser nulo."), message) }
+            .hasMessages()
+            .firstNotNullOf { message -> assertEquals("O e-mail não pode ser nulo.", message) }
     }
 }

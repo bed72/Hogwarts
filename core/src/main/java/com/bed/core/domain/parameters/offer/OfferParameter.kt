@@ -1,9 +1,5 @@
 package com.bed.core.domain.parameters.offer
 
-import arrow.core.Either
-import arrow.core.left
-import arrow.core.right
-
 import java.time.LocalDateTime
 
 import com.bed.core.values.Price
@@ -20,16 +16,13 @@ data class OfferParameter(
     val description: Description = Description(""),
     val createdAt: CreatedAt = CreatedAt(LocalDateTime.now()),
     val validatedAt: ValidatedAt = ValidatedAt(LocalDateTime.now())
-) : Parameter<OfferParameter> {
-    override fun isValid(): Either<MutableSet<String?>, OfferParameter> {
-        val data = mutableSetOf(
+) : Parameter {
+    override fun hasMessages(): MutableSet<String?> =
+        mutableSetOf(
             name.message,
             price.message,
             description.message,
             createdAt.message,
             validatedAt.message
         ).apply { removeIf { it == null } }
-
-        return if (data.all { it == null }) this.right() else data.left()
-    }
 }

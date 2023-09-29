@@ -49,8 +49,7 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
                     is EmailState.States.Failure -> binding.emailTextInput.error = states.data
                     is EmailState.States.Success -> {
                         parameter = parameter.copy(email = states.data)
-                        binding.emailTextInput.helperText =
-                            getString(R.string.valid_email, states.data.value)
+                        binding.emailTextInput.helperText = getString(R.string.valid_email, states.data.value)
                     }
                 }
             }
@@ -59,8 +58,7 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
                     is PasswordState.States.Failure -> binding.passwordTextInput.error = states.data
                     is PasswordState.States.Success -> {
                         parameter = parameter.copy(password = states.data)
-                        binding.passwordTextInput.helperText =
-                            getString(R.string.valid_password)
+                        binding.passwordTextInput.helperText = getString(R.string.valid_password)
                     }
                 }
             }
@@ -117,9 +115,9 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
 
     private fun validateParameter() {
         hideKeyboard()
-        parameter.isValid().fold(
-            { failure -> snackbar(failure.first()?: getString(R.string.generic_failure_title)) },
-            { success -> viewModel.signIn(success) }
-        )
+        with (parameter.hasMessages()) {
+            if (isEmpty()) viewModel.signIn(parameter)
+            else snackbar(first() ?: getString(R.string.generic_failure_title))
+        }
     }
 }

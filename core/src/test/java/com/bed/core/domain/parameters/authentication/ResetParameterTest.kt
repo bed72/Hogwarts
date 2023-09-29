@@ -19,10 +19,7 @@ internal class ResetParameterTest {
 
     @Test
     fun `Should try validate Reset Parameter return success`() {
-        factory.resetValidParameter.isValid().map { (code, password) ->
-            assertEquals("5CQcsREkB5xcqbY1L...", code.value)
-            assertEquals("P@ssw0rD", password.value)
-        }
+        assertEquals(mutableSetOf<String>(), factory.resetValidParameter.hasMessages())
     }
 
     @Test
@@ -32,8 +29,8 @@ internal class ResetParameterTest {
                 code = Code(""),
                 password = Password("P@ssw0rD"),
             )
-            .isValid()
-            .mapLeft { message -> assertEquals(mutableSetOf("O código não é válido."), message) }
+            .hasMessages()
+            .firstNotNullOf { message -> assertEquals("O código não é válido.", message) }
     }
 
     @Test
@@ -43,8 +40,8 @@ internal class ResetParameterTest {
                 code = Code("5CQcsREkB5xcqbY1L.."),
                 password = Password("")
             )
-            .isValid()
-            .mapLeft { message -> assertEquals(mutableSetOf("A senha não pode ser nula."), message) }
+            .hasMessages()
+            .firstNotNullOf { message -> assertEquals("A senha não pode ser nula.", message) }
     }
 
     @Test
@@ -54,9 +51,9 @@ internal class ResetParameterTest {
                 code = Code("5CQcsREkB5xcqbY1L.."),
                 password = Password("P@ssworD")
             )
-            .isValid()
-            .mapLeft { message ->
-                assertEquals(mutableSetOf("A senha presica conter caracteres maiúsculos, minúsculas e números."), message)
+            .hasMessages()
+            .firstNotNullOf { message ->
+                assertEquals("A senha presica conter caracteres maiúsculos, minúsculas e números.", message)
             }
     }
 
@@ -65,11 +62,11 @@ internal class ResetParameterTest {
         factory.resetInvalidParameter
             .copy(
                 code = Code("5CQcsREkB5xcqbY1L.."),
-                password = Password("p@ssw0rD")
+                password = Password("p@ssw0rd")
             )
-            .isValid()
-            .mapLeft { message ->
-                assertEquals(mutableSetOf("A senha presica conter caracteres maiúsculos, minúsculas e números."), message)
+            .hasMessages()
+            .firstNotNullOf { message ->
+                assertEquals("A senha presica conter caracteres maiúsculos, minúsculas e números.", message)
             }
     }
 
@@ -80,9 +77,9 @@ internal class ResetParameterTest {
                 code = Code("5CQcsREkB5xcqbY1L.."),
                 password = Password("p")
             )
-            .isValid()
-            .mapLeft { message ->
-                assertEquals(mutableSetOf("A senha precisa ser maior que 4 caracteres."), message)
+            .hasMessages()
+            .firstNotNullOf { message ->
+                assertEquals("A senha precisa ser maior que 4 caracteres.", message)
             }
     }
 
@@ -93,9 +90,9 @@ internal class ResetParameterTest {
                 code = Code("5CQcsREkB5xcqbY1L.."),
                 password = Password("P@ssworDP@ssworDP@ssworDP@ssworD")
             )
-            .isValid()
-            .mapLeft { message ->
-                assertEquals(mutableSetOf("A senha precisa ser menor que 16 caracteres."), message)
+            .hasMessages()
+            .firstNotNullOf { message ->
+                assertEquals("A senha precisa ser menor que 16 caracteres.", message)
             }
     }
 
@@ -103,12 +100,13 @@ internal class ResetParameterTest {
     fun `Should try validate Reset Parameter return failure when code, password is empty`() {
         val expect = mutableSetOf("O código não é válido.", "A senha não pode ser nula.")
 
-        factory.resetInvalidParameter
+        val response = factory.resetInvalidParameter
             .copy(
                 code = Code(""),
                 password = Password("")
             )
-            .isValid()
-            .mapLeft { message -> assertEquals(expect, message) }
+            .hasMessages()
+
+        assertEquals(expect, response)
     }
 }
