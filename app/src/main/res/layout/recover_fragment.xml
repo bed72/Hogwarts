@@ -54,41 +54,37 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <ViewFlipper
-        android:id="@+id/action_flipper"
+    <ViewStub
+        android:id="@+id/progress"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/normal_space"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout="@layout/loading_component"
+        android:inflatedId="@+id/progress_indicator" />
+
+    <LinearLayout
+        android:id="@+id/container_buttons"
+        android:orientation="vertical"
         android:layout_marginTop="@dimen/normal_space"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+        <Button
+            android:id="@+id/recover_button"
+            android:text="@string/recover_send_recover_button"
+            style="@style/NormalButton"
+            android:layout_height="@dimen/button_height"
+            android:layout_width="match_parent" />
 
-            <Button
-                android:id="@+id/recover_button"
-                android:text="@string/recover_send_recover_button"
-                style="@style/NormalButton"
-                android:layout_height="@dimen/button_height"
-                android:layout_width="match_parent" />
+        <Button
+            android:id="@+id/close_button"
+            android:text="@string/title_cancel_button"
+            style="@style/CancelButton"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginTop="@dimen/small_space"
+            android:layout_width="match_parent" />
 
-            <Button
-                android:id="@+id/close_button"
-                android:text="@string/title_cancel_button"
-                style="@style/CancelButton"
-                android:layout_height="@dimen/button_height"
-                android:layout_marginTop="@dimen/small_space"
-                android:layout_width="match_parent" />
-
-        </LinearLayout>
-
-        <com.google.android.material.progressindicator.CircularProgressIndicator
-            android:id="@+id/progress_indicator"
-            android:layout_width="@dimen/progress_bar_dimens"
-            android:layout_height="@dimen/progress_bar_dimens"
-            android:indeterminate="true"
-            android:layout_gravity="center" />
-
-    </ViewFlipper>
+    </LinearLayout>
 
 </LinearLayout>

@@ -15,7 +15,6 @@ import com.bed.seller.presentation.commons.extensions.actionKeyboard
 
 import com.bed.core.domain.parameters.authentication.RecoverParameter
 
-import com.bed.seller.presentation.commons.states.States
 import com.bed.seller.presentation.commons.states.EmailState
 import com.bed.seller.presentation.commons.extensions.debounce
 import com.bed.seller.presentation.commons.constants.AppConstants
@@ -55,8 +54,8 @@ class RecoverFragment : BaseBottomSheetDialogFragment<RecoverFragmentBinding>(
 
     private fun observeRecoverStates() {
         viewModel.states.observe(viewLifecycleOwner) { states ->
-            binding.actionFlipper.displayedChild = when (states) {
-                RecoverViewModel.States.Loading -> States.FLIPPER_LOADING
+            when (states) {
+                RecoverViewModel.States.Loading -> handlerLoading(VISIBLE, GONE)
                 is RecoverViewModel.States.Recover ->
                     if (states.isSuccess) handlerSuccessMessage() else handlerFailureMessage()
             }
@@ -90,21 +89,30 @@ class RecoverFragment : BaseBottomSheetDialogFragment<RecoverFragmentBinding>(
         }
     }
 
-    private fun handlerFailureMessage(): Int {
-        snackbar(R.string.generic_failure_title) { dismiss() }
-
-        return States.FLIPPER_FAILURE
+    private fun handlerLoading(progressVisibility: Int, containerVisibility: Int) {
+        with (binding) {
+            progress.visibility = progressVisibility
+            containerButtons.visibility = containerVisibility
+        }
     }
 
-    private fun handlerSuccessMessage(): Int {
-        snackbar(R.string.recover_success_title, R.string.recover_open_email_title_button, ::dismiss, ::navigateToEmail)
+    private fun handlerFailureMessage() {
+        snackbar(R.string.generic_failure_title)
+        handlerLoading(GONE, VISIBLE)
+    }
 
-        return States.FLIPPER_SUCCESS
+    private fun handlerSuccessMessage() {
+        snackbar(R.string.recover_success_title, R.string.recover_open_email_title_button, ::dismiss, ::navigateToEmail)
     }
 
     private fun navigateToEmail() {
         dismiss()
 
         openExternalApp(AppConstants.EMAIL_APP)
+    }
+
+    companion object {
+       const val GONE = View.GONE
+       const val VISIBLE = View.VISIBLE
     }
 }
