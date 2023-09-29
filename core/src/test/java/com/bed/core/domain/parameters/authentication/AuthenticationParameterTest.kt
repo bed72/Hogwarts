@@ -30,7 +30,7 @@ internal class AuthenticationParameterTest {
                 password = Password("P@ssw0rD")
             )
             .hasMessages()
-            .firstNotNullOf { message -> assertEquals("O e-mail não pode ser nulo.", message) }
+            .firstNotNullOf { message -> assertEquals("Preencha um e-mail válido.", message) }
     }
 
     @Test
@@ -41,7 +41,7 @@ internal class AuthenticationParameterTest {
                 password = Password("")
             )
             .hasMessages()
-            .firstNotNullOf { message -> assertEquals("A senha não pode ser nula.", message) }
+            .firstNotNullOf { message -> assertEquals("Preencha uma senha válida.", message) }
     }
 
     @Test
@@ -106,7 +106,7 @@ internal class AuthenticationParameterTest {
 
     @Test
     fun `Should try validate Authentication Parameter return failure when e-mail and password is empty`() {
-        val expect = mutableSetOf("O e-mail não pode ser nulo.", "A senha não pode ser nula.")
+        val expect = mutableSetOf("Preencha um e-mail válido.", "Preencha uma senha válida.")
 
         val response = factory.signInAndSingUpInvalidParameter.hasMessages()
 

@@ -10,7 +10,7 @@ import am.ik.yavi.core.ConstraintViolations
 value class Price(val value: Double) : ValueObject {
     private val valid: Validator<Price> get() = validator {
         Price::value {
-            notNull().message("O preço não pode ser nulo.")
+            notNull().message("Preencha um preço não válido.")
             positive().message("Preencha um valor maior que R\$ 0,0.")
         }
     }

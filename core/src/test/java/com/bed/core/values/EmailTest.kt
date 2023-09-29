@@ -11,7 +11,7 @@ internal class EmailTest {
         val data = Email("")
 
         assertFalse(data.of.isValid)
-        assertEquals("O e-mail não pode ser nulo.", data.message)
+        assertEquals("Preencha um e-mail válido.", data.message)
     }
 
     @Test

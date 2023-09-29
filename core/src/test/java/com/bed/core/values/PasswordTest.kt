@@ -11,7 +11,7 @@ internal class PasswordTest {
         val data = Password("")
 
         assertFalse(data.of.isValid)
-        assertEquals("A senha não pode ser nula.", data.message)
+        assertEquals("Preencha uma senha válida.", data.message)
     }
 
     @Test

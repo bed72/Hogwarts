@@ -33,6 +33,6 @@ internal class RecoverParameterTest {
     fun `Should try validate Recover Parameter return failure when e-mail is invalid`() {
         factory.recoverInvalidParameter
             .hasMessages()
-            .firstNotNullOf { message -> assertEquals("O e-mail não pode ser nulo.", message) }
+            .firstNotNullOf { message -> assertEquals("Preencha um e-mail válido.", message) }
     }
 }

@@ -11,7 +11,7 @@ internal class DescriptionTest {
         val data = Description("")
 
         assertFalse(data.of.isValid)
-        assertEquals("A descrição não pode ser nula.", data.message)
+        assertEquals("Preencha uma descrição válida.", data.message)
     }
 
     @Test

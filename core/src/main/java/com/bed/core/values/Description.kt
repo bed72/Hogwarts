@@ -8,7 +8,7 @@ import am.ik.yavi.core.ConstraintViolations
 value class Description(val value: String) : ValueObject {
     private val valid: Validator<Description> get() = validator {
         Description::value {
-            notEmpty().message("A descrição não pode ser nula.")
+            notEmpty().message("Preencha uma descrição válida.")
             pattern("^[a-zA-Z0-9\\s.,;!']+\$").message("Preencha uma descrição válida.")
             lessThanOrEqual(63).message("A descrição precisa ser menor que 64 caracteres.")
             greaterThanOrEqual(4).message("A descrição precisa ser maior que 4 caracteres.")

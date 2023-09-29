@@ -41,7 +41,7 @@ internal class ResetParameterTest {
                 password = Password("")
             )
             .hasMessages()
-            .firstNotNullOf { message -> assertEquals("A senha não pode ser nula.", message) }
+            .firstNotNullOf { message -> assertEquals("Preencha uma senha válida.", message) }
     }
 
     @Test
@@ -98,7 +98,7 @@ internal class ResetParameterTest {
 
     @Test
     fun `Should try validate Reset Parameter return failure when code, password is empty`() {
-        val expect = mutableSetOf("O código não é válido.", "A senha não pode ser nula.")
+        val expect = mutableSetOf("O código não é válido.", "Preencha uma senha válida.")
 
         val response = factory.resetInvalidParameter
             .copy(

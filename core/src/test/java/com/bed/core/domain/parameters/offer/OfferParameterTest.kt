@@ -34,7 +34,7 @@ internal class OfferParameterTest {
         val expect = mutableSetOf(
             "Preencha um nome de produto válido.",
             "Preencha um valor maior que R\$ 0,0.",
-            "A descrição não pode ser nula.",
+            "Preencha uma descrição válida.",
             "A data não corresponde ao dia de hoje.",
             "A data precisa ser após o dia de hoje."
         )
@@ -91,7 +91,7 @@ internal class OfferParameterTest {
                 validatedAt =  ValidatedAt(factory.validateAt)
             )
             .hasMessages()
-            .firstNotNullOf { message -> assertEquals("A descrição não pode ser nula.", message) }
+            .firstNotNullOf { message -> assertEquals("Preencha uma descrição válida.", message) }
     }
 
     @Test

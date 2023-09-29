@@ -9,7 +9,7 @@ value class Email(val value: String) : ValueObject {
     private val valid: Validator<Email> get() = validator {
         Email::value {
             email().message("Preencha um e-mail válido.")
-            notEmpty().message("O e-mail não pode ser nulo.")
+            notEmpty().message("Preencha um e-mail válido.")
         }
     }
 
