@@ -91,27 +91,22 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <ViewFlipper
-                android:id="@+id/action_flipper"
+            <ViewStub
+                android:id="@+id/progress"
+                android:layout_gravity="center"
                 android:layout_marginTop="@dimen/normal_space"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout="@layout/loading_component"
+                android:inflatedId="@+id/progress_indicator" />
 
-                <Button
-                    android:id="@+id/sign_up_button"
-                    android:text="@string/title_create_account_button"
-                    style="@style/CancelButton"
-                    android:layout_height="@dimen/button_height"
-                    android:layout_width="match_parent" />
-
-                <com.google.android.material.progressindicator.CircularProgressIndicator
-                    android:id="@+id/progress"
-                    android:layout_width="@dimen/progress_bar_dimens"
-                    android:layout_height="@dimen/progress_bar_dimens"
-                    android:indeterminate="true"
-                    android:layout_gravity="center" />
-
-            </ViewFlipper>
+            <Button
+                android:id="@+id/sign_up_button"
+                android:text="@string/title_create_account_button"
+                style="@style/CancelButton"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginTop="@dimen/normal_space"
+                android:layout_width="match_parent" />
 
             <LinearLayout
                 android:layout_marginTop="@dimen/normal_space"

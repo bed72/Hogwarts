@@ -15,6 +15,7 @@ import com.bed.seller.presentation.commons.extensions.actionKeyboard
 
 import com.bed.core.domain.parameters.authentication.RecoverParameter
 
+import com.bed.seller.presentation.commons.states.States
 import com.bed.seller.presentation.commons.states.EmailState
 import com.bed.seller.presentation.commons.extensions.debounce
 import com.bed.seller.presentation.commons.constants.AppConstants
@@ -55,7 +56,7 @@ class RecoverFragment : BaseBottomSheetDialogFragment<RecoverFragmentBinding>(
     private fun observeRecoverStates() {
         viewModel.states.observe(viewLifecycleOwner) { states ->
             when (states) {
-                RecoverViewModel.States.Loading -> handlerLoading(VISIBLE, GONE)
+                RecoverViewModel.States.Loading -> handlerLoading(States.VISIBLE, States.GONE)
                 is RecoverViewModel.States.Recover ->
                     if (states.isSuccess) handlerSuccessMessage() else handlerFailureMessage()
             }
@@ -98,7 +99,7 @@ class RecoverFragment : BaseBottomSheetDialogFragment<RecoverFragmentBinding>(
 
     private fun handlerFailureMessage() {
         snackbar(R.string.generic_failure_title)
-        handlerLoading(GONE, VISIBLE)
+        handlerLoading(States.GONE, States.VISIBLE)
     }
 
     private fun handlerSuccessMessage() {
@@ -109,10 +110,5 @@ class RecoverFragment : BaseBottomSheetDialogFragment<RecoverFragmentBinding>(
         dismiss()
 
         openExternalApp(AppConstants.EMAIL_APP)
-    }
-
-    companion object {
-       const val GONE = View.GONE
-       const val VISIBLE = View.VISIBLE
     }
 }

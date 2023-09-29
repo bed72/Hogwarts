@@ -66,16 +66,15 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
 
     private fun observeSignUpState() {
         viewModel.states.observe(viewLifecycleOwner) { states ->
-            binding.actionFlipper.displayedChild = when (states) {
-                SignUpViewModel.States.Loading -> States.FLIPPER_LOADING
+            when (states) {
+                SignUpViewModel.States.Loading -> handlerLoading(States.VISIBLE, States.GONE)
                 is SignUpViewModel.States.Failure -> {
                     snackbar(states.data)
-                    States.FLIPPER_FAILURE
+                    handlerLoading(States.GONE, States.VISIBLE)
                 }
                 is SignUpViewModel.States.Success -> {
                     snackbar(R.string.sign_up_success_message)
                     navigateTo(SignUpFragmentDirections.actionSingUpToHome())
-                    States.FLIPPER_SUCCESS
                 }
             }
         }
@@ -109,6 +108,13 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
         with (parameter.hasMessages()) {
             if (isEmpty()) viewModel.signUp(parameter)
             else snackbar(first() ?: getString(R.string.generic_failure_title))
+        }
+    }
+
+    private fun handlerLoading(progressVisibility: Int, buttonVisibility: Int) {
+        with (binding) {
+            progress.visibility = progressVisibility
+            signUpButton.visibility = buttonVisibility
         }
     }
 }
