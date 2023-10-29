@@ -38,8 +38,8 @@ android {
             )
         )
 
-        buildConfigField("String", "API_KEY", keys.getProperty("API_KEY"))
-        buildConfigField("String", "BASE_URL", keys.getProperty("BASE_URL"))
+//        buildConfigField("String", "API_KEY", keys.getProperty("API_KEY"))
+//        buildConfigField("String", "BASE_URL", keys.getProperty("BASE_URL"))
         buildConfigField("String", "DATA_STORE", keys.getProperty("DATA_STORE"))
     }
 
@@ -96,26 +96,26 @@ dependencies {
 
     implementation(project(":core"))
 
-    implementation("androidx.core:core-ktx:1.10.1")
+    implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.core:core-splashscreen:1.0.1")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
-    val navigationVersion = "2.7.1"
+    val navigationVersion = "2.7.4"
     implementation("androidx.navigation:navigation-ui-ktx:$navigationVersion")
     implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
 
-    val lifecycleVersion = "2.6.1"
+    val lifecycleVersion = "2.6.2"
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
 
-    val hiltVersion = "2.47"
+    val hiltVersion = "2.48.1"
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
     implementation("com.google.dagger:hilt-android:$hiltVersion")
 
-    val ktorVersion = "2.3.3"
+    val ktorVersion = "2.3.5"
     implementation("io.ktor:ktor-client-core:$ktorVersion")
     implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
     implementation("io.ktor:ktor-client-logging:$ktorVersion")

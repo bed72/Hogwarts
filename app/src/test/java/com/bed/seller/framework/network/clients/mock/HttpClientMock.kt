@@ -27,8 +27,6 @@ import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.observer.ResponseObserver
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 
-import com.bed.seller.BuildConfig
-
 interface HttpClientMock : com.bed.seller.framework.network.clients.HttpClient {
     operator fun invoke(content: String, status: HttpStatusCode): MockEngine
 }
@@ -77,10 +75,10 @@ class HttpClientMockImpl : HttpClientMock {
 
     private fun HttpClientConfig<*>.configureRequestDefaultMock() {
         install(DefaultRequest) {
-            url(BuildConfig.BASE_URL)
+//            url(BuildConfig.BASE_URL)
             headers {
                 header(HttpHeaders.ContentType, ContentType.Application.Json)
-                header("apikey", BuildConfig.API_KEY)
+//                header("apikey", BuildConfig.API_KEY)
             }
         }
     }
