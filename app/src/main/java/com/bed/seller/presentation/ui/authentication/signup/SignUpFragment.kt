@@ -9,10 +9,11 @@ import dagger.hilt.android.AndroidEntryPoint
 
 import com.bed.seller.R
 
+import com.bed.core.values.getFirstMessage
+
 import com.bed.seller.databinding.SignUpFragmentBinding
 
 import com.bed.core.domain.parameters.authentication.SignUpParameter
-import com.bed.core.values.getFirstMessage
 
 import com.bed.seller.presentation.commons.states.States
 import com.bed.seller.presentation.commons.states.NameState
@@ -49,7 +50,10 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
         with (viewModel) {
             name.states.observe(viewLifecycleOwner) { states ->
                 when (states) {
-                    is NameState.States.Failure -> binding.nameTextInput.error = states.data
+                    is NameState.States.Failure -> {
+                        nameRow = ""
+                        binding.nameTextInput.error = states.data
+                    }
                     is NameState.States.Success -> {
                         nameRow = states.data()
                         binding.nameTextInput.helperText = getString(R.string.sign_up_valid_name, nameRow)
@@ -58,7 +62,10 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
             }
             email.states.observe(viewLifecycleOwner) { states ->
                 when (states) {
-                    is EmailState.States.Failure -> binding.emailTextInput.error = states.data
+                    is EmailState.States.Failure -> {
+                        emailRow = ""
+                        binding.emailTextInput.error = states.data
+                    }
                     is EmailState.States.Success -> {
                         emailRow = states.data()
                         binding.emailTextInput.helperText = getString(R.string.sign_up_valid_email, emailRow)
@@ -67,7 +74,10 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
             }
             password.states.observe(viewLifecycleOwner) { states->
                 when (states) {
-                    is PasswordState.States.Failure -> binding.passwordTextInput.error = states.data
+                    is PasswordState.States.Failure -> {
+                        passwordRow = ""
+                        binding.passwordTextInput.error = states.data
+                    }
                     is PasswordState.States.Success -> {
                         passwordRow = states.data()
                         binding.passwordTextInput.helperText = getString(R.string.sign_up_valid_password)

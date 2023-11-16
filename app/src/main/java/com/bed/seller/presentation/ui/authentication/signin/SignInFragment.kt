@@ -10,10 +10,11 @@ import dagger.hilt.android.AndroidEntryPoint
 
 import com.bed.seller.R
 
+import com.bed.core.values.getFirstMessage
+
 import com.bed.seller.databinding.SignInFragmentBinding
 
 import com.bed.core.domain.parameters.authentication.SignInParameter
-import com.bed.core.values.getFirstMessage
 
 import com.bed.seller.presentation.commons.states.States
 import com.bed.seller.presentation.commons.states.EmailState
@@ -48,7 +49,10 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
         with (viewModel) {
             email.states.observe(viewLifecycleOwner) { states ->
                 when (states) {
-                    is EmailState.States.Failure -> binding.emailTextInput.error = states.data
+                    is EmailState.States.Failure -> {
+                        emailRow = ""
+                        binding.emailTextInput.error = states.data
+                    }
                     is EmailState.States.Success -> {
                         emailRow = states.data()
                         binding.emailTextInput.helperText = getString(R.string.sign_up_valid_email, emailRow)
@@ -57,7 +61,10 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
             }
             password.states.observe(viewLifecycleOwner) { states->
                 when (states) {
-                    is PasswordState.States.Failure -> binding.passwordTextInput.error = states.data
+                    is PasswordState.States.Failure -> {
+                        passwordRow = ""
+                        binding.passwordTextInput.error = states.data
+                    }
                     is PasswordState.States.Success -> {
                         passwordRow = states.data()
                         binding.passwordTextInput.helperText = getString(R.string.sign_up_valid_password)
