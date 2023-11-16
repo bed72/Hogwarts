@@ -1,24 +1,27 @@
 package com.bed.core.values
 
-import arrow.core.left
+import arrow.core.Nel
 import arrow.core.right
 import arrow.core.Either
+import arrow.core.leftNel
 
 @JvmInline
-value class EmailValue(val value: String) : ValueObject<EmailValue> {
+value class EmailValue private constructor(private val value: String) {
 
-    override fun validate(): Either<String, EmailValue> {
-        val (isValid, message) = rule(value)
+    operator fun invoke() = value
 
-        return if (isValid) this.right() else message.left()
-    }
+    companion object {
+        operator fun invoke(value: String?): Either<Nel<MessageValue>, EmailValue> =
+            when {
+                value == null -> MessageValue("O e-mail não pode ser nulo.").leftNel()
+                isValid(value) -> EmailValue(value).right()
+                else -> MessageValue("Preencha um e-mail válido.").leftNel()
+            }
 
-    private fun rule(value: String): Pair<Boolean, String> {
-        val pattern = "^[a-zA-Z\\d+_.-]+@[a-zA-Z\\d.-]+\\.[a-zA-z]{2,3}\$".toRegex()
+        private fun isValid(value: String): Boolean {
+            val pattern = "^[a-zA-Z\\d+_.-]+@[a-zA-Z\\d.-]+\\.[a-zA-z]{2,3}\$".toRegex()
 
-        return when {
-            pattern.matches(value).not() -> false to "Preencha um e-mail válido."
-            else -> true to value
+            return pattern.matches(value)
         }
     }
 }

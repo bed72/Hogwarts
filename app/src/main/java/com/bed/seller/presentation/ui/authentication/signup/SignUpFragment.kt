@@ -12,6 +12,7 @@ import com.bed.seller.R
 import com.bed.seller.databinding.SignUpFragmentBinding
 
 import com.bed.core.domain.parameters.authentication.SignUpParameter
+import com.bed.core.values.getFirstMessage
 
 import com.bed.seller.presentation.commons.states.States
 import com.bed.seller.presentation.commons.states.NameState
@@ -22,14 +23,16 @@ import com.bed.seller.presentation.commons.fragments.BaseFragment
 
 import com.bed.seller.presentation.commons.extensions.debounce
 import com.bed.seller.presentation.commons.extensions.actionKeyboard
-import com.bed.seller.presentation.commons.extensions.fragments.snackbar
+import com.bed.seller.presentation.commons.extensions.fragments.snackBar
 import com.bed.seller.presentation.commons.extensions.fragments.navigateTo
 import com.bed.seller.presentation.commons.extensions.fragments.hideKeyboard
 
 @AndroidEntryPoint
 class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding::inflate) {
 
-    private var parameter = SignUpParameter()
+    private var nameRow = ""
+    private var emailRow = ""
+    private var passwordRow = ""
 
     private val viewModel: SignUpViewModel by viewModels()
 
@@ -48,9 +51,8 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
                 when (states) {
                     is NameState.States.Failure -> binding.nameTextInput.error = states.data
                     is NameState.States.Success -> {
-                        parameter = parameter.copy(name = states.data)
-                        binding.nameTextInput.helperText =
-                            getString(R.string.sign_up_valid_name, states.data.value)
+                        nameRow = states.data()
+                        binding.nameTextInput.helperText = getString(R.string.sign_up_valid_name, nameRow)
                     }
                 }
             }
@@ -58,9 +60,8 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
                 when (states) {
                     is EmailState.States.Failure -> binding.emailTextInput.error = states.data
                     is EmailState.States.Success -> {
-                        parameter = parameter.copy(email = states.data)
-                        binding.emailTextInput.helperText =
-                            getString(R.string.sign_up_valid_email, states.data.value)
+                        emailRow = states.data()
+                        binding.emailTextInput.helperText = getString(R.string.sign_up_valid_email, emailRow)
                     }
                 }
             }
@@ -68,9 +69,8 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
                 when (states) {
                     is PasswordState.States.Failure -> binding.passwordTextInput.error = states.data
                     is PasswordState.States.Success -> {
-                        parameter = parameter.copy(password = states.data)
-                        binding.passwordTextInput.helperText =
-                            getString(R.string.sign_up_valid_password)
+                        passwordRow = states.data()
+                        binding.passwordTextInput.helperText = getString(R.string.sign_up_valid_password)
                     }
                 }
             }
@@ -82,7 +82,7 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
             binding.actionFlipper.displayedChild = when (states) {
                 SignUpViewModel.States.Loading -> States.FLIPPER_LOADING
                 is SignUpViewModel.States.Failure -> {
-                    snackbar(requireView(), states.data)
+                    snackBar(requireView(), states.data)
                     States.FLIPPER_FAILURE
                 }
                 is SignUpViewModel.States.Success -> {
@@ -119,8 +119,8 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
 
     private fun validateParameter() {
         hideKeyboard()
-        parameter.isValid().fold(
-            { failure -> snackbar(requireView(), failure[States.FIRST_MESSAGE]) },
+        SignUpParameter(nameRow, emailRow, passwordRow).fold(
+            { failure -> snackBar(requireView(), failure.getFirstMessage()) },
             { success -> viewModel.signUp(success) }
         )
     }

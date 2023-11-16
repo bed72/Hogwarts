@@ -10,29 +10,23 @@ internal class EmailValueTest {
     fun `Should return message failure when E-mail is invalid`() {
         val message = EmailValue("")
 
-        val validator = message.validate()
-
-        assertTrue(validator.isLeft())
-        validator.mapLeft { assertEquals(it, "Preencha um e-mail válido.") }
+        assertTrue(message.isLeft())
+        message.mapLeft { assertEquals(it.getFirstMessage(), "Preencha um e-mail válido.") }
     }
 
     @Test
     fun `Should return message failure when E-mail is invalid with partial validations`() {
         val message = EmailValue("email.com")
 
-        val validator = message.validate()
-
-        assertTrue(validator.isLeft())
-        validator.mapLeft { assertEquals(it, "Preencha um e-mail válido.") }
+        assertTrue(message.isLeft())
+        message.mapLeft { assertEquals(it.getFirstMessage(), "Preencha um e-mail válido.") }
     }
 
     @Test
     fun `Should return the E-mail when value is valid`() {
-        val name = EmailValue("email@email.com")
+        val email = EmailValue("email@email.com")
 
-        val validator = name.validate()
-
-        assertTrue(validator.isRight())
-        validator.map { assertEquals(it.value, "email@email.com") }
+        assertTrue(email.isRight())
+        email.map { assertEquals(it(), "email@email.com") }
     }
 }

@@ -11,8 +11,8 @@ import com.bed.seller.framework.network.request.authentication.SignUpDataRequest
 
 class SignUpMapper @Inject constructor() : Mapper<SignUpParameter, SignUpRequest> {
     override fun invoke(parameter: SignUpParameter) = SignUpRequest(
-        email = parameter.email.value,
-        password = parameter.password.value,
-        data = SignUpDataRequest(name = parameter.name.value)
+        email = parameter.email(),
+        password = parameter.password(),
+        data = SignUpDataRequest(name = parameter.name())
     )
 }

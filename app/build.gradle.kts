@@ -125,7 +125,7 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.5.0")
     implementation("com.airbnb.android:lottie:6.1.0")
 //    implementation("io.github.mmolosay:debounce:1.0.0")
-    implementation("com.google.android.material:material:1.9.0")
+    implementation("com.google.android.material:material:1.10.0")
 //    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
     implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11")
 

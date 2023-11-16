@@ -6,6 +6,8 @@ import androidx.lifecycle.switchMap
 import androidx.lifecycle.MutableLiveData
 
 import com.bed.core.values.EmailValue
+import com.bed.core.values.getFirstMessage
+
 import com.bed.core.usecases.coroutines.CoroutinesUseCase
 
 class EmailState(useCase: CoroutinesUseCase) {
@@ -15,8 +17,8 @@ class EmailState(useCase: CoroutinesUseCase) {
     val states: LiveData<States> = actions.switchMap { action ->
         liveData(useCase.main()) {
             if (action is Actions.Validate)
-                EmailValue(action.parameter).validate().fold(
-                    { failure -> emit(States.Failure(failure)) },
+                EmailValue(action.parameter).fold(
+                    { failure -> emit(States.Failure(failure.getFirstMessage())) },
                     { success -> emit(States.Success(success)) }
                 )
         }

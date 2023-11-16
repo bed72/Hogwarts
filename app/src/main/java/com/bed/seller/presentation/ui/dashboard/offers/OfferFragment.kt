@@ -34,7 +34,7 @@ import com.bed.seller.databinding.OfferFragmentBinding
 
 import com.bed.seller.presentation.commons.loaders.ImageLoader
 import com.bed.seller.presentation.commons.recyclers.getGenericAdapterOf
-import com.bed.seller.presentation.commons.extensions.fragments.snackbar
+import com.bed.seller.presentation.commons.extensions.fragments.snackBar
 import com.bed.seller.presentation.commons.fragments.BaseBottomSheetDialogFragment
 
 import com.bed.seller.presentation.ui.dashboard.offers.model.ImageOfferScreenModel
@@ -57,19 +57,19 @@ class OfferFragment : BaseBottomSheetDialogFragment<OfferFragmentBinding>(OfferF
     private val getPhotoFromGallery =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) {
             if (it != null) Log.d("Picker", "Photo: $it")
-            else snackbar(binding.root, "No media selected")
+            else snackBar(binding.root, "No media selected")
         }
 
     private val getPhotoFromGalleryLegacy get() =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) Log.d("Picker", "Photo: $it.data?.data")
-            else snackbar(binding.root, "No media selected")
+            else snackBar(binding.root, "No media selected")
         }
 
     private val getPhotosFromGallery =
         registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(5)) {
             if (it.isNotEmpty()) adapterImages.submitList(it.mapIndexed { id, image -> ImageOfferScreenModel(id, image) })
-            else snackbar(binding.root, "No media selected")
+            else snackBar(binding.root, "No media selected")
         }
 
     private val getCamera = registerForActivityResult(ActivityResultContracts.TakePicture()) {
@@ -81,7 +81,7 @@ class OfferFragment : BaseBottomSheetDialogFragment<OfferFragmentBinding>(OfferF
     private val getPermissionCamera =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
         if (it) getCamera.launch(createImageUri())
-        else snackbar(binding.root, "The camera permission is required")
+        else snackBar(binding.root, "The camera permission is required")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

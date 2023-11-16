@@ -1,24 +1,27 @@
 package com.bed.core.values
 
-import arrow.core.left
+import arrow.core.Nel
 import arrow.core.right
 import arrow.core.Either
+import arrow.core.leftNel
 
 @JvmInline
-value class NameValue(val value: String) : ValueObject<NameValue> {
+value class NameValue private constructor(private val value: String) {
 
-    override fun validate(): Either<String, NameValue> {
-        val (isValid, message) = rule(value)
+    operator fun invoke() = value
 
-        return if (isValid) this.right() else message.left()
-    }
+    companion object {
+        operator fun invoke(value: String?): Either<Nel<MessageValue>, NameValue> =
+            when {
+                value == null -> MessageValue("O nome e sobrenome não podem ser nulos.").leftNel()
+                isValid(value) -> NameValue(value).right()
+                else -> MessageValue("Preencha um nome e sobrenome válidos.").leftNel()
+            }
 
-    private fun rule(value: String): Pair<Boolean, String> {
-        val pattern = "\\b[A-Za-zÀ-ú][A-Za-zÀ-ú]+,?\\s[A-Za-zÀ-ú][A-Za-zÀ-ú]{2,19}\\b".toRegex()
+        private fun isValid(value: String): Boolean {
+            val pattern = "\\b[A-Za-zÀ-ú][A-Za-zÀ-ú]+,?\\s[A-Za-zÀ-ú][A-Za-zÀ-ú]{2,19}\\b".toRegex()
 
-        return when {
-            pattern.matches(value).not() -> false to "Preencha um nome e sobrenome válidos."
-            else -> true to value
+            return pattern.matches(value)
         }
     }
 }

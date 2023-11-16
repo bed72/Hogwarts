@@ -1,63 +1,38 @@
 package com.bed.core.domain.parameters.authentication
 
 import org.junit.Test
-import org.junit.Before
 import org.junit.Assert.assertEquals
 
-import com.bed.core.values.EmailValue
-import com.bed.core.values.PasswordValue
-
-import com.bed.test.factories.authentication.SignInFactory
+import com.bed.core.values.getFirstMessage
 
 internal class SignInParameterTest {
-    private lateinit var factory: SignInFactory
-
-    @Before
-    fun setUp() {
-        factory = SignInFactory()
-    }
 
     @Test
-    fun `Should try validate SignInParameter return success`() {
-        factory.signInParameter.isValid().map { (email, password) ->
-            assertEquals(email.value, "email@email.com")
-            assertEquals(password.value, "P@ssw0rD")
+    fun `Should try validate SignInParameter return failure when e-mail is invalid`() {
+        SignInParameter("emailemail.com", "P@ssw0rD").mapLeft { message ->
+            assertEquals(message.getFirstMessage(), "Preencha um e-mail válido.")
         }
     }
 
     @Test
-    fun `Should try validate SignInParameter return failure when e-mail is invalid`() {
-        factory.invalidParameter
-            .copy(
-                email = EmailValue(""),
-                password = PasswordValue("P@ssw0rD"),
-            )
-            .isValid()
-            .mapLeft { message -> assertEquals(message, listOf("Preencha um e-mail válido.")) }
-    }
-
-    @Test
     fun `Should try validate SignInParameter return failure when password is invalid`() {
-        factory.invalidParameter
-            .copy(
-                email = EmailValue("email@email.com"),
-                password = PasswordValue(""),
-            )
-            .isValid().mapLeft { message -> assertEquals(message, listOf("Preencha uma senha válida.")) }
+        SignInParameter("email@email.com", "P@ss").mapLeft { message ->
+            assertEquals(message.getFirstMessage(), "A senha presica conter mais de 6 caracteres.")
+        }
     }
 
     @Test
     fun `Should try validate SignInParameter return failure when e-mail and password is invalid`() {
-        val expect = listOf(
-            "Preencha um e-mail válido.",
-            "A senha presica conter caracteres numéricos.",
-        )
+        SignInParameter("emailemail.com", "P@ss").mapLeft { message ->
+            assertEquals(message.getFirstMessage(), "Preencha um e-mail válido.")
+        }
+    }
 
-        factory.invalidParameter
-            .copy(
-                email = EmailValue("emailemail.com"),
-                password = PasswordValue("Password"),
-            )
-            .isValid().mapLeft { message -> assertEquals(message, expect) }
+    @Test
+    fun `Should try validate SignInParameter return success`() {
+        SignInParameter("email@email.com", "P@ssw0rD").map { (email, password) ->
+            assertEquals(email(), "email@email.com")
+            assertEquals(password(), "P@ssw0rD")
+        }
     }
 }

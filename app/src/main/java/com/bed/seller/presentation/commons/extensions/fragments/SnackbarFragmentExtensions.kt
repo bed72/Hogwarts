@@ -10,16 +10,16 @@ import com.google.android.material.snackbar.BaseTransientBottomBar
 
 import com.bed.seller.R
 
-fun Fragment.snackbar(view: View, message: String) =
+fun Fragment.snackBar(view: View, message: String) =
     Snackbar.make(view, message, Snackbar.LENGTH_LONG).show()
 
-fun Fragment.snackbar(view: View, @StringRes message: Int, time: Int = 6000) =
+fun Fragment.snackBar(view: View, @StringRes message: Int, time: Int = 6000) =
     Snackbar.make(view, getText(message), time).setDuration(time).show()
 
-fun Fragment.snackbar(view: View, @StringRes message: Int, arg: String) =
+fun Fragment.snackBar(view: View, @StringRes message: Int, arg: String) =
     Snackbar.make(view, resources.getString(message, arg), Snackbar.LENGTH_LONG).show()
 
-fun Fragment.snackbar(
+fun Fragment.snackBar(
     view: View,
     message: String,
     time: Int = Snackbar.LENGTH_INDEFINITE,
@@ -30,7 +30,7 @@ fun Fragment.snackbar(
     .setAction(titleAction) { action() }
     .show()
 
-fun Fragment.snackbar(
+fun Fragment.snackBar(
     view: View,
     message: String,
     action: () -> Unit

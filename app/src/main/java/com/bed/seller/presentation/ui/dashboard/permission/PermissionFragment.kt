@@ -16,7 +16,7 @@ import com.bed.seller.databinding.PermissionFragmentBinding
 import com.bed.seller.presentation.commons.extensions.setDivider
 import com.bed.seller.presentation.commons.permissions.Permissions
 import com.bed.seller.presentation.commons.recyclers.getGenericAdapterOf
-import com.bed.seller.presentation.commons.extensions.fragments.snackbar
+import com.bed.seller.presentation.commons.extensions.fragments.snackBar
 import com.bed.seller.presentation.commons.fragments.BaseBottomSheetDialogFragment
 import com.bed.seller.presentation.commons.extensions.fragments.shouldRequestPermission
 
@@ -69,8 +69,8 @@ class PermissionFragment : BaseBottomSheetDialogFragment<PermissionFragmentBindi
             else permissions.all { it.key in Permissions.permissionsToTiramisu }
 
             if (grant and identified)
-                snackbar(requireView(), getString(R.string.permissions_success)) { dismiss() }
-            else snackbar(requireView(), getString(R.string.permissions_failure)) { dismiss() }
+                snackBar(requireView(), getString(R.string.permissions_success)) { dismiss() }
+            else snackBar(requireView(), getString(R.string.permissions_failure)) { dismiss() }
         }
     }
 
@@ -95,13 +95,13 @@ class PermissionFragment : BaseBottomSheetDialogFragment<PermissionFragmentBindi
     private fun requestPermissions() {
         if (shouldRequestPermission(Permissions.permissionsCommons))
             permissionLauncher.launch(Permissions.permissionsCommons)
-        else snackbar(requireView(), getString(R.string.permissions_failure))
+        else snackBar(requireView(), getString(R.string.permissions_failure))
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun requestPermissionsTiramisu() {
         if (shouldRequestPermission(Permissions.permissionsToTiramisu))
             permissionLauncher.launch(Permissions.permissionsToTiramisu)
-        else snackbar(requireView(), getString(R.string.permissions_failure))
+        else snackBar(requireView(), getString(R.string.permissions_failure))
     }
 }

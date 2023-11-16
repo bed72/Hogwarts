@@ -1,32 +1,30 @@
 package com.bed.core.values
 
-import arrow.core.left
+import arrow.core.Nel
 import arrow.core.right
 import arrow.core.Either
+import arrow.core.leftNel
 
 @JvmInline
-value class PasswordValue (val value: String) : ValueObject<PasswordValue> {
+value class PasswordValue private constructor(private val value: String) {
 
-    override fun validate(): Either<String, PasswordValue> {
-        val (isValid, message) = rule(value)
+    operator fun invoke() = value
 
-        return if (isValid) this.right() else message.left()
-    }
+    companion object {
+        operator fun invoke(value: String?): Either<Nel<MessageValue>, PasswordValue> =
+            when {
+                value == null -> MessageValue("O senha não pode ser nula.").leftNel()
+                isValid(value) -> PasswordValue(value).right()
+                value.length <= 6 -> MessageValue("A senha presica conter mais de 6 caracteres.").leftNel()
+                value.contains(".*\\d.*".toRegex()).not() -> MessageValue("A senha presica conter caracteres numéricos.").leftNel()
+                value.contains(".*[A-Z].*".toRegex()).not() -> MessageValue("A senha presica conter caracteres maiúsculos.").leftNel()
+                else -> MessageValue("Preencha uma senha válida.").leftNel()
+            }
 
-    private fun rule(value: String): Pair<Boolean, String> {
-        val minSize = 6
-        val patternNeedsNumberCharacter = ".*\\d.*".toRegex()
-        val patternNeedsUpperCaseCharacter = ".*[A-Z].*".toRegex()
+        private fun isValid(value: String): Boolean {
+            val pattern = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}\$".toRegex()
 
-        return when {
-            value.isEmpty() -> false to "Preencha uma senha válida."
-            value.length <= minSize ->
-                false to "A senha presica conter mais de 5 caracteres."
-            patternNeedsNumberCharacter.matches(value).not() ->
-                false to "A senha presica conter caracteres numéricos."
-            patternNeedsUpperCaseCharacter.matches(value).not() ->
-                false to "A senha presica conter caracteres maiúsculos."
-            else -> true to value
+            return pattern.matches(value)
         }
     }
 }

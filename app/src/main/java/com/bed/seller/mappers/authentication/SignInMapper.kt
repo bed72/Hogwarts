@@ -9,7 +9,7 @@ import com.bed.seller.framework.network.request.authentication.SignInRequest
 
 class SignInMapper @Inject constructor() : Mapper<SignInParameter, SignInRequest> {
     override fun invoke(parameter: SignInParameter) = SignInRequest(
-        email = parameter.email.value,
-        password = parameter.password.value,
+        email = parameter.email(),
+        password = parameter.password(),
     )
 }
