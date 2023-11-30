@@ -1,18 +1,18 @@
 buildscript {
     dependencies {
         classpath("com.google.dagger:hilt-android-gradle-plugin:2.48.1")
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.7.4")
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.7.5")
     }
 }
 
 plugins {
-    id("com.android.application") version "8.1.3" apply false
+    id("com.android.application") version "8.1.4" apply false
 
     id("io.gitlab.arturbosch.detekt") version "1.23.1" apply true
 
-    id("org.jetbrains.kotlin.jvm") version "1.9.10" apply false
-    id("org.jetbrains.kotlin.android") version "1.9.10" apply false
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.10" apply false
+    id("org.jetbrains.kotlin.jvm") version "1.9.20" apply false
+    id("org.jetbrains.kotlin.android") version "1.9.20" apply false
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.20" apply false
 }
 
 tasks.register("copyGitHooks", Copy::class.java) {
