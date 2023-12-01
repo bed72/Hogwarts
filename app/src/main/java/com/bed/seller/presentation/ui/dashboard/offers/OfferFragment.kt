@@ -1,7 +1,5 @@
 package com.bed.seller.presentation.ui.dashboard.offers
 
-import javax.inject.Inject
-
 import java.io.File
 import java.util.Date
 import java.util.Locale
@@ -19,8 +17,6 @@ import android.provider.MediaStore
 import android.graphics.ImageDecoder
 import android.content.pm.PackageManager
 
-import dagger.hilt.android.AndroidEntryPoint
-
 import androidx.core.content.FileProvider
 import androidx.core.content.ContextCompat
 
@@ -32,7 +28,6 @@ import com.bed.seller.BuildConfig
 
 import com.bed.seller.databinding.OfferFragmentBinding
 
-import com.bed.seller.presentation.commons.loaders.ImageLoader
 import com.bed.seller.presentation.commons.recyclers.getGenericAdapterOf
 import com.bed.seller.presentation.commons.extensions.fragments.snackBar
 import com.bed.seller.presentation.commons.fragments.BaseBottomSheetDialogFragment
@@ -40,18 +35,14 @@ import com.bed.seller.presentation.commons.fragments.BaseBottomSheetDialogFragme
 import com.bed.seller.presentation.ui.dashboard.offers.model.ImageOfferScreenModel
 import com.bed.seller.presentation.ui.dashboard.offers.viewholder.ImageOfferViewHolder
 
-@AndroidEntryPoint
 class OfferFragment : BaseBottomSheetDialogFragment<OfferFragmentBinding>(OfferFragmentBinding::inflate) {
-
-    @Inject
-    lateinit var imageLoader: ImageLoader
 
     private var image: Uri = Uri.EMPTY
 
 //    private val viewModel: SaleViewModel by viewModels()
 
     private val adapterImages by lazy {
-        getGenericAdapterOf { ImageOfferViewHolder.create(it, imageLoader) }
+        getGenericAdapterOf { ImageOfferViewHolder.create(it) }
     }
 
     private val getPhotoFromGallery =

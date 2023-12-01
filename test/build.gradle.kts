@@ -1,6 +1,5 @@
 plugins {
-    id("java-library")
-    id("org.jetbrains.kotlin.jvm")
+    alias(libs.plugins.kotlin.jvm)
 }
 
 java {
@@ -11,7 +10,5 @@ java {
 dependencies {
     implementation(project(":core"))
 
-    api("junit:junit:4.13.2")
-    api("org.mockito.kotlin:mockito-kotlin:5.1.0")
-    api("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    api(libs.bundles.test)
 }

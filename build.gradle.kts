@@ -1,18 +1,14 @@
-buildscript {
-    dependencies {
-        classpath("com.google.dagger:hilt-android-gradle-plugin:2.48.1")
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.7.5")
-    }
-}
-
 plugins {
-    id("com.android.application") version "8.1.4" apply false
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.hilt) apply false
+    alias(libs.plugins.detekt) apply true
+    alias(libs.plugins.navigation) apply false
 
-    id("io.gitlab.arturbosch.detekt") version "1.23.4" apply true
+    alias(libs.plugins.application) apply false
 
-    id("org.jetbrains.kotlin.jvm") version "1.9.20" apply false
-    id("org.jetbrains.kotlin.android") version "1.9.20" apply false
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.20" apply false
+    alias(libs.plugins.kotlin.jvm) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
 }
 
 tasks.register("copyGitHooks", Copy::class.java) {
@@ -37,3 +33,5 @@ tasks.register("installGitHooks", Exec::class.java) {
 afterEvaluate {
     tasks.getByPath(":app:preBuild").dependsOn(":installGitHooks")
 }
+
+true

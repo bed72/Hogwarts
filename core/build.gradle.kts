@@ -1,6 +1,5 @@
 plugins {
-    id("java-library")
-    id("org.jetbrains.kotlin.jvm")
+    alias(libs.plugins.kotlin.jvm)
 }
 
 java {
@@ -9,11 +8,7 @@ java {
 }
 
 dependencies {
-    api("javax.inject:javax.inject:1")
-    api("io.arrow-kt:arrow-core:1.2.1")
-
-//    api("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
-    api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    api(libs.bundles.core)
 
     testImplementation(project(":test"))
 }

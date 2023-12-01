@@ -4,13 +4,13 @@ import java.io.FileInputStream
 import kotlin.collections.listOf
 
 plugins {
-    id("kotlin-kapt")
-    id("kotlinx-serialization")
-    id("com.android.application")
-    id("dagger.hilt.android.plugin")
-    id("io.gitlab.arturbosch.detekt")
-    id("androidx.navigation.safeargs")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.navigation)
 }
 
 val keys = Properties().apply {
@@ -45,6 +45,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 
     testOptions {
@@ -93,71 +94,31 @@ android {
 }
 
 dependencies {
-
     implementation(project(":core"))
 
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("androidx.core:core-splashscreen:1.0.1")
-    implementation("androidx.datastore:datastore-preferences:1.0.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    ksp(libs.hilt.compiler)
+    implementation(libs.hilt.android)
 
-    val navigationVersion = "2.7.5"
-    implementation("androidx.navigation:navigation-ui-ktx:$navigationVersion")
-    implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
+    implementation(libs.bundles.ktor)
+    implementation(libs.bundles.others)
+    implementation(libs.bundles.androidx)
 
-    val lifecycleVersion = "2.6.2"
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
-
-    val hiltVersion = "2.48.1"
-    kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
-    implementation("com.google.dagger:hilt-android:$hiltVersion")
-
-    val ktorVersion = "2.3.6"
-    implementation("io.ktor:ktor-client-core:$ktorVersion")
-    implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
-    implementation("io.ktor:ktor-client-logging:$ktorVersion")
-    implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
-
-    implementation("io.coil-kt:coil:2.5.0")
-    implementation("com.airbnb.android:lottie:6.2.0")
-    implementation("com.google.android.material:material:1.10.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11")
-
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.4")
+    detektPlugins(libs.detekt)
 
     testImplementation(project(":test"))
-    testImplementation("androidx.arch.core:core-testing:2.2.0")
-    testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
+    testImplementation(libs.androidx.arch.test)
 
-    androidTestUtil("androidx.test:orchestrator:1.4.2")
+    androidTestUtil(libs.androidx.orchestrator.test)
 
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    kspAndroidTest(libs.hilt.compiler)
 
-    kaptAndroidTest("com.google.dagger:hilt-android-compiler:$hiltVersion")
+    androidTestImplementation(libs.bundles.androidx.test)
 
-    val espressoVersion = "3.5.1"
-    androidTestImplementation("androidx.test.espresso:espresso-core:$espressoVersion")
-    androidTestImplementation ("androidx.test.espresso:espresso-contrib:$espressoVersion")
-
-    androidTestImplementation("androidx.test:runner:1.5.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.navigation:navigation-testing:$navigationVersion")
-
-    androidTestImplementation("com.squareup.okhttp3:mockwebserver:4.9.3")
-    androidTestImplementation("com.google.dagger:hilt-android-testing:$hiltVersion")
-    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
-
-    debugImplementation("androidx.fragment:fragment-testing:1.6.2")
-    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.12")
+    debugImplementation(libs.bundles.debug)
 }
 
 detekt {
-    toolVersion = "1.23.4"
+    toolVersion = libs.versions.detekt.get()
 
     parallel = true
 
