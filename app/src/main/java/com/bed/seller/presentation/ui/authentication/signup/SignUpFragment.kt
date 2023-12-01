@@ -15,7 +15,7 @@ import com.bed.seller.databinding.SignUpFragmentBinding
 
 import com.bed.core.domain.parameters.authentication.SignUpParameter
 
-import com.bed.seller.presentation.commons.states.States
+import com.bed.seller.presentation.commons.states.ConstantStates
 import com.bed.seller.presentation.commons.states.NameState
 import com.bed.seller.presentation.commons.states.EmailState
 import com.bed.seller.presentation.commons.states.PasswordState
@@ -90,14 +90,14 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
     private fun observeSignUpState() {
         viewModel.states.observe(viewLifecycleOwner) { states ->
             binding.actionFlipper.displayedChild = when (states) {
-                SignUpViewModel.States.Loading -> States.FLIPPER_LOADING
+                SignUpViewModel.States.Loading -> ConstantStates.FLIPPER_LOADING
                 is SignUpViewModel.States.Failure -> {
                     snackBar(requireView(), states.data)
-                    States.FLIPPER_FAILURE
+                    ConstantStates.FLIPPER_FAILURE
                 }
                 is SignUpViewModel.States.Success -> {
                     navigateTo(SignUpFragmentDirections.actionSingUpToHome())
-                    States.FLIPPER_SUCCESS
+                    ConstantStates.FLIPPER_SUCCESS
                 }
             }
         }

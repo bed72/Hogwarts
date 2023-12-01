@@ -41,22 +41,22 @@ internal class SignUpModelViewModelTest {
     private lateinit var signUpUseCase: SignUpUseCase
 
     @Mock
-    private lateinit var saveStorageUseCase: SaveStorageUseCase
+    private lateinit var storageUseCase: SaveStorageUseCase
 
     @Mock
     private lateinit var observer: Observer<SignUpViewModel.States>
 
     private lateinit var factory: SignUpFactory
 
-    private lateinit var signUpViewModel: SignUpViewModel
+    private lateinit var viewModel: SignUpViewModel
 
     @Before
     fun setUp() {
         factory = SignUpFactory()
-        signUpViewModel = SignUpViewModel(
+        viewModel = SignUpViewModel(
             signUpUseCase,
             rule.dispatcher,
-            saveStorageUseCase
+            storageUseCase
         ).apply { states.observeForever(observer) }
     }
 
@@ -64,7 +64,7 @@ internal class SignUpModelViewModelTest {
     fun `Should emit Loading State when trying to sign up with return success`() = runTest {
         whenever(signUpUseCase(any())).thenReturn(flowOf(factory.success))
 
-        signUpViewModel.signUp(factory.signUpParameter)
+        viewModel.signUp(factory.signUpParameter)
 
         verify(observer).onChanged(isA<SignUpViewModel.States.Loading>())
         verify(observer).onChanged(isA<SignUpViewModel.States.Success>())
@@ -74,7 +74,7 @@ internal class SignUpModelViewModelTest {
     fun `Should emit Loading State when trying to sign up with return failure`() = runTest {
         whenever(signUpUseCase(any())).thenReturn(flowOf(factory.failure))
 
-        signUpViewModel.signUp(factory.signUpParameter)
+        viewModel.signUp(factory.signUpParameter)
 
         verify(observer).onChanged(isA<SignUpViewModel.States.Loading>())
         verify(observer).onChanged(isA<SignUpViewModel.States.Failure>())
@@ -85,9 +85,9 @@ internal class SignUpModelViewModelTest {
         runTest {
             whenever(signUpUseCase(any())).thenReturn(flowOf(factory.success))
 
-            signUpViewModel.signUp(factory.signUpParameter)
+            viewModel.signUp(factory.signUpParameter)
 
-            val (success) = signUpViewModel.states.value as SignUpViewModel.States.Success
+            val (success) = viewModel.states.value as SignUpViewModel.States.Success
             assertEquals(success.expireIn, 3600)
             assertEquals(success.accessToken, "5CQcsREkB5xcqbY1L...")
             assertEquals(success.refreshToken, "5CQcsREkB5xcqbY1L...")
@@ -99,9 +99,9 @@ internal class SignUpModelViewModelTest {
     fun `Should return Failure State when trying to create an account with return failure`() = runTest {
         whenever(signUpUseCase(any())).thenReturn(flowOf(factory.failure))
 
-        signUpViewModel.signUp(factory.signUpParameter)
+        viewModel.signUp(factory.signUpParameter)
 
-        val (failure) = signUpViewModel.states.value as SignUpViewModel.States.Failure
+        val (failure) = viewModel.states.value as SignUpViewModel.States.Failure
         assertEquals(failure, "Este e-mail já foi cadastrado.")
     }
 }

@@ -16,7 +16,7 @@ import com.bed.seller.databinding.SignInFragmentBinding
 
 import com.bed.core.domain.parameters.authentication.SignInParameter
 
-import com.bed.seller.presentation.commons.states.States
+import com.bed.seller.presentation.commons.states.ConstantStates
 import com.bed.seller.presentation.commons.states.EmailState
 import com.bed.seller.presentation.commons.states.PasswordState
 
@@ -77,14 +77,14 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
     private fun observeSignInState() {
         viewModel.states.observe(viewLifecycleOwner) { states ->
             binding.actionFlipper.displayedChild = when (states) {
-                SignInViewModel.States.Loading -> States.FLIPPER_LOADING
+                SignInViewModel.States.Loading -> ConstantStates.FLIPPER_LOADING
                 is SignInViewModel.States.Failure -> {
                     snackBar(requireView(), states.data)
-                    States.FLIPPER_FAILURE
+                    ConstantStates.FLIPPER_FAILURE
                 }
                 is SignInViewModel.States.Success -> {
                     navigateTo(SignInFragmentDirections.actionSignInToHome())
-                    States.FLIPPER_SUCCESS
+                    ConstantStates.FLIPPER_SUCCESS
                 }
             }
         }
