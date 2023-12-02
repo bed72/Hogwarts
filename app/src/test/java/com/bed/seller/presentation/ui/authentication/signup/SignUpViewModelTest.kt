@@ -23,14 +23,13 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 
 import com.bed.test.rule.MainCoroutineRule
 
-import com.bed.core.usecases.storage.SaveStorageUseCase
 import com.bed.core.usecases.authentication.SignUpUseCase
 
 import com.bed.test.factories.authentication.AuthenticationFactory
 
 @RunWith(MockitoJUnitRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)
-internal class SignUpModelViewModelTest {
+internal class SignUpViewModelTest {
 
     @get:Rule
     val rule = MainCoroutineRule()
@@ -40,9 +39,6 @@ internal class SignUpModelViewModelTest {
 
     @Mock
     private lateinit var signUpUseCase: SignUpUseCase
-
-    @Mock
-    private lateinit var saveStorageUseCase: SaveStorageUseCase
 
     @Mock
     private lateinit var observer: Observer<SignUpViewModel.States>
@@ -56,8 +52,7 @@ internal class SignUpModelViewModelTest {
         factory = AuthenticationFactory()
         viewModel = SignUpViewModel(
             signUpUseCase,
-            rule.dispatcher,
-            saveStorageUseCase
+            rule.dispatcher
         ).apply { states.observeForever(observer) }
     }
 

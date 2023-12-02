@@ -98,7 +98,6 @@ dependencies {
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.android)
 
-    implementation(libs.bundles.ktor)
     implementation(libs.bundles.others)
     implementation(libs.bundles.androidx)
 

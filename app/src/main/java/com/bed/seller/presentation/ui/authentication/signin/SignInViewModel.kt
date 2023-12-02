@@ -11,10 +11,8 @@ import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 
 import com.bed.seller.presentation.commons.states.EmailState
-import com.bed.seller.presentation.commons.states.StorageState
 import com.bed.seller.presentation.commons.states.PasswordState
 
-import com.bed.core.usecases.storage.SaveStorageUseCase
 import com.bed.core.usecases.authentication.SignInUseCase
 import com.bed.core.usecases.coroutines.CoroutinesUseCase
 
@@ -24,11 +22,8 @@ import com.bed.core.domain.parameters.authentication.AuthenticationParameter
 @HiltViewModel
 class SignInViewModel @Inject constructor(
     signInUseCase: SignInUseCase,
-    coroutinesUseCase: CoroutinesUseCase,
-    saveStorageUseCase: SaveStorageUseCase
+    coroutinesUseCase: CoroutinesUseCase
 ) : ViewModel() {
-
-    private val storage = StorageState(saveStorageUseCase)
 
     val email = EmailState(coroutinesUseCase)
     val password = PasswordState(coroutinesUseCase)
@@ -43,10 +38,7 @@ class SignInViewModel @Inject constructor(
                 signInUseCase(action.parameter).collect { data ->
                     data.fold(
                         { failure -> emit(States.Failure(failure.message)) },
-                        { success ->
-                            storage.save(success)
-                            emit(States.Success(success))
-                        }
+                        { success -> emit(States.Success(success)) }
                     )
                 }
             }

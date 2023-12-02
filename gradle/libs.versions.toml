@@ -2,7 +2,6 @@
 inject = "1"
 agp = "8.2.0"
 coil = "2.5.0"
-ktor = "2.3.6"
 hilt = "2.48.1"
 arrow = "1.2.1"
 lottie = "6.2.0"
@@ -51,12 +50,6 @@ lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie"
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 okhttp = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 detekt = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
-
-ktor-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
-ktor-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
-ktor-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
-ktor-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
-ktor-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
 
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt"}
@@ -150,14 +143,6 @@ others = [
     "lottie",
     "okhttp",
     "material"
-]
-
-ktor = [
-    "ktor-core",
-    "ktor-json",
-    "ktor-okhttp",
-    "ktor-logging",
-    "ktor-negotiation"
 ]
 
 androidx = [

@@ -23,7 +23,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 
 import com.bed.test.rule.MainCoroutineRule
 
-import com.bed.core.usecases.storage.SaveStorageUseCase
 import com.bed.core.usecases.authentication.SignInUseCase
 
 import com.bed.test.factories.authentication.AuthenticationFactory
@@ -42,9 +41,6 @@ internal class SignInViewModelTest {
     private lateinit var signInUseCase: SignInUseCase
 
     @Mock
-    private lateinit var saveStorageUseCase: SaveStorageUseCase
-
-    @Mock
     private lateinit var observer: Observer<SignInViewModel.States>
 
     private lateinit var factory: AuthenticationFactory
@@ -56,8 +52,7 @@ internal class SignInViewModelTest {
         factory = AuthenticationFactory()
         viewModel = SignInViewModel(
             signInUseCase,
-            rule.dispatcher,
-            saveStorageUseCase
+            rule.dispatcher
         ).apply { states.observeForever(observer) }
     }
 
