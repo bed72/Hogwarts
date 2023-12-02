@@ -13,31 +13,41 @@ import com.bed.seller.R
 fun Fragment.snackBar(view: View, message: String) =
     Snackbar.make(view, message, Snackbar.LENGTH_LONG).show()
 
-fun Fragment.snackBar(view: View, @StringRes message: Int, time: Int = 6000) =
-    Snackbar.make(view, getText(message), time).setDuration(time).show()
+fun Fragment.snackBar(message: String) =
+    Snackbar.make(this.requireView(), message, Snackbar.LENGTH_LONG).show()
 
-fun Fragment.snackBar(view: View, @StringRes message: Int, arg: String) =
-    Snackbar.make(view, resources.getString(message, arg), Snackbar.LENGTH_LONG).show()
+fun Fragment.snackBar(@StringRes message: Int, time: Int = 6000) =
+    Snackbar.make(this.requireView(), getText(message), time).setDuration(time).show()
+
+fun Fragment.snackBar(@StringRes message: Int, arg: String) =
+    Snackbar.make(this.requireView(), resources.getString(message, arg), Snackbar.LENGTH_LONG).show()
 
 fun Fragment.snackBar(
-    view: View,
-    message: String,
+    @StringRes message: Int,
     time: Int = Snackbar.LENGTH_INDEFINITE,
     @StringRes titleAction: Int = android.R.string.ok,
     action: () -> Unit
 ) = Snackbar
-    .make(view, message, time)
+    .make(this.requireView(), message, time)
     .setAction(titleAction) { action() }
     .show()
 
 fun Fragment.snackBar(
-    view: View,
-    message: String,
-    action: () -> Unit
+    @StringRes message: Int,
+    @StringRes titleAction: Int = R.string.exit_snackbar,
+    actionClose: () -> Unit,
+    actionButton: () -> Unit,
 ) = Snackbar
-    .make(view, message, Snackbar.LENGTH_LONG)
+    .make(this.requireView(), message, Snackbar.LENGTH_LONG)
+    .setAction(titleAction) { actionButton() }
+    .addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
+        override fun onDismissed(transientBottomBar: Snackbar?, event: Int) { actionClose() }
+    })
+    .show()
+
+fun Fragment.snackBar(@StringRes message: Int, action: () -> Unit) = Snackbar
+    .make(this.requireView(), message, Snackbar.LENGTH_LONG)
     .addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
         override fun onDismissed(transientBottomBar: Snackbar?, event: Int) { action() }
     })
-    .setAction(R.string.exit_snackbar) { action() }
     .show()

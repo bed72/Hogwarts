@@ -14,6 +14,11 @@ fun <A, B> Either<A, B>.leftNel(): Either<NonEmptyList<A>, B> = mapLeft { it.nel
 
 fun <E, A, R> Either<E, A>.andThen(f: (A) -> Either<E, R>): Either<E, R> = fold({ it.left() }, f)
 
+fun <E, A, R> validate(
+    a: EitherNel<E, A>,
+    f: (A) -> R
+): EitherNel<E, R> = either { f(a.bind()) }
+
 fun <E, A, B, R> validate(
     a: EitherNel<E, A>,
     b: EitherNel<E, B>,

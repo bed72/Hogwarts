@@ -10,7 +10,6 @@ import androidx.lifecycle.MutableLiveData
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 
-import com.bed.seller.presentation.commons.states.NameState
 import com.bed.seller.presentation.commons.states.EmailState
 import com.bed.seller.presentation.commons.states.StorageState
 import com.bed.seller.presentation.commons.states.PasswordState
@@ -20,7 +19,7 @@ import com.bed.core.usecases.authentication.SignUpUseCase
 import com.bed.core.usecases.coroutines.CoroutinesUseCase
 
 import com.bed.core.domain.models.authentication.AuthenticationModel
-import com.bed.core.domain.parameters.authentication.SignUpParameter
+import com.bed.core.domain.parameters.authentication.AuthenticationParameter
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
@@ -29,13 +28,12 @@ class SignUpViewModel @Inject constructor(
     saveStorageUseCase: SaveStorageUseCase
 ) : ViewModel() {
 
+    private val actions = MutableLiveData<Actions>()
+
     private val storage = StorageState(saveStorageUseCase)
 
-    val name = NameState(coroutinesUseCase)
     val email = EmailState(coroutinesUseCase)
     val password = PasswordState(coroutinesUseCase)
-
-    private val actions = MutableLiveData<Actions>()
 
     val states: LiveData<States> = actions.switchMap { action ->
         liveData(coroutinesUseCase.main()) {
@@ -55,12 +53,12 @@ class SignUpViewModel @Inject constructor(
         }
     }
 
-    fun signUp(parameter: SignUpParameter) {
+    fun signUp(parameter: AuthenticationParameter) {
         actions.value = Actions.SignUp(parameter)
     }
 
     sealed class Actions {
-        data class SignUp(val parameter: SignUpParameter) : Actions()
+        data class SignUp(val parameter: AuthenticationParameter) : Actions()
     }
 
     sealed class States {

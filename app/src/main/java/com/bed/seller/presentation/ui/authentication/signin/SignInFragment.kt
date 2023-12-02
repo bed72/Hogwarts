@@ -14,7 +14,7 @@ import com.bed.core.values.getFirstMessage
 
 import com.bed.seller.databinding.SignInFragmentBinding
 
-import com.bed.core.domain.parameters.authentication.SignInParameter
+import com.bed.core.domain.parameters.authentication.AuthenticationParameter
 
 import com.bed.seller.presentation.commons.states.ConstantStates
 import com.bed.seller.presentation.commons.states.EmailState
@@ -55,7 +55,7 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
                     }
                     is EmailState.States.Success -> {
                         emailRow = states.data()
-                        binding.emailTextInput.helperText = getString(R.string.sign_up_valid_email, emailRow)
+                        binding.emailTextInput.helperText = getString(R.string.valid_email, emailRow)
                     }
                 }
             }
@@ -67,7 +67,7 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
                     }
                     is PasswordState.States.Success -> {
                         passwordRow = states.data()
-                        binding.passwordTextInput.helperText = getString(R.string.sign_up_valid_password)
+                        binding.passwordTextInput.helperText = getString(R.string.valid_password)
                     }
                 }
             }
@@ -124,8 +124,9 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
 
     private fun validateParameter() {
         hideKeyboard()
-        SignInParameter(emailRow, passwordRow).fold(
-            { failure -> snackBar(requireView(), failure.getFirstMessage()) },
+
+        AuthenticationParameter(emailRow, passwordRow).fold(
+            { failure -> snackBar(failure.getFirstMessage()) },
             { success -> viewModel.signIn(success) }
         )
     }

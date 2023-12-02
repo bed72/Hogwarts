@@ -19,7 +19,7 @@ import com.bed.core.usecases.authentication.SignInUseCase
 import com.bed.core.usecases.coroutines.CoroutinesUseCase
 
 import com.bed.core.domain.models.authentication.AuthenticationModel
-import com.bed.core.domain.parameters.authentication.SignInParameter
+import com.bed.core.domain.parameters.authentication.AuthenticationParameter
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
@@ -53,12 +53,12 @@ class SignInViewModel @Inject constructor(
         }
     }
 
-    fun signIn(parameter: SignInParameter) {
+    fun signIn(parameter: AuthenticationParameter) {
         actions.value = Actions.SignIn(parameter)
     }
 
     sealed class Actions {
-        data class SignIn(val parameter: SignInParameter) : Actions()
+        data class SignIn(val parameter: AuthenticationParameter) : Actions()
     }
 
     sealed class States {

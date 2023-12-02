@@ -13,15 +13,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 
-import com.bed.core.usecases.storage.GetStorageUseCase
-import com.bed.core.usecases.coroutines.CoroutinesUseCase
-
 import com.bed.seller.presentation.commons.states.States
-import com.bed.seller.framework.constants.StorageConstant
+
+import com.bed.core.usecases.coroutines.CoroutinesUseCase
+import com.bed.core.usecases.authentication.IsLoggedInUseCase
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val storageUseCase: GetStorageUseCase,
+    private val isLoggedInUseCase: IsLoggedInUseCase,
     private val coroutinesUseCase: CoroutinesUseCase,
 ) : ViewModel() {
 
@@ -34,9 +33,7 @@ class SplashViewModel @Inject constructor(
         viewModelScope.launch(coroutinesUseCase.main()) {
             _state.update { States.Loading }
 
-            storageUseCase(StorageConstant.DATASTORE_REFRESH_TOKEN.value).collect { data ->
-                _state.update { if (data.isEmpty()) States.Failure() else States.Success() }
-            }
+            _state.update { if (isLoggedInUseCase()) States.Success() else States.Failure() }
         }
     }
 }

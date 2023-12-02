@@ -5,6 +5,7 @@ import kotlin.collections.listOf
 
 plugins {
     alias(libs.plugins.application)
+    alias(libs.plugins.google.service)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
@@ -38,8 +39,6 @@ android {
             )
         )
 
-//        buildConfigField("String", "API_KEY", keys.getProperty("API_KEY"))
-//        buildConfigField("String", "BASE_URL", keys.getProperty("BASE_URL"))
         buildConfigField("String", "DATA_STORE", keys.getProperty("DATA_STORE"))
     }
 
@@ -102,6 +101,9 @@ dependencies {
     implementation(libs.bundles.ktor)
     implementation(libs.bundles.others)
     implementation(libs.bundles.androidx)
+
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.bundles.firbase)
 
     detektPlugins(libs.detekt)
 

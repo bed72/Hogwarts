@@ -1,6 +1,11 @@
 package com.bed.seller.presentation.commons.states
 
+import android.view.View
+
 object ConstantStates {
+    const val GONE = View.GONE
+    const val VISIBLE = View.VISIBLE
+
     const val FLIPPER_LOADING = 1
     const val FLIPPER_FAILURE = 0
     const val FLIPPER_SUCCESS = FLIPPER_FAILURE

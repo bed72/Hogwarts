@@ -4,49 +4,29 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 import com.bed.core.domain.models.authentication.AuthenticationModel
-import com.bed.core.domain.models.authentication.AuthenticationUserModel
-import com.bed.core.domain.models.authentication.AuthenticationMetadataModel
 
 @Serializable
 data class AuthenticationResponse(
-    @SerialName("expires_in")
-    val expireIn: Int,
+    @SerialName("uid")
+    val uid: String,
 
-    @SerialName("access_token")
-    val accessToken: String,
+    @SerialName("displayName")
+    val name: String?,
 
-    @SerialName("refresh_token")
-    val refreshToken: String,
+    @SerialName("email")
+    val email: String?,
 
-    @SerialName("user")
-    val user: AuthenticationUserResponse,
+    @SerialName("photoUrl")
+    val photo: String?,
+
+    @SerialName("emailVerified")
+    val emailVerified: Boolean
 )
 
 fun AuthenticationResponse.toModel() = AuthenticationModel(
-    expireIn = expireIn,
-    accessToken = accessToken,
-    refreshToken = refreshToken,
-    user = user.toModel()
+    uid = uid,
+    name = name ?: "",
+    email = email ?: "",
+    photo = photo ?: "",
+    emailVerified = emailVerified
 )
-
-@Serializable
-data class AuthenticationUserResponse(
-    @SerialName("email")
-    val email: String,
-
-    @SerialName("user_metadata")
-    val userMetadata: AuthenticationMetadataResponse,
-)
-
-fun AuthenticationUserResponse.toModel() = AuthenticationUserModel(
-    email = email,
-    userMetadata = userMetadata.toModel()
-)
-
-@Serializable
-data class AuthenticationMetadataResponse(
-    @SerialName("name")
-    val name: String,
-)
-
-fun AuthenticationMetadataResponse.toModel() = AuthenticationMetadataModel(name = name)

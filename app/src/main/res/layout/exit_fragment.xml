@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout
-    android:padding="@dimen/normal_padding"
+    android:padding="@dimen/normal_space"
     android:orientation="vertical"
     style="@style/BottomSheetDialog"
     android:layout_width="match_parent"
@@ -18,20 +18,49 @@
         android:layout_height="wrap_content"
         android:text="@string/exit_title" />
 
-    <Button
-        android:id="@+id/yes_button"
-        android:text="@string/exit_title_yes_button"
-        style="@style/NormalButton"
-        android:layout_height="@dimen/button_height"
-        android:layout_marginTop="@dimen/normal_margin"
-        android:layout_width="match_parent" />
+    <TextView
+        android:id="@+id/description_text"
+        style="@style/GreyMediumNormalBody"
+        android:layout_gravity="start"
+        android:layout_marginTop="@dimen/small_space"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    
+    <ViewFlipper
+        android:id="@+id/action_flipper"
+        android:layout_marginTop="@dimen/normal_space"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
-    <Button
-        android:id="@+id/no_button"
-        android:text="@string/exit_title_no_button"
-        style="@style/CancelButton"
-        android:layout_height="@dimen/button_height"
-        android:layout_marginTop="@dimen/small_margin"
-        android:layout_width="match_parent" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/yes_button"
+                android:text="@string/exit_title_yes_button"
+                style="@style/NormalButton"
+                android:layout_height="@dimen/button_height"
+                android:layout_width="match_parent" />
+
+            <Button
+                android:id="@+id/no_button"
+                android:text="@string/exit_title_no_button"
+                style="@style/CancelButton"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginTop="@dimen/small_space"
+                android:layout_width="match_parent" />
+
+        </LinearLayout>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progress"
+            android:indeterminate="true"
+            android:layout_width="@dimen/progress_bar_dimens"
+            android:layout_height="@dimen/progress_bar_dimens"
+            android:layout_gravity="center" />
+
+    </ViewFlipper>
 
 </LinearLayout>

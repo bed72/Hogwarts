@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout
-    android:padding="@dimen/normal_padding"
+    android:padding="@dimen/normal_space"
     android:orientation="vertical"
     style="@style/BottomSheetDialog"
     android:layout_width="match_parent"
@@ -13,78 +13,78 @@
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" >
 
     <TextView
-        android:text="@string/recover_password_title"
+        android:text="@string/recover_title"
         style="@style/SemiBoldHeading5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <TextView
         style="@style/GreyMediumBody"
-        android:layout_marginTop="@dimen/small_margin"
+        android:layout_marginTop="@dimen/small_space"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/recover_password_description" />
+        android:text="@string/recover_description" />
 
     <TextView
         android:text="@string/title_email_text_input"
         style="@style/MediumBody1"
-        android:layout_marginTop="@dimen/small_margin"
+        android:layout_marginTop="@dimen/small_space"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/email_text_input"
         style="@style/TextInput"
         app:endIconMode="clear_text"
-        android:layout_marginTop="@dimen/big_small_margin"
+        android:layout_marginTop="@dimen/extra_small_space"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:placeholderText="@string/recover_password_placeholder_email_text_input" >
+        app:placeholderText="@string/recover_placeholder_email_text_input" >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/email_edit_input"
+            android:lines="@integer/max_lines_commons"
+            android:maxLines="@integer/max_lines_commons"
+            android:maxLength="@integer/max_length_email"
             style="@style/TextInputEdit"
-            tools:text="@string/recover_password_placeholder_email_text_input"
+            tools:text="@string/recover_placeholder_email_text_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <ViewFlipper
-        android:id="@+id/action_flipper"
-        android:layout_width="match_parent"
+    <ViewStub
+        android:id="@+id/progress"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/normal_space"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/normal_margin">
+        android:layout="@layout/loading_component"
+        android:inflatedId="@+id/progress_indicator" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/container_buttons"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/normal_space"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
-            <Button
-                android:id="@+id/recover_button"
-                android:text="@string/recover_password_send_recover_button"
-                style="@style/NormalButton"
-                android:layout_height="@dimen/button_height"
-                android:layout_width="match_parent" />
+        <Button
+            android:id="@+id/recover_button"
+            android:text="@string/recover_send_recover_button"
+            style="@style/NormalButton"
+            android:layout_height="@dimen/button_height"
+            android:layout_width="match_parent" />
 
-            <Button
-                android:id="@+id/close_button"
-                style="@style/CancelButton"
-                android:layout_height="@dimen/button_height"
-                android:layout_marginTop="@dimen/small_margin"
-                android:layout_width="match_parent"
-                android:text="@string/title_cancel_button" />
+        <Button
+            android:id="@+id/close_button"
+            android:text="@string/title_cancel_button"
+            style="@style/CancelButton"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginTop="@dimen/small_space"
+            android:layout_width="match_parent" />
 
-        </LinearLayout>
-
-        <com.google.android.material.progressindicator.CircularProgressIndicator
-            android:id="@+id/progress_indicator"
-            android:layout_width="@dimen/progress_bar_dimens"
-            android:indeterminate="true"
-            android:layout_height="@dimen/progress_bar_dimens"
-            android:layout_gravity="center" />
-
-    </ViewFlipper>
+    </LinearLayout>
 
 </LinearLayout>

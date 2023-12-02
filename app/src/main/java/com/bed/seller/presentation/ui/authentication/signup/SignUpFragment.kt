@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 
 import androidx.fragment.app.viewModels
+import com.bed.core.domain.parameters.authentication.AuthenticationParameter
 
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -13,12 +14,9 @@ import com.bed.core.values.getFirstMessage
 
 import com.bed.seller.databinding.SignUpFragmentBinding
 
-import com.bed.core.domain.parameters.authentication.SignUpParameter
-
-import com.bed.seller.presentation.commons.states.ConstantStates
-import com.bed.seller.presentation.commons.states.NameState
 import com.bed.seller.presentation.commons.states.EmailState
 import com.bed.seller.presentation.commons.states.PasswordState
+import com.bed.seller.presentation.commons.states.ConstantStates
 
 import com.bed.seller.presentation.commons.fragments.BaseFragment
 
@@ -31,7 +29,6 @@ import com.bed.seller.presentation.commons.extensions.fragments.hideKeyboard
 @AndroidEntryPoint
 class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding::inflate) {
 
-    private var nameRow = ""
     private var emailRow = ""
     private var passwordRow = ""
 
@@ -48,18 +45,6 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
 
     private fun observeFormState() {
         with (viewModel) {
-            name.states.observe(viewLifecycleOwner) { states ->
-                when (states) {
-                    is NameState.States.Failure -> {
-                        nameRow = ""
-                        binding.nameTextInput.error = states.data
-                    }
-                    is NameState.States.Success -> {
-                        nameRow = states.data()
-                        binding.nameTextInput.helperText = getString(R.string.sign_up_valid_name, nameRow)
-                    }
-                }
-            }
             email.states.observe(viewLifecycleOwner) { states ->
                 when (states) {
                     is EmailState.States.Failure -> {
@@ -68,7 +53,7 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
                     }
                     is EmailState.States.Success -> {
                         emailRow = states.data()
-                        binding.emailTextInput.helperText = getString(R.string.sign_up_valid_email, emailRow)
+                        binding.emailTextInput.helperText = getString(R.string.valid_email, emailRow)
                     }
                 }
             }
@@ -80,7 +65,7 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
                     }
                     is PasswordState.States.Success -> {
                         passwordRow = states.data()
-                        binding.passwordTextInput.helperText = getString(R.string.sign_up_valid_password)
+                        binding.passwordTextInput.helperText = getString(R.string.valid_password)
                     }
                 }
             }
@@ -89,15 +74,15 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
 
     private fun observeSignUpState() {
         viewModel.states.observe(viewLifecycleOwner) { states ->
-            binding.actionFlipper.displayedChild = when (states) {
-                SignUpViewModel.States.Loading -> ConstantStates.FLIPPER_LOADING
+            when (states) {
+                SignUpViewModel.States.Loading -> handlerLoading(ConstantStates.VISIBLE, ConstantStates.GONE)
                 is SignUpViewModel.States.Failure -> {
-                    snackBar(requireView(), states.data)
-                    ConstantStates.FLIPPER_FAILURE
+                    snackBar(states.data)
+                    handlerLoading(ConstantStates.GONE, ConstantStates.VISIBLE)
                 }
                 is SignUpViewModel.States.Success -> {
+                    snackBar(R.string.sign_up_success_message)
                     navigateTo(SignUpFragmentDirections.actionSingUpToHome())
-                    ConstantStates.FLIPPER_SUCCESS
                 }
             }
         }
@@ -110,7 +95,6 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
 
     private fun setupForm() {
         with (binding) {
-            nameEditInput.debounce { viewModel.name.set(it) }
             emailEditInput.debounce { viewModel.email.set(it) }
             passwordEditInput.debounce { viewModel.password.set(it) }
             passwordEditInput.actionKeyboard { validateParameter() }
@@ -129,9 +113,17 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
 
     private fun validateParameter() {
         hideKeyboard()
-        SignUpParameter(nameRow, emailRow, passwordRow).fold(
-            { failure -> snackBar(requireView(), failure.getFirstMessage()) },
+
+        AuthenticationParameter(emailRow, passwordRow).fold(
+            { failure -> snackBar(failure.getFirstMessage()) },
             { success -> viewModel.signUp(success) }
         )
+    }
+
+    private fun handlerLoading(progressVisibility: Int, buttonVisibility: Int) {
+        with (binding) {
+            progress.visibility = progressVisibility
+            signUpButton.visibility = buttonVisibility
+        }
     }
 }

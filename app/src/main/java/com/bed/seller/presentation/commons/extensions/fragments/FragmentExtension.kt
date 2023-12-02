@@ -16,3 +16,9 @@ fun Fragment.hideKeyboard(view: View? = activity?.window?.decorView?.rootView) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) view?.hideKeyboard(view)
     else inputMethodManager()?.hideSoftInputFromWindow(view?.applicationWindowToken, 0)
 }
+
+fun Fragment.openExternalApp(app: String, context: Context? = this.requireContext()) {
+    context?.let {
+        it.startActivity(it.packageManager.getLaunchIntentForPackage(app))
+    }
+}

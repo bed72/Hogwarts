@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.detekt) apply true
     alias(libs.plugins.navigation) apply false
+    alias(libs.plugins.google.service) apply false
 
     alias(libs.plugins.application) apply false
 
