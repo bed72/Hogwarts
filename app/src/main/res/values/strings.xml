@@ -113,6 +113,8 @@
     <string name="title_cancel_button">Cancelar</string>
 
     <!-- GENERIC FAILURE -->
-    <string name="generic_failure_title">Ops um erro aconteceu.  &#128542;</string>
+    <string name="generic_failure_title">Ops! Parece que algo deu errado.  &#128542;</string>
+    <string name="generic_failure_form">Ops! Por favor, verifique o campo e tente novamente.</string>
+    <string name="generic_failures_form">Ops! Por favor, verifique os campos e tente novamente.</string>
 
 </resources>

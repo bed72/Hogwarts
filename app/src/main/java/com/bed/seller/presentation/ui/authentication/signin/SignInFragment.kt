@@ -10,15 +10,13 @@ import dagger.hilt.android.AndroidEntryPoint
 
 import com.bed.seller.R
 
-import com.bed.core.values.getFirstMessage
+import com.bed.core.domain.parameters.authentication.AuthenticationParameter
 
 import com.bed.seller.databinding.SignInFragmentBinding
 
-import com.bed.core.domain.parameters.authentication.AuthenticationParameter
-
+import com.bed.seller.presentation.commons.states.States
+import com.bed.seller.presentation.commons.states.FormState
 import com.bed.seller.presentation.commons.states.ConstantStates
-import com.bed.seller.presentation.commons.states.EmailState
-import com.bed.seller.presentation.commons.states.PasswordState
 
 import com.bed.seller.presentation.commons.fragments.BaseFragment
 
@@ -27,6 +25,7 @@ import com.bed.seller.presentation.commons.extensions.actionKeyboard
 import com.bed.seller.presentation.commons.extensions.fragments.snackBar
 import com.bed.seller.presentation.commons.extensions.fragments.navigateTo
 import com.bed.seller.presentation.commons.extensions.fragments.hideKeyboard
+import com.bed.seller.presentation.commons.extensions.fragments.lifecycleExecute
 
 @AndroidEntryPoint
 class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding::inflate) {
@@ -46,27 +45,32 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
     }
 
     private fun observeFormState() {
-        with (viewModel) {
-            email.states.observe(viewLifecycleOwner) { states ->
-                when (states) {
-                    is EmailState.States.Failure -> {
+        lifecycleExecute {
+            viewModel.email.state.collect { state ->
+                when (state) {
+                    States.Loading -> {}
+                    is States.Failure -> {
                         emailRow = ""
-                        binding.emailTextInput.error = states.data
+                        binding.emailTextInput.error = state.data
                     }
-                    is EmailState.States.Success -> {
-                        emailRow = states.data()
+                    is States.Success -> {
+                        emailRow = state.data
                         binding.emailTextInput.helperText = getString(R.string.valid_email, emailRow)
                     }
                 }
             }
-            password.states.observe(viewLifecycleOwner) { states->
-                when (states) {
-                    is PasswordState.States.Failure -> {
+        }
+
+        lifecycleExecute {
+            viewModel.password.state.collect { state ->
+                when (state) {
+                    States.Loading -> {}
+                    is States.Failure -> {
                         passwordRow = ""
-                        binding.passwordTextInput.error = states.data
+                        binding.passwordTextInput.error = state.data
                     }
-                    is PasswordState.States.Success -> {
-                        passwordRow = states.data()
+                    is States.Success -> {
+                        passwordRow = state.data
                         binding.passwordTextInput.helperText = getString(R.string.valid_password)
                     }
                 }
@@ -104,8 +108,8 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
 
     private fun setupForm() {
         with (binding) {
-            emailEditInput.debounce { viewModel.email.set(it) }
-            passwordEditInput.debounce { viewModel.password.set(it) }
+            emailEditInput.debounce { viewModel.email.set(it, FormState.Type.Email) }
+            passwordEditInput.debounce { viewModel.password.set(it, FormState.Type.Password) }
             passwordEditInput.actionKeyboard { validateParameter() }
         }
     }
@@ -126,7 +130,7 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
         hideKeyboard()
 
         AuthenticationParameter(emailRow, passwordRow).fold(
-            { failure -> snackBar(failure.getFirstMessage()) },
+            { _ -> snackBar(R.string.generic_failures_form) },
             { success -> viewModel.signIn(success) }
         )
     }

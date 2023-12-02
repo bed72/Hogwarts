@@ -13,6 +13,6 @@ object ConstantStates {
 
 sealed class States<out T> {
     data object Loading : States<Nothing>()
-    data class Success<T>(val data: T? = null) : States<T>()
-    data class Failure(val data: String? = null, var consumed: Boolean = false) : States<Nothing>()
+    data class Success<T>(val data: T) : States<T>()
+    data class Failure(val data: String, var consumed: Boolean = false) : States<Nothing>()
 }

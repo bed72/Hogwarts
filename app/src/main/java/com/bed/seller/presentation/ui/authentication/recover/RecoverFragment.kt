@@ -14,15 +14,18 @@ import com.bed.seller.databinding.RecoverFragmentBinding
 import com.bed.seller.presentation.commons.constants.AppConstants
 import com.bed.seller.presentation.commons.extensions.actionKeyboard
 
-import com.bed.core.values.getFirstMessage
 import com.bed.core.domain.parameters.authentication.RecoverParameter
 
-import com.bed.seller.presentation.commons.states.EmailState
-import com.bed.seller.presentation.commons.extensions.debounce
+import com.bed.seller.presentation.commons.states.States
+import com.bed.seller.presentation.commons.states.FormState
 import com.bed.seller.presentation.commons.states.ConstantStates
+
+import com.bed.seller.presentation.commons.extensions.debounce
 import com.bed.seller.presentation.commons.extensions.fragments.snackBar
 import com.bed.seller.presentation.commons.extensions.fragments.hideKeyboard
 import com.bed.seller.presentation.commons.extensions.fragments.openExternalApp
+import com.bed.seller.presentation.commons.extensions.fragments.lifecycleExecute
+
 import com.bed.seller.presentation.commons.fragments.BaseBottomSheetDialogFragment
 
 @AndroidEntryPoint
@@ -43,15 +46,18 @@ class RecoverFragment : BaseBottomSheetDialogFragment<RecoverFragmentBinding>(
     }
 
     private fun observeFormState() {
-        viewModel.email.states.observe(viewLifecycleOwner) { states ->
-            when (states) {
-                is EmailState.States.Failure -> {
-                    emailRow = ""
-                    binding.emailTextInput.error = states.data
-                }
-                is EmailState.States.Success -> {
-                    emailRow = states.data()
-                    binding.emailTextInput.helperText = getString(R.string.valid_email, states.data())
+        lifecycleExecute {
+            viewModel.email.state.collect { state ->
+                when (state) {
+                    States.Loading -> {}
+                    is States.Success -> {
+                        emailRow = state.data
+                        binding.emailTextInput.helperText = getString(R.string.valid_email, emailRow)
+                    }
+                    is States.Failure -> {
+                        emailRow = ""
+                        binding.emailTextInput.error = state.data
+                    }
                 }
             }
         }
@@ -74,7 +80,7 @@ class RecoverFragment : BaseBottomSheetDialogFragment<RecoverFragmentBinding>(
 
     private fun setupForm() {
         with (binding.emailEditInput) {
-            debounce { viewModel.email.set(it) }
+            debounce { viewModel.email.set(it, FormState.Type.Email) }
             actionKeyboard { validateParameter() }
         }
     }
@@ -90,7 +96,7 @@ class RecoverFragment : BaseBottomSheetDialogFragment<RecoverFragmentBinding>(
         hideKeyboard(binding.root)
 
         RecoverParameter(emailRow).fold(
-            { failure -> snackBar(failure.getFirstMessage()) },
+            { _ -> snackBar(R.string.generic_failure_form) },
             { success -> viewModel.recover(success) }
         )
     }

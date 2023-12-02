@@ -11,10 +11,10 @@ import androidx.lifecycle.distinctUntilChanged
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 
+import com.bed.seller.presentation.commons.states.FormState
+
 import com.bed.core.usecases.authentication.ResetUseCase
 import com.bed.core.usecases.coroutines.CoroutinesUseCase
-
-import com.bed.seller.presentation.commons.states.PasswordState
 
 import com.bed.core.domain.parameters.authentication.ResetParameter
 
@@ -25,8 +25,7 @@ class ResetViewModel @Inject constructor(
 ) : ViewModel() {
     private val actions = MutableLiveData<Actions>()
 
-    val password = PasswordState(coroutinesUseCase)
-    val repeatPassword = PasswordState(coroutinesUseCase)
+    val password = FormState()
 
     val states: LiveData<States> = actions.distinctUntilChanged().switchMap { action ->
         liveData(coroutinesUseCase.main()) {

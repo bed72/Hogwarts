@@ -3,9 +3,7 @@ package com.bed.seller.presentation.ui.splash
 import javax.inject.Inject
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,27 +11,25 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 
-import com.bed.seller.presentation.commons.states.States
-
-import com.bed.core.usecases.coroutines.CoroutinesUseCase
 import com.bed.core.usecases.authentication.IsLoggedInUseCase
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val isLoggedInUseCase: IsLoggedInUseCase,
-    private val coroutinesUseCase: CoroutinesUseCase,
+    private val useCase: IsLoggedInUseCase
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow<States<Nothing>>(States.Loading)
-    val state: StateFlow<States<Nothing>> get() = _state.asStateFlow()
+    private val _state = MutableStateFlow<States>(States.Loading)
 
-    init { get() }
+    val state: StateFlow<States> get() = _state.asStateFlow()
 
-    private fun get() {
-        viewModelScope.launch(coroutinesUseCase.main()) {
-            _state.update { States.Loading }
+    init { isLoggedIn() }
 
-            _state.update { if (isLoggedInUseCase()) States.Success() else States.Failure() }
-        }
+    private fun isLoggedIn() {
+        _state.update { States.IsLoggedIn(useCase()) }
+    }
+
+    sealed class States {
+        data object Loading : States()
+        data class IsLoggedIn(val isSuccess: Boolean) : States()
     }
 }

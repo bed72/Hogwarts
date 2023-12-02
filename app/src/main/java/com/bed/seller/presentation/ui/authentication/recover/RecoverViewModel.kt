@@ -11,7 +11,7 @@ import androidx.lifecycle.distinctUntilChanged
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 
-import com.bed.seller.presentation.commons.states.EmailState
+import com.bed.seller.presentation.commons.states.FormState
 
 import com.bed.core.usecases.coroutines.CoroutinesUseCase
 import com.bed.core.usecases.authentication.RecoverUseCase
@@ -25,7 +25,7 @@ class RecoverViewModel @Inject constructor(
 ) : ViewModel() {
     private val actions = MutableLiveData<Actions>()
 
-    val email = EmailState(coroutinesUseCase)
+    val email = FormState()
 
     val states: LiveData<States> = actions.distinctUntilChanged().switchMap { action ->
         liveData(coroutinesUseCase.main()) {

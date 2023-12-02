@@ -14,7 +14,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 import com.bed.seller.databinding.SplashFragmentBinding
 
-import com.bed.seller.presentation.commons.states.States
 import com.bed.seller.presentation.commons.fragments.BaseFragment
 import com.bed.seller.presentation.commons.extensions.fragments.navigateTo
 
@@ -34,11 +33,10 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(SplashFragmentBinding
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.state.collect { state ->
                     when (state) {
-                        States.Loading -> {}
-                        is States.Success -> navigateTo(SplashFragmentDirections.actionSplashToHome())
-                        is States.Failure -> {
-                            state.consumed = true
-                            navigateTo(SplashFragmentDirections.actionSplashToSignIn())
+                        SplashViewModel.States.Loading -> {}
+                        is SplashViewModel.States.IsLoggedIn -> {
+                            if (state.isSuccess) navigateTo(SplashFragmentDirections.actionSplashToHome())
+                            else navigateTo(SplashFragmentDirections.actionSplashToSignIn())
                         }
                     }
                 }

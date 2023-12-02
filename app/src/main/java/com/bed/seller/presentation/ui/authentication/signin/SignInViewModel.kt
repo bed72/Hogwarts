@@ -10,8 +10,7 @@ import androidx.lifecycle.MutableLiveData
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 
-import com.bed.seller.presentation.commons.states.EmailState
-import com.bed.seller.presentation.commons.states.PasswordState
+import com.bed.seller.presentation.commons.states.FormState
 
 import com.bed.core.usecases.authentication.SignInUseCase
 import com.bed.core.usecases.coroutines.CoroutinesUseCase
@@ -25,8 +24,8 @@ class SignInViewModel @Inject constructor(
     coroutinesUseCase: CoroutinesUseCase
 ) : ViewModel() {
 
-    val email = EmailState(coroutinesUseCase)
-    val password = PasswordState(coroutinesUseCase)
+    val email = FormState()
+    val password = FormState()
 
     private val actions = MutableLiveData<Actions>()
 
