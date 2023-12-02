@@ -64,7 +64,6 @@ class ResetFragment : BaseFragment<ResetFragmentBinding>(ResetFragmentBinding::i
         lifecycleExecute {
             viewModel.password.state.collect { state ->
                 when (state) {
-                    States.Loading -> {}
                     is States.Failure -> {
                         passwordRow = ""
                         binding.passwordTextInput.error = state.data
@@ -73,6 +72,7 @@ class ResetFragment : BaseFragment<ResetFragmentBinding>(ResetFragmentBinding::i
                         passwordRow = state.data
                         binding.passwordTextInput.helperText = getString(R.string.valid_password)
                     }
+                    else -> {}
                 }
             }
         }

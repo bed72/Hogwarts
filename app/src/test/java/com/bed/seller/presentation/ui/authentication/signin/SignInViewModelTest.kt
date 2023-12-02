@@ -38,7 +38,7 @@ internal class SignInViewModelTest {
     var instantExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var signInUseCase: SignInUseCase
+    private lateinit var useCase: SignInUseCase
 
     @Mock
     private lateinit var observer: Observer<SignInViewModel.States>
@@ -51,14 +51,14 @@ internal class SignInViewModelTest {
     fun setUp() {
         factory = AuthenticationFactory()
         viewModel = SignInViewModel(
-            signInUseCase,
+            useCase,
             rule.dispatcher
         ).apply { states.observeForever(observer) }
     }
 
     @Test
     fun `Should emit Loading State when trying to sign in with return success`() = runTest {
-        whenever(signInUseCase(any())).thenReturn(flowOf(factory.success))
+        whenever(useCase(any())).thenReturn(flowOf(factory.success))
 
         viewModel.signIn(factory.signInAndSingUpValidParameter)
 
@@ -68,7 +68,7 @@ internal class SignInViewModelTest {
 
     @Test
     fun `Should emit Loading State when trying to sign in with return failure`() = runTest {
-        whenever(signInUseCase(any())).thenReturn(flowOf(factory.failure))
+        whenever(useCase(any())).thenReturn(flowOf(factory.failure))
 
         viewModel.signIn(factory.signInAndSingUpValidParameter)
 
@@ -79,7 +79,7 @@ internal class SignInViewModelTest {
     @Test
     fun `Should return AuthenticationModel in Success State when trying to sign in with return success`() =
         runTest {
-            whenever(signInUseCase(any())).thenReturn(flowOf(factory.success))
+            whenever(useCase(any())).thenReturn(flowOf(factory.success))
 
             viewModel.signIn(factory.signInAndSingUpValidParameter)
 
@@ -93,7 +93,7 @@ internal class SignInViewModelTest {
 
     @Test
     fun `Should return MessageModel in Failure State when trying to sign in with return failure`() = runTest {
-        whenever(signInUseCase(any())).thenReturn(flowOf(factory.failure))
+        whenever(useCase(any())).thenReturn(flowOf(factory.failure))
 
         viewModel.signIn(factory.signInAndSingUpValidParameter)
 

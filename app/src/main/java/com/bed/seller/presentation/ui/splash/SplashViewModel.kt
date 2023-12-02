@@ -17,9 +17,7 @@ import com.bed.core.usecases.authentication.IsLoggedInUseCase
 class SplashViewModel @Inject constructor(
     private val useCase: IsLoggedInUseCase
 ) : ViewModel() {
-
     private val _state = MutableStateFlow<States>(States.Loading)
-
     val state: StateFlow<States> get() = _state.asStateFlow()
 
     init { isLoggedIn() }

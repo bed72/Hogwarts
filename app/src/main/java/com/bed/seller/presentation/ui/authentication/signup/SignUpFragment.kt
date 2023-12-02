@@ -47,7 +47,6 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
         lifecycleExecute {
             viewModel.email.state.collect { state ->
                 when (state) {
-                    States.Loading -> {}
                     is States.Failure -> {
                         emailRow = ""
                         binding.emailTextInput.error = state.data
@@ -56,6 +55,7 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
                         emailRow = state.data
                         binding.emailTextInput.helperText = getString(R.string.valid_email, emailRow)
                     }
+                    else -> {}
                 }
             }
         }
@@ -63,7 +63,6 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
         lifecycleExecute {
             viewModel.password.state.collect { state ->
                 when (state) {
-                    States.Loading -> {}
                     is States.Failure -> {
                         passwordRow = ""
                         binding.passwordTextInput.error = state.data
@@ -72,6 +71,7 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(SignUpFragmentBinding
                         passwordRow = state.data
                         binding.passwordTextInput.helperText = getString(R.string.valid_password)
                     }
+                    else -> {}
                 }
             }
         }

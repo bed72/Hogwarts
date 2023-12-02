@@ -49,7 +49,6 @@ class RecoverFragment : BaseBottomSheetDialogFragment<RecoverFragmentBinding>(
         lifecycleExecute {
             viewModel.email.state.collect { state ->
                 when (state) {
-                    States.Loading -> {}
                     is States.Success -> {
                         emailRow = state.data
                         binding.emailTextInput.helperText = getString(R.string.valid_email, emailRow)
@@ -58,17 +57,23 @@ class RecoverFragment : BaseBottomSheetDialogFragment<RecoverFragmentBinding>(
                         emailRow = ""
                         binding.emailTextInput.error = state.data
                     }
+                    else -> {}
                 }
             }
         }
     }
 
     private fun observeRecoverStates() {
-        viewModel.states.observe(viewLifecycleOwner) { states ->
-            when (states) {
-                RecoverViewModel.States.Loading -> handlerLoading(ConstantStates.VISIBLE, ConstantStates.GONE)
-                is RecoverViewModel.States.Recover ->
-                    if (states.isSuccess) handlerSuccessMessage() else handlerFailureMessage()
+        lifecycleExecute {
+            viewModel.state.collect { state ->
+                when (state) {
+                    States.Loading -> handlerLoading(ConstantStates.VISIBLE, ConstantStates.GONE)
+                    is States.Failure -> handlerFailureMessage()
+                    is States.Success -> {
+                        if (state.data) handlerSuccessMessage() else handlerFailureMessage()
+                    }
+                    else -> {}
+                }
             }
         }
     }

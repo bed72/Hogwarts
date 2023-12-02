@@ -15,7 +15,7 @@ import com.bed.core.values.getFirstMessage
 
 class FormState {
 
-    private val _state = MutableStateFlow<States<String>>(States.Loading)
+    private val _state = MutableStateFlow<States<String>>(States.Initial)
     val state: StateFlow<States<String>> get() = _state.asStateFlow()
 
     fun set(value: String, type: Type) {
