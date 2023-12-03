@@ -33,6 +33,7 @@ import com.bed.test.factories.authentication.AuthenticationFactory
 @RunWith(MockitoJUnitRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class RecoverViewModelTest {
+
     @get:Rule
     val rule = MainCoroutineRule()
 
@@ -42,46 +43,70 @@ internal class RecoverViewModelTest {
     @Mock
     private lateinit var useCase: RecoverUseCase
 
+    private lateinit var viewModel: RecoverViewModel
+
     private lateinit var factory: AuthenticationFactory
 
-    private lateinit var emissions: MutableList<States<Boolean>>
-
-    private lateinit var viewModel: RecoverViewModel
+    private lateinit var states: MutableList<States<Boolean>>
 
     @Before
     fun setUp() {
-        emissions = mutableListOf()
+        states = mutableListOf()
         factory = AuthenticationFactory()
         viewModel = RecoverViewModel(useCase, rule.dispatcher)
     }
 
     @Test
-    fun `Should emit Loading State when trying to recover with return success`() = runTest {
-        val job = launch(rule.dispatcher.main()) { viewModel.state.toList(emissions) }
+    fun `Should issue first loading state when trying to recover account with successful return`() = runTest {
+        whenever(useCase(any())).thenReturn(flowOf(true)).also { delay(1_000L) }
 
-        whenever(useCase(any())).thenReturn(flowOf(true)).run { delay(1_000L) }
+        val job = launch(rule.dispatcher.main()) { viewModel.state.toList(states) }
 
         viewModel.recover(factory.recoverValidParameter)
 
-        assertEquals(emissions[0], States.Initial)
-        assertEquals(emissions[1], States.Loading)
-        emissions[2].let { assertTrue(it is States.Success && it.data) }
+        assertEquals(states[AuthenticationFactory.INITIAL], States.Initial)
+        assertEquals(states[AuthenticationFactory.LOADING], States.Loading)
+        states[AuthenticationFactory.SUCCESS].let { assertTrue(it is States.Success && it.data) }
 
         job.cancel()
     }
 
     @Test
-    fun `Should emit Loading State when trying to recover with return failure`() = runTest {
-        val job = launch(rule.dispatcher.main()) { viewModel.state.toList(emissions) }
+    fun `Should issue first loading state when trying to recover account with failure return`() = runTest {
+        whenever(useCase(any())).thenReturn(flowOf(false)).also { delay(1_000L) }
 
-        whenever(useCase(any())).thenReturn(flowOf(false)).run { delay(1_000L) }
+        val job = launch(rule.dispatcher.main()) { viewModel.state.toList(states) }
 
         viewModel.recover(factory.recoverValidParameter)
 
-        assertEquals(emissions[0], States.Initial)
-        assertEquals(emissions[1], States.Loading)
-        assertFalse(emissions[2] is States.Failure)
+        assertEquals(states[AuthenticationFactory.INITIAL], States.Initial)
+        assertEquals(states[AuthenticationFactory.LOADING], States.Loading)
+        assertFalse(states[AuthenticationFactory.FAILURE] is States.Failure)
 
         job.cancel()
+    }
+
+    @Test
+    fun `Should recover account with logged out return`() = runTest {
+        whenever(useCase(any())).thenReturn(flowOf(false))
+
+        viewModel.recover(factory.recoverValidParameter)
+
+        viewModel.state.value.let {
+            it as States.Success
+            assertFalse(it.data)
+        }
+    }
+
+    @Test
+    fun `Should recover account with logged return`() = runTest {
+        whenever(useCase(any())).thenReturn(flowOf(true))
+
+        viewModel.recover(factory.recoverValidParameter)
+
+        viewModel.state.value.let {
+            it as States.Success
+            assertTrue(it.data)
+        }
     }
 }

@@ -1,18 +1,13 @@
 package com.bed.seller.presentation.ui.splash
 
-import kotlinx.coroutines.launch
-
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-
 import dagger.hilt.android.AndroidEntryPoint
 
 import com.bed.seller.databinding.SplashFragmentBinding
+import com.bed.seller.presentation.commons.extensions.fragments.lifecycleExecute
 
 import com.bed.seller.presentation.commons.fragments.BaseFragment
 import com.bed.seller.presentation.commons.extensions.fragments.navigateTo
@@ -25,20 +20,20 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(SplashFragmentBinding
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.isLoggedIn()
+
         observeStates()
     }
 
     private fun observeStates() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.state.collect { state ->
-                    when (state) {
-                        SplashViewModel.States.Loading -> {}
-                        is SplashViewModel.States.IsLoggedIn -> {
-                            if (state.isSuccess) navigateTo(SplashFragmentDirections.actionSplashToHome())
-                            else navigateTo(SplashFragmentDirections.actionSplashToSignIn())
-                        }
+        lifecycleExecute {
+            viewModel.state.collect { state ->
+                when (state) {
+                    is SplashViewModel.States.IsLoggedIn -> {
+                        if (state.isSuccess) navigateTo(SplashFragmentDirections.actionSplashToHome())
+                        else navigateTo(SplashFragmentDirections.actionSplashToSignIn())
                     }
+                    else -> {}
                 }
             }
         }
