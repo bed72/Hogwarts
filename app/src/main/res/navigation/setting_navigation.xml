@@ -22,7 +22,7 @@
     <dialog
         android:id="@+id/sign_out_fragment"
         tools:layout="@layout/exit_fragment"
-        android:name="com.bed.seller.presentation.ui.authentication.signout.SignOutExitFragment" >
+        android:name="com.bed.seller.presentation.ui.authentication.signout.SignOutFragment" >
 
         <action
             android:id="@+id/action_sign_out_to_sign_in"

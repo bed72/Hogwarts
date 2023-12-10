@@ -11,33 +11,20 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 
+import com.bed.seller.presentation.commons.states.States
 import com.bed.core.usecases.authentication.SignOutUseCase
 
 @HiltViewModel
 class SignOutViewModel @Inject constructor(
-    private val signOutUseCase: SignOutUseCase
+    private val useCase: SignOutUseCase
 ) : ViewModel() {
-    private val _state = MutableStateFlow<States>(States.Initial)
-
-    val state: StateFlow<States> get() = _state.asStateFlow()
+    private val _state = MutableStateFlow<States<Unit>>(States.Initial)
+    val state: StateFlow<States<Unit>> get() = _state.asStateFlow()
 
     fun signOut() {
-        onLoading()
-
-        signOutUseCase().run { onSuccess() }
-    }
-
-    private fun onLoading() {
-        _state.update { States.Loading }
-    }
-
-    private fun onSuccess() {
-        _state.update { States.IsSignOut(true) }
-    }
-
-    sealed class States {
-        data object Initial : States()
-        data object Loading : States()
-        data class IsSignOut(val isSuccess: Boolean) : States()
+        with (_state) {
+            update { States.Loading }
+            update { States.Success(useCase()) }
+        }
     }
 }
