@@ -13,14 +13,15 @@ import com.bed.seller.R
 
 import com.bed.seller.databinding.RecoverFragmentBinding
 
-import com.bed.seller.presentation.commons.states.States
 import com.bed.seller.presentation.commons.states.FormState
 import com.bed.seller.presentation.commons.states.ConstantStates
 import com.bed.seller.presentation.commons.constants.AppConstants
 import com.bed.seller.presentation.commons.extensions.actionKeyboard
 
 import com.bed.seller.presentation.commons.extensions.debounce
+import com.bed.seller.presentation.commons.extensions.observeDupleStates
 import com.bed.seller.presentation.commons.extensions.fragments.snackBar
+import com.bed.seller.presentation.commons.extensions.observeTripleStates
 import com.bed.seller.presentation.commons.extensions.fragments.hideKeyboard
 import com.bed.seller.presentation.commons.extensions.fragments.openExternalApp
 import com.bed.seller.presentation.commons.extensions.fragments.lifecycleExecute
@@ -46,33 +47,31 @@ class RecoverFragment : BaseBottomSheetDialogFragment<RecoverFragmentBinding>(
 
     private fun observeFormState() {
         lifecycleExecute {
-            viewModel.email.state.collect { state ->
-                when (state) {
-                    is States.Success -> {
-                        emailRow = state.data
+            viewModel.email.state.collect {
+                it.observeDupleStates(
+                    failure = { data ->
+                        emailRow = ""
+                        binding.emailTextInput.error = data
+                    },
+                    success = { data ->
+                        emailRow = data
                         binding.emailTextInput.helperText = getString(R.string.valid_email, emailRow)
                     }
-                    is States.Failure -> {
-                        emailRow = ""
-                        binding.emailTextInput.error = state.data
-                    }
-                    else -> {}
-                }
+                )
             }
         }
     }
 
     private fun observeRecoverStates() {
         lifecycleExecute {
-            viewModel.state.collect { state ->
-                when (state) {
-                    States.Loading -> handlerLoading(ConstantStates.VISIBLE, ConstantStates.GONE)
-                    is States.Failure -> handlerFailureMessage()
-                    is States.Success -> {
-                        if (state.data) handlerSuccessMessage() else handlerFailureMessage()
+            viewModel.state.collect {
+                it.observeTripleStates(
+                    loading = { handlerLoading(ConstantStates.VISIBLE, ConstantStates.GONE) },
+                    failure = { handlerFailureMessage() },
+                    success = { isSuccess ->
+                        if (isSuccess) handlerSuccessMessage() else handlerFailureMessage()
                     }
-                    else -> {}
-                }
+                )
             }
         }
     }

@@ -14,14 +14,15 @@ import com.bed.core.domain.parameters.authentication.ResetParameter
 import com.bed.seller.R
 import com.bed.seller.databinding.ResetFragmentBinding
 
-import com.bed.seller.presentation.commons.states.States
 import com.bed.seller.presentation.commons.states.FormState
 import com.bed.seller.presentation.commons.states.ConstantStates
 import com.bed.seller.presentation.commons.fragments.BaseFragment
 
 import com.bed.seller.presentation.commons.extensions.debounce
 import com.bed.seller.presentation.commons.extensions.actionKeyboard
+import com.bed.seller.presentation.commons.extensions.observeDupleStates
 import com.bed.seller.presentation.commons.extensions.fragments.snackBar
+import com.bed.seller.presentation.commons.extensions.observeTripleStates
 import com.bed.seller.presentation.commons.extensions.fragments.navigateTo
 import com.bed.seller.presentation.commons.extensions.fragments.hideKeyboard
 import com.bed.seller.presentation.commons.extensions.fragments.lifecycleExecute
@@ -60,31 +61,29 @@ class ResetFragment : BaseFragment<ResetFragmentBinding>(ResetFragmentBinding::i
 
     private fun observeFormState() {
         lifecycleExecute {
-            viewModel.password.state.collect { state ->
-                when (state) {
-                    is States.Success -> {
-                        passwordRow = state.data
+            viewModel.password.state.collect {
+                it.observeDupleStates(
+                    failure = { data ->
+                        passwordRow = ""
+                        binding.passwordTextInput.error = data
+                    },
+                    success = { data ->
+                        passwordRow = data
                         binding.passwordTextInput.helperText = getString(R.string.valid_password)
                     }
-                    is States.Failure -> {
-                        passwordRow = ""
-                        binding.passwordTextInput.error = state.data
-                    }
-                    else -> {}
-                }
+                )
             }
         }
     }
 
     private fun observeResetState() {
         lifecycleExecute {
-            viewModel.state.collect { state ->
-                when (state) {
-                    States.Loading -> ConstantStates.FLIPPER_LOADING
-                    is States.Failure -> handlerFailureMessage()
-                    is States.Success -> if (state.data) handlerSuccessMessage() else handlerFailureMessage()
-                    else -> {}
-                }
+            viewModel.state.collect {
+                it.observeTripleStates(
+                    loading = { ConstantStates.FLIPPER_LOADING },
+                    failure = { handlerFailureMessage() },
+                    success = { data -> if (data) handlerSuccessMessage() else handlerFailureMessage() }
+                )
             }
         }
     }

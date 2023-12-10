@@ -11,7 +11,7 @@ object ConstantStates {
     const val FLIPPER_SUCCESS = FLIPPER_FAILURE
 }
 
-sealed class States<out T> {
+sealed class States<out S> {
     data object Initial : States<Nothing>()
     data object Loading : States<Nothing>()
     data class Success<T>(val data: T) : States<T>()
