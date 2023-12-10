@@ -85,7 +85,7 @@
             <deepLink
                 android:id="@+id/reset"
                 app:action="ACTION_VIEW"
-                app:uri="https://seller-9041b.firebaseapp.com/__/auth/action?{code}" />
+                app:uri="https://seller-9041b.firebaseapp.com/__/auth/action?mode=resetPassword&amp;oobCode={code}" />
 
         <action
             android:id="@+id/action_reset_to_sign_in"

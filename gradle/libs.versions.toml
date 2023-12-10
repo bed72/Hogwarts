@@ -2,7 +2,7 @@
 inject = "1"
 agp = "8.2.0"
 coil = "2.5.0"
-hilt = "2.48.1"
+hilt = "2.49"
 arrow = "1.2.1"
 lottie = "6.2.0"
 kotlin = "1.9.20"
@@ -16,7 +16,7 @@ kotlinx-coroutines = "1.7.3"
 
 google-service = "4.4.0"
 
-firebase-bom = "32.6.0"
+firebase-bom = "32.7.0"
 firebase-auth = "22.3.0"
 firebase-analytics = "21.5.0"
 
@@ -35,7 +35,7 @@ androidx-constraintlayout = "2.1.4"
 
 # Test
 junit = "4.13.2"
-mockito = "5.1.0"
+mockito = "5.2.1"
 espresso = "3.5.1"
 
 [libraries]

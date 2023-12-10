@@ -7,18 +7,17 @@ import androidx.fragment.app.viewModels
 
 import dagger.hilt.android.AndroidEntryPoint
 
+import com.bed.core.domain.parameters.authentication.RecoverParameter
+
 import com.bed.seller.R
 
 import com.bed.seller.databinding.RecoverFragmentBinding
 
-import com.bed.seller.presentation.commons.constants.AppConstants
-import com.bed.seller.presentation.commons.extensions.actionKeyboard
-
-import com.bed.core.domain.parameters.authentication.RecoverParameter
-
 import com.bed.seller.presentation.commons.states.States
 import com.bed.seller.presentation.commons.states.FormState
 import com.bed.seller.presentation.commons.states.ConstantStates
+import com.bed.seller.presentation.commons.constants.AppConstants
+import com.bed.seller.presentation.commons.extensions.actionKeyboard
 
 import com.bed.seller.presentation.commons.extensions.debounce
 import com.bed.seller.presentation.commons.extensions.fragments.snackBar
@@ -101,7 +100,7 @@ class RecoverFragment : BaseBottomSheetDialogFragment<RecoverFragmentBinding>(
         hideKeyboard(binding.root)
 
         RecoverParameter(emailRow).fold(
-            { _ -> snackBar(R.string.generic_failure_form) },
+            { _ -> snackBar(R.string.generic_email_failure_form) },
             { success -> viewModel.recover(success) }
         )
     }

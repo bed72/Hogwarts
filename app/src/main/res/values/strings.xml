@@ -57,7 +57,7 @@
     <!-- RESET PASSWORD -->
     <string name="reset_title_button">Enviar</string>
     <string name="reset_password_title">Vamos recuperar sua conta</string>
-    <string name="reset_success_title">Senha alterada com sucesso  &#128274;</string>
+    <string name="reset_success_title">Senha alterada com sucesso  &#127881;</string>
     <string name="reset_password_sub_title">Entre com uma nova senha para que possa ter acesso a sua conta.</string>
 
     <!-- PERMISSIONS -->
@@ -113,8 +113,8 @@
     <string name="title_cancel_button">Cancelar</string>
 
     <!-- GENERIC FAILURE -->
+    <string name="generic_email_failure_form">Ops! Preencha um e-mail válido.</string>
+    <string name="generic_password_failure_form">Ops! Preencha uma senha válida.</string>
     <string name="generic_failure_title">Ops! Parece que algo deu errado.  &#128542;</string>
-    <string name="generic_failure_form">Ops! Por favor, verifique o campo e tente novamente.</string>
     <string name="generic_failures_form">Ops! Por favor, verifique os campos e tente novamente.</string>
-
 </resources>

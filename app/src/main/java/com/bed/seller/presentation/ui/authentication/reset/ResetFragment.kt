@@ -9,17 +9,15 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.activity.OnBackPressedCallback
 
-import com.bed.seller.R
-
-import com.bed.seller.databinding.ResetFragmentBinding
-
-import com.bed.seller.presentation.commons.fragments.BaseFragment
-
 import com.bed.core.domain.parameters.authentication.ResetParameter
+
+import com.bed.seller.R
+import com.bed.seller.databinding.ResetFragmentBinding
 
 import com.bed.seller.presentation.commons.states.States
 import com.bed.seller.presentation.commons.states.FormState
 import com.bed.seller.presentation.commons.states.ConstantStates
+import com.bed.seller.presentation.commons.fragments.BaseFragment
 
 import com.bed.seller.presentation.commons.extensions.debounce
 import com.bed.seller.presentation.commons.extensions.actionKeyboard
@@ -57,20 +55,20 @@ class ResetFragment : BaseFragment<ResetFragmentBinding>(ResetFragmentBinding::i
         observeFormState()
         observeResetState()
 
-        codeRow = handleCode(arguments.code)
+        codeRow = arguments.code ?: ""
     }
 
     private fun observeFormState() {
         lifecycleExecute {
             viewModel.password.state.collect { state ->
                 when (state) {
-                    is States.Failure -> {
-                        passwordRow = ""
-                        binding.passwordTextInput.error = state.data
-                    }
                     is States.Success -> {
                         passwordRow = state.data
                         binding.passwordTextInput.helperText = getString(R.string.valid_password)
+                    }
+                    is States.Failure -> {
+                        passwordRow = ""
+                        binding.passwordTextInput.error = state.data
                     }
                     else -> {}
                 }
@@ -79,11 +77,14 @@ class ResetFragment : BaseFragment<ResetFragmentBinding>(ResetFragmentBinding::i
     }
 
     private fun observeResetState() {
-        viewModel.states.observe(viewLifecycleOwner) { state ->
-            binding.actionFlipper.displayedChild = when (state) {
-                ResetViewModel.States.Loading -> ConstantStates.FLIPPER_LOADING
-                is ResetViewModel.States.Reset ->
-                    if (state.isSuccess) handlerSuccessMessage() else handlerFailureMessage()
+        lifecycleExecute {
+            viewModel.state.collect { state ->
+                when (state) {
+                    States.Loading -> ConstantStates.FLIPPER_LOADING
+                    is States.Failure -> handlerFailureMessage()
+                    is States.Success -> if (state.data) handlerSuccessMessage() else handlerFailureMessage()
+                    else -> {}
+                }
             }
         }
     }
@@ -104,20 +105,13 @@ class ResetFragment : BaseFragment<ResetFragmentBinding>(ResetFragmentBinding::i
         binding.resetButton.setOnClickListener { validateParameter()  }
     }
 
-    private fun handleCode(code: String?): String =
-        code?.let {
-            val pattern = "oobCode=([^&]+)&".toRegex()
-
-            val match = pattern.find(it)
-
-            match?.groupValues?.get(1) ?: ""
-        } ?: ""
-
     private fun validateParameter() {
         hideKeyboard(binding.root)
 
+        if (codeRow.isEmpty()) snackBar(R.string.generic_failure_title)
+
         ResetParameter(codeRow, passwordRow).fold(
-            { _ -> snackBar(R.string.generic_failure_form) },
+            { _ -> snackBar(R.string.generic_password_failure_form) },
             { success -> viewModel.reset(success) }
         )
     }

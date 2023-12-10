@@ -79,18 +79,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <intent-filter>
-
+            <intent-filter android:autoVerify="true" >
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.BROWSABLE" />
 
-                <data
-                    android:scheme="https"
-                    android:path="/__/auth/action"
-                    android:host="seller-9041b.firebaseapp.com" />
-
+                <data android:scheme="https" />
+                <data android:path="/__/auth/action" />
+                <data android:host="seller-9041b.firebaseapp.com" />
 
             </intent-filter>
 

@@ -2,15 +2,19 @@ package com.bed.seller.presentation.ui.authentication.reset
 
 import javax.inject.Inject
 
-import androidx.lifecycle.liveData
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.switchMap
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.distinctUntilChanged
+import androidx.lifecycle.viewModelScope
+
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 
+import com.bed.seller.presentation.commons.states.States
 import com.bed.seller.presentation.commons.states.FormState
 
 import com.bed.core.usecases.authentication.ResetUseCase
@@ -20,33 +24,19 @@ import com.bed.core.domain.parameters.authentication.ResetParameter
 
 @HiltViewModel
 class ResetViewModel @Inject constructor(
-    resetUseCase: ResetUseCase,
-    coroutinesUseCase: CoroutinesUseCase
+    private val resetUseCase: ResetUseCase,
+    private val coroutinesUseCase: CoroutinesUseCase
 ) : ViewModel() {
-    private val actions = MutableLiveData<Actions>()
-
     val password = FormState()
 
-    val states: LiveData<States> = actions.distinctUntilChanged().switchMap { action ->
-        liveData(coroutinesUseCase.main()) {
-            emit(States.Loading)
-
-            if (action is Actions.Reset)
-                resetUseCase(action.parameter).collect { emit(States.Reset(it)) }
-        }
-    }
+    private val _state = MutableStateFlow<States<Boolean>>(States.Initial)
+    val state: StateFlow<States<Boolean>> get() = _state.asStateFlow()
 
     fun reset(parameter: ResetParameter) {
-        actions.value = Actions.Reset(parameter)
-    }
+        _state.update { States.Loading }
 
-    sealed class Actions {
-        data class Reset(val parameter: ResetParameter) : Actions()
-    }
-
-    sealed class States {
-        data object Loading : States()
-
-        data class Reset(val isSuccess: Boolean) : States()
+        viewModelScope.launch(coroutinesUseCase.main()) {
+            _state.update { States.Success(resetUseCase(parameter).first()) }
+        }
     }
 }
