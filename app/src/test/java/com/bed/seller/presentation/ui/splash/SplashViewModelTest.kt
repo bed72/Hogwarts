@@ -52,7 +52,7 @@ internal class SplashViewModelTest {
         viewModel.isLoggedIn()
 
         assertEquals(states[AuthenticationFactory.INITIAL], SplashViewModel.States.Initial)
-        states[IS_LOGGED].let { assertTrue(it is SplashViewModel.States.IsLoggedIn && it.isSuccess) }
+        states[IS_LOGGED].let { assertTrue(it is SplashViewModel.States.IsLoggedIn && it.isLogged) }
 
         job.cancel()
     }
@@ -66,7 +66,7 @@ internal class SplashViewModelTest {
         viewModel.isLoggedIn()
 
         assertEquals(states[AuthenticationFactory.INITIAL], SplashViewModel.States.Initial)
-        states[IS_LOGGED].let { assertFalse(it is SplashViewModel.States.IsLoggedIn && it.isSuccess) }
+        states[IS_LOGGED].let { assertFalse(it is SplashViewModel.States.IsLoggedIn && it.isLogged) }
 
         job.cancel()
     }
@@ -79,7 +79,7 @@ internal class SplashViewModelTest {
 
         viewModel.state.value.let {
             it as SplashViewModel.States.IsLoggedIn
-            assertFalse(it.isSuccess)
+            assertFalse(it.isLogged)
         }
     }
 
@@ -91,7 +91,7 @@ internal class SplashViewModelTest {
 
         viewModel.state.value.let {
             it as SplashViewModel.States.IsLoggedIn
-            assertTrue(it.isSuccess)
+            assertTrue(it.isLogged)
         }
     }
 

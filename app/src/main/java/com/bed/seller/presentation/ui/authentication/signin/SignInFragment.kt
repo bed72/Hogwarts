@@ -22,6 +22,7 @@ import com.bed.seller.presentation.commons.fragments.BaseFragment
 
 import com.bed.seller.presentation.commons.extensions.debounce
 import com.bed.seller.presentation.commons.extensions.actionKeyboard
+import com.bed.seller.presentation.commons.extensions.observeDupleStates
 import com.bed.seller.presentation.commons.extensions.fragments.snackBar
 import com.bed.seller.presentation.commons.extensions.fragments.navigateTo
 import com.bed.seller.presentation.commons.extensions.fragments.hideKeyboard
@@ -46,49 +47,50 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
 
     private fun observeFormState() {
         lifecycleExecute {
-            viewModel.email.state.collect { state ->
-                when (state) {
-                    is States.Failure -> {
+            viewModel.email.state.collect {
+                it.observeDupleStates(
+                    failure = { data ->
                         emailRow = ""
-                        binding.emailTextInput.error = state.data
-                    }
-                    is States.Success -> {
-                        emailRow = state.data
+                        binding.emailTextInput.error = data
+                    },
+                    success = { data ->
+                        emailRow = data
                         binding.emailTextInput.helperText = getString(R.string.valid_email, emailRow)
                     }
-                    else -> {}
-                }
+                )
             }
         }
 
         lifecycleExecute {
-            viewModel.password.state.collect { state ->
-                when (state) {
-                    is States.Failure -> {
+            viewModel.password.state.collect {
+                it.observeDupleStates(
+                    failure = { data ->
                         passwordRow = ""
-                        binding.passwordTextInput.error = state.data
-                    }
-                    is States.Success -> {
-                        passwordRow = state.data
+                        binding.passwordTextInput.error = data
+                    },
+                    success = { data ->
+                        passwordRow = data
                         binding.passwordTextInput.helperText = getString(R.string.valid_password)
                     }
-                    else -> {}
-                }
+                )
             }
         }
     }
 
     private fun observeSignInState() {
-        viewModel.states.observe(viewLifecycleOwner) { states ->
-            binding.actionFlipper.displayedChild = when (states) {
-                SignInViewModel.States.Loading -> ConstantStates.FLIPPER_LOADING
-                is SignInViewModel.States.Failure -> {
-                    snackBar(requireView(), states.data)
-                    ConstantStates.FLIPPER_FAILURE
-                }
-                is SignInViewModel.States.Success -> {
-                    navigateTo(SignInFragmentDirections.actionSignInToHome())
-                    ConstantStates.FLIPPER_SUCCESS
+        lifecycleExecute {
+            viewModel.state.collect { state ->
+                binding.actionFlipper.displayedChild = when (state) {
+                    States.Initial -> ConstantStates.FLIPPER_SUCCESS
+                    States.Loading -> ConstantStates.FLIPPER_LOADING
+                    is States.Failure -> {
+                        snackBar(requireView(), state.data)
+                        ConstantStates.FLIPPER_FAILURE
+                    }
+                    is States.Success -> {
+                        navigateTo(SignInFragmentDirections.actionSignInToHome())
+                        ConstantStates.FLIPPER_SUCCESS
+                    }
                 }
             }
         }

@@ -27,14 +27,10 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(SplashFragmentBinding
 
     private fun observeStates() {
         lifecycleExecute {
-            viewModel.state.collect { state ->
-                when (state) {
-                    is SplashViewModel.States.IsLoggedIn -> {
-                        if (state.isSuccess) navigateTo(SplashFragmentDirections.actionSplashToHome())
-                        else navigateTo(SplashFragmentDirections.actionSplashToSignIn())
-                    }
-                    else -> {}
-                }
+            viewModel.state.collect {
+                if (it is SplashViewModel.States.IsLoggedIn && it.isLogged)
+                    navigateTo(SplashFragmentDirections.actionSplashToHome())
+                else navigateTo(SplashFragmentDirections.actionSplashToSignIn())
             }
         }
     }

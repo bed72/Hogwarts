@@ -2,14 +2,18 @@ package com.bed.seller.presentation.ui.authentication.signin
 
 import javax.inject.Inject
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.liveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.switchMap
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 
+import com.bed.seller.presentation.commons.states.States
 import com.bed.seller.presentation.commons.states.FormState
 
 import com.bed.core.usecases.authentication.SignInUseCase
@@ -20,41 +24,25 @@ import com.bed.core.domain.parameters.authentication.AuthenticationParameter
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    signInUseCase: SignInUseCase,
-    coroutinesUseCase: CoroutinesUseCase
+    private val signInUseCase: SignInUseCase,
+    private val coroutinesUseCase: CoroutinesUseCase
 ) : ViewModel() {
-
     val email = FormState()
     val password = FormState()
 
-    private val actions = MutableLiveData<Actions>()
-
-    val states: LiveData<States> = actions.switchMap { action ->
-        liveData(coroutinesUseCase.main()) {
-            if (action is Actions.SignIn) {
-                emit(States.Loading)
-
-                signInUseCase(action.parameter).collect { data ->
-                    data.fold(
-                        { failure -> emit(States.Failure(failure.message)) },
-                        { success -> emit(States.Success(success)) }
-                    )
-                }
-            }
-        }
-    }
+    private val _state = MutableStateFlow<States<AuthenticationModel>>(States.Initial)
+    val state: StateFlow<States<AuthenticationModel>> get() = _state.asStateFlow()
 
     fun signIn(parameter: AuthenticationParameter) {
-        actions.value = Actions.SignIn(parameter)
-    }
+        _state.update { States.Loading }
 
-    sealed class Actions {
-        data class SignIn(val parameter: AuthenticationParameter) : Actions()
-    }
-
-    sealed class States {
-        data object Loading : States()
-        data class Failure(val data: String) : States()
-        data class Success(val data: AuthenticationModel) : States()
+        viewModelScope.launch(coroutinesUseCase.main()) {
+            signInUseCase(parameter).collect {
+                it.fold(
+                    { failure -> _state.update { States.Failure(failure.message) } },
+                    { success -> _state.update { States.Success(success) } }
+                )
+            }
+        }
     }
 }

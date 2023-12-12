@@ -55,7 +55,7 @@ internal class SignInFragmentTest {
         onView(
             allOf(
                 isAssignableFrom(Snackbar.SnackbarLayout::class.java),
-                hasDescendant(withText("Preencha um e-mail válido."))
+                hasDescendant(withText("Ops! Por favor, verifique os campos e tente novamente."))
             )
         ).check(matches(isDisplayed()))
     }

@@ -21,8 +21,6 @@ import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-
 import com.bed.seller.presentation.commons.states.States
 
 import com.bed.core.usecases.authentication.RecoverUseCase
@@ -35,9 +33,6 @@ import com.bed.test.factories.authentication.AuthenticationFactory
 internal class RecoverViewModelTest {
     @get:Rule
     val rule = MainCoroutineRule()
-
-    @get:Rule
-    var instantExecutorRule = InstantTaskExecutorRule()
 
     @Mock
     private lateinit var useCase: RecoverUseCase
@@ -57,7 +52,7 @@ internal class RecoverViewModelTest {
 
     @Test
     fun `Should issue first loading state when trying to recover account with successful return`() = runTest {
-        whenever(useCase(any())).thenReturn(flowOf(true))// depends to need a .also { delay(1_000L) }
+        whenever(useCase(any())).thenReturn(flowOf(true))
 
         val job = launch(rule.dispatcher.main()) { viewModel.state.toList(states) }
 

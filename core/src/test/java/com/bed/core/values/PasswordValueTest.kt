@@ -5,6 +5,13 @@ import org.junit.Assert.assertTrue
 import org.junit.Assert.assertEquals
 
 internal class PasswordValueTest {
+    @Test
+    fun `Should return the Name when value is valid`() {
+        val password = PasswordValue("P@ssw0rD")
+
+        assertTrue(password.isRight())
+        password.map { assertEquals(it(), "P@ssw0rD") }
+    }
 
     @Test
     fun `Should return message failure when Password is invalid`() {
@@ -36,13 +43,5 @@ internal class PasswordValueTest {
 
         assertTrue(message.isLeft())
         message.mapLeft { assertEquals(it.getFirstMessage(), "A senha presica conter caracteres maiúsculos.") }
-    }
-
-    @Test
-    fun `Should return the Name when value is valid`() {
-        val password = PasswordValue("P@ssw0rD")
-
-        assertTrue(password.isRight())
-        password.map { assertEquals(it(), "P@ssw0rD") }
     }
 }

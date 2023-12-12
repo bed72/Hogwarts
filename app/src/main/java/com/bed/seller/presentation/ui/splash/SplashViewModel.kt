@@ -26,6 +26,6 @@ class SplashViewModel @Inject constructor(
 
     sealed class States {
         data object Initial : States()
-        data class IsLoggedIn(val isSuccess: Boolean) : States()
+        data class IsLoggedIn(val isLogged: Boolean) : States()
     }
 }

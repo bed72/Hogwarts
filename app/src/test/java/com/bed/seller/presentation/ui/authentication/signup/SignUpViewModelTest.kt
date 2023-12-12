@@ -5,85 +5,87 @@ import org.junit.Test
 import org.junit.Before
 import org.junit.runner.RunWith
 
+import junit.framework.TestCase.assertTrue
 import junit.framework.TestCase.assertEquals
 
 import org.mockito.Mock
 import org.mockito.kotlin.any
-import org.mockito.kotlin.isA
-import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import org.mockito.junit.MockitoJUnitRunner
 
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-import androidx.lifecycle.Observer
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.bed.seller.presentation.commons.states.States
 
 import com.bed.test.rule.MainCoroutineRule
+import com.bed.test.factories.authentication.AuthenticationFactory
 
 import com.bed.core.usecases.authentication.SignUpUseCase
-
-import com.bed.test.factories.authentication.AuthenticationFactory
+import com.bed.core.domain.models.authentication.AuthenticationModel
 
 @RunWith(MockitoJUnitRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class SignUpViewModelTest {
-
     @get:Rule
     val rule = MainCoroutineRule()
 
-    @get:Rule
-    var instantExecutorRule = InstantTaskExecutorRule()
-
     @Mock
-    private lateinit var signUpUseCase: SignUpUseCase
-
-    @Mock
-    private lateinit var observer: Observer<SignUpViewModel.States>
-
-    private lateinit var factory: AuthenticationFactory
+    private lateinit var useCase: SignUpUseCase
 
     private lateinit var viewModel: SignUpViewModel
 
+    private lateinit var factory: AuthenticationFactory
+
+    private lateinit var states: MutableList<States<AuthenticationModel>>
+
     @Before
     fun setUp() {
+        states = mutableListOf()
         factory = AuthenticationFactory()
-        viewModel = SignUpViewModel(
-            signUpUseCase,
-            rule.dispatcher
-        ).apply { states.observeForever(observer) }
+        viewModel = SignUpViewModel(useCase, rule.dispatcher)
     }
 
     @Test
-    fun `Should emit Loading State when trying to sign up with return success`() = runTest {
-        whenever(signUpUseCase(any())).thenReturn(flowOf(factory.success))
+    fun `Should emit Loading State when trying to sign up with successful return`() = runTest {
+        whenever(useCase(any())).thenReturn(flowOf(factory.success))
+
+        val job = launch(rule.dispatcher.main()) { viewModel.state.toList(states) }
 
         viewModel.signUp(factory.signInAndSingUpValidParameter)
 
-        verify(observer).onChanged(isA<SignUpViewModel.States.Loading>())
-        verify(observer).onChanged(isA<SignUpViewModel.States.Success>())
+        assertEquals(states[AuthenticationFactory.INITIAL], States.Initial)
+        assertEquals(states[AuthenticationFactory.LOADING], States.Loading)
+        assertTrue(states[AuthenticationFactory.SUCCESS] is States.Success)
+
+        job.cancel()
     }
 
     @Test
-    fun `Should emit Loading State when trying to sign up with return failure`() = runTest {
-        whenever(signUpUseCase(any())).thenReturn(flowOf(factory.failure))
+    fun `Should emit Loading State when trying to sign up with failure return`() = runTest {
+        whenever(useCase(any())).thenReturn(flowOf(factory.failure))
+
+        val job = launch(rule.dispatcher.main()) { viewModel.state.toList(states) }
 
         viewModel.signUp(factory.signInAndSingUpValidParameter)
 
-        verify(observer).onChanged(isA<SignUpViewModel.States.Loading>())
-        verify(observer).onChanged(isA<SignUpViewModel.States.Failure>())
-    }
+        assertEquals(states[AuthenticationFactory.INITIAL], States.Initial)
+        assertEquals(states[AuthenticationFactory.LOADING], States.Loading)
+        assertTrue(states[AuthenticationFactory.FAILURE] is States.Failure)
 
+        job.cancel()
+    }
     @Test
-    fun `Should return AuthenticationModel in Success State when trying to sign up with return success`() =
+    fun `Should return AuthenticationModel in Success State when trying to sign up with successful return`() =
         runTest {
-            whenever(signUpUseCase(any())).thenReturn(flowOf(factory.success))
+            whenever(useCase(any())).thenReturn(flowOf(factory.success))
 
             viewModel.signUp(factory.signInAndSingUpValidParameter)
 
-            val (success) = viewModel.states.value as SignUpViewModel.States.Success
+            val (success) = viewModel.state.value as States.Success
             assertEquals("5CQcsREkB5xcqbY1L...", success.uid)
             assertEquals("Gabriel Ramos", success.name)
             assertEquals("bed@gmail.com", success.email)
@@ -91,13 +93,14 @@ internal class SignUpViewModelTest {
             assertEquals(false, success.emailVerified)
         }
 
-    @Test
-    fun `Should return MessageModel in Failure State when trying to create an account with return failure`() = runTest {
-        whenever(signUpUseCase(any())).thenReturn(flowOf(factory.failure))
 
-        viewModel.signUp(factory.signInAndSingUpValidParameter)
+        @Test
+        fun `Should return MessageModel in Failure State when trying to create an account with failure return`() = runTest {
+            whenever(useCase(any())).thenReturn(flowOf(factory.failure))
 
-        val (failure) = viewModel.states.value as SignUpViewModel.States.Failure
-        assertEquals("Ops, um erro aconteceu.", failure)
-    }
+            viewModel.signUp(factory.signInAndSingUpValidParameter)
+
+            val (failure) = viewModel.state.value as States.Failure
+            assertEquals("Ops, um erro aconteceu.", failure)
+        }
 }

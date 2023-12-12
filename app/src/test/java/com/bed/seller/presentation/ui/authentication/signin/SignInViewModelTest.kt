@@ -5,85 +5,88 @@ import org.junit.Test
 import org.junit.Before
 import org.junit.runner.RunWith
 
+import junit.framework.TestCase.assertTrue
 import junit.framework.TestCase.assertEquals
 
 import org.mockito.Mock
 import org.mockito.kotlin.any
-import org.mockito.kotlin.isA
-import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import org.mockito.junit.MockitoJUnitRunner
 
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-import androidx.lifecycle.Observer
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-
-import com.bed.test.rule.MainCoroutineRule
+import com.bed.core.domain.models.authentication.AuthenticationModel
 
 import com.bed.core.usecases.authentication.SignInUseCase
+import com.bed.seller.presentation.commons.states.States
 
+import com.bed.test.rule.MainCoroutineRule
 import com.bed.test.factories.authentication.AuthenticationFactory
 
 @RunWith(MockitoJUnitRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class SignInViewModelTest {
-
     @get:Rule
     val rule = MainCoroutineRule()
-
-    @get:Rule
-    var instantExecutorRule = InstantTaskExecutorRule()
 
     @Mock
     private lateinit var useCase: SignInUseCase
 
-    @Mock
-    private lateinit var observer: Observer<SignInViewModel.States>
+    private lateinit var viewModel: SignInViewModel
 
     private lateinit var factory: AuthenticationFactory
 
-    private lateinit var viewModel: SignInViewModel
+    private lateinit var states: MutableList<States<AuthenticationModel>>
 
     @Before
     fun setUp() {
+        states = mutableListOf()
         factory = AuthenticationFactory()
-        viewModel = SignInViewModel(
-            useCase,
-            rule.dispatcher
-        ).apply { states.observeForever(observer) }
+        viewModel = SignInViewModel(useCase, rule.dispatcher)
     }
 
     @Test
-    fun `Should emit Loading State when trying to sign in with return success`() = runTest {
+    fun `Should emit Loading State when trying to sign in with successful return`() = runTest {
         whenever(useCase(any())).thenReturn(flowOf(factory.success))
 
+        val job = launch(rule.dispatcher.main()) { viewModel.state.toList(states) }
+
         viewModel.signIn(factory.signInAndSingUpValidParameter)
 
-        verify(observer).onChanged(isA<SignInViewModel.States.Loading>())
-        verify(observer).onChanged(isA<SignInViewModel.States.Success>())
+        assertEquals(states[AuthenticationFactory.INITIAL], States.Initial)
+        assertEquals(states[AuthenticationFactory.LOADING], States.Loading)
+        assertTrue(states[AuthenticationFactory.SUCCESS] is States.Success)
+
+        job.cancel()
     }
 
     @Test
-    fun `Should emit Loading State when trying to sign in with return failure`() = runTest {
+    fun `Should emit Loading State when trying to sign in with failure failure`() = runTest {
         whenever(useCase(any())).thenReturn(flowOf(factory.failure))
 
+        val job = launch(rule.dispatcher.main()) { viewModel.state.toList(states) }
+
         viewModel.signIn(factory.signInAndSingUpValidParameter)
 
-        verify(observer).onChanged(isA<SignInViewModel.States.Loading>())
-        verify(observer).onChanged(isA<SignInViewModel.States.Failure>())
+        assertEquals(states[AuthenticationFactory.INITIAL], States.Initial)
+        assertEquals(states[AuthenticationFactory.LOADING], States.Loading)
+        assertTrue(states[AuthenticationFactory.FAILURE] is States.Failure)
+
+        job.cancel()
     }
 
     @Test
-    fun `Should return AuthenticationModel in Success State when trying to sign in with return success`() =
+    fun `Should return AuthenticationModel in Success State when trying to sign in with successful return`() =
         runTest {
             whenever(useCase(any())).thenReturn(flowOf(factory.success))
 
             viewModel.signIn(factory.signInAndSingUpValidParameter)
 
-            val (success) = viewModel.states.value as SignInViewModel.States.Success
+            val (success) = viewModel.state.value as States.Success
             assertEquals("5CQcsREkB5xcqbY1L...", success.uid)
             assertEquals("Gabriel Ramos", success.name)
             assertEquals("bed@gmail.com", success.email)
@@ -92,12 +95,12 @@ internal class SignInViewModelTest {
         }
 
     @Test
-    fun `Should return MessageModel in Failure State when trying to sign in with return failure`() = runTest {
+    fun `Should return MessageModel in Failure State when trying to sign in with failure return`() = runTest {
         whenever(useCase(any())).thenReturn(flowOf(factory.failure))
 
         viewModel.signIn(factory.signInAndSingUpValidParameter)
 
-        val (failure) = viewModel.states.value as SignInViewModel.States.Failure
+        val (failure) = viewModel.state.value as States.Failure
         assertEquals("Ops, um erro aconteceu.", failure)
     }
 }

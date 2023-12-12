@@ -20,8 +20,6 @@ import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-
 import com.bed.core.usecases.authentication.ResetUseCase
 
 import com.bed.seller.presentation.commons.states.States
@@ -34,9 +32,6 @@ import com.bed.test.factories.authentication.AuthenticationFactory
 internal class ResetViewModelTest {
     @get:Rule
     val rule = MainCoroutineRule()
-
-    @get:Rule
-    var instantExecutorRule = InstantTaskExecutorRule()
 
     @Mock
     private lateinit var useCase: ResetUseCase

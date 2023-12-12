@@ -4,7 +4,11 @@ import dagger.hilt.android.AndroidEntryPoint
 
 import android.os.Bundle
 
-import androidx.annotation.NavigationRes
+import kotlinx.coroutines.launch
+
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +19,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 
+import androidx.annotation.NavigationRes
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 
 import com.bed.seller.R
@@ -59,7 +64,14 @@ class MainActivity : AppCompatActivity() {
     private fun setupConnection() {
         if (connection.isActiveNetworkMetered) alert.show()
 
-        connection.observe(this) { if (it) alert.dismiss() else alert.show() }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                connection.state.collect {
+                    if (it is CheckConnection.States.IsConnected && it.isConnected) alert.dismiss()
+                    else alert.show()
+                }
+            }
+        }
     }
 
     private fun setupNavigationBarController() {
@@ -99,5 +111,4 @@ class MainActivity : AppCompatActivity() {
 
         if (isTopLevelDestination.not()) binding.toolbar.setNavigationIcon(R.drawable.ic_back)
     }
-
 }
