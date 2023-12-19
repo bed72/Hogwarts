@@ -18,7 +18,7 @@ class GalleryViewHolder(
     private val view: ImageView = item.itemGalleryImage
 
     fun bind(data: FromGalleryScreenModel) {
-        view.load(data.url, 32F)
+        view.load(data.url, 42F)
 
         itemView.setOnClickListener { data.onClick() }
     }
