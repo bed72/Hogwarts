@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupComponentAppBarController() {
-        appBarConfiguration = AppBarConfiguration(ScreensConstants.showAppBarIn)
+        appBarConfiguration = AppBarConfiguration(ScreensConstants.removeGoBackIcon)
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)

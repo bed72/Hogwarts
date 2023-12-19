@@ -4,6 +4,9 @@
     <dimen name="splash_icon_size">292dp</dimen>
     <dimen name="permission_icon_size">192dp</dimen>
 
+    <!-- Image Card Sizes -->
+    <dimen name="image_card_dimens">108dp</dimen>
+
     <!-- Progress Sizes -->
     <dimen name="progress_bar_dimens">26dp</dimen>
 
@@ -18,22 +21,30 @@
     <dimen name="progress_bar_size">30dp</dimen>
 
     <!-- CheckBox Sizes -->
-    <dimen name="check_box_size">20dp</dimen>
-    <dimen name="check_box_icon_size">16dp</dimen>
-    <dimen name="check_box_corner_radius">4dp</dimen>
-    <dimen name="check_box_stroke_radius">1dp</dimen>
-    <dimen name="check_box_icon_corner_radius">2dp</dimen>
+    <dimen name="check_box_check_size">20dp</dimen>
+    <dimen name="check_box_check_icon_size">16dp</dimen>
+    <dimen name="check_box_check_corner_radius">4dp</dimen>
+    <dimen name="check_box_check_stroke_radius">1dp</dimen>
+    <dimen name="check_box_check_icon_corner_radius">2dp</dimen>
+
+    <dimen name="check_box_select_size">28dp</dimen>
+    <dimen name="check_box_select_icon_size">24dp</dimen>
+    <dimen name="check_box_select_corner_radius">4dp</dimen>
+    <dimen name="check_box_select_stroke_radius">2dp</dimen>
+    <dimen name="check_box_select_icon_corner_radius">2dp</dimen>
 
     <!-- Buttons Sizes -->
     <dimen name="button_height">54dp</dimen>
     <dimen name="button_corner_radius">14dp</dimen>
 
     <!-- Spacings Sizes -->
+    <dimen name="very_extra_small_space">2dp</dimen>
     <dimen name="extra_small_space">4dp</dimen>
     <dimen name="small_space">8dp</dimen>
     <dimen name="normal_space">16dp</dimen>
     <dimen name="large_space">32dp</dimen>
     <dimen name="extra_large_space">64dp</dimen>
+    <dimen name="very_extra_large_space">128dp</dimen>
 
     <!-- Regular Size Fonts -->
     <dimen name="regular_body_1">16sp</dimen>

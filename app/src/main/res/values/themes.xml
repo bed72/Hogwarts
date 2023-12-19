@@ -65,6 +65,12 @@
         <item name="android:scrollbarThumbVertical">@null</item>
     </style>
 
+    <!-- ScrollView -->
+    <style name="ShapeView" parent="">
+        <item name="cornerSize">16%</item>
+        <item name="cornerFamily">rounded</item>
+    </style>
+
     <!-- CheckBox -->
     <style name="CheckBox" parent="Widget.MaterialComponents.CompoundButton.CheckBox" >
         <item name="android:fontFamily">@font/poppins</item>

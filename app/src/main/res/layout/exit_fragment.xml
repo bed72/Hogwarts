@@ -28,7 +28,7 @@
     
     <ViewFlipper
         android:id="@+id/action_flipper"
-        android:layout_marginTop="@dimen/normal_space"
+        android:layout_marginTop="@dimen/small_space"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 

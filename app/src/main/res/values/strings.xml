@@ -76,13 +76,18 @@
     <!-- HOME -->
     <string name="home_fab_title_button">Cadastrar</string>
 
-    <!-- SALE -->
-    <string name="sale_title_save_button">Criar</string>
-    <string name="sale_title_name_text_input">Nome</string>
-    <string name="sale_title">Nova oferta  &#127919;</string>
-    <string name="sale_placeholder_name_text_input">Café</string>
-    <string name="sale_title_name_text_input_text_input">Nome</string>
-    <string name="sale_subtitle">Cadastre um novo produto que deseja criar uma oferta!</string>
+    <!-- OFFER -->
+    <string name="offer_title">Cadastrar oferta</string>
+    <string name="offer_title_save_button">Criar</string>
+    <string name="offer_title_name_text_input">Nome</string>
+    <string name="offer_placeholder_name_text_input">Café</string>
+    <string name="offer_title_name_text_input_text_input">Nome</string>
+    <string name="offer_subtitle">Cadastre um novo produto que deseja criar uma oferta!</string>
+
+    <!-- GALLERY -->
+    <string name="gallery_title_save_button">Enviar</string>
+    <string name="gallery_title">Selecione as imagens  &#127919;</string>
+    <string name="gallery_subtitle">Selecione até 5 imagens do produto que deseja criar uma nova oferta!</string>
 
     <!-- NOTIFICATION -->
     <string name="notification_title">Notificações</string>

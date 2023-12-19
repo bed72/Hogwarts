@@ -16,4 +16,13 @@
                 android:color="@color/grey_300" />
         </shape>
     </item>
+
+    <item
+        android:top="@dimen/check_box_check_icon_corner_radius"
+        android:left="@dimen/check_box_check_icon_corner_radius"
+        android:right="@dimen/check_box_check_icon_corner_radius"
+        android:bottom="@dimen/check_box_check_icon_corner_radius"
+        android:width="@dimen/check_box_check_icon_size"
+        android:height="@dimen/check_box_check_icon_size"
+        android:drawable="@drawable/ic_check" />
 </layer-list>

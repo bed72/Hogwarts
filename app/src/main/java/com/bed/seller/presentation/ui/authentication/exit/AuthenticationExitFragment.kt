@@ -2,6 +2,7 @@ package com.bed.seller.presentation.ui.authentication.exit
 
 import android.os.Bundle
 import android.view.View
+import com.bed.seller.R
 
 import com.bed.seller.databinding.ExitFragmentBinding
 
@@ -18,15 +19,18 @@ class AuthenticationExitFragment : BaseBottomSheetDialogFragment<ExitFragmentBin
     }
 
     private fun setupComponents() {
-        setupButtonCloseApp()
-        setupButtonCloseBottomSheet()
+        setupButtons()
+        setupDescription()
     }
 
-    private fun setupButtonCloseApp() {
-        binding.yesButton.setOnClickListener { it.closeApplication() }
+    private fun setupButtons() {
+        with (binding) {
+            noButton.setOnClickListener { dismiss() }
+            yesButton.setOnClickListener { it.closeApplication() }
+        }
     }
 
-    private fun setupButtonCloseBottomSheet() {
-        binding.noButton.setOnClickListener { dismiss() }
+    private fun setupDescription() {
+        binding.descriptionText.text = getText(R.string.exit_description)
     }
 }

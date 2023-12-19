@@ -68,6 +68,7 @@
     <color name="grey_300">#62727A</color>
     <color name="grey_500">#808A7F</color>
     <color name="black_500">#010F07</color>
+    <color name="transparency_dark_secondary">#32B4CCBC</color>
 
     <!-- Both -->
     <color name="navbar_dark">#202B25</color>
