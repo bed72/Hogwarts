@@ -26,8 +26,8 @@
     <TextView
         android:id="@+id/subtitle_text"
         android:layout_gravity="start"
-        style="@style/GreyMediumNormalBody"
         android:layout_marginTop="@dimen/small_space"
+        style="@style/GreyMediumNormalBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,21 +35,41 @@
         app:layout_constraintTop_toBottomOf="@+id/title_text"
         android:text="@string/gallery_subtitle" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/images_recycler"
-        app:spanCount="3"
-        tools:itemCount="9"
+    <ViewFlipper
+        android:id="@+id/action_flipper"
         android:layout_height="0dp"
-        android:clipToPadding="false"
-        android:orientation="vertical"
         android:layout_marginTop="@dimen/small_space"
         android:layout_width="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.64"
         app:layout_constraintStart_toStartOf="parent"
-        tools:listitem="@layout/item_gallery_component"
-        app:layout_constraintTop_toBottomOf="@+id/subtitle_text"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+        app:layout_constraintTop_toBottomOf="@+id/subtitle_text" >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/images_recycler"
+            app:spanCount="3"
+            tools:itemCount="9"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_gallery_component"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/recycler_progress"
+            android:indeterminate="true"
+            android:layout_width="@dimen/progress_bar_size"
+            android:layout_height="@dimen/progress_bar_size"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/failure_text"
+            style="@style/GreyMediumBody"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </ViewFlipper>
 
     <LinearLayout
         android:layout_height="0dp"
@@ -57,7 +77,7 @@
         android:layout_width="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/images_recycler" >
+        app:layout_constraintTop_toBottomOf="@+id/action_flipper" >
 
         <Button
             android:id="@+id/select_button"
@@ -76,7 +96,5 @@
             android:layout_width="match_parent" />
 
     </LinearLayout>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

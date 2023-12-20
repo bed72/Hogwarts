@@ -178,8 +178,8 @@
                 <com.google.android.material.progressindicator.CircularProgressIndicator
                     android:id="@+id/progress"
                     android:indeterminate="true"
-                    android:layout_width="@dimen/progress_bar_dimens"
-                    android:layout_height="@dimen/progress_bar_dimens"
+                    android:layout_width="@dimen/progress_bar_size"
+                    android:layout_height="@dimen/progress_bar_size"
                     android:layout_gravity="center" />
 
             </ViewFlipper>

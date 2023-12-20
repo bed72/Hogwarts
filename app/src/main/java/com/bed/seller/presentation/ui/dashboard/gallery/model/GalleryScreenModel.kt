@@ -6,4 +6,7 @@ interface GalleryScreenModel
 
 data class FromCameraScreenModel(val onClick: () -> Unit) : GalleryScreenModel
 
-data class FromGalleryScreenModel(val url: Uri, val onClick: () -> Unit) : GalleryScreenModel
+data class FromGalleryScreenModel(
+    val url: Uri,
+    val onSelectedImages: (MutableSet<Uri>) -> Unit
+) : GalleryScreenModel

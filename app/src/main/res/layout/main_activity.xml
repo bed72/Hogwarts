@@ -43,6 +43,7 @@
         android:elevation="0dp"
         android:layout_width="0dp"
         app:menu="@menu/bottom_menu_items"
+        style="@style/BottomNavigationView"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

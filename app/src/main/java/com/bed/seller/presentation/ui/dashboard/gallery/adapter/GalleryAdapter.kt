@@ -25,8 +25,9 @@ class GalleryAdapter(
         when (data[position]) {
             is FromCameraScreenModel ->
                 (holder as CameraViewHolder).bind(data[position] as FromCameraScreenModel)
-            is FromGalleryScreenModel ->
+            is FromGalleryScreenModel -> {
                 (holder as GalleryViewHolder).bind(data[position] as FromGalleryScreenModel)
+            }
         }
     }
 

@@ -18,6 +18,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 
+import com.bed.seller.presentation.commons.states.States
+
 import com.bed.core.usecases.coroutines.CoroutinesUseCase
 
 @HiltViewModel
@@ -25,10 +27,18 @@ class GalleryViewModel @Inject constructor(
     private val application: Application,
     private val useCase: CoroutinesUseCase
 ) : ViewModel() {
-    private val _images: MutableStateFlow<List<Uri>> = MutableStateFlow(listOf())
-    val images: StateFlow<List<Uri>> get() = _images.asStateFlow()
+    private val _counterImages: MutableStateFlow<Int> = MutableStateFlow(0)
+    val counterImages: StateFlow<Int> get() = _counterImages.asStateFlow()
+
+    private val _selectedImages: MutableStateFlow<MutableSet<Uri>> = MutableStateFlow(mutableSetOf())
+    val selectedImages: StateFlow<Set<Uri>> get() = _selectedImages.asStateFlow()
+
+    private val _imagesFromGallery: MutableStateFlow<States<List<Uri>>> = MutableStateFlow(States.Initial)
+    val imagesFromGallery: StateFlow<States<List<Uri>>> get() = _imagesFromGallery.asStateFlow()
 
     fun getAllImagesFromGallery() {
+        _imagesFromGallery.update { States.Loading }
+
         val uris = mutableListOf<Uri>()
 
         application.contentResolver.query(
@@ -48,6 +58,14 @@ class GalleryViewModel @Inject constructor(
             }
         }
 
-        viewModelScope.launch(useCase.io()) { _images.update { uris } }
+        viewModelScope.launch(useCase.io()) {
+            if (uris.isNotEmpty()) _imagesFromGallery.update { States.Success(uris) }
+            else _imagesFromGallery.update { States.Failure("Ops! não conseguimos carregar suas fotos.") }
+        }
+    }
+
+    fun setSelectedImages(images: MutableSet<Uri>) {
+        _selectedImages.update { images }
+        _counterImages.update { images.size }
     }
 }

@@ -5,10 +5,13 @@
     <dimen name="permission_icon_size">192dp</dimen>
 
     <!-- Image Card Sizes -->
-    <dimen name="image_card_dimens">108dp</dimen>
+    <dimen name="icon_normal_size">48dp</dimen>
+    <dimen name="image_card_size">110dp</dimen>
+    <dimen name="image_card_height_size">120dp</dimen>
 
-    <!-- Progress Sizes -->
-    <dimen name="progress_bar_dimens">26dp</dimen>
+    <dimen name="select_border_size">22dp</dimen>
+    <dimen name="select_border_stroke_radius">6dp</dimen>
+    <dimen name="select_border_corner_radius">16dp</dimen>
 
     <!-- BottomSheet Sizes -->
     <dimen name="bottom_sheet_corner_radius">14dp</dimen>
@@ -18,7 +21,7 @@
     <dimen name="text_input_corner_radius">14dp</dimen>
 
     <!-- ProgressBar Sizes -->
-    <dimen name="progress_bar_size">30dp</dimen>
+    <dimen name="progress_bar_size">28dp</dimen>
 
     <!-- CheckBox Sizes -->
     <dimen name="check_box_check_size">20dp</dimen>
@@ -26,12 +29,6 @@
     <dimen name="check_box_check_corner_radius">4dp</dimen>
     <dimen name="check_box_check_stroke_radius">1dp</dimen>
     <dimen name="check_box_check_icon_corner_radius">2dp</dimen>
-
-    <dimen name="check_box_select_size">28dp</dimen>
-    <dimen name="check_box_select_icon_size">24dp</dimen>
-    <dimen name="check_box_select_corner_radius">4dp</dimen>
-    <dimen name="check_box_select_stroke_radius">2dp</dimen>
-    <dimen name="check_box_select_icon_corner_radius">2dp</dimen>
 
     <!-- Buttons Sizes -->
     <dimen name="button_height">54dp</dimen>

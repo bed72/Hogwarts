@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout
-    android:padding="@dimen/very_extra_small_space"
+    android:padding="@dimen/extra_small_space"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,8 +10,8 @@
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/item_gallery_image"
         android:scaleType="fitXY"
-        android:layout_width="@dimen/image_card_dimens"
-        android:layout_height="@dimen/image_card_dimens"
+        android:layout_width="@dimen/image_card_size"
+        android:layout_height="@dimen/image_card_size"
         tools:src="@tools:sample/avatars"
         android:layout_gravity="start|center" />
 

@@ -14,13 +14,17 @@ import android.Manifest.permission.READ_MEDIA_IMAGES
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED
 
+import com.bed.seller.R
+
 import com.bed.seller.databinding.GalleryFragmentBinding
 
-import com.bed.seller.presentation.ui.dashboard.gallery.adapter.GalleryAdapter
-
+import com.bed.seller.presentation.commons.states.States
+import com.bed.seller.presentation.commons.states.ConstantStates
+import com.bed.seller.presentation.commons.extensions.fragments.navigateBack
 import com.bed.seller.presentation.commons.extensions.fragments.lifecycleExecute
 import com.bed.seller.presentation.commons.fragments.BaseBottomSheetDialogFragment
 
+import com.bed.seller.presentation.ui.dashboard.gallery.adapter.GalleryAdapter
 import com.bed.seller.presentation.ui.dashboard.gallery.model.GalleryScreenModel
 import com.bed.seller.presentation.ui.dashboard.gallery.model.FromCameraScreenModel
 import com.bed.seller.presentation.ui.dashboard.gallery.model.FromGalleryScreenModel
@@ -58,7 +62,7 @@ class GalleryFragment : BaseBottomSheetDialogFragment<GalleryFragmentBinding>(Ga
 //    }
 
     private val getPermissionGallery =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { _ ->
             showAllImagesFromGallery()
         }
 
@@ -67,14 +71,27 @@ class GalleryFragment : BaseBottomSheetDialogFragment<GalleryFragmentBinding>(Ga
 
         setupComponents()
 
-        observeImagesFromGallery()
+        observeSelectedImagesState()
+        observeImagesFromGalleryState()
     }
 
-    private fun observeImagesFromGallery() {
+    private fun observeSelectedImagesState() {
+        lifecycleExecute { viewModel.counterImages.collect { handlerSelectedButton(it) } }
+    }
+
+    private fun observeImagesFromGalleryState() {
         lifecycleExecute {
-            viewModel.images.collect { setAdapterAdapter(it) }
+            viewModel.imagesFromGallery.collect { state ->
+                binding.actionFlipper.displayedChild = when (state) {
+                    States.Initial, States.Loading -> ConstantStates.FLIPPER_LOADING
+                    is States.Failure -> setFailure(state.data)
+                    is States.Success -> setSuccess(state.data)
+                }
+            }
         }
     }
+
+    private fun showAllImagesFromGallery() { viewModel.getAllImagesFromGallery() }
 
     private fun setupComponents() {
         setupButtons()
@@ -82,25 +99,49 @@ class GalleryFragment : BaseBottomSheetDialogFragment<GalleryFragmentBinding>(Ga
         handlerPermissions()
     }
 
-    private fun setAdapterAdapter(urls: List<Uri>) {
-        if (urls.isNotEmpty())
-            binding.imagesRecycler.run {
-                adapter = GalleryAdapter(handlerModel(urls))
-            }
+    private fun setFailure(data: String): Int {
+        binding.failureText.text = data
+
+        return ConstantStates.FLIPPER_FAILURE
     }
 
-    private fun handlerModel(urls: List<Uri>): List<GalleryScreenModel> =
-        urls.mapIndexed { index, url ->
-            if (index == 0) FromCameraScreenModel {}
-            else FromGalleryScreenModel(url) {}
+    private fun setSuccess(data: List<Uri>): Int {
+        if (data.isEmpty()) return setFailure(getString(R.string.generic_failure_title))
+
+        setAdapterAdapter(data)
+
+        return ConstantStates.FLIPPER_SUCCESS
+    }
+
+    private fun setAdapterAdapter(urls: List<Uri>) {
+        binding.imagesRecycler.run { adapter = GalleryAdapter(handlerUrls(urls)) }
+    }
+
+    private fun handlerSelectedButton(quantity: Int) {
+        with (binding.selectButton) {
+            text = when (quantity) {
+                0 -> getText(R.string.gallery_title_save_button)
+                1 -> getString(R.string.gallery_selected_title_save_button, quantity.toString())
+                in 2..5 -> getString(R.string.gallery_multiple_selected_title_save_button, quantity.toString())
+                else -> getString(R.string.gallery_max_selected_message)
+            }
+
+            isEnabled = quantity < 6
         }
+    }
 
     private fun setupButtons() {
         with (binding) {
             cancelButton.setOnClickListener { dismiss() }
-            selectButton.setOnClickListener { handlerPermissions() }
+            selectButton.setOnClickListener { navigateBack() }
         }
     }
+
+    private fun handlerUrls(urls: List<Uri>): List<GalleryScreenModel> =
+        urls.mapIndexed { index, url ->
+            if (index == 0) FromCameraScreenModel {}
+            else FromGalleryScreenModel(url) { viewModel.setSelectedImages(it) }
+        }
 
     private fun handlerPermissions() {
         when (Build.VERSION.SDK_INT) {
@@ -109,8 +150,6 @@ class GalleryFragment : BaseBottomSheetDialogFragment<GalleryFragmentBinding>(Ga
             else -> getPermissionGallery.launch(OTHERS)
         }
     }
-
-    private fun showAllImagesFromGallery() { viewModel.getAllImagesFromGallery() }
 
 //    private fun openGallery() {
 //        getPhotosFromGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
