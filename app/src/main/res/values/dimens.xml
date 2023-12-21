@@ -1,4 +1,6 @@
 <resources>
+    <dimen name="none_size">0dp</dimen>
+
     <!-- Splash Icon Sizes -->
     <dimen name="diver_height">0.6dp</dimen>
     <dimen name="splash_icon_size">292dp</dimen>
@@ -14,7 +16,9 @@
     <dimen name="select_border_corner_radius">16dp</dimen>
 
     <!-- BottomSheet Sizes -->
+    <dimen name="bottom_sheet_bottom_size">256dp</dimen>
     <dimen name="bottom_sheet_corner_radius">14dp</dimen>
+
 
     <!-- Text Input Edit Sizes -->
     <dimen name="text_input_height">48dp</dimen>

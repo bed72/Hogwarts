@@ -100,6 +100,7 @@ dependencies {
     implementation(libs.hilt.android)
 
     implementation(libs.bundles.others)
+    implementation(libs.bundles.camera)
     implementation(libs.bundles.androidx)
 
     implementation(platform(libs.firebase.bom))

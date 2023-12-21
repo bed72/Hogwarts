@@ -1,7 +1,5 @@
 package com.bed.seller.presentation.ui.dashboard.gallery
 
-import dagger.hilt.android.AndroidEntryPoint
-
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.activity.result.contract.ActivityResultContracts
@@ -11,15 +9,19 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
+import android.Manifest.permission.CAMERA
 import android.Manifest.permission.READ_MEDIA_IMAGES
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED
+
+import dagger.hilt.android.AndroidEntryPoint
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 import com.bed.seller.R
 
 import com.bed.seller.databinding.GalleryFragmentBinding
+import com.bed.seller.presentation.commons.constants.AppConstants
 
 import com.bed.seller.presentation.commons.states.States
 import com.bed.seller.presentation.commons.states.ConstantStates
@@ -37,33 +39,6 @@ import com.bed.seller.presentation.ui.dashboard.gallery.model.FromGalleryScreenM
 class GalleryFragment : BaseBottomSheetDialogFragment<GalleryFragmentBinding>(GalleryFragmentBinding::inflate) {
 
     private val viewModel: GalleryViewModel by viewModels()
-
-    //    private var image: Uri = Uri.EMPTY
-
-//    private val getPhotoFromGallery =
-//        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) {
-//            if (it != null) Log.d("Picker", "Photo: $it")
-//            else snackBar(binding.root, "No media selected")
-//        }
-
-
-//    private val getPhotosFromGallery =
-//        registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(5)) {
-//            if (it.isNotEmpty()) adapterImages.submitList(it.mapIndexed { id, image -> ImageOfferScreenModel(id, image) })
-//            else snackBar(binding.root, "No media selected")
-//        }
-
-//    private val getCamera = registerForActivityResult(ActivityResultContracts.TakePicture()) {
-//        if (it) adapterImages.submitList(listOf(image).mapIndexed { id, image ->
-//            ImageOfferScreenModel(id, image)
-//        })
-//    }
-
-//    private val getPermissionCamera =
-//        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-//        if (it) getCamera.launch(createImageUri())
-//        else snackBar(binding.root, "The camera permission is required")
-//    }
 
     private val getPermissionGallery =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
@@ -117,10 +92,7 @@ class GalleryFragment : BaseBottomSheetDialogFragment<GalleryFragmentBinding>(Ga
     }
 
     private fun setupRecycler(data: List<Uri>) {
-        binding.imagesRecycler.run {
-            adapter = GalleryAdapter(handlerUrls(data))
-
-        }
+        binding.imagesRecycler.run { adapter = GalleryAdapter(handlerUrls(data)) }
     }
 
     private fun setupButtons() {
@@ -131,7 +103,7 @@ class GalleryFragment : BaseBottomSheetDialogFragment<GalleryFragmentBinding>(Ga
     }
 
     private fun setupFullBottomSheet() {
-        val bottom = dialog?.findViewById<FrameLayout>(BOTTOM_SHEET)
+        val bottom = dialog?.findViewById<FrameLayout>(AppConstants.BOTTOM_SHEET)
 
         BottomSheetBehavior.from(bottom!!).apply {
             peekHeight = BottomSheetBehavior.PEEK_HEIGHT_AUTO
@@ -175,46 +147,11 @@ class GalleryFragment : BaseBottomSheetDialogFragment<GalleryFragmentBinding>(Ga
         navigateTo(GalleryFragmentDirections.actionGalleryToCamera())
     }
 
-//    private fun openGallery() {
-//        getPhotosFromGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-//    }
-
-//    private fun handlerCamera() {
-//        val permission = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
-//
-//        if (permission == PackageManager.PERMISSION_GRANTED) getCamera.launch(createImageUri())
-//        else getPermissionCamera.launch(Manifest.permission.CAMERA)
-//    }
-
-
-
-//    private fun createImageUri(): Uri {
-//        val name = SimpleDateFormat(getString(R.string.pattern_date_images), Locale.US).run { format(Date()) }
-//        val directory = File(requireContext().filesDir, getString(R.string.pattern_save_images)).apply { mkdir() }
-//        return FileProvider.getUriForFile(
-//                requireContext(),
-//                "${BuildConfig.APPLICATION_ID}.provider",
-//                File(directory, "${name}.jpg")
-//            ).apply { image = this }
-//    }
-
-//    private fun clearCache(){
-//        requireContext().cacheDir.deleteRecursively()
-//    }
-//
-//    private fun loadBitmapFromUri(uri: Uri): Bitmap {
-//        val src = ImageDecoder.createSource(requireContext().contentResolver, uri)
-//        return ImageDecoder.decodeBitmap(src) { decoder, _, _ ->
-//            decoder.isMutableRequired = true
-//        }
-//    }
-
     companion object {
-        @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-        private val TIRAMISU = arrayOf(READ_MEDIA_IMAGES)
         private val OTHERS = arrayOf(READ_EXTERNAL_STORAGE)
+        @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+        private val TIRAMISU = arrayOf(CAMERA, READ_MEDIA_IMAGES)
         @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
-        private val CAKE = arrayOf(READ_MEDIA_IMAGES, READ_MEDIA_VISUAL_USER_SELECTED)
-        private val BOTTOM_SHEET = com.google.android.material.R.id.design_bottom_sheet
+        private val CAKE = arrayOf(CAMERA, READ_MEDIA_IMAGES, READ_MEDIA_VISUAL_USER_SELECTED)
     }
 }

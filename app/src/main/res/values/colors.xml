@@ -73,11 +73,12 @@
     <!-- Both -->
     <color name="navbar_dark">#202B25</color>
     <color name="navbar_light">#E6F1E9</color>
+    <color name="bottom_sheet_light">#F5F0F8</color>
     <color name="neutral_textColorHighlight">#9936AA68</color>
 
     <!-- Base Colors -->
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
     <color name="transparent">@android:color/transparent</color>
 
 </resources>

@@ -51,7 +51,7 @@ class GalleryViewHolder(
             container.setBackgroundResource(R.drawable.no_border_background)
         } else {
             badge.visibility = VISIBLE
-            container.setBackgroundResource(R.drawable.normal_border_background)
+            container.setBackgroundResource(R.drawable.normal_border_transparent_background)
         }
     }
 
