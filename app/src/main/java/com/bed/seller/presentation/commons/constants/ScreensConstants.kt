@@ -10,8 +10,9 @@ object ScreensConstants {
     // Remove icon go back
     val removeGoBackIcon = setOf(
         R.id.home_fragment,
+        R.id.camera_fragment,
         R.id.products_fragment,
-        R.id.dashboard_exit_fragment,
+        R.id.dashboard_exit_fragment
     )
 
     //Remove toolbar

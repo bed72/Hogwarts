@@ -89,6 +89,7 @@
     <string name="gallery_title">Selecione as imagens  &#127919;</string>
     <string name="gallery_selected_title_save_button">%s foto selecionada</string>
     <string name="gallery_max_selected_message">Selecione apenas 5 fotos</string>
+    <string name="gallery_permissions_message">Conceda as permissões para continuar.</string>
     <string name="gallery_multiple_selected_title_save_button">%s fotos selecionadas</string>
     <string name="gallery_subtitle">Selecione até 5 imagens do produto que deseja criar uma nova oferta!</string>
 

@@ -22,6 +22,31 @@
     <dialog
         android:id="@+id/gallery_fragment"
         tools:layout="@layout/gallery_fragment"
-        android:name="com.bed.seller.presentation.ui.dashboard.gallery.GalleryFragment" />
+        android:name="com.bed.seller.presentation.ui.dashboard.gallery.GalleryFragment" >
+
+        <action
+            android:id="@+id/action_gallery_to_camera"
+            app:destination="@+id/camera_fragment"
+            app:exitAnim="@anim/exit_fade_out"
+            app:enterAnim="@anim/enter_fade_in"
+            app:popExitAnim="@anim/pop_exit_fade_out"
+            app:popEnterAnim="@anim/pop_enter_fade_in" />
+
+    </dialog>
+
+    <dialog
+        android:id="@+id/camera_fragment"
+        tools:layout="@layout/camera_fragment"
+        android:name="com.bed.seller.presentation.ui.dashboard.camera.CameraFragment" >
+
+        <action
+            android:id="@+id/action_camera_to_gallery"
+            app:destination="@+id/gallery_fragment"
+            app:exitAnim="@anim/enter_fade_in"
+            app:enterAnim="@anim/exit_fade_out"
+            app:popExitAnim="@anim/pop_enter_fade_in"
+            app:popEnterAnim="@anim/pop_exit_fade_out" />
+
+    </dialog>
 
 </navigation>

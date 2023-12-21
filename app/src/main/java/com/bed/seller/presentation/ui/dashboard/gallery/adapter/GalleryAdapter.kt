@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 import com.bed.seller.presentation.ui.dashboard.gallery.model.GalleryScreenModel
-import com.bed.seller.presentation.ui.dashboard.gallery.viewholder.CameraViewHolder
 import com.bed.seller.presentation.ui.dashboard.gallery.model.FromCameraScreenModel
 import com.bed.seller.presentation.ui.dashboard.gallery.model.FromGalleryScreenModel
+
+import com.bed.seller.presentation.ui.dashboard.gallery.viewholder.CameraViewHolder
 import com.bed.seller.presentation.ui.dashboard.gallery.viewholder.GalleryViewHolder
 
 class GalleryAdapter(
