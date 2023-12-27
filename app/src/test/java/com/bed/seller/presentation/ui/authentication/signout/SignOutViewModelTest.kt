@@ -23,8 +23,9 @@ import com.bed.seller.presentation.commons.states.States
 
 import com.bed.core.usecases.authentication.SignOutUseCase
 
-import com.bed.test.rule.MainCoroutineRule
+import com.bed.test.rules.MainCoroutineRule
 import com.bed.test.factories.authentication.AuthenticationFactory
+import com.bed.test.factories.authentication.Factories
 
 @RunWith(MockitoJUnitRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -53,9 +54,9 @@ internal class SignOutViewModelTest {
 
         viewModel.signOut()
 
-        assertEquals(states[AuthenticationFactory.INITIAL], States.Initial)
-        assertEquals(states[AuthenticationFactory.LOADING], States.Loading)
-        assertTrue(states[AuthenticationFactory.SUCCESS] is States.Success)
+        assertEquals(states[Factories.INITIAL], States.Initial)
+        assertEquals(states[Factories.LOADING], States.Loading)
+        assertTrue(states[Factories.SUCCESS] is States.Success)
 
         job.cancel()
     }

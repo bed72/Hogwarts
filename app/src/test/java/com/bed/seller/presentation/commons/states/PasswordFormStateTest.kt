@@ -12,9 +12,8 @@ import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-import com.bed.test.rule.MainCoroutineRule
-
-import com.bed.test.factories.authentication.AuthenticationFactory
+import com.bed.test.rules.MainCoroutineRule
+import com.bed.test.factories.authentication.Factories
 
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class PasswordFormStateTest {
@@ -32,14 +31,14 @@ internal class PasswordFormStateTest {
     }
 
     @Test
-    fun `Should return successful`() = runTest {
+    fun `Should successfully return`() = runTest {
         val job = launch(rule.dispatcher.main()) { form.state.toList(states) }
 
         form.set("P@ssw0rD", FormState.Type.Password)
 
-        assertEquals(states[AuthenticationFactory.INITIAL], States.Initial)
-        assertEquals(states[AuthenticationFactory.LOADING], States.Loading)
-        assertTrue(states[AuthenticationFactory.SUCCESS] is States.Success)
+        assertEquals(states[Factories.INITIAL], States.Initial)
+        assertEquals(states[Factories.LOADING], States.Loading)
+        assertTrue(states[Factories.SUCCESS] is States.Success)
         form.state.value.let {
             it as States.Success
             assertEquals(it.data, "P@ssw0rD")
@@ -49,14 +48,14 @@ internal class PasswordFormStateTest {
     }
 
     @Test
-    fun `Should return failure (empty)`() = runTest {
+    fun `Should failure return (empty)`() = runTest {
         val job = launch(rule.dispatcher.main()) { form.state.toList(states) }
 
         form.set("", FormState.Type.Password)
 
-        assertEquals(states[AuthenticationFactory.INITIAL], States.Initial)
-        assertEquals(states[AuthenticationFactory.LOADING], States.Loading)
-        assertTrue(states[AuthenticationFactory.FAILURE] is States.Failure)
+        assertEquals(states[Factories.INITIAL], States.Initial)
+        assertEquals(states[Factories.LOADING], States.Loading)
+        assertTrue(states[Factories.FAILURE] is States.Failure)
         form.state.value.let {
             it as States.Failure
             assertEquals(it.data, "A senha presica conter mais de 6 caracteres.")
@@ -66,14 +65,14 @@ internal class PasswordFormStateTest {
     }
 
     @Test
-    fun `Should return failure (needs number)`() = runTest {
+    fun `Should failure return (needs number)`() = runTest {
         val job = launch(rule.dispatcher.main()) { form.state.toList(states) }
 
         form.set("P@ssworD", FormState.Type.Password)
 
-        assertEquals(states[AuthenticationFactory.INITIAL], States.Initial)
-        assertEquals(states[AuthenticationFactory.LOADING], States.Loading)
-        assertTrue(states[AuthenticationFactory.FAILURE] is States.Failure)
+        assertEquals(states[Factories.INITIAL], States.Initial)
+        assertEquals(states[Factories.LOADING], States.Loading)
+        assertTrue(states[Factories.FAILURE] is States.Failure)
         form.state.value.let {
             it as States.Failure
             assertEquals(it.data, "A senha presica conter caracteres numéricos.")
@@ -83,14 +82,14 @@ internal class PasswordFormStateTest {
     }
 
     @Test
-    fun `Should return failure (needs capital letters)`() = runTest {
+    fun `Should failure return (needs capital letters)`() = runTest {
         val job = launch(rule.dispatcher.main()) { form.state.toList(states) }
 
         form.set("p@ssw0rd", FormState.Type.Password)
 
-        assertEquals(states[AuthenticationFactory.INITIAL], States.Initial)
-        assertEquals(states[AuthenticationFactory.LOADING], States.Loading)
-        assertTrue(states[AuthenticationFactory.FAILURE] is States.Failure)
+        assertEquals(states[Factories.INITIAL], States.Initial)
+        assertEquals(states[Factories.LOADING], States.Loading)
+        assertTrue(states[Factories.FAILURE] is States.Failure)
         form.state.value.let {
             it as States.Failure
             assertEquals(it.data, "A senha presica conter caracteres maiúsculos.")

@@ -18,10 +18,10 @@ import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-import com.bed.core.usecases.authentication.IsLoggedInUseCase
+import com.bed.test.rules.MainCoroutineRule
+import com.bed.test.factories.authentication.Factories
 
-import com.bed.test.rule.MainCoroutineRule
-import com.bed.test.factories.authentication.AuthenticationFactory
+import com.bed.core.usecases.authentication.IsLoggedInUseCase
 
 @RunWith(MockitoJUnitRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -51,7 +51,7 @@ internal class SplashViewModelTest {
 
         viewModel.isLoggedIn()
 
-        assertEquals(states[AuthenticationFactory.INITIAL], SplashViewModel.States.Initial)
+        assertEquals(states[Factories.INITIAL], SplashViewModel.States.Initial)
         states[IS_LOGGED].let { assertTrue(it is SplashViewModel.States.IsLoggedIn && it.isLogged) }
 
         job.cancel()
@@ -65,7 +65,7 @@ internal class SplashViewModelTest {
 
         viewModel.isLoggedIn()
 
-        assertEquals(states[AuthenticationFactory.INITIAL], SplashViewModel.States.Initial)
+        assertEquals(states[Factories.INITIAL], SplashViewModel.States.Initial)
         states[IS_LOGGED].let { assertFalse(it is SplashViewModel.States.IsLoggedIn && it.isLogged) }
 
         job.cancel()

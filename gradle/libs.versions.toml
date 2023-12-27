@@ -11,8 +11,6 @@ detekt = "1.23.4"
 material = "1.11.0"
 leakcanary = "2.12"
 ksp = "1.9.21-1.0.16"
-mockwebserver = "4.12.0"
-okhttp = "5.0.0-alpha.11"
 kotlinx-coroutines = "1.7.3"
 
 google-service = "4.4.0"
@@ -50,7 +48,6 @@ coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-
 coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
 lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-okhttp = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 detekt = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
 
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
@@ -86,7 +83,6 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 mockito = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockito" }
 
 hilt-test = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
-mockwebserver-test = { group = "com.squareup.okhttp3", name = "mockwebserver", version.ref = "mockwebserver" }
 coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 
 androidx-runner-test = { group = "androidx.test", name = "runner", version.ref = "androidx-runner" }
@@ -128,7 +124,6 @@ test = [
 androidx-test = [
     "hilt-test",
     "coroutines-test",
-    "mockwebserver-test",
     "androidx-junit-test",
     "androidx-runner-test",
     "androidx-navigation-test",
@@ -150,7 +145,6 @@ core = [
 others = [
     "coil",
     "lottie",
-    "okhttp",
     "material"
 ]
 

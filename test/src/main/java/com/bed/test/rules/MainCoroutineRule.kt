@@ -1,4 +1,4 @@
-package com.bed.test.rule
+package com.bed.test.rules
 
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description

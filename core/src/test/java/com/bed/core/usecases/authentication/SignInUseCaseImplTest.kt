@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-import com.bed.test.rule.MainCoroutineRule
+import com.bed.test.rules.MainCoroutineRule
 
 import com.bed.core.data.repositories.AuthenticationRepository
 
@@ -33,13 +33,13 @@ import com.bed.core.domain.models.authentication.AuthenticationModel
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-internal class SignUpUseCaseTest {
+internal class SignInUseCaseImplTest {
     @get:Rule
     val rule = MainCoroutineRule()
 
     private lateinit var factory: AuthenticationFactory
 
-    private lateinit var useCase: SignUpUseCase
+    private lateinit var useCase: SignInUseCase
 
     @Mock
     private lateinit var repository: AuthenticationRepository
@@ -47,12 +47,12 @@ internal class SignUpUseCaseTest {
     @Before
     fun setup() {
         factory = AuthenticationFactory()
-        useCase = SignUpUseCaseImpl(rule.dispatcher, repository)
+        useCase = SignInUseCaseImpl(rule.dispatcher, repository)
     }
 
     @Test
-    fun `Should return value not null when trying sign up account with return failure`() = runTest {
-        whenever(repository.signUp(any())).thenReturn(factory.failure)
+    fun `Should return value not null when trying sign in account with failure return`() = runTest {
+        whenever(repository.signIn(any())).thenReturn(factory.failure)
 
         val response = useCase(factory.signInAndSingUpValidParameter).first()
 
@@ -60,8 +60,8 @@ internal class SignUpUseCaseTest {
     }
 
     @Test
-    fun `Should return value not null when trying sign up account with return success`() = runTest {
-        whenever(repository.signUp(any())).thenReturn(factory.success)
+    fun `Should return value not null when trying sign in account with successful return`() = runTest {
+        whenever(repository.signIn(any())).thenReturn(factory.success)
 
         val response = useCase(factory.signInAndSingUpValidParameter).first()
 
@@ -69,17 +69,17 @@ internal class SignUpUseCaseTest {
     }
 
     @Test
-    fun `Should only call repository once when trying sign up account`() = runTest {
-        whenever(repository.signUp(any())).thenReturn(factory.failure)
+    fun `Should only call repository once when trying sign in account`() = runTest {
+        whenever(repository.signIn(any())).thenReturn(factory.failure)
 
         useCase(factory.signInAndSingUpValidParameter).first()
 
-        verify(repository, times(1)).signUp(any())
+        verify(repository, times(1)).signIn(any())
     }
 
     @Test
-    fun `Should return failure value when trying a sign up account`() = runTest {
-        whenever(repository.signUp(any())).thenReturn(factory.failure)
+    fun `Should return failure value when trying a sign in account`() = runTest {
+        whenever(repository.signIn(any())).thenReturn(factory.failure)
 
         val response = useCase(factory.signInAndSingUpValidParameter).first()
 
@@ -87,8 +87,8 @@ internal class SignUpUseCaseTest {
     }
 
     @Test
-    fun `Should return failure value with status and message when trying a sign up account`() = runTest {
-        whenever(repository.signUp(any())).thenReturn(factory.failure)
+    fun `Should return failure value with status and message when trying a sign in account`() = runTest {
+        whenever(repository.signIn(any())).thenReturn(factory.failure)
 
         val response = useCase(factory.signInAndSingUpValidParameter).first()
 
@@ -98,8 +98,8 @@ internal class SignUpUseCaseTest {
     }
 
     @Test
-    fun `Should return success value when trying a sign up account`() = runTest {
-        whenever(repository.signUp(any())).thenReturn(factory.success)
+    fun `Should return success value when trying a sign in account`() = runTest {
+        whenever(repository.signIn(any())).thenReturn(factory.success)
 
         val response = useCase(factory.signInAndSingUpValidParameter).first()
 
@@ -107,8 +107,8 @@ internal class SignUpUseCaseTest {
     }
 
     @Test
-    fun `Should return success value with status and message when trying a sign up account`() = runTest {
-        whenever(repository.signUp(any())).thenReturn(factory.success)
+    fun `Should return success value with status and message when trying a sign in account`() = runTest {
+        whenever(repository.signIn(any())).thenReturn(factory.success)
 
         val response = useCase(factory.signInAndSingUpValidParameter).first()
 

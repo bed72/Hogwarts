@@ -19,14 +19,14 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-import com.bed.test.rule.MainCoroutineRule
+import com.bed.test.rules.MainCoroutineRule
 
 import com.bed.core.data.repositories.AuthenticationRepository
 import com.bed.test.factories.authentication.AuthenticationFactory
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-internal class ResetUseCaseTest {
+internal class ResetUseCaseImplTest {
     @get:Rule
     val rule = MainCoroutineRule()
 
@@ -44,7 +44,7 @@ internal class ResetUseCaseTest {
     }
 
     @Test
-    fun `Should return value not null when trying reset password with return failure`() = runTest {
+    fun `Should return value not null when trying reset password with failure return`() = runTest {
         whenever(repository.reset(any())).thenReturn(false)
 
         val response = useCase(factory.resetValidParameter).first()
@@ -53,7 +53,7 @@ internal class ResetUseCaseTest {
     }
 
     @Test
-    fun `Should return value not null when trying reset password with return success`() = runTest {
+    fun `Should return value not null when trying reset password with successful return`() = runTest {
         whenever(repository.reset(any())).thenReturn(true)
 
         val response = useCase(factory.resetValidParameter).first()

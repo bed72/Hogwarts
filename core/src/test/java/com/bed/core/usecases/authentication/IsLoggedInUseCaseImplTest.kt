@@ -20,7 +20,7 @@ import com.bed.core.data.repositories.AuthenticationRepository
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-internal class IsLoggedInUseCaseTest {
+internal class IsLoggedInUseCaseImplTest {
     private lateinit var useCase: IsLoggedInUseCase
 
     @Mock
@@ -32,7 +32,7 @@ internal class IsLoggedInUseCaseTest {
     }
 
     @Test
-    fun `Should return value not null when trying verify is logged in account with return failure`() = runTest {
+    fun `Should return value not null when trying verify is logged in account with failure return`() = runTest {
         whenever(repository.isLoggedIn()).thenReturn(false)
 
         val response = useCase()
@@ -41,7 +41,7 @@ internal class IsLoggedInUseCaseTest {
     }
 
     @Test
-    fun `Should return value not null when trying verify is logged in account with return success`() = runTest {
+    fun `Should return value not null when trying verify is logged in account with successful return`() = runTest {
         whenever(repository.isLoggedIn()).thenReturn(true)
 
         val response = useCase()
@@ -50,7 +50,7 @@ internal class IsLoggedInUseCaseTest {
     }
 
     @Test
-    fun `Should only call repository once when trying verify is logged in account with return failure`() = runTest {
+    fun `Should only call repository once when trying verify is logged in account with failure return`() = runTest {
         whenever(repository.isLoggedIn()).thenReturn(false)
 
         useCase()
@@ -59,7 +59,7 @@ internal class IsLoggedInUseCaseTest {
     }
 
     @Test
-    fun `Should only call repository once when trying verify is logged in account with return success`() = runTest {
+    fun `Should only call repository once when trying verify is logged in account with successful return`() = runTest {
         whenever(repository.isLoggedIn()).thenReturn(true)
 
         useCase()

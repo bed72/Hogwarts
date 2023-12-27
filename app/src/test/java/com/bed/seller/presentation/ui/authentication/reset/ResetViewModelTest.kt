@@ -24,8 +24,9 @@ import com.bed.core.usecases.authentication.ResetUseCase
 
 import com.bed.seller.presentation.commons.states.States
 
-import com.bed.test.rule.MainCoroutineRule
+import com.bed.test.rules.MainCoroutineRule
 import com.bed.test.factories.authentication.AuthenticationFactory
+import com.bed.test.factories.authentication.Factories
 
 @RunWith(MockitoJUnitRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -57,9 +58,9 @@ internal class ResetViewModelTest {
 
         viewModel.reset(factory.resetValidParameter)
 
-        assertEquals(states[AuthenticationFactory.INITIAL], States.Initial)
-        assertEquals(states[AuthenticationFactory.LOADING], States.Loading)
-        states[AuthenticationFactory.SUCCESS].let { assertTrue(it is States.Success && it.data) }
+        assertEquals(states[Factories.INITIAL], States.Initial)
+        assertEquals(states[Factories.LOADING], States.Loading)
+        states[Factories.SUCCESS].let { assertTrue(it is States.Success && it.data) }
 
         job.cancel()
     }
@@ -72,9 +73,9 @@ internal class ResetViewModelTest {
 
         viewModel.reset(factory.resetValidParameter)
 
-        assertEquals(states[AuthenticationFactory.INITIAL], States.Initial)
-        assertEquals(states[AuthenticationFactory.LOADING], States.Loading)
-        assertFalse(states[AuthenticationFactory.FAILURE] is States.Failure)
+        assertEquals(states[Factories.INITIAL], States.Initial)
+        assertEquals(states[Factories.LOADING], States.Loading)
+        assertFalse(states[Factories.FAILURE] is States.Failure)
 
         job.cancel()
     }
