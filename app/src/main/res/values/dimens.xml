@@ -19,7 +19,6 @@
     <dimen name="bottom_sheet_bottom_size">256dp</dimen>
     <dimen name="bottom_sheet_corner_radius">14dp</dimen>
 
-
     <!-- Text Input Edit Sizes -->
     <dimen name="text_input_height">48dp</dimen>
     <dimen name="text_input_corner_radius">14dp</dimen>
