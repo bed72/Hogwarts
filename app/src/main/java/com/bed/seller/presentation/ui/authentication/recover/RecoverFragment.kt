@@ -19,7 +19,7 @@ import com.bed.seller.presentation.commons.constants.AppConstants
 import com.bed.seller.presentation.commons.extensions.actionKeyboard
 
 import com.bed.seller.presentation.commons.extensions.debounce
-import com.bed.seller.presentation.commons.extensions.observeDupleStates
+import com.bed.seller.presentation.commons.extensions.observePairStates
 import com.bed.seller.presentation.commons.extensions.fragments.snackBar
 import com.bed.seller.presentation.commons.extensions.observeTripleStates
 import com.bed.seller.presentation.commons.extensions.fragments.hideKeyboard
@@ -48,7 +48,7 @@ class RecoverFragment : BaseBottomSheetDialogFragment<RecoverFragmentBinding>(
     private fun observeFormState() {
         lifecycleExecute {
             viewModel.email.state.collect {
-                it.observeDupleStates(
+                it.observePairStates(
                     failure = { data ->
                         emailRow = ""
                         binding.emailTextInput.error = data

@@ -20,7 +20,7 @@ import com.bed.seller.presentation.commons.fragments.BaseFragment
 
 import com.bed.seller.presentation.commons.extensions.debounce
 import com.bed.seller.presentation.commons.extensions.actionKeyboard
-import com.bed.seller.presentation.commons.extensions.observeDupleStates
+import com.bed.seller.presentation.commons.extensions.observePairStates
 import com.bed.seller.presentation.commons.extensions.fragments.snackBar
 import com.bed.seller.presentation.commons.extensions.observeTripleStates
 import com.bed.seller.presentation.commons.extensions.fragments.navigateTo
@@ -62,7 +62,7 @@ class ResetFragment : BaseFragment<ResetFragmentBinding>(ResetFragmentBinding::i
     private fun observeFormState() {
         lifecycleExecute {
             viewModel.password.state.collect {
-                it.observeDupleStates(
+                it.observePairStates(
                     failure = { data ->
                         passwordRow = ""
                         binding.passwordTextInput.error = data

@@ -2,7 +2,7 @@ package com.bed.seller.presentation.commons.extensions
 
 import com.bed.seller.presentation.commons.states.States
 
-fun <S> States<S>.observeDupleStates(
+fun <S> States<S>.observePairStates(
     success: (data: S) -> Unit,
     failure: (data: String) -> Unit
 ) {
