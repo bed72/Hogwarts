@@ -2,6 +2,8 @@ package com.bed.seller.presentation.ui.dashboard.offers
 
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
+import android.animation.ValueAnimator
 
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,6 +34,7 @@ class OfferFragment : BaseFragment<OfferFragmentBinding>(OfferFragmentBinding::i
 
         setupSave()
         setupCancel()
+
     }
 
     private fun initAdapter() {
@@ -39,7 +42,10 @@ class OfferFragment : BaseFragment<OfferFragmentBinding>(OfferFragmentBinding::i
     }
 
     private fun setupSave() {
-        binding.saveButton.setOnClickListener { navigateTo(OfferFragmentDirections.actionOfferToGallery()) }
+        binding.saveButton.setOnClickListener {
+//            binding.test.animateCharacterByCharacter("Coffee", 64L)
+            navigateTo(OfferFragmentDirections.actionOfferToGallery())
+        }
     }
 
     private fun setupCancel() {

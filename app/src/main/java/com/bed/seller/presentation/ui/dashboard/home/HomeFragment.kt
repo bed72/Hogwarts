@@ -30,12 +30,6 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
         setupComponents()
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        setNavigationBarColorTheme(R.color.navbar_dark, R.color.navbar_light)
-    }
-
     override fun onCreateMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_menu_items, menu)
     }

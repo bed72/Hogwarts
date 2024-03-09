@@ -1,6 +1,5 @@
 package com.bed.seller.presentation.commons.fragments
 
-import androidx.annotation.ColorRes
 import androidx.fragment.app.Fragment
 import androidx.core.view.MenuProvider
 import androidx.viewbinding.ViewBinding
@@ -12,10 +11,6 @@ import android.view.MenuItem
 import android.view.ViewGroup
 import android.view.MenuInflater
 import android.view.LayoutInflater
-import android.content.res.Configuration
-
-import com.bed.seller.R
-import com.bed.seller.presentation.commons.extensions.fragments.setNavigationBarColor
 
 typealias InflateFragment<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 
@@ -36,12 +31,6 @@ abstract class BaseFragment<viewBinding : ViewBinding>(
         return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        setNavigationBarColorTheme()
-    }
-
     override fun onDestroy() {
         super.onDestroy()
 
@@ -59,14 +48,14 @@ abstract class BaseFragment<viewBinding : ViewBinding>(
 
     override fun onMenuItemSelected(menu: MenuItem): Boolean = false
 
-    protected fun setNavigationBarColorTheme(
-        @ColorRes colorDark: Int = R.color.dark_background,
-        @ColorRes colorLight: Int = R.color.light_background
-    ) {
-        when (requireContext().resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-            Configuration.UI_MODE_NIGHT_NO -> setNavigationBarColor(colorLight)
-            Configuration.UI_MODE_NIGHT_YES -> setNavigationBarColor(colorDark)
-        }
-    }
+//    protected fun setNavigationBarColorTheme(
+//        @ColorRes colorDark: Int = R.color.dark_background,
+//        @ColorRes colorLight: Int = R.color.light_background
+//    ) {
+//        when (requireContext().resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+//            Configuration.UI_MODE_NIGHT_NO -> setNavigationBarColor(colorLight)
+//            Configuration.UI_MODE_NIGHT_YES -> setNavigationBarColor(colorDark)
+//        }
+//    }
 
 }

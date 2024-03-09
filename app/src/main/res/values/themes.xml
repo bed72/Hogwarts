@@ -51,7 +51,7 @@
 
     <!-- BottomNavigationView -->
     <style name="BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
-        <item name="backgroundTint">@color/light_background</item>
+        <item name="android:background">@color/transparent</item>
     </style>
 
     <!-- FloatingActionButton -->

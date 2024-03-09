@@ -11,9 +11,10 @@
     tools:context=".presentation.ui.dashboard.offers.OfferFragment" >
 
     <TextView
-        style="@style/GreyMediumNormalBody"
+        android:id="@+id/test"
         android:layout_gravity="start"
         android:layout_marginTop="@dimen/small_space"
+        style="@style/GreyMediumNormalBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/normal_space"

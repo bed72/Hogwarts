@@ -17,9 +17,4 @@ class ProductsFragment : BaseFragment<ProductsFragmentBinding>(ProductsFragmentB
         super.onViewCreated(view, savedInstanceState)
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        setNavigationBarColorTheme(R.color.navbar_dark, R.color.navbar_light)
-    }
 }

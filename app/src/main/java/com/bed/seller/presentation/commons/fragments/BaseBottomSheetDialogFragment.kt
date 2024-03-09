@@ -1,19 +1,16 @@
 package com.bed.seller.presentation.commons.fragments
 
-import android.content.res.Configuration
 import android.os.Bundle
 
 import android.view.View
 import android.view.ViewGroup
 import android.view.LayoutInflater
-import androidx.annotation.ColorRes
 
 import androidx.viewbinding.ViewBinding
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 import com.bed.seller.R
-import com.bed.seller.presentation.commons.extensions.fragments.setNavigationBarColor
 
 typealias InflateBottomSheet<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 
@@ -36,12 +33,6 @@ abstract class BaseBottomSheetDialogFragment<viewBinding : ViewBinding>(
         return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        setNavigationBarColorTheme()
-    }
-
     override fun onDestroy() {
         super.onDestroy()
 
@@ -54,13 +45,13 @@ abstract class BaseBottomSheetDialogFragment<viewBinding : ViewBinding>(
         _binding = null
     }
 
-    protected fun setNavigationBarColorTheme(
-        @ColorRes colorDark: Int = R.color.dark_background,
-        @ColorRes colorLight: Int = R.color.light_background
-    ) {
-        when (requireContext().resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-            Configuration.UI_MODE_NIGHT_NO -> setNavigationBarColor(colorLight)
-            Configuration.UI_MODE_NIGHT_YES -> setNavigationBarColor(colorDark)
-        }
-    }
+//    protected fun setNavigationBarColorTheme(
+//        @ColorRes colorDark: Int = R.color.dark_background,
+//        @ColorRes colorLight: Int = R.color.light_background
+//    ) {
+//        when (requireContext().resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+//            Configuration.UI_MODE_NIGHT_NO -> setNavigationBarColor(colorLight)
+//            Configuration.UI_MODE_NIGHT_YES -> setNavigationBarColor(colorDark)
+//        }
+//    }
 }
