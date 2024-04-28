@@ -7,16 +7,16 @@ import com.bed.core.values.getFirstMessage
 
 internal class RecoverParameterTest {
     @Test
-    fun `Should try validate RecoverParameter return failure when e-mail is invalid`() {
-        RecoverParameter("emailemail.com").mapLeft { message ->
-            assertEquals(message.getFirstMessage(), "Preencha um e-mail válido.")
+    fun `Should try validate RecoverParameter return valid`() {
+        RecoverParameter("email@email.com").map { (email) ->
+            assertEquals(email(), "email@email.com")
         }
     }
 
     @Test
-    fun `Should try validate RecoverParameter return success`() {
-        RecoverParameter("email@email.com").map { (email) ->
-            assertEquals(email(), "email@email.com")
+    fun `Should try validate RecoverParameter return failure when e-mail is invalid`() {
+        RecoverParameter("emailemail.com").mapLeft { message ->
+            assertEquals(message.getFirstMessage(), "Preencha um e-mail válido.")
         }
     }
 }

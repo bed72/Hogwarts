@@ -14,6 +14,14 @@ internal class NameValueTest {
     }
 
     @Test
+    fun `Should return message failure when Name is null`() {
+        val message = NameValue(null)
+
+        assertTrue(message.isLeft())
+        message.mapLeft { assertEquals(it.getFirstMessage(), "O nome e sobrenome não podem ser nulos.") }
+    }
+
+    @Test
     fun `Should return message failure when Name is invalid`() {
         val message = NameValue("")
 

@@ -14,6 +14,14 @@ internal class CodeValueTest {
     }
 
     @Test
+    fun `Should return message failure when Code is null`() {
+        val message = CodeValue(null)
+
+        assertTrue(message.isLeft())
+        message.mapLeft { assertEquals(it.getFirstMessage(), "O código não podem ser nulo.") }
+    }
+
+    @Test
     fun `Should return message failure when Code is invalid`() {
         val message = CodeValue("")
 

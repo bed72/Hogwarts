@@ -14,6 +14,14 @@ internal class EmailValueTest {
     }
 
     @Test
+    fun `Should return message failure when E-mail is empty`() {
+        val message = EmailValue(null)
+
+        assertTrue(message.isLeft())
+        message.mapLeft { assertEquals(it.getFirstMessage(), "O e-mail não pode ser nulo.") }
+    }
+
+    @Test
     fun `Should return message failure when E-mail is invalid`() {
         val message = EmailValue("")
 

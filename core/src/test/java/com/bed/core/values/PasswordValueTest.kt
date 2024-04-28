@@ -6,11 +6,19 @@ import org.junit.Assert.assertEquals
 
 internal class PasswordValueTest {
     @Test
-    fun `Should return the Name when value is valid`() {
+    fun `Should return the Password when value is valid`() {
         val password = PasswordValue("P@ssw0rD")
 
         assertTrue(password.isRight())
         password.map { assertEquals(it(), "P@ssw0rD") }
+    }
+
+    @Test
+    fun `Should return message failure when Password is null`() {
+        val message = PasswordValue(null)
+
+        assertTrue(message.isLeft())
+        message.mapLeft { assertEquals(it.getFirstMessage(), "O senha não pode ser nula.") }
     }
 
     @Test

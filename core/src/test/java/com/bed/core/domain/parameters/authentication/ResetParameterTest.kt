@@ -7,6 +7,13 @@ import com.bed.core.values.getFirstMessage
 
 internal class ResetParameterTest {
     @Test
+    fun `Should try validate ResetParameter return valid`() {
+        ResetParameter("code", "P@ssw0rD").map { (code, password) ->
+            assertEquals(code(), "code")
+            assertEquals(password(), "P@ssw0rD")
+        }
+    }
+    @Test
     fun `Should try validate ResetParameter return failure when code is invalid`() {
         ResetParameter("", "P@ssw0rD").mapLeft { message ->
             assertEquals(message.getFirstMessage(), "Preencha um código válido.")
@@ -31,14 +38,6 @@ internal class ResetParameterTest {
     fun `Should try validate ResetParameter return failure when password is invalid (needs a capital character)`() {
         ResetParameter("code", "passw0rd").mapLeft { message ->
             assertEquals(message.getFirstMessage(), "A senha presica conter caracteres maiúsculos.")
-        }
-    }
-
-    @Test
-    fun `Should try validate ResetParameter return success`() {
-        ResetParameter("code", "P@ssw0rD").map { (code, password) ->
-            assertEquals(code(), "code")
-            assertEquals(password(), "P@ssw0rD")
         }
     }
 }
