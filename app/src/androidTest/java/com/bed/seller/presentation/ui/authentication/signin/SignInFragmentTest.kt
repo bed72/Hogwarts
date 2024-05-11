@@ -28,11 +28,13 @@ import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 
 import  com.bed.seller.R
 
+import com.bed.core.data.repositories.CoroutinesRepository
+
 import com.bed.seller.presentation.extension.launchFragmentInHiltContainer
 
 @HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
-@UninstallModules(CoroutinesUseCaseModule::class)
+@UninstallModules(CoroutinesRepository::class)
 internal class SignInFragmentTest {
 
     @get:Rule

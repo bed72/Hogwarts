@@ -47,7 +47,7 @@ internal class ResetViewModelTest {
     fun setUp() {
         states = mutableListOf()
         factory = AuthenticationFactory()
-        viewModel = ResetViewModel(useCase, rule.dispatcher)
+        viewModel = ResetViewModel(useCase)
     }
 
     @Test

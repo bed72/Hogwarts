@@ -22,11 +22,11 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import com.bed.seller.presentation.commons.states.States
 
 import com.bed.test.rules.MainCoroutineRule
+import com.bed.test.factories.authentication.Factories
 import com.bed.test.factories.authentication.AuthenticationFactory
 
 import com.bed.core.usecases.authentication.SignUpUsecase
 import com.bed.core.domain.models.authentication.AuthenticationModel
-import com.bed.test.factories.authentication.Factories
 
 @RunWith(MockitoJUnitRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -47,7 +47,7 @@ internal class SignUpViewModelTest {
     fun setUp() {
         states = mutableListOf()
         factory = AuthenticationFactory()
-        viewModel = SignUpViewModel(useCase, rule.dispatcher)
+        viewModel = SignUpViewModel(useCase)
     }
 
     @Test

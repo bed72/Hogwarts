@@ -19,12 +19,11 @@ import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-import com.bed.seller.presentation.commons.states.States
-
-import com.bed.core.usecases.authentication.SignOutUsecase
-
 import com.bed.test.rules.MainCoroutineRule
 import com.bed.test.factories.authentication.Factories
+
+import com.bed.seller.presentation.commons.states.States
+import com.bed.core.usecases.authentication.SignOutUsecase
 
 @RunWith(MockitoJUnitRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)

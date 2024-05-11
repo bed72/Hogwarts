@@ -26,8 +26,9 @@ import com.bed.seller.presentation.commons.states.States
 import com.bed.core.usecases.authentication.RecoverUsecase
 
 import com.bed.test.rules.MainCoroutineRule
-import com.bed.test.factories.authentication.AuthenticationFactory
+
 import com.bed.test.factories.authentication.Factories
+import com.bed.test.factories.authentication.AuthenticationFactory
 
 @RunWith(MockitoJUnitRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -48,7 +49,7 @@ internal class RecoverViewModelTest {
     fun setUp() {
         states = mutableListOf()
         factory = AuthenticationFactory()
-        viewModel = RecoverViewModel(useCase, rule.dispatcher)
+        viewModel = RecoverViewModel(useCase)
     }
 
     @Test
