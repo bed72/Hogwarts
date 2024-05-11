@@ -11,11 +11,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 
-import com.bed.core.usecases.authentication.IsLoggedInUseCase
+import com.bed.core.usecases.authentication.IsLoggedInUsecase
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val useCase: IsLoggedInUseCase
+    private val useCase: IsLoggedInUsecase
 ) : ViewModel() {
     private val _state = MutableStateFlow<States>(States.Initial)
     val state: StateFlow<States> get() = _state.asStateFlow()

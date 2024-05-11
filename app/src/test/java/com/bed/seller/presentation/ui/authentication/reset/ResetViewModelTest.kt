@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-import com.bed.core.usecases.authentication.ResetUseCase
+import com.bed.core.usecases.authentication.ResetUsecase
 
 import com.bed.seller.presentation.commons.states.States
 
@@ -35,7 +35,7 @@ internal class ResetViewModelTest {
     val rule = MainCoroutineRule()
 
     @Mock
-    private lateinit var useCase: ResetUseCase
+    private lateinit var useCase: ResetUsecase
 
     private  lateinit var viewModel: ResetViewModel
 

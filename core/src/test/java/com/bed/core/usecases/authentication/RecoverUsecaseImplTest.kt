@@ -26,13 +26,13 @@ import com.bed.test.factories.authentication.AuthenticationFactory
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-internal class RecoverUseCaseImplTest {
+internal class RecoverUsecaseImplTest {
     @get:Rule
     val rule = MainCoroutineRule()
 
     private lateinit var factory: AuthenticationFactory
 
-    private lateinit var useCase: RecoverUseCase
+    private lateinit var useCase: RecoverUsecase
 
     @Mock
     private lateinit var repository: AuthenticationRepository
@@ -40,7 +40,7 @@ internal class RecoverUseCaseImplTest {
     @Before
     fun setup() {
         factory = AuthenticationFactory()
-        useCase = RecoverUseCaseImpl(rule.dispatcher, repository)
+        useCase = RecoverUsecaseImpl(rule.dispatcher, repository)
     }
 
     @Test

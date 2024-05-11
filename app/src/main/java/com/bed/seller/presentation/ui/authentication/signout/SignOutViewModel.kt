@@ -12,11 +12,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import dagger.hilt.android.lifecycle.HiltViewModel
 
 import com.bed.seller.presentation.commons.states.States
-import com.bed.core.usecases.authentication.SignOutUseCase
+import com.bed.core.usecases.authentication.SignOutUsecase
 
 @HiltViewModel
 class SignOutViewModel @Inject constructor(
-    private val useCase: SignOutUseCase
+    private val useCase: SignOutUsecase
 ) : ViewModel() {
     private val _state = MutableStateFlow<States<Unit>>(States.Initial)
     val state: StateFlow<States<Unit>> get() = _state.asStateFlow()

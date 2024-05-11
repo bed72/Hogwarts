@@ -20,15 +20,15 @@ import com.bed.core.data.repositories.AuthenticationRepository
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-internal class IsLoggedInUseCaseImplTest {
-    private lateinit var useCase: IsLoggedInUseCase
+internal class IsLoggedInUsecaseImplTest {
+    private lateinit var useCase: IsLoggedInUsecase
 
     @Mock
     private lateinit var repository: AuthenticationRepository
 
     @Before
     fun setup() {
-        useCase = IsLoggedInUseCaseImpl(repository)
+        useCase = IsLoggedInUsecaseImpl(repository)
     }
 
     @Test

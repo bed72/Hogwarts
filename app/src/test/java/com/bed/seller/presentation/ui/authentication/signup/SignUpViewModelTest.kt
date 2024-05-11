@@ -24,7 +24,7 @@ import com.bed.seller.presentation.commons.states.States
 import com.bed.test.rules.MainCoroutineRule
 import com.bed.test.factories.authentication.AuthenticationFactory
 
-import com.bed.core.usecases.authentication.SignUpUseCase
+import com.bed.core.usecases.authentication.SignUpUsecase
 import com.bed.core.domain.models.authentication.AuthenticationModel
 import com.bed.test.factories.authentication.Factories
 
@@ -35,7 +35,7 @@ internal class SignUpViewModelTest {
     val rule = MainCoroutineRule()
 
     @Mock
-    private lateinit var useCase: SignUpUseCase
+    private lateinit var useCase: SignUpUsecase
 
     private lateinit var viewModel: SignUpViewModel
 

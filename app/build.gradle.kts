@@ -23,7 +23,7 @@ android {
     namespace = "com.bed.seller"
 
     defaultConfig {
-        minSdk = 29
+        minSdk = 30
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -94,7 +94,6 @@ android {
 
 dependencies {
     implementation(project(":core"))
-//    implementation(libs.core)
 
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.android)

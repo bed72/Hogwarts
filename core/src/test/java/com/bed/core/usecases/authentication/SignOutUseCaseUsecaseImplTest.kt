@@ -18,15 +18,15 @@ import com.bed.core.data.repositories.AuthenticationRepository
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-internal class SignOutUseCaseUseCaseImplTest {
-    private lateinit var useCase: SignOutUseCase
+internal class SignOutUseCaseUsecaseImplTest {
+    private lateinit var useCase: SignOutUsecase
 
     @Mock
     private lateinit var repository: AuthenticationRepository
 
     @Before
     fun setUp() {
-        useCase = SignOutUseCaseImpl(repository)
+        useCase = SignOutUsecaseImpl(repository)
     }
 
     @Test

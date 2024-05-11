@@ -33,13 +33,13 @@ import com.bed.core.domain.models.authentication.AuthenticationModel
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-internal class SignUpUseCaseImplTest {
+internal class SignUpUsecaseImplTest {
     @get:Rule
     val rule = MainCoroutineRule()
 
     private lateinit var factory: AuthenticationFactory
 
-    private lateinit var useCase: SignUpUseCase
+    private lateinit var useCase: SignUpUsecase
 
     @Mock
     private lateinit var repository: AuthenticationRepository
@@ -47,7 +47,7 @@ internal class SignUpUseCaseImplTest {
     @Before
     fun setup() {
         factory = AuthenticationFactory()
-        useCase = SignUpUseCaseImpl(rule.dispatcher, repository)
+        useCase = SignUpUsecaseImpl(rule.dispatcher, repository)
     }
 
     @Test

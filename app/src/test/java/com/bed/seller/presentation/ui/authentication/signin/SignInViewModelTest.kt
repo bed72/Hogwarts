@@ -21,7 +21,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 import com.bed.core.domain.models.authentication.AuthenticationModel
 
-import com.bed.core.usecases.authentication.SignInUseCase
+import com.bed.core.usecases.authentication.SignInUsecase
 import com.bed.seller.presentation.commons.states.States
 
 import com.bed.test.rules.MainCoroutineRule
@@ -35,7 +35,7 @@ internal class SignInViewModelTest {
     val rule = MainCoroutineRule()
 
     @Mock
-    private lateinit var useCase: SignInUseCase
+    private lateinit var useCase: SignInUsecase
 
     private lateinit var viewModel: SignInViewModel
 

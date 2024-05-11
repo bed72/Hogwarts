@@ -11,11 +11,11 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 
-import com.bed.core.data.datasources.local.LocalStorageDataSource
+import com.bed.core.data.datasources.local.LocalStorageDatasource
 
-class LocalStorageDataSourceImpl @Inject constructor(
+class LocalStorageDatasourceImpl @Inject constructor(
     private val datastore: DataStore<Preferences>
-) : LocalStorageDataSource {
+) : LocalStorageDatasource {
 
     override suspend fun get(value: String): Flow<String> =
         datastore.data.map { preferences -> preferences[buildKey(value)].orEmpty() }

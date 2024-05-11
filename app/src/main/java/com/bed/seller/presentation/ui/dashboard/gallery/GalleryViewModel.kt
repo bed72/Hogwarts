@@ -20,14 +20,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 
 import com.bed.seller.presentation.commons.states.States
 
-import com.bed.core.usecases.coroutines.CoroutinesUseCase
-import kotlinx.coroutines.delay
-
 @HiltViewModel
-class GalleryViewModel @Inject constructor(
-    private val application: Application,
-    private val useCase: CoroutinesUseCase
-) : ViewModel() {
+class GalleryViewModel @Inject constructor(private val application: Application) : ViewModel() {
     private val _counterImages: MutableStateFlow<Int> = MutableStateFlow(0)
     val counterImages: StateFlow<Int> get() = _counterImages.asStateFlow()
 
@@ -38,7 +32,7 @@ class GalleryViewModel @Inject constructor(
     val imagesFromGallery: StateFlow<States<List<Uri>>> get() = _imagesFromGallery.asStateFlow()
 
     fun getAllImagesFromGallery() {
-        viewModelScope.launch(useCase.io()) {
+        viewModelScope.launch {
             _imagesFromGallery.update { States.Loading }
 
             val uris = mutableListOf<Uri>()

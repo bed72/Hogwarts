@@ -6,19 +6,19 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 import com.bed.core.usecases.UseCase
-import com.bed.core.usecases.coroutines.CoroutinesUseCase
 
 import com.bed.core.data.repositories.StorageRepository
+import com.bed.core.data.repositories.CoroutinesRepository
 
 interface SaveStorageUseCase {
     operator fun invoke(parameter: Pair<String, String>): Flow<Unit>
 }
 
 class SaveStorageUseCaseImpl @Inject constructor(
-    private val useCase: CoroutinesUseCase,
-    private val repository: StorageRepository
+    private val repositoryStorage: StorageRepository,
+    private val coroutinesRepository: CoroutinesRepository,
 ) : SaveStorageUseCase, UseCase<Pair<String, String>, Unit>() {
     override suspend fun doWork(parameter: Pair<String, String>) {
-        withContext(useCase.io()) { repository.save(parameter) }
+        withContext(coroutinesRepository.io()) { repositoryStorage.save(parameter) }
     }
 }

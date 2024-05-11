@@ -14,8 +14,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 
-import com.bed.core.usecases.coroutines.CoroutinesUseCase
-import com.bed.core.usecases.authentication.RecoverUseCase
+import com.bed.core.usecases.authentication.RecoverUsecase
 
 import com.bed.seller.presentation.commons.states.States
 import com.bed.seller.presentation.commons.states.FormState
@@ -23,10 +22,7 @@ import com.bed.seller.presentation.commons.states.FormState
 import com.bed.core.domain.parameters.authentication.RecoverParameter
 
 @HiltViewModel
-class RecoverViewModel @Inject constructor(
-    private val recoverUseCase: RecoverUseCase,
-    private val coroutinesUseCase: CoroutinesUseCase,
-) : ViewModel() {
+class RecoverViewModel @Inject constructor(private val recoverUseCase: RecoverUsecase) : ViewModel() {
     val email = FormState()
 
     private val _state = MutableStateFlow<States<Boolean>>(States.Initial)
@@ -35,7 +31,7 @@ class RecoverViewModel @Inject constructor(
     fun recover(parameter: RecoverParameter) {
         _state.update { States.Loading }
 
-        viewModelScope.launch(coroutinesUseCase.main()) {
+        viewModelScope.launch {
             _state.update { States.Success(recoverUseCase(parameter).first()) }
         }
     }

@@ -16,17 +16,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import com.bed.seller.presentation.commons.states.States
 import com.bed.seller.presentation.commons.states.FormState
 
-import com.bed.core.usecases.authentication.SignInUseCase
-import com.bed.core.usecases.coroutines.CoroutinesUseCase
+import com.bed.core.usecases.authentication.SignInUsecase
 
 import com.bed.core.domain.models.authentication.AuthenticationModel
 import com.bed.core.domain.parameters.authentication.AuthenticationParameter
 
 @HiltViewModel
-class SignInViewModel @Inject constructor(
-    private val signInUseCase: SignInUseCase,
-    private val coroutinesUseCase: CoroutinesUseCase
-) : ViewModel() {
+class SignInViewModel @Inject constructor(private val signInUseCase: SignInUsecase) : ViewModel() {
     val email = FormState()
     val password = FormState()
 
@@ -36,7 +32,7 @@ class SignInViewModel @Inject constructor(
     fun signIn(parameter: AuthenticationParameter) {
         _state.update { States.Loading }
 
-        viewModelScope.launch(coroutinesUseCase.main()) {
+        viewModelScope.launch {
             signInUseCase(parameter).collect {
                 it.fold(
                     { failure -> _state.update { States.Failure(failure.message) } },

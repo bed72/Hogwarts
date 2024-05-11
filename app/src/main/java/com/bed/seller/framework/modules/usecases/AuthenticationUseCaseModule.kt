@@ -5,42 +5,42 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 
-import com.bed.core.usecases.authentication.ResetUseCase
-import com.bed.core.usecases.authentication.ResetUseCaseImpl
+import com.bed.core.usecases.authentication.ResetUsecase
+import com.bed.core.usecases.authentication.ResetUsecaseImpl
 
-import com.bed.core.usecases.authentication.SignUpUseCase
-import com.bed.core.usecases.authentication.SignUpUseCaseImpl
+import com.bed.core.usecases.authentication.SignUpUsecase
+import com.bed.core.usecases.authentication.SignUpUsecaseImpl
 
-import com.bed.core.usecases.authentication.SignInUseCase
-import com.bed.core.usecases.authentication.SignInUseCaseImpl
+import com.bed.core.usecases.authentication.SignInUsecase
+import com.bed.core.usecases.authentication.SignInUsecaseImpl
 
-import com.bed.core.usecases.authentication.RecoverUseCase
-import com.bed.core.usecases.authentication.RecoverUseCaseImpl
+import com.bed.core.usecases.authentication.RecoverUsecase
+import com.bed.core.usecases.authentication.RecoverUsecaseImpl
 
-import com.bed.core.usecases.authentication.IsLoggedInUseCase
-import com.bed.core.usecases.authentication.IsLoggedInUseCaseImpl
+import com.bed.core.usecases.authentication.IsLoggedInUsecase
+import com.bed.core.usecases.authentication.IsLoggedInUsecaseImpl
 
-import com.bed.core.usecases.authentication.SignOutUseCase
-import com.bed.core.usecases.authentication.SignOutUseCaseImpl
+import com.bed.core.usecases.authentication.SignOutUsecase
+import com.bed.core.usecases.authentication.SignOutUsecaseImpl
 
 @Module
 @InstallIn(ViewModelComponent::class)
 interface AuthenticationUseCaseModule {
     @Binds
-    fun bindSignOut(useCase: SignOutUseCaseImpl): SignOutUseCase
+    fun bindSignOut(useCase: SignOutUsecaseImpl): SignOutUsecase
 
     @Binds
-    fun bindIsLoggedIn(useCase: IsLoggedInUseCaseImpl): IsLoggedInUseCase
+    fun bindIsLoggedIn(useCase: IsLoggedInUsecaseImpl): IsLoggedInUsecase
 
     @Binds
-    fun binReset(useCase: ResetUseCaseImpl): ResetUseCase
+    fun binReset(useCase: ResetUsecaseImpl): ResetUsecase
 
     @Binds
-    fun bindRecover(useCase: RecoverUseCaseImpl): RecoverUseCase
+    fun bindRecover(useCase: RecoverUsecaseImpl): RecoverUsecase
 
     @Binds
-    fun bindSignUpUseCase(useCase: SignUpUseCaseImpl): SignUpUseCase
+    fun bindSignUpUseCase(useCase: SignUpUsecaseImpl): SignUpUsecase
 
     @Binds
-    fun bindSignInUseCase(useCase: SignInUseCaseImpl): SignInUseCase
+    fun bindSignInUseCase(useCase: SignInUsecaseImpl): SignInUsecase
 }

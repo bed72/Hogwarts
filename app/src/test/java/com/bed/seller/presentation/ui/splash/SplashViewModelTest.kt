@@ -21,7 +21,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import com.bed.test.rules.MainCoroutineRule
 import com.bed.test.factories.authentication.Factories
 
-import com.bed.core.usecases.authentication.IsLoggedInUseCase
+import com.bed.core.usecases.authentication.IsLoggedInUsecase
 
 @RunWith(MockitoJUnitRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -31,7 +31,7 @@ internal class SplashViewModelTest {
     val rule = MainCoroutineRule()
 
     @Mock
-    private lateinit var useCase: IsLoggedInUseCase
+    private lateinit var useCase: IsLoggedInUsecase
 
     private lateinit var viewModel: SplashViewModel
 

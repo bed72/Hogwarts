@@ -28,8 +28,6 @@ import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 
 import  com.bed.seller.R
 
-import com.bed.seller.framework.modules.usecases.CoroutinesUseCaseModule
-
 import com.bed.seller.presentation.extension.launchFragmentInHiltContainer
 
 @HiltAndroidTest

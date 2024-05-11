@@ -23,7 +23,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 import com.bed.seller.presentation.commons.states.States
 
-import com.bed.core.usecases.authentication.RecoverUseCase
+import com.bed.core.usecases.authentication.RecoverUsecase
 
 import com.bed.test.rules.MainCoroutineRule
 import com.bed.test.factories.authentication.AuthenticationFactory
@@ -36,7 +36,7 @@ internal class RecoverViewModelTest {
     val rule = MainCoroutineRule()
 
     @Mock
-    private lateinit var useCase: RecoverUseCase
+    private lateinit var useCase: RecoverUsecase
 
     private lateinit var viewModel: RecoverViewModel
 

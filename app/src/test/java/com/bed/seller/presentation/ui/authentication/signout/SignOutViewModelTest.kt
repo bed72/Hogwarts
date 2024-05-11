@@ -21,10 +21,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 import com.bed.seller.presentation.commons.states.States
 
-import com.bed.core.usecases.authentication.SignOutUseCase
+import com.bed.core.usecases.authentication.SignOutUsecase
 
 import com.bed.test.rules.MainCoroutineRule
-import com.bed.test.factories.authentication.AuthenticationFactory
 import com.bed.test.factories.authentication.Factories
 
 @RunWith(MockitoJUnitRunner::class)
@@ -34,7 +33,7 @@ internal class SignOutViewModelTest {
     val rule = MainCoroutineRule()
 
     @Mock
-    private lateinit var useCase: SignOutUseCase
+    private lateinit var useCase: SignOutUsecase
 
     private lateinit var viewModel: SignOutViewModel
 

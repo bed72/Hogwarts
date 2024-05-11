@@ -13,20 +13,16 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 
+import com.bed.core.usecases.authentication.SignUpUsecase
+
 import com.bed.seller.presentation.commons.states.States
 import com.bed.seller.presentation.commons.states.FormState
-
-import com.bed.core.usecases.authentication.SignUpUseCase
-import com.bed.core.usecases.coroutines.CoroutinesUseCase
 
 import com.bed.core.domain.models.authentication.AuthenticationModel
 import com.bed.core.domain.parameters.authentication.AuthenticationParameter
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor(
-    private val signUpUseCase: SignUpUseCase,
-    private val coroutinesUseCase: CoroutinesUseCase
-) : ViewModel() {
+class SignUpViewModel @Inject constructor(private val signUpUseCase: SignUpUsecase) : ViewModel() {
     val email = FormState()
     val password = FormState()
 
@@ -36,7 +32,7 @@ class SignUpViewModel @Inject constructor(
     fun signUp(parameter: AuthenticationParameter) {
         _state.update { States.Loading }
 
-        viewModelScope.launch(coroutinesUseCase.main()) {
+        viewModelScope.launch {
             signUpUseCase(parameter).collect {
                 it.fold(
                     { failure -> _state.update { States.Failure(failure.message) } },
