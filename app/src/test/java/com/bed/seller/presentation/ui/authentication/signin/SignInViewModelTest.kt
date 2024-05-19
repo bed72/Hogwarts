@@ -19,14 +19,13 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-import com.bed.test.rules.MainCoroutineRule
-
 import com.bed.seller.presentation.commons.states.States
-import com.bed.core.usecases.authentication.SignInUsecase
 
+import com.bed.test.rules.MainCoroutineRule
 import com.bed.test.factories.authentication.Factories
 import com.bed.test.factories.authentication.AuthenticationFactory
 
+import com.bed.core.usecases.authentication.SignInUsecase
 import com.bed.core.domain.models.authentication.AuthenticationModel
 
 @RunWith(MockitoJUnitRunner::class)

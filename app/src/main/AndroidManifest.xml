@@ -71,7 +71,6 @@
         <activity
             android:exported="true"
             android:launchMode="standard"
-            android:screenOrientation="locked"
             android:windowSoftInputMode="adjustResize"
             android:name=".presentation.ui.MainActivity"
             android:configChanges="orientation|screenSize"
