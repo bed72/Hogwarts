@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.activity.OnBackPressedCallback
 
-import com.bed.core.domain.parameters.authentication.ResetParameter
+import com.bed.core.entities.input.ResetInput
 
 import com.bed.seller.R
 import com.bed.seller.databinding.ResetFragmentBinding
@@ -109,7 +109,7 @@ class ResetFragment : BaseFragment<ResetFragmentBinding>(ResetFragmentBinding::i
 
         if (codeRow.isEmpty()) snackBar(R.string.generic_failure_title)
 
-        ResetParameter(codeRow, passwordRow).fold(
+        ResetInput(codeRow, passwordRow).fold(
             { _ -> snackBar(R.string.generic_password_failure_form) },
             { success -> viewModel.reset(success) }
         )

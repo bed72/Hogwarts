@@ -7,14 +7,14 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
-import com.bed.core.data.repositories.StorageRepository
-import com.bed.core.data.repositories.StorageRepositoryImpl
+import com.bed.core.repositories.CoroutinesRepository
+import com.bed.core.repositories.AuthenticationRepository
 
-import com.bed.core.data.repositories.CoroutinesRepository
-import com.bed.core.data.repositories.CoroutinesRepositoryImpl
+import com.bed.seller.data.repositories.StorageRepository
+import com.bed.seller.data.repositories.StorageRepositoryImpl
 
-import com.bed.core.data.repositories.AuthenticationRepository
-import com.bed.core.data.repositories.AuthenticationRepositoryImpl
+import com.bed.seller.data.repositories.CoroutinesRepositoryImpl
+import com.bed.seller.data.repositories.AuthenticationRepositoryImpl
 
 @Module
 @InstallIn(SingletonComponent::class)

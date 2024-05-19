@@ -2,25 +2,23 @@ package com.bed.core.usecases.authentication
 
 import javax.inject.Inject
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.flowOn
 
-import com.bed.core.usecases.UseCase
+import com.bed.core.alias.AuthenticationCoreType
 
-import com.bed.core.data.repositories.CoroutinesRepository
-import com.bed.core.data.repositories.AuthenticationRepository
+import com.bed.core.entities.input.AuthenticationInput
 
-import com.bed.core.domain.alias.AuthenticationType
-import com.bed.core.domain.parameters.authentication.AuthenticationParameter
+import com.bed.core.repositories.CoroutinesRepository
+import com.bed.core.repositories.AuthenticationRepository
 
 interface SignInUsecase {
-    operator fun invoke(parameter: AuthenticationParameter): Flow<AuthenticationType>
+    suspend operator fun invoke(parameter: AuthenticationInput): AuthenticationCoreType
 }
 
 class SignInUsecaseImpl @Inject constructor(
     private val coroutinesRepository: CoroutinesRepository,
     private val authenticationRepository: AuthenticationRepository,
-) : SignInUsecase, UseCase<AuthenticationParameter, AuthenticationType>() {
-    override suspend fun doWork(parameter: AuthenticationParameter): AuthenticationType =
-        withContext(coroutinesRepository.io()) { authenticationRepository.signIn(parameter) }
+) : SignInUsecase {
+    override suspend fun invoke(parameter: AuthenticationInput): AuthenticationCoreType =
+        authenticationRepository.signIn(parameter).flowOn(coroutinesRepository.io())
 }

@@ -2,34 +2,35 @@ package com.bed.test.factories.authentication
 
 import arrow.core.left
 import arrow.core.right
+import kotlinx.coroutines.flow.flowOf
 
-import com.bed.core.domain.models.failure.MessageModel
-import com.bed.core.domain.models.authentication.AuthenticationModel
+import com.bed.core.entities.output.MessageOutput
+import com.bed.core.entities.output.AuthenticationOutput
 
-import com.bed.core.domain.parameters.authentication.ResetParameter
-import com.bed.core.domain.parameters.authentication.RecoverParameter
-import com.bed.core.domain.parameters.authentication.AuthenticationParameter
+import com.bed.core.entities.input.ResetInput
+import com.bed.core.entities.input.RecoverInput
+import com.bed.core.entities.input.AuthenticationInput
 
 class AuthenticationFactory {
-    val resetInvalidParameter = ResetParameter("", "").leftOrNull()!!
+    val resetInvalidParameter = ResetInput("", "").leftOrNull()!!
     val resetValidParameter =
-        ResetParameter("5CQcsREkB5xcqbY1L...", "P@ssw0rD").getOrNull()!!
+        ResetInput("5CQcsREkB5xcqbY1L...", "P@ssw0rD").getOrNull()!!
 
-    val recoverInvalidParameter = RecoverParameter("").leftOrNull()!!
-    val recoverValidParameter = RecoverParameter("email@email.com").getOrNull()!!
+    val recoverInvalidParameter = RecoverInput("").leftOrNull()!!
+    val recoverValidParameter = RecoverInput("email@email.com").getOrNull()!!
 
     val signInAndSingUpInvalidParameter =
-        AuthenticationParameter("", "").leftOrNull()!!
+        AuthenticationInput("", "").leftOrNull()!!
     val signInAndSingUpValidParameter =
-        AuthenticationParameter("email@email.com", "P@ssw0rD").getOrNull()!!
+        AuthenticationInput("email@email.com", "P@ssw0rD").getOrNull()!!
 
-    val failure get() = create(Mock.Failure)
-    val success get() = create(Mock.Success)
+    val failure get() = flowOf(create(Mock.Failure))
+    val success get() = flowOf(create(Mock.Success))
 
     private fun create(mock: Mock) = when (mock) {
         Mock.Failure ->
-            MessageModel("Ops, um erro aconteceu.").left()
-        Mock.Success -> AuthenticationModel(
+            MessageOutput("Ops, um erro aconteceu.").left()
+        Mock.Success -> AuthenticationOutput(
             "5CQcsREkB5xcqbY1L...",
             "Gabriel Ramos",
             "bed@gmail.com",

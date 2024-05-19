@@ -16,12 +16,13 @@ import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNotNull
 
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-import com.bed.test.rules.MainCoroutineRule
+import com.bed.core.repositories.AuthenticationRepository
 
-import com.bed.core.data.repositories.AuthenticationRepository
+import com.bed.test.rules.MainCoroutineRule
 import com.bed.test.factories.authentication.AuthenticationFactory
 
 @ExperimentalCoroutinesApi
@@ -30,9 +31,8 @@ internal class ResetUsecaseImplTest {
     @get:Rule
     val rule = MainCoroutineRule()
 
+    private lateinit var usecase: ResetUsecase
     private lateinit var factory: AuthenticationFactory
-
-    private lateinit var useCase: ResetUsecase
 
     @Mock
     private lateinit var repository: AuthenticationRepository
@@ -40,51 +40,44 @@ internal class ResetUsecaseImplTest {
     @Before
     fun setUp() {
         factory = AuthenticationFactory()
-        useCase = ResetUsecaseImpl(rule.dispatcher, repository)
+        usecase = ResetUsecaseImpl(rule.dispatcher, repository)
     }
 
     @Test
-    fun `Should return value not null when trying reset password with failure return`() = runTest {
-        whenever(repository.reset(any())).thenReturn(false)
+    fun `Should only call repository once when trying reset password with true return`() = runTest {
+        whenever(repository.reset(any())).thenReturn(flowOf(true))
 
-        val response = useCase(factory.resetValidParameter).first()
-
-        assertNotNull(response)
-    }
-
-    @Test
-    fun `Should return value not null when trying reset password with successful return`() = runTest {
-        whenever(repository.reset(any())).thenReturn(true)
-
-        val response = useCase(factory.resetValidParameter).first()
-
-        assertNotNull(response)
-    }
-
-    @Test
-    fun `Should only call repository once when trying reset password`() = runTest {
-        whenever(repository.reset(any())).thenReturn(false)
-
-        useCase(factory.resetValidParameter).first()
+        usecase(factory.resetValidParameter)
 
         verify(repository, times(1)).reset(any())
     }
 
     @Test
-    fun `Should return failure value when trying reset password`() = runTest {
-        whenever(repository.reset(any())).thenReturn(false)
+    fun `Should only call repository once when trying reset password with false return`() = runTest {
+        whenever(repository.reset(any())).thenReturn(flowOf(false))
 
-        val response = useCase(factory.resetValidParameter).first()
+        usecase(factory.resetValidParameter).first()
 
-        assertEquals(false, response)
+        verify(repository, times(1)).reset(any())
     }
 
     @Test
     fun `Should return success value when trying reset password`() = runTest {
-        whenever(repository.reset(any())).thenReturn(true)
+        whenever(repository.reset(any())).thenReturn(flowOf(true))
 
-        val response = useCase(factory.resetValidParameter).first()
+        usecase(factory.resetValidParameter).first().run {
+            assertNotNull(this)
+            assertEquals(this, true)
+        }
+    }
 
-        assertEquals(true, response)
+    @Test
+    fun `Should return failure value when trying reset password`() = runTest {
+        whenever(repository.reset(any())).thenReturn(flowOf(false))
+
+       usecase(factory.resetValidParameter).first().run {
+            assertNotNull(this)
+            assertEquals(this, false)
+        }
     }
 }

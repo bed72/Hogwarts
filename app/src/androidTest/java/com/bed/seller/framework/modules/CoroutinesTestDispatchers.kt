@@ -11,13 +11,12 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineScheduler
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 
-import com.bed.core.usecases.coroutines.CoroutinesUseCase
-
+import com.bed.core.repositories.CoroutinesRepository
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class CoroutinesTestDispatchers(
     private val dispatcher: TestDispatcher = UnconfinedTestDispatcher(TestCoroutineScheduler())
-) : CoroutinesUseCase {
+) : CoroutinesRepository {
     override fun io(): CoroutineDispatcher = dispatcher
     override fun main(): CoroutineDispatcher = dispatcher
     override fun default(): CoroutineDispatcher = dispatcher
@@ -28,5 +27,5 @@ class CoroutinesTestDispatchers(
 @InstallIn(SingletonComponent::class)
 object CoroutinesTestModule {
     @Provides
-    fun provideTestDispatchers(): CoroutinesUseCase = CoroutinesTestDispatchers()
+    fun provideTestDispatchers(): CoroutinesRepository = CoroutinesTestDispatchers()
 }

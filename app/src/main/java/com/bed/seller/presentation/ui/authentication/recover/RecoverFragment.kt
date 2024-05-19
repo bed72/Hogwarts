@@ -7,7 +7,7 @@ import androidx.fragment.app.viewModels
 
 import dagger.hilt.android.AndroidEntryPoint
 
-import com.bed.core.domain.parameters.authentication.RecoverParameter
+import com.bed.core.entities.input.RecoverInput
 
 import com.bed.seller.R
 
@@ -98,7 +98,7 @@ class RecoverFragment : BaseBottomSheetDialogFragment<RecoverFragmentBinding>(
     private fun validateParameter() {
         hideKeyboard(binding.root)
 
-        RecoverParameter(emailRow).fold(
+        RecoverInput(emailRow).fold(
             { _ -> snackBar(R.string.generic_email_failure_form) },
             { success -> viewModel.recover(success) }
         )

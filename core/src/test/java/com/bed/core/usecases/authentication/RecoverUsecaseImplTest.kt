@@ -16,10 +16,11 @@ import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNotNull
 
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-import com.bed.core.data.repositories.AuthenticationRepository
+import com.bed.core.repositories.AuthenticationRepository
 
 import com.bed.test.rules.MainCoroutineRule
 import com.bed.test.factories.authentication.AuthenticationFactory
@@ -30,9 +31,8 @@ internal class RecoverUsecaseImplTest {
     @get:Rule
     val rule = MainCoroutineRule()
 
+    private lateinit var usecase: RecoverUsecase
     private lateinit var factory: AuthenticationFactory
-
-    private lateinit var useCase: RecoverUsecase
 
     @Mock
     private lateinit var repository: AuthenticationRepository
@@ -40,51 +40,51 @@ internal class RecoverUsecaseImplTest {
     @Before
     fun setup() {
         factory = AuthenticationFactory()
-        useCase = RecoverUsecaseImpl(rule.dispatcher, repository)
-    }
-
-    @Test
-    fun `Should return value not null when trying verify is recover account with failure return`() = runTest {
-        whenever(repository.recover(any())).thenReturn(false)
-
-        val response = useCase(factory.recoverValidParameter).first()
-
-        assertNotNull(response)
+        usecase = RecoverUsecaseImpl(rule.dispatcher, repository)
     }
 
     @Test
     fun `Should return value not null when trying verify is recover account with successful return`() = runTest {
-        whenever(repository.recover(any())).thenReturn(true)
+        whenever(repository.recover(any())).thenReturn(flowOf(true))
 
-        val response = useCase(factory.recoverValidParameter).first()
+        val response = usecase(factory.recoverValidParameter).first()
 
         assertNotNull(response)
     }
 
     @Test
     fun `Should only call repository once when trying verify is recover account`() = runTest {
-        whenever(repository.recover(any())).thenReturn(false)
+        whenever(repository.recover(any())).thenReturn(flowOf(false))
 
-        useCase(factory.recoverValidParameter).first()
+        usecase(factory.recoverValidParameter).first()
 
         verify(repository, times(1)).recover(any())
     }
 
     @Test
-    fun `Should return failure value when trying verify is recover account`() = runTest {
-        whenever(repository.recover(any())).thenReturn(false)
+    fun `Should return success value when trying verify is recover account`() = runTest {
+        whenever(repository.recover(any())).thenReturn(flowOf(true))
 
-        val response = useCase(factory.recoverValidParameter).first()
+        val response = usecase(factory.recoverValidParameter).first()
 
-        assertEquals(false, response)
+        assertEquals(true, response)
     }
 
     @Test
-    fun `Should return success value when trying verify is recover account`() = runTest {
-        whenever(repository.recover(any())).thenReturn(true)
+    fun `Should return value not null when trying verify is recover account with failure return`() = runTest {
+        whenever(repository.recover(any())).thenReturn(flowOf(false))
 
-        val response = useCase(factory.recoverValidParameter).first()
+        val response = usecase(factory.recoverValidParameter).first()
 
-        assertEquals(true, response)
+        assertNotNull(response)
+    }
+
+    @Test
+    fun `Should return failure value when trying verify is recover account`() = runTest {
+        whenever(repository.recover(any())).thenReturn(flowOf(false))
+
+        val response = usecase(factory.recoverValidParameter).first()
+
+        assertEquals(false, response)
     }
 }

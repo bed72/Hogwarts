@@ -19,7 +19,7 @@ import com.bed.core.usecases.authentication.RecoverUsecase
 import com.bed.seller.presentation.commons.states.States
 import com.bed.seller.presentation.commons.states.FormState
 
-import com.bed.core.domain.parameters.authentication.RecoverParameter
+import com.bed.core.entities.input.RecoverInput
 
 @HiltViewModel
 class RecoverViewModel @Inject constructor(private val recoverUseCase: RecoverUsecase) : ViewModel() {
@@ -28,7 +28,7 @@ class RecoverViewModel @Inject constructor(private val recoverUseCase: RecoverUs
     private val _state = MutableStateFlow<States<Boolean>>(States.Initial)
     val state: StateFlow<States<Boolean>> get() = _state.asStateFlow()
 
-    fun recover(parameter: RecoverParameter) {
+    fun recover(parameter: RecoverInput) {
         _state.update { States.Loading }
 
         viewModelScope.launch {

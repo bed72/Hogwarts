@@ -40,9 +40,7 @@ internal class RecoverViewModelTest {
     private lateinit var useCase: RecoverUsecase
 
     private lateinit var viewModel: RecoverViewModel
-
     private lateinit var factory: AuthenticationFactory
-
     private lateinit var states: MutableList<States<Boolean>>
 
     @Before

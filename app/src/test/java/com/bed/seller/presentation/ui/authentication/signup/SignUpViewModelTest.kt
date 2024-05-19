@@ -26,7 +26,7 @@ import com.bed.test.factories.authentication.Factories
 import com.bed.test.factories.authentication.AuthenticationFactory
 
 import com.bed.core.usecases.authentication.SignUpUsecase
-import com.bed.core.domain.models.authentication.AuthenticationModel
+import com.bed.core.entities.output.AuthenticationOutput
 
 @RunWith(MockitoJUnitRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -38,10 +38,8 @@ internal class SignUpViewModelTest {
     private lateinit var useCase: SignUpUsecase
 
     private lateinit var viewModel: SignUpViewModel
-
     private lateinit var factory: AuthenticationFactory
-
-    private lateinit var states: MutableList<States<AuthenticationModel>>
+    private lateinit var states: MutableList<States<AuthenticationOutput>>
 
     @Before
     fun setUp() {
@@ -52,7 +50,7 @@ internal class SignUpViewModelTest {
 
     @Test
     fun `Should emit Loading State when trying to sign up with successful return`() = runTest {
-        whenever(useCase(any())).thenReturn(flowOf(factory.success))
+        whenever(useCase(any())).thenReturn(factory.success)
 
         val job = launch(rule.dispatcher.main()) { viewModel.state.toList(states) }
 
@@ -67,7 +65,7 @@ internal class SignUpViewModelTest {
 
     @Test
     fun `Should emit Loading State when trying to sign up with failure return`() = runTest {
-        whenever(useCase(any())).thenReturn(flowOf(factory.failure))
+        whenever(useCase(any())).thenReturn(factory.failure)
 
         val job = launch(rule.dispatcher.main()) { viewModel.state.toList(states) }
 
@@ -82,22 +80,22 @@ internal class SignUpViewModelTest {
     @Test
     fun `Should return AuthenticationModel in Success State when trying to sign up with successful return`() =
         runTest {
-            whenever(useCase(any())).thenReturn(flowOf(factory.success))
+            whenever(useCase(any())).thenReturn(factory.success)
 
             viewModel.signUp(factory.signInAndSingUpValidParameter)
 
             val (success) = viewModel.state.value as States.Success
-            assertEquals("5CQcsREkB5xcqbY1L...", success.uid)
-            assertEquals("Gabriel Ramos", success.name)
-            assertEquals("bed@gmail.com", success.email)
-            assertEquals("https://github.com/bed72.png", success.photo)
-            assertEquals(false, success.emailVerified)
+            assertEquals(success.emailVerified, false)
+            assertEquals(success.name, "Gabriel Ramos")
+            assertEquals(success.email, "bed@gmail.com")
+            assertEquals(success.uid, "5CQcsREkB5xcqbY1L...")
+            assertEquals(success.photo, "https://github.com/bed72.png")
         }
 
 
         @Test
         fun `Should return MessageModel in Failure State when trying to create an account with failure return`() = runTest {
-            whenever(useCase(any())).thenReturn(flowOf(factory.failure))
+            whenever(useCase(any())).thenReturn(factory.failure)
 
             viewModel.signUp(factory.signInAndSingUpValidParameter)
 

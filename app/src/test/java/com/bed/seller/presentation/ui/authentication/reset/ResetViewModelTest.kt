@@ -38,9 +38,7 @@ internal class ResetViewModelTest {
     private lateinit var useCase: ResetUsecase
 
     private  lateinit var viewModel: ResetViewModel
-
     private lateinit var factory: AuthenticationFactory
-
     private lateinit var states: MutableList<States<Boolean>>
 
     @Before

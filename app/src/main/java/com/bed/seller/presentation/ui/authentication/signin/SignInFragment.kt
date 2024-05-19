@@ -10,7 +10,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 import com.bed.seller.R
 
-import com.bed.core.domain.parameters.authentication.AuthenticationParameter
+import com.bed.core.entities.input.AuthenticationInput
 
 import com.bed.seller.databinding.SignInFragmentBinding
 
@@ -131,7 +131,7 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
     private fun validateParameter() {
         hideKeyboard()
 
-        AuthenticationParameter(emailRow, passwordRow).fold(
+        AuthenticationInput(emailRow, passwordRow).fold(
             { _ -> snackBar(R.string.generic_failures_form) },
             { success -> viewModel.signIn(success) }
         )

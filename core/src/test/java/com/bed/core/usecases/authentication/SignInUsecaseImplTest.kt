@@ -22,14 +22,12 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+import com.bed.core.entities.output.MessageOutput
+import com.bed.core.entities.output.AuthenticationOutput
+import com.bed.core.repositories.AuthenticationRepository
+
 import com.bed.test.rules.MainCoroutineRule
-
-import com.bed.core.data.repositories.AuthenticationRepository
-
 import com.bed.test.factories.authentication.AuthenticationFactory
-
-import com.bed.core.domain.models.failure.MessageModel
-import com.bed.core.domain.models.authentication.AuthenticationModel
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
@@ -37,9 +35,8 @@ internal class SignInUsecaseImplTest {
     @get:Rule
     val rule = MainCoroutineRule()
 
-    private lateinit var factory: AuthenticationFactory
-
     private lateinit var useCase: SignInUsecase
+    private lateinit var factory: AuthenticationFactory
 
     @Mock
     private lateinit var repository: AuthenticationRepository
@@ -51,21 +48,12 @@ internal class SignInUsecaseImplTest {
     }
 
     @Test
-    fun `Should return value not null when trying sign in account with failure return`() = runTest {
+    fun `Should return failure value when trying a sign in account`() = runTest {
         whenever(repository.signIn(any())).thenReturn(factory.failure)
 
         val response = useCase(factory.signInAndSingUpValidParameter).first()
 
-        assertNotNull(response)
-    }
-
-    @Test
-    fun `Should return value not null when trying sign in account with successful return`() = runTest {
-        whenever(repository.signIn(any())).thenReturn(factory.success)
-
-        val response = useCase(factory.signInAndSingUpValidParameter).first()
-
-        assertNotNull(response)
+        assertTrue(response is Either.Left<MessageOutput>)
     }
 
     @Test
@@ -78,12 +66,20 @@ internal class SignInUsecaseImplTest {
     }
 
     @Test
-    fun `Should return failure value when trying a sign in account`() = runTest {
-        whenever(repository.signIn(any())).thenReturn(factory.failure)
+    fun `Should return success value with status and message when trying a sign in account`() = runTest {
+        whenever(repository.signIn(any())).thenReturn(factory.success)
 
         val response = useCase(factory.signInAndSingUpValidParameter).first()
 
-        assertTrue(response is Either.Left<MessageModel>)
+        assertTrue(response is Either.Right<AuthenticationOutput>)
+        response.onRight { success ->
+            assertNotNull(success)
+            assertEquals(success.emailVerified, false)
+            assertEquals(success.name, "Gabriel Ramos")
+            assertEquals(success.email, "bed@gmail.com")
+            assertEquals(success.uid, "5CQcsREkB5xcqbY1L...")
+            assertEquals(success.photo, "https://github.com/bed72.png")
+        }
     }
 
     @Test
@@ -92,32 +88,10 @@ internal class SignInUsecaseImplTest {
 
         val response = useCase(factory.signInAndSingUpValidParameter).first()
 
+        assertTrue(response is Either.Left<MessageOutput>)
         response.onLeft { failure ->
-            assertEquals("Ops, um erro aconteceu.", failure.message)
-        }
-    }
-
-    @Test
-    fun `Should return success value when trying a sign in account`() = runTest {
-        whenever(repository.signIn(any())).thenReturn(factory.success)
-
-        val response = useCase(factory.signInAndSingUpValidParameter).first()
-
-        assertTrue(response is Either.Right<AuthenticationModel>)
-    }
-
-    @Test
-    fun `Should return success value with status and message when trying a sign in account`() = runTest {
-        whenever(repository.signIn(any())).thenReturn(factory.success)
-
-        val response = useCase(factory.signInAndSingUpValidParameter).first()
-
-        response.onRight { success ->
-            assertEquals("5CQcsREkB5xcqbY1L...", success.uid)
-            assertEquals("Gabriel Ramos", success.name)
-            assertEquals("bed@gmail.com", success.email)
-            assertEquals("https://github.com/bed72.png", success.photo )
-            assertEquals(false, success.emailVerified)
+            assertNotNull(failure)
+            assertEquals(failure.message, "Ops, um erro aconteceu.")
         }
     }
 }

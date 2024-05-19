@@ -12,7 +12,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineScheduler
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 
-import com.bed.core.data.repositories.CoroutinesRepository
+import com.bed.core.repositories.CoroutinesRepository
 
 @ExperimentalCoroutinesApi
 class MainCoroutineRule(

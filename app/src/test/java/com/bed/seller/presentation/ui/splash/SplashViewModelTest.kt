@@ -34,7 +34,6 @@ internal class SplashViewModelTest {
     private lateinit var useCase: IsLoggedInUsecase
 
     private lateinit var viewModel: SplashViewModel
-
     private lateinit var states: MutableList<SplashViewModel.States>
 
     @Before

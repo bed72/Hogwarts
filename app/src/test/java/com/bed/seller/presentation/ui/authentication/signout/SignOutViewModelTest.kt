@@ -35,7 +35,6 @@ internal class SignOutViewModelTest {
     private lateinit var useCase: SignOutUsecase
 
     private lateinit var viewModel: SignOutViewModel
-
     private lateinit var states: MutableList<States<Unit>>
 
     @Before

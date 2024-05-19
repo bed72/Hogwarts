@@ -19,7 +19,7 @@ import com.bed.core.usecases.authentication.ResetUsecase
 import com.bed.seller.presentation.commons.states.States
 import com.bed.seller.presentation.commons.states.FormState
 
-import com.bed.core.domain.parameters.authentication.ResetParameter
+import com.bed.core.entities.input.ResetInput
 
 @HiltViewModel
 class ResetViewModel @Inject constructor(private val resetUseCase: ResetUsecase) : ViewModel() {
@@ -28,7 +28,7 @@ class ResetViewModel @Inject constructor(private val resetUseCase: ResetUsecase)
     private val _state = MutableStateFlow<States<Boolean>>(States.Initial)
     val state: StateFlow<States<Boolean>> get() = _state.asStateFlow()
 
-    fun reset(parameter: ResetParameter) {
+    fun reset(parameter: ResetInput) {
         _state.update { States.Loading }
 
         viewModelScope.launch {

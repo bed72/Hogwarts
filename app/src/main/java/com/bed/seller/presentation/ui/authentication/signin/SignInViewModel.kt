@@ -18,18 +18,18 @@ import com.bed.seller.presentation.commons.states.FormState
 
 import com.bed.core.usecases.authentication.SignInUsecase
 
-import com.bed.core.domain.models.authentication.AuthenticationModel
-import com.bed.core.domain.parameters.authentication.AuthenticationParameter
+import com.bed.core.entities.output.AuthenticationOutput
+import com.bed.core.entities.input.AuthenticationInput
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(private val signInUseCase: SignInUsecase) : ViewModel() {
     val email = FormState()
     val password = FormState()
 
-    private val _state = MutableStateFlow<States<AuthenticationModel>>(States.Initial)
-    val state: StateFlow<States<AuthenticationModel>> get() = _state.asStateFlow()
+    private val _state = MutableStateFlow<States<AuthenticationOutput>>(States.Initial)
+    val state: StateFlow<States<AuthenticationOutput>> get() = _state.asStateFlow()
 
-    fun signIn(parameter: AuthenticationParameter) {
+    fun signIn(parameter: AuthenticationInput) {
         _state.update { States.Loading }
 
         viewModelScope.launch {

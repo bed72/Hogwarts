@@ -1,6 +1,7 @@
 package com.bed.core.usecases.authentication
 
 import org.junit.Test
+import org.junit.Rule
 import org.junit.Before
 import org.junit.runner.RunWith
 
@@ -16,72 +17,60 @@ import junit.framework.TestCase.assertNotNull
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-import com.bed.core.data.repositories.AuthenticationRepository
+import com.bed.core.repositories.AuthenticationRepository
+import com.bed.test.rules.MainCoroutineRule
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 internal class IsLoggedInUsecaseImplTest {
-    private lateinit var useCase: IsLoggedInUsecase
+    @get:Rule
+    val rule = MainCoroutineRule()
+
+    private lateinit var usecase: IsLoggedInUsecase
 
     @Mock
     private lateinit var repository: AuthenticationRepository
 
     @Before
     fun setup() {
-        useCase = IsLoggedInUsecaseImpl(repository)
-    }
-
-    @Test
-    fun `Should return value not null when trying verify is logged in account with failure return`() = runTest {
-        whenever(repository.isLoggedIn()).thenReturn(false)
-
-        val response = useCase()
-
-        assertNotNull(response)
-    }
-
-    @Test
-    fun `Should return value not null when trying verify is logged in account with successful return`() = runTest {
-        whenever(repository.isLoggedIn()).thenReturn(true)
-
-        val response = useCase()
-
-        assertNotNull(response)
-    }
-
-    @Test
-    fun `Should only call repository once when trying verify is logged in account with failure return`() = runTest {
-        whenever(repository.isLoggedIn()).thenReturn(false)
-
-        useCase()
-
-        verify(repository, times(1)).isLoggedIn()
+        usecase = IsLoggedInUsecaseImpl(repository)
     }
 
     @Test
     fun `Should only call repository once when trying verify is logged in account with successful return`() = runTest {
         whenever(repository.isLoggedIn()).thenReturn(true)
 
-        useCase()
+        usecase()
 
         verify(repository, times(1)).isLoggedIn()
     }
 
     @Test
-    fun `Should return failure value when trying verify is logged in account`() = runTest {
+    fun `Should only call repository once when trying verify is logged in account with failure return`() = runTest {
         whenever(repository.isLoggedIn()).thenReturn(false)
 
-        val response = useCase()
+        usecase()
 
-        assertEquals(false, response)
+        verify(repository, times(1)).isLoggedIn()
     }
 
     @Test
     fun `Should return success value when trying verify is logged in account`() = runTest {
         whenever(repository.isLoggedIn()).thenReturn(true)
 
-        val response = useCase()
+        usecase().run {
+            assertNotNull(this)
+            assertEquals(this, true)
+        }
+    }
 
-        assertEquals(true, response)
+    @Test
+    fun `Should return failure value when trying verify is logged in account`() = runTest {
+        whenever(repository.isLoggedIn()).thenReturn(false)
+
+        usecase().run {
+            assertNotNull(this)
+            assertEquals(this, false)
+        }
     }
 }

@@ -7,11 +7,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-import com.bed.core.values.NameValue
-import com.bed.core.values.EmailValue
-import com.bed.core.values.MessageValue
-import com.bed.core.values.PasswordValue
-import com.bed.core.values.getFirstMessage
+import com.bed.core.entities.value.NameValue
+import com.bed.core.entities.value.EmailValue
+import com.bed.core.entities.value.PasswordValue
 
 class FormState {
 
@@ -40,8 +38,8 @@ class FormState {
         PasswordValue(value).fold(::setFailure) { setSuccess(it()) }
     }
 
-    private fun setFailure(failure: Nel<MessageValue>) {
-        _state.update { States.Failure(failure.getFirstMessage()) }
+    private fun setFailure(failure: Nel<String>) {
+        _state.update { States.Failure(failure.first()) }
     }
 
     private fun  setSuccess(success: String) {
