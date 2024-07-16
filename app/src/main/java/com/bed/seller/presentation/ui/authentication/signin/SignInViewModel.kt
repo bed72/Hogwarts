@@ -13,13 +13,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 
-import com.bed.seller.presentation.commons.states.States
-import com.bed.seller.presentation.commons.states.FormState
+import com.bed.core.entities.input.AuthenticationInput
+import com.bed.core.entities.output.AuthenticationOutput
 
 import com.bed.core.usecases.authentication.SignInUsecase
 
-import com.bed.core.entities.output.AuthenticationOutput
-import com.bed.core.entities.input.AuthenticationInput
+import com.bed.seller.presentation.commons.states.States
+import com.bed.seller.presentation.commons.states.FormState
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(private val signInUseCase: SignInUsecase) : ViewModel() {

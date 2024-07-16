@@ -1,42 +1,42 @@
 [versions]
 inject = "1"
-agp = "8.4.0"
+agp = "8.5.1"
 coil = "2.6.0"
 hilt = "2.51.1"
 arrow = "1.2.4"
-camera = "1.3.3"
-lottie = "6.4.0"
-kotlin = "1.9.23"
+camera = "1.3.4"
+lottie = "6.4.1"
+kotlin = "2.0.0"
 detekt = "1.23.6"
 material = "1.12.0"
 leakcanary = "2.14"
-ksp = "1.9.23-1.0.20"
+ksp = "2.0.0-1.0.21"
 kotlinx-coroutines = "1.8.1"
 
-google-service = "4.4.1"
+google-service = "4.4.2"
 
-firebase-bom = "33.0.0"
+firebase-bom = "33.1.2"
 firebase-auth = "23.0.0"
-firebase-analytics = "22.0.0"
+firebase-analytics = "22.0.2"
 
 androidx-arch = "2.2.0"
 androidx-core = "1.13.1"
-androidx-junit = "1.1.5"
+androidx-junit = "1.2.1"
 androidx-splash = "1.0.1"
-androidx-runner = "1.5.2"
-androidx-fragment = "1.7.1"
-androidx-appcompat = "1.6.1"
-androidx-lifecycle = "2.8.0"
+androidx-runner = "1.6.1"
+androidx-fragment = "1.8.1"
+androidx-appcompat = "1.7.0"
+androidx-lifecycle = "2.8.3"
 androidx-navigation = "2.7.7"
 androidx-preferences = "1.1.1"
-androidx-orchestrator = "1.4.2"
+androidx-orchestrator = "1.5.0"
 androidx-constraintlayout = "2.1.4"
 
 # Test
 core = "1.13.1"
 junit = "4.13.2"
 mockito = "5.3.1"
-espresso = "3.5.1"
+espresso = "3.6.1"
 
 [libraries]
 # Core
@@ -103,10 +103,10 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt"}
 application = { id = "com.android.application", version.ref = "agp" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
-google-service = { id = "com.google.gms.google-services", version.ref = "google-service" }
-navigation = { id = "androidx.navigation.safeargs.kotlin", version.ref = "androidx-navigation" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+google-service = { id = "com.google.gms.google-services", version.ref = "google-service" }
+navigation = { id = "androidx.navigation.safeargs.kotlin", version.ref = "androidx-navigation" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 [bundles]
@@ -161,11 +161,11 @@ androidx = [
     "androidx-splash",
     "androidx-appcompat",
     "androidx-preferences",
+    "androidx-navigation-ui",
     "androidx-constraintlayout",
     "androidx-lifecycle-runtime",
     "androidx-lifecycle-livedata",
     "androidx-lifecycle-viewmodel",
-    "androidx-navigation-ui",
 #    "androidx-navigation-plugin",
     "androidx-navigation-fragment"
 ]
