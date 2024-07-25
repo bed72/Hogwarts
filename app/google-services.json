@@ -22,7 +22,7 @@
           }
         },
         {
-          "client_id": "427145770230-k50lggfpbb3af8eip1ou55qqi9ujovbb.apps.googleusercontent.com",
+          "client_id": "427145770230-28v5ict4h4jq7oe38ioqu8064s3ckj5q.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -35,7 +35,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "427145770230-k50lggfpbb3af8eip1ou55qqi9ujovbb.apps.googleusercontent.com",
+              "client_id": "427145770230-1b8ohq7lctk2h2fpd7q0ho5h62tn8d5s.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -51,6 +51,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "427145770230-mntmk58vkkp210i2d7guqsb7ce0tvjuk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bed.seller.debug",
+            "certificate_hash": "c6e588328278c9ad2a8d5dc2ec376098e4a653fc"
+          }
+        },
+        {
           "client_id": "427145770230-q9c5r64bf65trgqlt9mbkdd010ecehda.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -59,7 +67,7 @@
           }
         },
         {
-          "client_id": "427145770230-k50lggfpbb3af8eip1ou55qqi9ujovbb.apps.googleusercontent.com",
+          "client_id": "427145770230-28v5ict4h4jq7oe38ioqu8064s3ckj5q.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -72,7 +80,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "427145770230-k50lggfpbb3af8eip1ou55qqi9ujovbb.apps.googleusercontent.com",
+              "client_id": "427145770230-1b8ohq7lctk2h2fpd7q0ho5h62tn8d5s.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -96,7 +104,7 @@
           }
         },
         {
-          "client_id": "427145770230-k50lggfpbb3af8eip1ou55qqi9ujovbb.apps.googleusercontent.com",
+          "client_id": "427145770230-28v5ict4h4jq7oe38ioqu8064s3ckj5q.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -109,7 +117,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "427145770230-k50lggfpbb3af8eip1ou55qqi9ujovbb.apps.googleusercontent.com",
+              "client_id": "427145770230-1b8ohq7lctk2h2fpd7q0ho5h62tn8d5s.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
