@@ -1,12 +1,27 @@
 package com.bed.seller.presentation.ui.authentication.signin
 
+import android.os.Build
+import android.util.Log
 import android.os.Bundle
 import android.view.View
+import android.content.ContentValues.TAG
 
 import androidx.activity.addCallback
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 
+import kotlinx.coroutines.coroutineScope
+
 import dagger.hilt.android.AndroidEntryPoint
+
+import androidx.credentials.CustomCredential
+import androidx.credentials.CredentialManager
+import androidx.credentials.GetCredentialRequest
+import androidx.credentials.GetCredentialResponse
+
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
+import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
 
 import com.bed.seller.R
 
@@ -17,7 +32,6 @@ import com.bed.seller.databinding.SignInFragmentBinding
 import com.bed.seller.presentation.commons.states.States
 import com.bed.seller.presentation.commons.states.FormState
 import com.bed.seller.presentation.commons.states.ConstantStates
-
 import com.bed.seller.presentation.commons.fragments.BaseFragment
 
 import com.bed.seller.presentation.commons.extensions.debounce
@@ -36,8 +50,22 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
 
     private val viewModel: SignInViewModel by viewModels()
 
+    private lateinit var credentialManager: CredentialManager
+    private lateinit var googleOption: GetSignInWithGoogleOption
+    private lateinit var credentialRequest: GetCredentialRequest
+
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        credentialManager = CredentialManager.create(requireContext())
+        googleOption = GetSignInWithGoogleOption
+            .Builder(getString(R.string.credendials))
+            .build()
+        credentialRequest = GetCredentialRequest
+            .Builder()
+            .addCredentialOption(googleOption)
+            .build()
 
         setupComponents()
 
@@ -131,9 +159,44 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
     private fun validateParameter() {
         hideKeyboard()
 
-        AuthenticationInput(emailRow, passwordRow).fold(
-            { _ -> snackBar(R.string.generic_failures_form) },
-            { success -> viewModel.signIn(success) }
-        )
+        singInWithGoogle()
+//        AuthenticationInput(emailRow, passwordRow).fold(
+//            { _ -> snackBar(R.string.generic_failures_form) },
+//            { success -> viewModel.signIn(success) }
+//        )
+    }
+
+    private fun singInWithGoogle() {
+        lifecycleExecute {
+            coroutineScope {
+                try {
+                    val result = credentialManager.getCredential(
+                        context = requireContext(),
+                        request = credentialRequest,
+                    )
+                    handleSignIn(result)
+                } catch (exception: Exception) {
+                    Log.e(TAG, "Unexpected type of credential", exception)
+                }
+            }
+        }
+    }
+
+    private fun handleSignIn(result: GetCredentialResponse) {
+        when (val credential = result.credential) {
+            is CustomCredential -> {
+                if (credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
+                    try {
+                        val googleIdTokenCredential = GoogleIdTokenCredential
+                            .createFrom(credential.data)
+                        Log.e(TAG, "NAME ${googleIdTokenCredential.displayName}")
+
+                    } catch (exception: GoogleIdTokenParsingException) {
+                        Log.e(TAG, "Received an invalid google id token response", exception)
+                    }
+                } else Log.e(TAG, "Unexpected type of credential")
+            }
+            else -> Log.e(TAG, "Unexpected type of credential")
+        }
     }
 }
