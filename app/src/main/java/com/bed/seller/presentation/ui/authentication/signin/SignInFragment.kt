@@ -1,6 +1,5 @@
 package com.bed.seller.presentation.ui.authentication.signin
 
-import android.os.Build
 import android.util.Log
 import android.os.Bundle
 import android.view.View
@@ -190,13 +189,9 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
                     } catch (exception: GoogleIdTokenParsingException) {
                         Log.e(TAG, "Received an invalid google id token response", exception)
                     }
-                } else {
-                    Log.e(TAG, "Unexpected type of credential")
-                }
-            }
-            else -> {
-                Log.e(TAG, "Unexpected type of credential")
-            }
+                } else Log.e(TAG, "Unexpected type of credential")
+
+            } else -> Log.e(TAG, "Unexpected type of credential")
         }
     }
 }
