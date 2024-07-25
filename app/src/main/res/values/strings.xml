@@ -1,7 +1,7 @@
 <resources>
     <string name="empty_value" />
     <string name="app_name">Ohh Ferta</string>
-    <string name="credendials">427145770230-1b8ohq7lctk2h2fpd7q0ho5h62tn8d5s.apps.googleusercontent.com</string>
+    <string name="credendials"></string>
 
     <string name="pattern_save_images">images</string>
     <string name="pattern_date_images">ddMMyyhhmmss</string>
