@@ -37,6 +37,7 @@ import com.bed.seller.presentation.commons.extensions.fragments.snackBar
 import com.bed.seller.presentation.commons.extensions.fragments.navigateTo
 import com.bed.seller.presentation.commons.extensions.fragments.hideKeyboard
 import com.bed.seller.presentation.commons.extensions.fragments.lifecycleExecute
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 
 @AndroidEntryPoint
 class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding::inflate) {
@@ -52,9 +53,15 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val googleOption = GetSignInWithGoogleOption
-            .Builder(getString(R.string.credendials))
+        val googleOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
+            .setFilterByAuthorizedAccounts(true)
+            .setServerClientId(getString(R.string.credendials))
+            .setAutoSelectEnabled(true)
             .build()
+
+//            GetSignInWithGoogleOption
+//            .Builder(getString(R.string.credendials))
+//            .build()
 
         credentialManager = CredentialManager.create(requireContext())
         credentialRequest = GetCredentialRequest
@@ -190,7 +197,6 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(SignInFragmentBinding
                         Log.e(TAG, "Received an invalid google id token response", exception)
                     }
                 } else Log.e(TAG, "Unexpected type of credential")
-
             } else -> Log.e(TAG, "Unexpected type of credential")
         }
     }

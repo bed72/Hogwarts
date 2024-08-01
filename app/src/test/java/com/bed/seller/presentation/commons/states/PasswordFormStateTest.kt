@@ -58,7 +58,7 @@ internal class PasswordFormStateTest {
         assertTrue(states[Factories.FAILURE] is States.Failure)
         form.state.value.let {
             it as States.Failure
-            assertEquals(it.data, "A senha presica conter mais de 6 caracteres.")
+            assertEquals(it.data, "Senha inválida.")
         }
 
         job.cancel()
@@ -75,7 +75,7 @@ internal class PasswordFormStateTest {
         assertTrue(states[Factories.FAILURE] is States.Failure)
         form.state.value.let {
             it as States.Failure
-            assertEquals(it.data, "A senha presica conter caracteres numéricos.")
+            assertEquals(it.data, "Senha inválida.")
         }
 
         job.cancel()
@@ -92,7 +92,7 @@ internal class PasswordFormStateTest {
         assertTrue(states[Factories.FAILURE] is States.Failure)
         form.state.value.let {
             it as States.Failure
-            assertEquals(it.data, "A senha presica conter caracteres maiúsculos.")
+            assertEquals(it.data, "Senha inválida.")
         }
 
         job.cancel()
