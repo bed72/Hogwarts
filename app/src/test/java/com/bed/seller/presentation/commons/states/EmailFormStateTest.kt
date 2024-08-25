@@ -58,7 +58,7 @@ internal class EmailFormStateTest {
         assertTrue(states[Factories.FAILURE] is States.Failure)
         form.state.value.let {
             it as States.Failure
-            assertEquals(it.data, "Preencha um e-mail válido.")
+            assertEquals(it.data, "E-mail inválido.")
         }
 
         job.cancel()
@@ -75,7 +75,7 @@ internal class EmailFormStateTest {
         assertTrue(states[Factories.FAILURE] is States.Failure)
         form.state.value.let {
             it as States.Failure
-            assertEquals(it.data, "Preencha um e-mail válido.")
+            assertEquals(it.data, "E-mail inválido.")
         }
 
         job.cancel()

@@ -43,13 +43,13 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:networkSecurityConfig="@xml/network_security_config" >
 
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+<!--        <meta-data-->
+<!--            android:name="com.google.android.gms.version"-->
+<!--            android:value="@integer/google_play_services_version" />-->
 
-        <meta-data
-            android:name="com.google.android.accounts.API_KEY"
-            android:value="427145770230-q9c5r64bf65trgqlt9mbkdd010ecehda.apps.googleusercontent.com" />
+<!--        <meta-data-->
+<!--            android:name="com.google.android.accounts.API_KEY"-->
+<!--            android:value="427145770230-q9c5r64bf65trgqlt9mbkdd010ecehda.apps.googleusercontent.com" />-->
 
         <!-- Trigger Google Play services to install the backported photo picker module. -->
         <!--        <service-->
@@ -101,6 +101,10 @@
 <!--                <data android:path="/__/auth/action" />-->
 <!--                <data android:host="seller-9041b.firebaseapp.com" />-->
 
+
+                <data android:scheme="https" />
+                <data android:path="/signin" />
+                <data android:host="www.seller-bedapp.com" />
 
                 <data android:scheme="https" />
                 <data android:path="/signin" />

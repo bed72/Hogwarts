@@ -58,7 +58,7 @@ internal class NameFormStateTest {
         assertTrue(states[Factories.FAILURE] is States.Failure)
         form.state.value.let {
             it as States.Failure
-            assertEquals(it.data, "Preencha um nome e sobrenome válidos.")
+            assertEquals(it.data, "Nome e Sobrenome inválidos.")
         }
 
         job.cancel()
@@ -75,7 +75,7 @@ internal class NameFormStateTest {
         assertTrue(states[Factories.FAILURE] is States.Failure)
         form.state.value.let {
             it as States.Failure
-            assertEquals(it.data, "Preencha um nome e sobrenome válidos.")
+            assertEquals(it.data, "Nome e Sobrenome inválidos.")
         }
 
         job.cancel()
