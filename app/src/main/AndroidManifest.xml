@@ -97,9 +97,14 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
+<!--                <data android:scheme="https" />-->
+<!--                <data android:path="/__/auth/action" />-->
+<!--                <data android:host="seller-9041b.firebaseapp.com" />-->
+
+
                 <data android:scheme="https" />
-                <data android:path="/__/auth/action" />
-                <data android:host="seller-9041b.firebaseapp.com" />
+                <data android:path="/signin" />
+                <data android:host="www.seller-bedapp.com" />
 
             </intent-filter>
 
